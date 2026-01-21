@@ -1,0 +1,636 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+  generatedFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+//////////////////////////////////////////
+// ENUMS
+//////////////////////////////////////////
+
+enum OrderStatus {
+  PENDING_CONFIRMATION
+  PENDING_PICKUP
+  PENDING_DELIVERY
+  DELIVERED
+  RETURNED
+  CANCELLED
+}
+
+enum VerificationCodeType {
+  REGISTER
+  FORGOT_PASSWORD
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum HTTPMethod {
+  GET
+  POST
+  PUT
+  DELETE
+  PATCH
+  OPTIONS
+  HEAD
+}
+
+//////////////////////////////////////////
+// CORE MODELS
+//////////////////////////////////////////
+
+model Language {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(500)
+  code String @unique @db.VarChar(10)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("LanguageCreatedBy", fields: [createdById], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  updatedBy User? @relation("LanguageUpdatedBy", fields: [updatedById], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+
+  userTranslations     UserTranslation[]
+  productTranslations  ProductTranslation[]
+  categoryTranslations CategoryTranslation[]
+  brandTranslations    BrandTranslation[]
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  name        String  @db.VarChar(500)
+  password    String  @db.VarChar(500)
+  phoneNumber String  @db.VarChar(50)
+  avatar      String? @db.VarChar(1000)
+
+  // field này có thể dùng để thực hiện chức năng quên mật khẩu, đăng nhập 2 bước
+  totpSecret String?    @unique @db.VarChar(1000)
+  status     UserStatus @default(ACTIVE)
+
+  roleId Int
+  role   Role @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  refreshTokens RefreshToken[]
+  carts         CartItem[]
+  orders        Order[]
+  reviews       Review[]
+
+  createdPermissions          Permission[]          @relation("PermissionCreatedBy")
+  updatedPermissions          Permission[]          @relation("PermissionUpdatedBy")
+  createdRoles                Role[]                @relation("RoleCreatedBy")
+  updatedRoles                Role[]                @relation("RoleUpdatedBy")
+  createdProducts             Product[]             @relation("ProductCreatedBy")
+  updatedProducts             Product[]             @relation("ProductUpdatedBy")
+  createdCategories           Category[]            @relation("CategoryCreatedBy")
+  updatedCategories           Category[]            @relation("CategoryUpdatedBy")
+  createdVariants             Variant[]             @relation("VariantCreatedBy")
+  updatedVariants             Variant[]             @relation("VariantUpdatedBy")
+  createdVariantOptions       VariantOption[]       @relation("VariantOptionCreatedBy")
+  updatedVariantOptions       VariantOption[]       @relation("VariantOptionUpdatedBy")
+  createdSkus                 SKU[]                 @relation("SkuCreatedBy")
+  updatedSkus                 SKU[]                 @relation("SkuUpdatedBy")
+  createdLanguages            Language[]            @relation("LanguageCreatedBy")
+  updatedLanguages            Language[]            @relation("LanguageUpdatedBy")
+  createdBrands               Brand[]               @relation("BrandCreatedBy")
+  updatedBrands               Brand[]               @relation("BrandUpdatedBy")
+  createdProductTranslations  ProductTranslation[]  @relation("ProductTranslationCreatedBy")
+  updatedProductTranslations  ProductTranslation[]  @relation("ProductTranslationUpdatedBy")
+  createdCategoryTranslations CategoryTranslation[] @relation("CategoryTranslationCreatedBy")
+  updatedCategoryTranslations CategoryTranslation[] @relation("CategoryTranslationUpdatedBy")
+  createdBrandTranslations    BrandTranslation[]    @relation("BrandTranslationCreatedBy")
+  updatedBrandTranslations    BrandTranslation[]    @relation("BrandTranslationUpdatedBy")
+  createdOrders               Order[]               @relation("OrderCreatedBy")
+  updatedOrders               Order[]               @relation("OrderUpdatedBy")
+  createdUserTranslations     UserTranslation[]     @relation("UserTranslationCreatedBy")
+  updatedUserTranslations     UserTranslation[]     @relation("UserTranslationUpdatedBy")
+  userTranslations            UserTranslation[]     @relation("User")
+  sentMessages                Message[]             @relation("FromUser")
+  receivedMessages            Message[]             @relation("ToUser")
+
+  // 1 user có thể tạo ra nhiều user khác
+  // 1 user chỉ có thể được tạo ra bởi 1 user khác
+  // Tự quan hệ 1-n
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("UserCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("UserUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  createdUsers User[] @relation("UserCreatedBy")
+  updatedUsers User[] @relation("UserUpdatedBy")
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model UserTranslation {
+  id          Int     @id @default(autoincrement())
+  userId      Int
+  languageId  Int
+  address     String? @db.VarChar(500)
+  description String?
+
+  createdById Int?
+  updatedById Int?
+
+  user     User     @relation("User", fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdBy User? @relation("UserTranslationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("UserTranslationUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model VerificationCode {
+  id    Int                  @id @default(autoincrement())
+  email String               @unique @db.VarChar(500)
+  code  String               @db.VarChar(50)
+  type  VerificationCodeType // REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu
+
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email, code, type])
+  @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các verification code đã hết hạn
+}
+
+model RefreshToken {
+  token  String @unique @db.VarChar(1000)
+  userId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các refresh token đã hết hạn
+}
+
+model Permission {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique @db.VarChar(500)
+  description String
+  path        String     @db.VarChar(1000)
+  method      HTTPMethod
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("PermissionCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("PermissionUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  roles Role[] // PermissionsRoles[] - Implicit many-to-many (Prisma tự động tạo bảng _PermissionToRole)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // permissionsRoles PermissionsRoles[]
+}
+
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique @db.VarChar(500)
+  description String
+  isActive    Boolean @default(true)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("RoleCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("RoleUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  users       User[]
+  permissions Permission[] // PermissionsRoles[] - Implicit many-to-many (Prisma tự động tạo bảng _PermissionToRole)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // permissionsRoles PermissionsRoles[]
+}
+
+//////////////////////////////////////////
+// PRODUCT DOMAIN
+//////////////////////////////////////////
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  base_price    Float
+  virtual_price Float
+  brandId       Int
+  images        String[]
+
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("ProductCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("ProductUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  productTranslations ProductTranslation[]
+  variants            Variant[]
+  skus                SKU[]
+  reviews             Review[]
+  categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // productsCategories ProductsCategories[]
+}
+
+model ProductTranslation {
+  id          Int    @id @default(autoincrement())
+  productId   Int
+  languageId  Int
+  name        String @db.VarChar(500)
+  description String
+
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("ProductTranslationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("ProductTranslationUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Category {
+  id               Int  @id @default(autoincrement())
+  parentCategoryId Int?
+
+  parentCategory     Category?  @relation("CategoryParentCategories", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childrenCategories Category[] @relation("CategoryParentCategories")
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("CategoryCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("CategoryUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  categoryTranslations CategoryTranslation[]
+  products             Product[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // productsCategories ProductsCategories[]
+}
+
+model CategoryTranslation {
+  id          Int    @id @default(autoincrement())
+  categoryId  Int
+  languageId  Int
+  name        String @db.VarChar(500)
+  description String
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("CategoryTranslationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("CategoryTranslationUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Variant {
+  id        Int    @id @default(autoincrement())
+  name      String @db.VarChar(500)
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("VariantCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("VariantUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  variantOptions VariantOption[]
+}
+
+model VariantOption {
+  id        Int    @id @default(autoincrement())
+  value     String @db.VarChar(500)
+  variantId Int
+
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("VariantOptionCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("VariantOptionUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  skus SKU[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // skusVariantOptions SkusVariantOptions[]
+}
+
+model SKU {
+  id        Int      @id @default(autoincrement())
+  value     String   @db.VarChar(500)
+  price     Float
+  stock     Int
+  images    String[]
+  productId Int
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("SkuCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("SkuUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  variantOptions      VariantOption[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
+  
+  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
+  // skusVariantOptions SkusVariantOptions[]
+  
+  cartItems           CartItem[]
+  productSKUSnapshots ProductSKUSnapshot[]
+}
+
+//////////////////////////////////////////
+// BRAND
+//////////////////////////////////////////
+
+model Brand {
+  id   Int    @id @default(autoincrement())
+  logo String @db.VarChar(1000)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("BrandCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("BrandUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  products          Product[]
+  brandTranslations BrandTranslation[]
+}
+
+model BrandTranslation {
+  id          Int    @id @default(autoincrement())
+  brandId     Int
+  languageId  Int
+  name        String @db.VarChar(500)
+  description String
+
+  brand    Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("BrandTranslationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("BrandTranslationUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+//////////////////////////////////////////
+// ORDER & CART
+//////////////////////////////////////////
+
+model CartItem {
+  id       Int @id @default(autoincrement())
+  quantity Int
+  skuId    Int
+  userId   Int
+
+  sku  SKU  @relation(fields: [skuId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id     Int         @id @default(autoincrement())
+  userId Int
+  status OrderStatus
+
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  createdById Int?
+  updatedById Int?
+
+  createdBy User? @relation("OrderCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("OrderUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // không cần price vì đã có trong SKU, nhân price với quantity để tính tổng tiền
+  items ProductSKUSnapshot[]
+}
+
+model ProductSKUSnapshot {
+  id          Int      @id @default(autoincrement())
+  productName String   @db.VarChar(500)
+  price       Float
+  images      String[]
+  skuValue    String   @db.VarChar(500)
+  skuId       Int?
+  orderId     Int?
+
+  sku   SKU?   @relation(fields: [skuId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  order Order? @relation(fields: [orderId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        Int    @id @default(autoincrement())
+  content   String
+  rating    Int
+  productId Int
+  userId    Int
+
+  product Product @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user    User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  // deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//////////////////////////////////////////
+// PAYMENT & MESSAGE
+//////////////////////////////////////////
+
+model PaymentTransaction {
+  id                 Int      @id @default(autoincrement())
+  gateway            String   @db.VarChar(100)
+  transactionDate    DateTime @default(now())
+  accountNumber      String   @db.VarChar(100)
+  subAccount         String?  @db.VarChar(250)
+  amountIn           Int      @default(0)
+  amountOut          Int      @default(0)
+  accumulated        Int      @default(0)
+  code               String?  @db.VarChar(250)
+  transactionContent String?  @db.Text
+  referenceNumber    String?  @db.VarChar(255)
+  body               String?  @db.Text
+
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id         Int    @id @default(autoincrement())
+  fromUserId Int
+  toUserId   Int
+  content    String
+
+  fromUser User @relation("FromUser", fields: [fromUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  toUser   User @relation("ToUser", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+}
+
+//////////////////////////////////////////
+// MANY-TO-MANY (EXPLICIT)
+//////////////////////////////////////////
+
+// LƯU Ý: Trong Prisma version 7, các quan hệ many-to-many đã được định nghĩa NGẦM ĐỊNH (implicit)
+// ở phía trên và Prisma tự động tạo bảng junction table trong database.
+// 
+// KHÔNG CẦN định nghĩa các bảng junction table rõ ràng (explicit) như sau nữa:
+//
+// 1. ProductsCategories - cho quan hệ Product ↔ Category (dòng 258, 300)
+//    - Product.categories: Category[]
+//    - Category.products: Product[]
+//    - Prisma tự động tạo bảng "_CategoryToProduct" trong database
+//
+// 2. PermissionsRoles - cho quan hệ Permission ↔ Role (dòng 208, 228)
+//    - Permission.roles: Role[]
+//    - Role.permissions: Permission[]
+//    - Prisma tự động tạo bảng "_PermissionToRole" trong database
+//
+// 3. SkusVariantOptions - cho quan hệ SKU ↔ VariantOption (dòng 361, 384)
+//    - SKU.variantOptions: VariantOption[]
+//    - VariantOption.skus: SKU[]
+//    - Prisma tự động tạo bảng "_SKUToVariantOption" trong database
+//
+// Chỉ cần định nghĩa bảng junction table rõ ràng (explicit) khi bạn muốn:
+// - Thêm các trường bổ sung vào bảng junction (timestamps, metadata, etc.)
+// - Tùy chỉnh tên bảng hoặc cấu trúc khác mặc định
+// - Có quan hệ phức tạp hơn với các bảng khác
+//
+// ==================== VÍ DỤ CÁCH VIẾT EXPLICIT (đã comment) ====================
+//
+// model ProductsCategories {
+//   product_id  Int
+//   category_id Int
+//
+//   product  Product  @relation("ProductsCategories", fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//   category Category @relation("ProductsCategories", fields: [category_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//
+//   // Có thể thêm các fields bổ sung ở đây:
+//   // featured    Boolean   @default(false)
+//   // displayOrder Int?
+//   // createdAt   DateTime  @default(now())
+//   // updatedAt   DateTime  @updatedAt
+//
+//   @@id([product_id, category_id])
+// }
+//
+// model PermissionsRoles {
+//   permission_id Int
+//   role_id       Int
+//
+//   permission Permission @relation("PermissionsRoles", fields: [permission_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//   role       Role       @relation("PermissionsRoles", fields: [role_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//
+//   // Có thể thêm các fields bổ sung ở đây:
+//   // grantedAt DateTime  @default(now())
+//   // grantedBy Int?
+//   // expiresAt DateTime?
+//
+//   @@id([permission_id, role_id])
+// }
+//
+// model SkusVariantOptions {
+//   sku_id            Int
+//   variant_option_id Int
+//
+//   sku           SKU           @relation("SkusVariantOptions", fields: [sku_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//   variantOption VariantOption @relation("SkusVariantOptions", fields: [variant_option_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+//
+//   // Có thể thêm các fields bổ sung ở đây:
+//   // sortOrder Int?
+//   // createdAt DateTime  @default(now())
+//
+//   @@id([sku_id, variant_option_id])
+// }
+//
+// LƯU Ý: Nếu dùng explicit, phải thay đổi các field trong models tương ứng:
+// - Permission.roles thành Permission.permissionsRoles (với relation name)
+// - Role.permissions thành Role.permissionsRoles (với relation name)
+// - Product.categories thành Product.productsCategories (với relation name)
+// - Category.products thành Category.productsCategories (với relation name)
+// - SKU.variantOptions thành SKU.skusVariantOptions (với relation name)
+// - VariantOption.skus thành VariantOption.skusVariantOptions (với relation name)
