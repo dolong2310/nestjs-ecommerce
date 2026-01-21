@@ -3,13 +3,16 @@ import { AuthConditionKey, AuthKey, REQUEST_USER_KEY } from '@/shared/constants/
 import { Auth } from '@/shared/decorators/auth.decorator';
 import { TokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
+import { RegisterBodyDTO, RegisterResponseDTO } from './auth.dto';
+import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
   @Post('register')
-  register(@Body() body: any): Promise<any> {
+  @ZodSerializerDto(RegisterResponseDTO)
+  register(@Body() body: RegisterBodyDTO): Promise<any> {
     return this.authService.register(body);
   }
 

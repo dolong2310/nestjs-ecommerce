@@ -4,6 +4,7 @@ import { HashingService } from '@/shared/services/hashing.service';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { RegisterBodyDTO } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  async register(body: any): Promise<any> {
+  async register(body: RegisterBodyDTO): Promise<any> {
     try {
       const userRoleId = await this.rolesService.getUserRoleId();
       const hashedPassword = await this.hashingService.hash(body.password);
