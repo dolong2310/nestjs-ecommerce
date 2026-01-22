@@ -1,12 +1,13 @@
+import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
+import { AuthRepository } from '@/routes/auth/auth.repo';
 import { RolesService } from '@/routes/auth/roles.service';
+import envConfig from '@/shared/config';
+import { EnumVerificationCode } from '@/shared/constants/auth.constant';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
-import { AuthRepository } from '@/routes/auth/auth.repo';
-import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
-import envConfig from '@/shared/config';
 import { addMilliseconds } from 'date-fns';
 import ms, { StringValue } from 'ms';
 
@@ -21,9 +22,43 @@ export class AuthService {
   ) { }
 
   async register(body: RegisterBodyType): Promise<RegisterResponseType> {
+    // flow register:
+    // 1. User input form email, password, confirm password, phone number
+    // 2. Click button "Send OTP code" -> send OTP code to email
+    // 3. User input OTP code
+    // 4. Click button "Register" with additional OTP code
+    // 5. Check OTP code
+    // 6. Create user
+    // 7. Delete OTP code
+    // 8. Return user (successfully registered)
     try {
+      // 1. Check OTP code
+      const verificationCode = await this.authRepository.findUniqueVerificationCode({
+        email: body.email,
+        code: body.code,
+        type: EnumVerificationCode.REGISTER,
+      });
+
+      if (!verificationCode) {
+        throw new BadRequestException([{
+          field: 'code',
+          message: 'Invalid OTP code',
+        }]);
+      }
+
+      if (verificationCode.expiresAt < new Date()) {
+        throw new BadRequestException([{
+          field: 'code',
+          message: 'OTP code has expired',
+        }]);
+      }
+
+      // 2. Create user
+      // 2.1 Get user role id
       const userRoleId = await this.rolesService.getUserRoleId();
+      // 2.2 Hash password
       const hashedPassword = await this.hashingService.hash(body.password);
+      // 2.3 Create user
       const user = await this.authRepository.createUser({
         name: body.name,
         email: body.email,
@@ -32,6 +67,10 @@ export class AuthService {
         roleId: userRoleId,
       });
 
+      // 3. Delete OTP code
+      await this.authRepository.deleteVerificationCode(verificationCode.id);
+
+      // 4. Return user (successfully registered)
       return user;
     } catch (error) {
       if (isUniqueConstraintPrismaError(error)) {

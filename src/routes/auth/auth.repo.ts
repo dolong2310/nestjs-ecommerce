@@ -1,4 +1,5 @@
 import { CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, RefreshTokenType, RegisterBodyType, VerificationCodeType } from "@/routes/auth/auth.model";
+import { EnumVerificationCodeType } from "@/shared/constants/auth.constant";
 import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";
 import { Injectable } from "@nestjs/common";
@@ -8,7 +9,7 @@ import { Injectable } from "@nestjs/common";
 export class AuthRepository {
   constructor(private readonly prismaService: PrismaService) { }
 
-  createUser(body: Omit<RegisterBodyType, 'confirmPassword'> & Pick<UserType, 'roleId'>): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
+  createUser(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'roleId'>): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
     return this.prismaService.user.create({
       data: {
         name: body.name,
@@ -81,6 +82,19 @@ export class AuthRepository {
       //   type: body.type,
       //   expiresAt: body.expiresAt,
       // },
+    });
+  }
+
+  findUniqueVerificationCode(uniqueInput: { email: string } | { id: number } | { email: string, code: string, type: EnumVerificationCodeType }): Promise<VerificationCodeType | null> {
+    // query theo "email" hoặc "id" hoặc "email, code, type" vì được đánh index
+    return this.prismaService.verificationCode.findUnique({
+      where: uniqueInput,
+    })
+  }
+
+  deleteVerificationCode(id: number): Promise<VerificationCodeType> {
+    return this.prismaService.verificationCode.delete({
+      where: { id },
     });
   }
 }

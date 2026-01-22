@@ -32,6 +32,7 @@ export const RegisterBodySchema = UserSchema.pick({
   phoneNumber: true,
 }).extend({
   confirmPassword: z.string().min(6).max(100),
+  code: z.string().length(6),
 }).strict().superRefine((data, ctx) => {
   if (data.password !== data.confirmPassword) {
     ctx.addIssue({

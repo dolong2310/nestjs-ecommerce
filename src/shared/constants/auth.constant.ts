@@ -20,3 +20,5 @@ export const EnumVerificationCode = {
   REGISTER: 'REGISTER',
   FORGOT_PASSWORD: 'FORGOT_PASSWORD',
 } as const;
+
+export type EnumVerificationCodeType = (typeof EnumVerificationCode)[keyof typeof EnumVerificationCode];
