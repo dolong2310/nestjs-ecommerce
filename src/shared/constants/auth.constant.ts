@@ -9,3 +9,9 @@ export const AuthConditionKey = {
   AND: 'and',
   OR: 'or',
 } as const;
+
+export const UserStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  BLOCKED: 'BLOCKED',
+} as const;

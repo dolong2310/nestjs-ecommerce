@@ -3,8 +3,8 @@ import { AuthConditionKey, AuthKey, REQUEST_USER_KEY } from '@/shared/constants/
 import { Auth } from '@/shared/decorators/auth.decorator';
 import { TokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
-import { RegisterBodyDTO, RegisterResponseDTO } from './auth.dto';
 import { ZodSerializerDto } from 'nestjs-zod';
+import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO } from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,30 +12,34 @@ export class AuthController {
 
   @Post('register')
   @ZodSerializerDto(RegisterResponseDTO)
-  register(@Body() body: RegisterBodyDTO): Promise<any> {
+  register(@Body() body: RegisterBodyDTO): Promise<RegisterResponseDTO> { // return dto to avoid exposing password and toptSecret
     return this.authService.register(body);
   }
 
   @Post('login')
-  login(@Body() body: any): Promise<any> {
+  @ZodSerializerDto(LoginResponseDTO)
+  login(@Body() body: LoginBodyDTO): Promise<LoginResponseDTO> {
     return this.authService.login(body);
   }
 
   @Post('logout')
-  logout(@Body() body: any): Promise<any> {
+  logout(@Body() body: LogoutBodyDTO): Promise<{ message: string }> {
     return this.authService.logout(body);
   }
 
   @Post('refresh-token')
   @HttpCode(HttpStatus.OK)
-  refreshToken(@Body() body: any): Promise<any> {
+  @ZodSerializerDto(RefreshJwtTokenResponseDTO)
+  refreshToken(@Body() body: RefreshJwtTokenBodyDTO): Promise<RefreshJwtTokenResponseDTO> {
     return this.authService.refreshToken(body);
   }
 
   @Get('me')
+  @ZodSerializerDto(GetMeResponseDTO)
   @Auth([AuthKey.JWT, AuthKey.API_KEY], { condition: AuthConditionKey.AND })
-  getMe(@Request() req: Request & { [REQUEST_USER_KEY]: TokenPayload }): Promise<any> {
+  getMe(@Request() req: Request & { [REQUEST_USER_KEY]: TokenPayload }): Promise<GetMeResponseDTO> {
     const userId = req[REQUEST_USER_KEY].userId;
+    console.log('User ID: ', userId);
     return this.authService.getMe(userId);
   }
 }

@@ -1,57 +1,30 @@
 import { RolesService } from '@/routes/auth/roles.service';
 import { isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { HashingService } from '@/shared/services/hashing.service';
-import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { RegisterBodyDTO } from './auth.dto';
+import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType } from './auth.model';
+import { AuthRepository } from './auth.repo';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly hashingService: HashingService,
-    private readonly prismaService: PrismaService,
+    private readonly authRepository: AuthRepository,
     private readonly tokenService: TokenService,
     private readonly rolesService: RolesService
   ) { }
 
-  private async _generateTokens(payload: { userId: number }) {
-    // Generate tokens
-    const [accessToken, refreshToken] = await Promise.all([
-      this.tokenService.signAccessToken(payload),
-      this.tokenService.signRefreshToken(payload),
-    ]);
-    // Verify refresh token
-    const decodedRefreshToken = await this.tokenService.verifyRefreshToken(refreshToken);
-    const expiresAt = new Date(decodedRefreshToken.exp * 1000);
-    // Save refresh token to database
-    await this.prismaService.refreshToken.create({
-      data: {
-        userId: payload.userId,
-        token: refreshToken,
-        expiresAt,
-      }
-    });
-
-    return { accessToken, refreshToken };
-  }
-
-  async register(body: RegisterBodyDTO): Promise<any> {
+  async register(body: RegisterBodyType): Promise<RegisterResponseType> {
     try {
       const userRoleId = await this.rolesService.getUserRoleId();
       const hashedPassword = await this.hashingService.hash(body.password);
-      const user = await this.prismaService.user.create({
-        data: {
-          name: body.name,
-          email: body.email,
-          password: hashedPassword,
-          phoneNumber: body.phoneNumber,
-          roleId: userRoleId,
-        },
-        omit: {
-          password: true,
-          totpSecret: true,
-        }
+      const user = await this.authRepository.createUser({
+        name: body.name,
+        email: body.email,
+        password: hashedPassword,
+        phoneNumber: body.phoneNumber,
+        roleId: userRoleId,
       });
 
       return user;
@@ -67,13 +40,9 @@ export class AuthService {
     }
   }
 
-  async login(body: any): Promise<any> {
+  async login(body: LoginBodyType): Promise<LoginResponseType> {
     try {
-      const user = await this.prismaService.user.findUnique({
-        where: {
-          email: body.email,
-        },
-      })
+      const user = await this.authRepository.findUserByEmail(body.email)
 
       if (!user) {
         throw new NotFoundException([{
@@ -99,52 +68,37 @@ export class AuthService {
     }
   }
 
-  async logout(body: any): Promise<any> {
+  async logout(body: LogoutBodyType): Promise<{ message: string }> {
     try {
       // Find refresh token in database
-      const refreshToken = await this.prismaService.refreshToken.findUnique({
-        where: {
-          token: body.refreshToken,
-        },
-      });
-
+      const refreshToken = await this.authRepository.findRefreshTokenByToken(body.refreshToken);
       // nếu không có refresh token thì return success, vì có đâu mà xoá trong database
       if (!refreshToken) {
-        return {
-          message: 'Logout successful',
-        };
+        return { message: 'Logout successful' };
       }
 
       // Delete refresh token from database
-      await this.prismaService.refreshToken.delete({
-        where: {
-          token: body.refreshToken,
-        },
-      });
+      await this.authRepository.deleteRefreshToken(body.refreshToken);
 
-      return {
-        message: 'Logout successful',
-      };
+      return { message: 'Logout successful' };
     } catch (error) {
       throw error;
     }
   }
 
-  async refreshToken(body: any): Promise<any> {
+  async refreshToken(body: RefreshJwtTokenBodyType): Promise<RefreshJwtTokenResponseType> {
     try {
       // Find refresh token in database
-      await this.prismaService.refreshToken.findUniqueOrThrow({
-        where: {
-          token: body.refreshToken,
-        },
-      });
+      const refreshToken = await this.authRepository.findRefreshTokenByToken(body.refreshToken);
+      if (!refreshToken) {
+        throw new NotFoundException([{
+          field: 'refreshToken',
+          message: 'Refresh token not found',
+        }]);
+      }
 
       // Delete refresh token from database
-      await this.prismaService.refreshToken.delete({
-        where: {
-          token: body.refreshToken,
-        },
-      });
+      await this.authRepository.deleteRefreshToken(body.refreshToken);
 
       // Decode refresh token get user id
       const decodedRefreshToken = await this.tokenService.verifyRefreshToken(body.refreshToken);
@@ -181,16 +135,16 @@ export class AuthService {
     }
   }
 
-  async getMe(userId: number): Promise<any> {
+  async getMe(userId: number): Promise<GetMeResponseType> {
     try {
-      const user = await this.prismaService.user.findUniqueOrThrow({
-        where: {
-          id: userId,
-        },
-        omit: {
-          password: true,
-        },
-      });
+      const user = await this.authRepository.findUserById(userId);
+
+      if (!user) {
+        throw new NotFoundException([{
+          field: 'userId',
+          message: 'User not found',
+        }]);
+      }
 
       return user;
     } catch (error) {
@@ -203,5 +157,24 @@ export class AuthService {
 
       throw error;
     }
+  }
+
+  private async _generateTokens(payload: { userId: number }) {
+    // Generate tokens
+    const [accessToken, refreshToken] = await Promise.all([
+      this.tokenService.signAccessToken(payload),
+      this.tokenService.signRefreshToken(payload),
+    ]);
+    // Verify refresh token
+    const decodedRefreshToken = await this.tokenService.verifyRefreshToken(refreshToken);
+    const expiresAt = new Date(decodedRefreshToken.exp * 1000);
+    // Save refresh token to database
+    await this.authRepository.createRefreshToken({
+      userId: payload.userId,
+      token: refreshToken,
+      expiresAt,
+    });
+
+    return { accessToken, refreshToken };
   }
 }
