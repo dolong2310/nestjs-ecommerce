@@ -2,6 +2,7 @@ import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
+import { EmailService } from '@/shared/services/email.service';
 import { HashingService } from '@/shared/services/hashing.service';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
@@ -11,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 // Common config
 import '@/shared/config';
 
-const sharedServices = [PrismaService, HashingService, TokenService];
+const sharedServices = [PrismaService, HashingService, TokenService, EmailService];
 const sharedRepositories = [SharedUserRepository];
 const sharedGuards = [AuthGuard, ApiKeyGuard, AuthCompositeGuard];
 

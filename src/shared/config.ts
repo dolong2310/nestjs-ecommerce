@@ -29,6 +29,8 @@ const configSchema = z.object({
   ADMIN_PHONE_NUMBER: z.string().min(1, 'ADMIN_PHONE_NUMBER is required'),
 
   OTP_EXPIRES_IN: z.string().min(1, 'OTP_EXPIRES_IN is required'),
+
+  RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
 });
 
 const config = configSchema.safeParse(process.env);

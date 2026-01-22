@@ -5,6 +5,7 @@ import envConfig from '@/shared/config';
 import { EnumVerificationCode } from '@/shared/constants/auth.constant';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
+import { EmailService } from '@/shared/services/email.service';
 import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
@@ -18,7 +19,8 @@ export class AuthService {
     private readonly sharedUserRepository: SharedUserRepository,
     private readonly authRepository: AuthRepository,
     private readonly tokenService: TokenService,
-    private readonly rolesService: RolesService
+    private readonly rolesService: RolesService,
+    private readonly emailService: EmailService,
   ) { }
 
   async register(body: RegisterBodyType): Promise<RegisterResponseType> {
@@ -224,6 +226,17 @@ export class AuthService {
         expiresAt: addMilliseconds(new Date(), ms(envConfig.OTP_EXPIRES_IN as StringValue)), // now + 5 minutes
       });
       // 3. Send OTP to email
+      const { error: emailError } = await this.emailService.sendOtp({
+        code: otpCode,
+        to: body.email,
+        subject: 'OTP Code',
+      })
+      if (emailError) {
+        throw new BadRequestException([{
+          field: 'code',
+          message: 'Failed to send OTP code',
+        }]);
+      }
       // 4. Return verification code
       return verificationCode;
     } catch (error) {
