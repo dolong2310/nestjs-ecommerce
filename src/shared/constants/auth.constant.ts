@@ -10,8 +10,13 @@ export const AuthConditionKey = {
   OR: 'or',
 } as const;
 
-export const UserStatus = {
+export const EnumUserStatus = {
   ACTIVE: 'ACTIVE',
   INACTIVE: 'INACTIVE',
   BLOCKED: 'BLOCKED',
+} as const;
+
+export const EnumVerificationCode = {
+  REGISTER: 'REGISTER',
+  FORGOT_PASSWORD: 'FORGOT_PASSWORD',
 } as const;

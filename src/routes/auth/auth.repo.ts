@@ -1,6 +1,7 @@
+import { CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, RefreshTokenType, RegisterBodyType, VerificationCodeType } from "@/routes/auth/auth.model";
+import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";
 import { Injectable } from "@nestjs/common";
-import { CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, RefreshTokenType, RegisterBodyType, UserType } from "./auth.model";
 
 
 @Injectable()
@@ -58,6 +59,28 @@ export class AuthRepository {
   deleteRefreshToken(token: string): Promise<RefreshTokenType> {
     return this.prismaService.refreshToken.delete({
       where: { token },
+    });
+  }
+
+  createVerificationCode(body: CreateVerificationCodeBodyType): Promise<VerificationCodeType> {
+    // upsert là nếu chưa có thì tạo mới hoặc có rồi thì cập nhật
+    // email là unique nên chỉ có thể có 1 verification code cho 1 email (không thể tạo thêm -> auto throw error)
+    return this.prismaService.verificationCode.upsert({
+      where: {
+        email: body.email,
+      },
+      create: body,
+      update: {
+        code: body.code,
+        expiresAt: body.expiresAt,
+      },
+      // Tạo thêm verification code cho email đó -> sai vì email là unique
+      // data: {
+      //   email: body.email,
+      //   code: body.code,
+      //   type: body.type,
+      //   expiresAt: body.expiresAt,
+      // },
     });
   }
 }

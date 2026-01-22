@@ -1,5 +1,6 @@
 import { Prisma } from "@/generated/prisma/client";
 import { JsonWebTokenError, TokenExpiredError } from "@nestjs/jwt";
+import { randomInt } from "crypto";
 import { Request } from "express";
 
 // Prisma errors
@@ -29,4 +30,12 @@ export function extractTokenFromHeader(request: Request): string | undefined {
 // Extract API key from header
 export function extractApiKeyFromHeader(request: Request): string | string[] | undefined {
   return request.headers['x-api-key'];
+}
+
+// Generate otp code
+export function generateOtpCode(): string {
+  // 6 chữ số
+  // min <= n < max
+  // -> n có thể là 100000, 100001, ..., 999999
+  return randomInt(100000, 1000000).toString();
 }

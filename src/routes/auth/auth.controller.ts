@@ -1,10 +1,10 @@
+import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/auth.dto';
 import { AuthService } from '@/routes/auth/auth.service';
 import { AuthConditionKey, AuthKey, REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { Auth } from '@/shared/decorators/auth.decorator';
 import { TokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
 import { ZodSerializerDto } from 'nestjs-zod';
-import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO } from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -41,5 +41,10 @@ export class AuthController {
     const userId = req[REQUEST_USER_KEY].userId;
     console.log('User ID: ', userId);
     return this.authService.getMe(userId);
+  }
+
+  @Post('otp')
+  sendOtp(@Body() body: SendOtpBodyDTO) {
+    return this.authService.sendOtp(body);
   }
 }

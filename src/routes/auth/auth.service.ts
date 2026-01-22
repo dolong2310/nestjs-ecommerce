@@ -1,15 +1,20 @@
 import { RolesService } from '@/routes/auth/roles.service';
-import { isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType } from './auth.model';
-import { AuthRepository } from './auth.repo';
+import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
+import { AuthRepository } from '@/routes/auth/auth.repo';
+import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
+import envConfig from '@/shared/config';
+import { addMilliseconds } from 'date-fns';
+import ms, { StringValue } from 'ms';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly hashingService: HashingService,
+    private readonly sharedUserRepository: SharedUserRepository,
     private readonly authRepository: AuthRepository,
     private readonly tokenService: TokenService,
     private readonly rolesService: RolesService
@@ -155,6 +160,34 @@ export class AuthService {
         }]);
       }
 
+      throw error;
+    }
+  }
+
+  async sendOtp(body: SendOtpBodyType) {
+    try {
+      // 1. Check email exists in database
+      const user = await this.sharedUserRepository.findUnique({ email: body.email });
+      if (user) {
+        throw new BadRequestException([{
+          field: 'email',
+          message: 'Email already exists',
+        }]);
+      }
+      // 2. Create verification code
+      // 2.1 Generate OTP code
+      const otpCode = generateOtpCode();
+      // 2.2 Create OTP code in database
+      const verificationCode = await this.authRepository.createVerificationCode({
+        email: body.email,
+        code: otpCode,
+        type: body.type,
+        expiresAt: addMilliseconds(new Date(), ms(envConfig.OTP_EXPIRES_IN as StringValue)), // now + 5 minutes
+      });
+      // 3. Send OTP to email
+      // 4. Return verification code
+      return verificationCode;
+    } catch (error) {
       throw error;
     }
   }
