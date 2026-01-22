@@ -14,7 +14,8 @@ export class EmailService {
 
   sendOtp(body: { code: string, to: string | string[], subject?: string }): Promise<CreateEmailResponse> {
     // https://app.postdrop.io/ use this website for create otp template html
-    const otpTemplate = fs.readFileSync(path.join(__dirname, '..', 'email-templates', 'otp.html'), 'utf8');
+    const templatePath = path.join(__dirname, '..', 'email-templates', 'otp.html');
+    const otpTemplate = fs.readFileSync(templatePath, 'utf8');
     const subject = body.subject ?? "OTP Code";
     const sender = 'NestJS Ecommerce';
     const otpCode = body.code;
