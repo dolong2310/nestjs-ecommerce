@@ -3,6 +3,7 @@ export const REQUEST_USER_KEY = 'user';
 export const AuthKey = {
   JWT: 'jwt',
   API_KEY: 'apiKey',
+  NONE: 'none',
 } as const;
 
 export const AuthConditionKey = {

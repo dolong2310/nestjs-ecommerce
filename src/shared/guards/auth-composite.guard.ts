@@ -1,9 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { AuthType, AUTH_TYPE_KEY, AuthMetadata } from '@/shared/types/shared-auth.type';
+import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';
 import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
-import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';
+import { AUTH_TYPE_KEY, AuthMetadata, AuthType } from '@/shared/types/shared-auth.type';
+import { CanActivate, ExecutionContext, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class AuthCompositeGuard implements CanActivate {
@@ -20,17 +20,35 @@ export class AuthCompositeGuard implements CanActivate {
       context.getHandler(),
     );
 
+    console.log('metadata: ', metadata);
+
+    // No metadata = default to JWT auth (protect all routes by default)
     if (!metadata) {
-      return true; // No auth required
+      /**
+       * Use _executeGuardsAnd to execute all guards, otherwise use to JWT auth by default
+       */
+      // const guardMap: Record<Exclude<AuthType, typeof AuthKey.NONE>, CanActivate> = {
+      //   [AuthKey.JWT]: this.authGuard,
+      //   [AuthKey.API_KEY]: this.apiKeyGuard,
+      // };
+      // return this._executeGuardsAnd(Object.values(guardMap), context);
+      return this._executeGuard(this.authGuard, context);
     }
 
     const { types, options } = metadata;
     const condition = options?.condition || AuthConditionKey.AND;
 
+    // Check if public route (no auth required)
+    // Example: @Public() | @Private([AuthKey.NONE]) | @Private([])
+    if (types.length === 0 || types.includes(AuthKey.NONE)) {
+      return true; // Public route
+    }
+
     // Map auth types to guards
     const guardMap: Record<AuthType, CanActivate> = {
       [AuthKey.JWT]: this.authGuard,
       [AuthKey.API_KEY]: this.apiKeyGuard,
+      [AuthKey.NONE]: { canActivate: () => true },
     };
 
     // Get guards to execute
@@ -58,9 +76,15 @@ export class AuthCompositeGuard implements CanActivate {
       if (result) {
         return true;
       }
-      return false;
+      throw new UnauthorizedException();
     } catch (error) {
-      return false;
+      if (error instanceof HttpException) {
+        throw new UnauthorizedException([{
+          field: 'authentication',
+          message: 'Authentication required',
+        }]);
+      }
+      throw error;
     }
   }
 
@@ -74,7 +98,10 @@ export class AuthCompositeGuard implements CanActivate {
       try {
         const result = await guard.canActivate(context);
         if (!result) {
-          throw new UnauthorizedException('Authentication failed');
+          throw new UnauthorizedException([{
+            field: 'authentication',
+            message: 'Authentication required',
+          }]);
         }
       } catch (error) {
         errors.push(error);
