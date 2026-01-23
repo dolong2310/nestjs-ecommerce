@@ -155,3 +155,7 @@ export const SendOtpBodySchema = VerificationCodeSchema.pick({
   email: true,
   type: true,
 }).strict();
+
+export const SendOtpResponseSchema = VerificationCodeSchema.omit({
+  code: true,
+});
