@@ -202,7 +202,7 @@ model Device {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  lastActiveAt DateTime @default(now()) // updatedAt sửa lại thành lastActiveAt nếu muốn rõ ngữ nghĩa hơn
+  lastActiveAt DateTime @updatedAt // updatedAt sửa lại thành lastActiveAt nếu muốn rõ ngữ nghĩa hơn
 
   refreshTokens RefreshToken[] // liên kết 1-n với RefreshToken
 }
