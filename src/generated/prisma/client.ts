@@ -63,6 +63,11 @@ export type VerificationCode = Prisma.VerificationCodeModel
  */
 export type RefreshToken = Prisma.RefreshTokenModel
 /**
+ * Model Device
+ * 
+ */
+export type Device = Prisma.DeviceModel
+/**
  * Model Permission
  * 
  */

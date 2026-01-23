@@ -56,6 +56,7 @@ export const ModelName = {
   UserTranslation: 'UserTranslation',
   VerificationCode: 'VerificationCode',
   RefreshToken: 'RefreshToken',
+  Device: 'Device',
   Permission: 'Permission',
   Role: 'Role',
   Product: 'Product',
@@ -156,11 +157,25 @@ export type VerificationCodeScalarFieldEnum = (typeof VerificationCodeScalarFiel
 export const RefreshTokenScalarFieldEnum = {
   token: 'token',
   userId: 'userId',
+  deviceId: 'deviceId',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt'
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const DeviceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  userAgent: 'userAgent',
+  ip: 'ip',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  lastActiveAt: 'lastActiveAt'
+} as const
+
+export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]
 
 
 export const PermissionScalarFieldEnum = {

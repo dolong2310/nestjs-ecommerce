@@ -23,6 +23,48 @@ export const GetMeResponseSchema = UserSchema.omit({
 export type GetMeResponseType = z.infer<typeof GetMeResponseSchema>;
 
 //////////////////////////////////////////
+// DEVICE
+//////////////////////////////////////////
+export const DeviceSchema = z.object({
+  id: z.number(),
+  userId: z.number(),
+  userAgent: z.string(),
+  ip: z.string(),
+  isActive: z.boolean().default(true),
+  lastActiveAt: z.date().default(new Date()),
+  createdAt: z.date().default(new Date()),
+});
+
+export type DeviceType = z.infer<typeof DeviceSchema>;
+
+export const CreateDeviceBodySchema = DeviceSchema.pick({
+  userId: true,
+  userAgent: true,
+  ip: true,
+  // isActive: true,
+  // lastActiveAt: true,
+}).strict();
+
+export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> & Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
+
+//////////////////////////////////////////
+// ROLE
+//////////////////////////////////////////
+export const RoleSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  description: z.string(),
+  isActive: z.boolean().default(true),
+  createdById: z.number().optional(),
+  updatedById: z.number().optional(),
+  deletedAt: z.date().nullable(),
+  createdAt: z.date().default(new Date()),
+  updatedAt: z.date().default(new Date()),
+});
+
+export type RoleType = z.infer<typeof RoleSchema>;
+
+//////////////////////////////////////////
 // REGISTER
 //////////////////////////////////////////
 export const RegisterBodySchema = UserSchema.pick({
@@ -81,6 +123,7 @@ export type LogoutBodyType = z.infer<typeof LogoutBodySchema>;
 export const RefreshTokenSchema = z.object({
   token: z.string().min(1).max(1000),
   userId: z.number(),
+  deviceId: z.number(),
   expiresAt: z.date(),
   createdAt: z.date(),
 });
@@ -90,6 +133,7 @@ export type RefreshTokenType = z.infer<typeof RefreshTokenSchema>;
 export const CreateRefreshTokenBodySchema = RefreshTokenSchema.pick({
   userId: true,
   token: true,
+  deviceId: true,
   expiresAt: true,
 }).strict();
 

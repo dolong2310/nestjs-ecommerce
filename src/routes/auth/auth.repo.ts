@@ -1,4 +1,4 @@
-import { CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, RefreshTokenType, RegisterBodyType, VerificationCodeType } from "@/routes/auth/auth.model";
+import { CreateDeviceBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, DeviceType, RefreshTokenType, RegisterBodyType, RoleType, VerificationCodeType } from "@/routes/auth/auth.model";
 import { EnumVerificationCodeType } from "@/shared/constants/auth.constant";
 import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";
@@ -25,12 +25,6 @@ export class AuthRepository {
     });
   }
 
-  findUserByEmail(email: string): Promise<UserType | null> {
-    return this.prismaService.user.findUnique({
-      where: { email },
-    });
-  }
-
   findUserById(id: number): Promise<Omit<UserType, 'password' | 'totpSecret'> | null> {
     return this.prismaService.user.findUnique({
       where: { id },
@@ -44,8 +38,9 @@ export class AuthRepository {
   createRefreshToken(body: CreateRefreshTokenBodyType): Promise<CreateRefreshTokenResponseType> {
     return this.prismaService.refreshToken.create({
       data: {
-        userId: body.userId,
         token: body.token,
+        userId: body.userId,
+        deviceId: body.deviceId,
         expiresAt: body.expiresAt,
       },
     });
@@ -95,6 +90,33 @@ export class AuthRepository {
   deleteVerificationCode(id: number): Promise<VerificationCodeType> {
     return this.prismaService.verificationCode.delete({
       where: { id },
+    });
+  }
+
+  createDevice(body: CreateDeviceBodyType): Promise<DeviceType> {
+    return this.prismaService.device.create({
+      data: body,
+    });
+  }
+
+  findDeviceUnique(uniqueInput: { id: number }): Promise<DeviceType | null> {
+    return this.prismaService.device.findUnique({
+      where: uniqueInput,
+    });
+  }
+
+  findUserUniqueIncludeRole(uniqueInput: { id: number } | { email: string }): Promise<(UserType & { role: RoleType }) | null> {
+    return this.prismaService.user.findUnique({
+      where: uniqueInput,
+      include: {
+        role: true,
+      },
+    }) as Promise<(UserType & { role: RoleType }) | null>;
+  }
+
+  findRoleUnique(uniqueInput: { id: number } | { name: string }) {
+    return this.prismaService.role.findUnique({
+      where: uniqueInput,
     });
   }
 }

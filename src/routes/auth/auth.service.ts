@@ -1,4 +1,4 @@
-import { GetMeResponseType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
+import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
 import { AuthRepository } from '@/routes/auth/auth.repo';
 import { RolesService } from '@/routes/auth/roles.service';
 import envConfig from '@/shared/config';
@@ -8,6 +8,7 @@ import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { EmailService } from '@/shared/services/email.service';
 import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
+import { AccessTokenPayloadCreate } from '@/shared/types/jwt.type';
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { addMilliseconds } from 'date-fns';
 import ms, { StringValue } from 'ms';
@@ -86,9 +87,11 @@ export class AuthService {
     }
   }
 
-  async login(body: LoginBodyType): Promise<LoginResponseType> {
+  async login(body: LoginBodyType & { ip: string, userAgent: string }): Promise<LoginResponseType> {
     try {
-      const user = await this.authRepository.findUserByEmail(body.email)
+      // 1. Check email exists in database
+      const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email });
+      // const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (!user) {
         throw new NotFoundException([{
@@ -97,6 +100,7 @@ export class AuthService {
         }]);
       }
 
+      // 2. Check password is correct
       const comparePassword = await this.hashingService.compare(body.password, user.password);
 
       if (!comparePassword) {
@@ -106,8 +110,34 @@ export class AuthService {
         }]);
       }
 
-      const tokens = await this._generateTokens({ userId: user.id });
+      // 3. Create device
+      const device = await this.authRepository.createDevice({
+        userId: user.id,
+        userAgent: body.userAgent,
+        ip: body.ip,
+      });
 
+      if (!device) {
+        throw new BadRequestException([{
+          field: 'device',
+          message: 'Failed to create device',
+        }]);
+      }
+
+      // 4. Get role name
+      // const role = await this.authRepository.findRoleUnique({ id: user.roleId });
+
+      // if (!role) {
+      //   throw new NotFoundException([{
+      //     field: 'role',
+      //     message: 'Role not found',
+      //   }]);
+      // }
+
+      // 5. Generate tokens
+      const tokens = await this._generateTokens({ userId: user.id, deviceId: device.id, roleId: user.roleId, roleName: user.role.name });
+
+      // 6. Return tokens
       return tokens;
     } catch (error) {
       throw error;
@@ -132,10 +162,11 @@ export class AuthService {
     }
   }
 
-  async refreshToken(body: RefreshJwtTokenBodyType): Promise<RefreshJwtTokenResponseType> {
+  async refreshToken(body: RefreshJwtTokenBodyType & { ip: string, userAgent: string }): Promise<RefreshJwtTokenResponseType> {
     try {
-      // Find refresh token in database
+      // 1. Find refresh token in database
       const refreshToken = await this.authRepository.findRefreshTokenByToken(body.refreshToken);
+
       if (!refreshToken) {
         throw new NotFoundException([{
           field: 'refreshToken',
@@ -143,15 +174,36 @@ export class AuthService {
         }]);
       }
 
-      // Delete refresh token from database
-      await this.authRepository.deleteRefreshToken(body.refreshToken);
+      // 2. Find device in database
+      const device = await this.authRepository.findDeviceUnique({ id: refreshToken.deviceId });
 
-      // Decode refresh token get user id
+      if (!device) {
+        throw new NotFoundException([{
+          field: 'device',
+          message: 'Device not found',
+        }]);
+      }
+
+      // 3. Decode refresh token get user id
       const decodedRefreshToken = await this.tokenService.verifyRefreshToken(body.refreshToken);
 
-      // Generate new tokens
-      const tokens = await this._generateTokens({ userId: decodedRefreshToken.userId });
+      // 4. Find user in database
+      const user = await this.authRepository.findUserUniqueIncludeRole({ id: decodedRefreshToken.userId });
 
+      if (!user) {
+        throw new NotFoundException([{
+          field: 'user',
+          message: 'User not found',
+        }]);
+      }
+
+      // 5. Generate new tokens
+      const tokens = await this._generateTokens({ userId: user.id, deviceId: refreshToken.deviceId, roleId: user.roleId, roleName: user.role.name });
+
+      // 6. Delete refresh token from database
+      await this.authRepository.deleteRefreshToken(body.refreshToken);
+
+      // 7. Return tokens
       return tokens;
     } catch (error) {
       // Handle JWT errors
@@ -183,7 +235,8 @@ export class AuthService {
 
   async getMe(userId: number): Promise<GetMeResponseType> {
     try {
-      const user = await this.authRepository.findUserById(userId);
+      // TODO: omit password and totpSecret in type
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
         throw new NotFoundException([{
@@ -244,19 +297,21 @@ export class AuthService {
     }
   }
 
-  private async _generateTokens(payload: { userId: number }) {
+  private async _generateTokens(payload: AccessTokenPayloadCreate): Promise<JwtTokenType> {
+    const { userId, deviceId, roleId, roleName } = payload;
     // Generate tokens
     const [accessToken, refreshToken] = await Promise.all([
-      this.tokenService.signAccessToken(payload),
-      this.tokenService.signRefreshToken(payload),
+      this.tokenService.signAccessToken({ userId, deviceId, roleId, roleName }),
+      this.tokenService.signRefreshToken({ userId }),
     ]);
     // Verify refresh token
     const decodedRefreshToken = await this.tokenService.verifyRefreshToken(refreshToken);
     const expiresAt = new Date(decodedRefreshToken.exp * 1000);
     // Save refresh token to database
     await this.authRepository.createRefreshToken({
-      userId: payload.userId,
       token: refreshToken,
+      userId,
+      deviceId,
       expiresAt,
     });
 

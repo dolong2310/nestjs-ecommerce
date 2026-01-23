@@ -5,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "cjs"
   generatedFileExtension = "ts"
 }
 
@@ -90,6 +90,7 @@ model User {
   role   Role @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   refreshTokens RefreshToken[]
+  devices       Device[] // liên kết 1-n với Device
   carts         CartItem[]
   orders        Order[]
   reviews       Review[]
@@ -178,15 +179,32 @@ model VerificationCode {
 }
 
 model RefreshToken {
-  token  String @unique @db.VarChar(1000)
-  userId Int
+  token    String @unique @db.VarChar(1000)
+  userId   Int
+  deviceId Int // Foreign key to Device model
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  device Device @relation(fields: [deviceId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   expiresAt DateTime
   createdAt DateTime @default(now())
 
   @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các refresh token đã hết hạn
+}
+
+model Device {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  userAgent String
+  ip        String
+  isActive  Boolean  @default(true) // Trạng thái thiết bị (đang login hay đã logout)
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  lastActiveAt DateTime @default(now()) // updatedAt sửa lại thành lastActiveAt nếu muốn rõ ngữ nghĩa hơn
+
+  refreshTokens RefreshToken[] // liên kết 1-n với RefreshToken
 }
 
 model Permission {
@@ -207,7 +225,7 @@ model Permission {
   updatedAt DateTime  @updatedAt
 
   roles Role[] // PermissionsRoles[] - Implicit many-to-many (Prisma tự động tạo bảng _PermissionToRole)
-  
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
 }
@@ -230,7 +248,7 @@ model Role {
 
   users       User[]
   permissions Permission[] // PermissionsRoles[] - Implicit many-to-many (Prisma tự động tạo bảng _PermissionToRole)
-  
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
 }
@@ -263,7 +281,7 @@ model Product {
   skus                SKU[]
   reviews             Review[]
   categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
-  
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
 }
@@ -308,7 +326,7 @@ model Category {
 
   categoryTranslations CategoryTranslation[]
   products             Product[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
-  
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
 }
@@ -372,7 +390,7 @@ model VariantOption {
   updatedAt DateTime  @updatedAt
 
   skus SKU[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
-  
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // skusVariantOptions SkusVariantOptions[]
 }
@@ -397,11 +415,11 @@ model SKU {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
-  variantOptions      VariantOption[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
-  
+  variantOptions VariantOption[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
+
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // skusVariantOptions SkusVariantOptions[]
-  
+
   cartItems           CartItem[]
   productSKUSnapshots ProductSKUSnapshot[]
 }
