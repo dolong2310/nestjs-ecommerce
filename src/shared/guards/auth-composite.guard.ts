@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthType, AUTH_TYPE_KEY, AuthMetadata } from '@/shared/types/auth.type';
+import { AuthType, AUTH_TYPE_KEY, AuthMetadata } from '@/shared/types/shared-auth.type';
 import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';

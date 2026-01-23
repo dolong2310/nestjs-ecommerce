@@ -10,8 +10,6 @@ export const JwtTokenSchema = z.object({
   refreshToken: z.string().min(1).max(1000),
 });
 
-export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
-
 //////////////////////////////////////////
 // GET ME
 //////////////////////////////////////////
@@ -19,8 +17,6 @@ export const GetMeResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
 });
-
-export type GetMeResponseType = z.infer<typeof GetMeResponseSchema>;
 
 //////////////////////////////////////////
 // DEVICE
@@ -35,8 +31,6 @@ export const DeviceSchema = z.object({
   createdAt: z.date().default(new Date()),
 });
 
-export type DeviceType = z.infer<typeof DeviceSchema>;
-
 export const CreateDeviceBodySchema = DeviceSchema.pick({
   userId: true,
   userAgent: true,
@@ -44,8 +38,6 @@ export const CreateDeviceBodySchema = DeviceSchema.pick({
   // isActive: true,
   // lastActiveAt: true,
 }).strict();
-
-export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> & Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
 
 //////////////////////////////////////////
 // ROLE
@@ -61,8 +53,6 @@ export const RoleSchema = z.object({
   createdAt: z.date().default(new Date()),
   updatedAt: z.date().default(new Date()),
 });
-
-export type RoleType = z.infer<typeof RoleSchema>;
 
 //////////////////////////////////////////
 // REGISTER
@@ -85,14 +75,10 @@ export const RegisterBodySchema = UserSchema.pick({
   }
 });
 
-export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
-
 export const RegisterResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
 });
-
-export type RegisterResponseType = z.infer<typeof RegisterResponseSchema>;
 
 //////////////////////////////////////////
 // LOGIN
@@ -102,11 +88,7 @@ export const LoginBodySchema = UserSchema.pick({
   password: true,
 }).strict();
 
-export type LoginBodyType = z.infer<typeof LoginBodySchema>;
-
 export const LoginResponseSchema = JwtTokenSchema;
-
-export type LoginResponseType = z.infer<typeof LoginResponseSchema>;
 
 //////////////////////////////////////////
 // LOGOUT
@@ -114,8 +96,6 @@ export type LoginResponseType = z.infer<typeof LoginResponseSchema>;
 export const LogoutBodySchema = JwtTokenSchema.pick({
   refreshToken: true,
 }).strict();
-
-export type LogoutBodyType = z.infer<typeof LogoutBodySchema>;
 
 //////////////////////////////////////////
 // REFRESH TOKEN
@@ -128,8 +108,9 @@ export const RefreshTokenSchema = z.object({
   createdAt: z.date(),
 });
 
-export type RefreshTokenType = z.infer<typeof RefreshTokenSchema>;
-
+//////////////////////////////////////////
+// CREATE REFRESH TOKEN
+//////////////////////////////////////////
 export const CreateRefreshTokenBodySchema = RefreshTokenSchema.pick({
   userId: true,
   token: true,
@@ -137,21 +118,16 @@ export const CreateRefreshTokenBodySchema = RefreshTokenSchema.pick({
   expiresAt: true,
 }).strict();
 
-export type CreateRefreshTokenBodyType = z.infer<typeof CreateRefreshTokenBodySchema>;
-
 export const CreateRefreshTokenResponseSchema = RefreshTokenSchema;
 
-export type CreateRefreshTokenResponseType = z.infer<typeof CreateRefreshTokenResponseSchema>;
-
+//////////////////////////////////////////
+// REFRESH JWT TOKEN
+//////////////////////////////////////////
 export const RefreshJwtTokenBodySchema = JwtTokenSchema.pick({
   refreshToken: true,
 }).strict();
 
-export type RefreshJwtTokenBodyType = z.infer<typeof RefreshJwtTokenBodySchema>;
-
 export const RefreshJwtTokenResponseSchema = JwtTokenSchema;
-
-export type RefreshJwtTokenResponseType = z.infer<typeof RefreshJwtTokenResponseSchema>;
 
 //////////////////////////////////////////
 // VERIFICATION CODE
@@ -165,16 +141,12 @@ export const VerificationCodeSchema = z.object({
   createdAt: z.date(),
 });
 
-export type VerificationCodeType = z.infer<typeof VerificationCodeSchema>;
-
 export const CreateVerificationCodeBodySchema = VerificationCodeSchema.pick({
   email: true,
   code: true,
   type: true,
   expiresAt: true,
 }).strict();
-
-export type CreateVerificationCodeBodyType = z.infer<typeof CreateVerificationCodeBodySchema>;
 
 //////////////////////////////////////////
 // SEND OTP
@@ -183,5 +155,3 @@ export const SendOtpBodySchema = VerificationCodeSchema.pick({
   email: true,
   type: true,
 }).strict();
-
-export type SendOtpBodyType = z.infer<typeof SendOtpBodySchema>;

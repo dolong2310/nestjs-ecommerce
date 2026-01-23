@@ -1,4 +1,4 @@
-import { CreateDeviceBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, DeviceType, RefreshTokenType, RegisterBodyType, RoleType, VerificationCodeType } from "@/routes/auth/auth.model";
+import { CreateDeviceBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, DeviceType, RefreshTokenType, RegisterBodyType, RoleType, VerificationCodeType } from "@/routes/auth/auth.type";
 import { EnumVerificationCodeType } from "@/shared/constants/auth.constant";
 import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";

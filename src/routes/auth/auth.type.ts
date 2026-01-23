@@ -1,0 +1,21 @@
+import { CreateDeviceBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, CreateVerificationCodeBodySchema, DeviceSchema, GetMeResponseSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema, VerificationCodeSchema } from "@/routes/auth/auth.model";
+import z from "zod";
+
+export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
+export type GetMeResponseType = z.infer<typeof GetMeResponseSchema>;
+export type DeviceType = z.infer<typeof DeviceSchema>;
+export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> & Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
+export type RoleType = z.infer<typeof RoleSchema>;
+export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
+export type RegisterResponseType = z.infer<typeof RegisterResponseSchema>;
+export type LoginBodyType = z.infer<typeof LoginBodySchema>;
+export type LoginResponseType = z.infer<typeof LoginResponseSchema>;
+export type LogoutBodyType = z.infer<typeof LogoutBodySchema>;
+export type RefreshTokenType = z.infer<typeof RefreshTokenSchema>;
+export type CreateRefreshTokenBodyType = z.infer<typeof CreateRefreshTokenBodySchema>;
+export type CreateRefreshTokenResponseType = z.infer<typeof CreateRefreshTokenResponseSchema>;
+export type RefreshJwtTokenBodyType = z.infer<typeof RefreshJwtTokenBodySchema>;
+export type RefreshJwtTokenResponseType = z.infer<typeof RefreshJwtTokenResponseSchema>;
+export type VerificationCodeType = z.infer<typeof VerificationCodeSchema>;
+export type CreateVerificationCodeBodyType = z.infer<typeof CreateVerificationCodeBodySchema>;
+export type SendOtpBodyType = z.infer<typeof SendOtpBodySchema>;

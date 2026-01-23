@@ -1,5 +1,5 @@
-import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.model';
 import { AuthRepository } from '@/routes/auth/auth.repo';
+import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.type';
 import { RolesService } from '@/routes/auth/roles.service';
 import envConfig from '@/shared/config';
 import { EnumVerificationCode } from '@/shared/constants/auth.constant';

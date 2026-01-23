@@ -1,5 +1,5 @@
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
-import { AUTH_TYPE_KEY, AuthMetadata, AuthOptions, AuthType } from '@/shared/types/auth.type';
+import { AUTH_TYPE_KEY, AuthMetadata, AuthOptions, AuthType } from '@/shared/types/shared-auth.type';
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 
 export function Auth(
