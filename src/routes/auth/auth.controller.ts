@@ -1,4 +1,4 @@
-import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO, SendOtpResponseDTO } from '@/routes/auth/auth.dto';
+import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/auth.dto';
 import { AuthService } from '@/routes/auth/auth.service';
 import { AuthConditionKey, AuthKey, REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { Auth } from '@/shared/decorators/auth.decorator';
@@ -47,8 +47,8 @@ export class AuthController {
   }
 
   @Post('otp')
-  @ZodSerializerDto(SendOtpResponseDTO)
-  sendOtp(@Body() body: SendOtpBodyDTO): Promise<SendOtpResponseDTO> {
+  @ZodSerializerDto(MessageResponseDTO)
+  sendOtp(@Body() body: SendOtpBodyDTO): Promise<MessageResponseDTO> {
     const { email, type } = body; // be explicit
     return this.authService.sendOtp({ email, type });
   }

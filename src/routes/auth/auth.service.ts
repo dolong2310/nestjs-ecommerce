@@ -265,7 +265,7 @@ export class AuthService {
     }
   }
 
-  async sendOtp(body: SendOtpBodyType) {
+  async sendOtp(body: SendOtpBodyType): Promise<MessageResponseType> {
     try {
       // 1. Check email exists in database
       const user = await this.sharedUserRepository.findUnique({ email: body.email });
@@ -308,8 +308,8 @@ export class AuthService {
         }]);
       }
 
-      // 5. Return verification code (omit code, because user must get code from email)
-      return verificationCode;
+      // 5. Do not return verification code, because user must get code from email
+      return { message: 'OTP code has been sent to email' };
     } catch (error) {
       throw error;
     }

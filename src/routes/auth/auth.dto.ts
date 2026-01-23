@@ -1,4 +1,4 @@
-import { GetMeResponseSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RegisterBodySchema, RegisterResponseSchema, SendOtpBodySchema, SendOtpResponseSchema } from '@/routes/auth/auth.model';
+import { GetMeResponseSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RegisterBodySchema, RegisterResponseSchema, SendOtpBodySchema } from '@/routes/auth/auth.model';
 import { createZodDto } from 'nestjs-zod';
 
 export class RegisterBodyDTO extends createZodDto(RegisterBodySchema) { }
@@ -10,4 +10,3 @@ export class GetMeResponseDTO extends createZodDto(GetMeResponseSchema) { }
 export class RefreshJwtTokenBodyDTO extends createZodDto(RefreshJwtTokenBodySchema) { }
 export class RefreshJwtTokenResponseDTO extends createZodDto(RefreshJwtTokenResponseSchema) { }
 export class SendOtpBodyDTO extends createZodDto(SendOtpBodySchema) { }
-export class SendOtpResponseDTO extends createZodDto(SendOtpResponseSchema) { }
