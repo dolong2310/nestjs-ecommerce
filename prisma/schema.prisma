@@ -28,7 +28,7 @@ enum OrderStatus {
   CANCELLED
 }
 
-enum VerificationCodeType {
+enum OtpCodeType {
   REGISTER
   FORGOT_PASSWORD
 }
@@ -165,17 +165,17 @@ model UserTranslation {
   updatedAt DateTime  @updatedAt
 }
 
-model VerificationCode {
+model OtpCode {
   id    Int                  @id @default(autoincrement())
   email String               @unique @db.VarChar(500)
   code  String               @db.VarChar(50)
-  type  VerificationCodeType // REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu
+  type  OtpCodeType // REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu
 
   expiresAt DateTime
   createdAt DateTime @default(now())
 
   @@index([email, code, type])
-  @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các verification code đã hết hạn
+  @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các otp code đã hết hạn
 }
 
 model RefreshToken {

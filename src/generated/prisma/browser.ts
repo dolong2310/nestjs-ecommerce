@@ -33,10 +33,10 @@ export type User = Prisma.UserModel
  */
 export type UserTranslation = Prisma.UserTranslationModel
 /**
- * Model VerificationCode
+ * Model OtpCode
  * 
  */
-export type VerificationCode = Prisma.VerificationCodeModel
+export type OtpCode = Prisma.OtpCodeModel
 /**
  * Model RefreshToken
  * 

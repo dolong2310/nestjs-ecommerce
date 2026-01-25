@@ -11,7 +11,7 @@
 export type * from './models/Language.js'
 export type * from './models/User.js'
 export type * from './models/UserTranslation.js'
-export type * from './models/VerificationCode.js'
+export type * from './models/OtpCode.js'
 export type * from './models/RefreshToken.js'
 export type * from './models/Device.js'
 export type * from './models/Permission.js'

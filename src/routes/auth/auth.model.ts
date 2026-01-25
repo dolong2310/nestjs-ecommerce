@@ -1,4 +1,4 @@
-import { EnumVerificationCode } from "@/shared/constants/auth.constant";
+import { EnumOtpCode } from "@/shared/constants/auth.constant";
 import { UserSchema } from "@/shared/models/shared-user.model";
 import z from "zod";
 
@@ -130,18 +130,18 @@ export const RefreshJwtTokenBodySchema = JwtTokenSchema.pick({
 export const RefreshJwtTokenResponseSchema = JwtTokenSchema;
 
 //////////////////////////////////////////
-// VERIFICATION CODE
+// OTP CODE
 //////////////////////////////////////////
-export const VerificationCodeSchema = z.object({
+export const OtpCodeSchema = z.object({
   id: z.number(),
   email: z.email(),
   code: z.string().length(6),
-  type: z.enum(EnumVerificationCode),
+  type: z.enum(EnumOtpCode),
   expiresAt: z.date(),
   createdAt: z.date(),
 });
 
-export const CreateVerificationCodeBodySchema = VerificationCodeSchema.pick({
+export const CreateOtpCodeBodySchema = OtpCodeSchema.pick({
   email: true,
   code: true,
   type: true,
@@ -151,7 +151,7 @@ export const CreateVerificationCodeBodySchema = VerificationCodeSchema.pick({
 //////////////////////////////////////////
 // SEND OTP
 //////////////////////////////////////////
-export const SendOtpBodySchema = VerificationCodeSchema.pick({
+export const SendOtpBodySchema = OtpCodeSchema.pick({
   email: true,
   type: true,
 }).strict();

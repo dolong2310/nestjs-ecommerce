@@ -1,5 +1,5 @@
-import { CreateDeviceBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, CreateVerificationCodeBodyType, DeviceType, RefreshTokenType, RegisterBodyType, RoleType, VerificationCodeType } from "@/routes/auth/auth.type";
-import { EnumVerificationCodeType } from "@/shared/constants/auth.constant";
+import { CreateDeviceBodyType, CreateOtpCodeBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, DeviceType, OtpCodeType, RefreshTokenType, RegisterBodyType, RoleType } from "@/routes/auth/auth.type";
+import { EnumOtpCodeType } from "@/shared/constants/auth.constant";
 import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";
 import { Injectable } from "@nestjs/common";
@@ -94,11 +94,11 @@ export class AuthRepository {
     });
   }
 
-  // Verification Code
-  createVerificationCode(body: CreateVerificationCodeBodyType): Promise<Omit<VerificationCodeType, 'code'>> {
+  // Otp Code
+  createOtpCode(body: CreateOtpCodeBodyType): Promise<Omit<OtpCodeType, 'code'>> {
     // upsert là nếu chưa có thì tạo mới hoặc có rồi thì cập nhật
-    // email là unique nên chỉ có thể có 1 verification code cho 1 email (không thể tạo thêm -> auto throw error)
-    return this.prismaService.verificationCode.upsert({
+    // email là unique nên chỉ có thể có 1 otp code cho 1 email (không thể tạo thêm -> auto throw error)
+    return this.prismaService.otpCode.upsert({
       where: {
         email: body.email,
       },
@@ -107,7 +107,7 @@ export class AuthRepository {
         code: body.code,
         expiresAt: body.expiresAt,
       },
-      // Tạo thêm verification code cho email đó -> sai vì email là unique
+      // Tạo thêm otp code cho email đó -> sai vì email là unique
       // data: {
       //   email: body.email,
       //   code: body.code,
@@ -117,15 +117,15 @@ export class AuthRepository {
     });
   }
 
-  findUniqueVerificationCode(uniqueInput: { email: string } | { id: number } | { email: string, code: string, type: EnumVerificationCodeType }): Promise<VerificationCodeType | null> {
+  findUniqueOtpCode(uniqueInput: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType | null> {
     // query theo "email" hoặc "id" hoặc "email, code, type" vì được đánh index
-    return this.prismaService.verificationCode.findUnique({
+    return this.prismaService.otpCode.findUnique({
       where: uniqueInput,
     })
   }
 
-  deleteVerificationCode(uniqueInput: { id: number }): Promise<VerificationCodeType> {
-    return this.prismaService.verificationCode.delete({
+  deleteOtpCode(uniqueInput: { id: number }): Promise<OtpCodeType> {
+    return this.prismaService.otpCode.delete({
       where: uniqueInput,
     });
   }

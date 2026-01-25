@@ -1,4 +1,4 @@
-import { CreateDeviceBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, CreateVerificationCodeBodySchema, DeviceSchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema, VerificationCodeSchema } from "@/routes/auth/auth.model";
+import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema } from "@/routes/auth/auth.model";
 import z from "zod";
 
 export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
@@ -16,8 +16,8 @@ export type CreateRefreshTokenBodyType = z.infer<typeof CreateRefreshTokenBodySc
 export type CreateRefreshTokenResponseType = z.infer<typeof CreateRefreshTokenResponseSchema>;
 export type RefreshJwtTokenBodyType = z.infer<typeof RefreshJwtTokenBodySchema>;
 export type RefreshJwtTokenResponseType = z.infer<typeof RefreshJwtTokenResponseSchema>;
-export type VerificationCodeType = z.infer<typeof VerificationCodeSchema>;
-export type CreateVerificationCodeBodyType = z.infer<typeof CreateVerificationCodeBodySchema>;
+export type OtpCodeType = z.infer<typeof OtpCodeSchema>;
+export type CreateOtpCodeBodyType = z.infer<typeof CreateOtpCodeBodySchema>;
 export type SendOtpBodyType = z.infer<typeof SendOtpBodySchema>;
 export type GoogleAuthStateType = z.infer<typeof GoogleAuthStateSchema>;
 export type GoogleAuthResponseType = z.infer<typeof GoogleAuthResponseSchema>;

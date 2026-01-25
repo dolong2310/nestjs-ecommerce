@@ -2,7 +2,7 @@ import { AuthRepository } from '@/routes/auth/auth.repo';
 import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.type';
 import { RolesService } from '@/routes/auth/roles.service';
 import envConfig from '@/shared/config';
-import { EnumVerificationCode } from '@/shared/constants/auth.constant';
+import { EnumOtpCode } from '@/shared/constants/auth.constant';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { EmailService } from '@/shared/services/email.service';
@@ -37,20 +37,20 @@ export class AuthService {
     // 8. Return user (successfully registered)
     try {
       // 1. Check OTP code
-      const verificationCode = await this.authRepository.findUniqueVerificationCode({
+      const otpCode = await this.authRepository.findUniqueOtpCode({
         email: body.email,
         code: body.code,
-        type: EnumVerificationCode.REGISTER,
+        type: EnumOtpCode.REGISTER,
       });
 
-      if (!verificationCode) {
+      if (!otpCode) {
         throw new BadRequestException([{
           field: 'code',
           message: 'Invalid OTP code',
         }]);
       }
 
-      if (verificationCode.expiresAt < new Date()) {
+      if (otpCode.expiresAt < new Date()) {
         throw new BadRequestException([{
           field: 'code',
           message: 'OTP code has expired',
@@ -75,7 +75,7 @@ export class AuthService {
       });
 
       // 3. Delete OTP code
-      await this.authRepository.deleteVerificationCode({ id: verificationCode.id });
+      await this.authRepository.deleteOtpCode({ id: otpCode.id });
 
       // 4. Return user (successfully registered)
       return user;
@@ -293,38 +293,38 @@ export class AuthService {
         }]);
       }
 
-      // 2. Create verification code
+      // 2. Create otp code
       // 2.1 Generate OTP code
-      const otpCode = generateOtpCode();
+      const generatedOtpCode = generateOtpCode();
 
       // 2.2 Create OTP code in database
-      const verificationCodePromise = this.authRepository.createVerificationCode({
+      const otpCodePromise = this.authRepository.createOtpCode({
         email: body.email,
-        code: otpCode,
+        code: generatedOtpCode,
         type: body.type,
         expiresAt: addMilliseconds(new Date(), ms(envConfig.OTP_EXPIRES_IN as StringValue)), // now + 5 minutes
       });
 
       // 3. Send OTP to email
       const sendOtpPromise = this.emailService.sendOtp({
-        code: otpCode,
+        code: generatedOtpCode,
         to: body.email,
         subject: 'OTP Code',
       })
 
       // 4. Execute promises
-      const [verificationCode, { error: emailError }] = await Promise.all([verificationCodePromise, sendOtpPromise]);
+      const [otpCode, { error: emailError }] = await Promise.all([otpCodePromise, sendOtpPromise]);
 
       if (emailError) {
         // Delete OTP code
-        await this.authRepository.deleteVerificationCode({ id: verificationCode.id });
+        await this.authRepository.deleteOtpCode({ id: otpCode.id });
         throw new BadRequestException([{
           field: 'code',
           message: 'Failed to send OTP code',
         }]);
       }
 
-      // 5. Do not return verification code, because user must get code from email
+      // 5. Do not return otp code, because user must get code from email
       return { message: 'OTP code has been sent to email' };
     } catch (error) {
       throw error;

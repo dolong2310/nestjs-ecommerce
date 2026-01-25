@@ -17,9 +17,9 @@ export const EnumUserStatus = {
   BLOCKED: 'BLOCKED',
 } as const;
 
-export const EnumVerificationCode = {
+export const EnumOtpCode = {
   REGISTER: 'REGISTER',
   FORGOT_PASSWORD: 'FORGOT_PASSWORD',
 } as const;
 
-export type EnumVerificationCodeType = (typeof EnumVerificationCode)[keyof typeof EnumVerificationCode];
+export type EnumOtpCodeType = (typeof EnumOtpCode)[keyof typeof EnumOtpCode];

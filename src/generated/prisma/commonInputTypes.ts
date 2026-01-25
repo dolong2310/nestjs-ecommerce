@@ -206,21 +206,21 @@ export type EnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserStatusFilter<$PrismaModel>
 }
 
-export type EnumVerificationCodeTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.VerificationCodeType | Prisma.EnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel> | $Enums.VerificationCodeType
+export type EnumOtpCodeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OtpCodeType | Prisma.EnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel> | $Enums.OtpCodeType
 }
 
-export type EnumVerificationCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.VerificationCodeType | Prisma.EnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumVerificationCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.VerificationCodeType
+export type EnumOtpCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OtpCodeType | Prisma.EnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOtpCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.OtpCodeType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel>
 }
 
 export type BoolFilter<$PrismaModel = never> = {
@@ -502,21 +502,21 @@ export type NestedEnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumVerificationCodeTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.VerificationCodeType | Prisma.EnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel> | $Enums.VerificationCodeType
+export type NestedEnumOtpCodeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.OtpCodeType | Prisma.EnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel> | $Enums.OtpCodeType
 }
 
-export type NestedEnumVerificationCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.VerificationCodeType | Prisma.EnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.VerificationCodeType[] | Prisma.ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumVerificationCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.VerificationCodeType
+export type NestedEnumOtpCodeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.OtpCodeType | Prisma.EnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.OtpCodeType[] | Prisma.ListEnumOtpCodeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumOtpCodeTypeWithAggregatesFilter<$PrismaModel> | $Enums.OtpCodeType
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumVerificationCodeTypeFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumOtpCodeTypeFilter<$PrismaModel>
 }
 
 export type NestedBoolFilter<$PrismaModel = never> = {

@@ -387,7 +387,7 @@ export const ModelName = {
   Language: 'Language',
   User: 'User',
   UserTranslation: 'UserTranslation',
-  VerificationCode: 'VerificationCode',
+  OtpCode: 'OtpCode',
   RefreshToken: 'RefreshToken',
   Device: 'Device',
   Permission: 'Permission',
@@ -422,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "language" | "user" | "userTranslation" | "verificationCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "variant" | "variantOption" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "paymentTransaction" | "message"
+    modelProps: "language" | "user" | "userTranslation" | "otpCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "variant" | "variantOption" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "paymentTransaction" | "message"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -648,77 +648,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    VerificationCode: {
-      payload: Prisma.$VerificationCodePayload<ExtArgs>
-      fields: Prisma.VerificationCodeFieldRefs
+    OtpCode: {
+      payload: Prisma.$OtpCodePayload<ExtArgs>
+      fields: Prisma.OtpCodeFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.VerificationCodeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload> | null
+          args: Prisma.OtpCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.VerificationCodeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         findFirst: {
-          args: Prisma.VerificationCodeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload> | null
+          args: Prisma.OtpCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.VerificationCodeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         findMany: {
-          args: Prisma.VerificationCodeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+          args: Prisma.OtpCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>[]
         }
         create: {
-          args: Prisma.VerificationCodeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         createMany: {
-          args: Prisma.VerificationCodeCreateManyArgs<ExtArgs>
+          args: Prisma.OtpCodeCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.VerificationCodeCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+          args: Prisma.OtpCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>[]
         }
         delete: {
-          args: Prisma.VerificationCodeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         update: {
-          args: Prisma.VerificationCodeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         deleteMany: {
-          args: Prisma.VerificationCodeDeleteManyArgs<ExtArgs>
+          args: Prisma.OtpCodeDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.VerificationCodeUpdateManyArgs<ExtArgs>
+          args: Prisma.OtpCodeUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.VerificationCodeUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>[]
+          args: Prisma.OtpCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>[]
         }
         upsert: {
-          args: Prisma.VerificationCodeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$VerificationCodePayload>
+          args: Prisma.OtpCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$OtpCodePayload>
         }
         aggregate: {
-          args: Prisma.VerificationCodeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateVerificationCode>
+          args: Prisma.OtpCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateOtpCode>
         }
         groupBy: {
-          args: Prisma.VerificationCodeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VerificationCodeGroupByOutputType>[]
+          args: Prisma.OtpCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OtpCodeGroupByOutputType>[]
         }
         count: {
-          args: Prisma.VerificationCodeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.VerificationCodeCountAggregateOutputType> | number
+          args: Prisma.OtpCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.OtpCodeCountAggregateOutputType> | number
         }
       }
     }
@@ -2217,7 +2217,7 @@ export const UserTranslationScalarFieldEnum = {
 export type UserTranslationScalarFieldEnum = (typeof UserTranslationScalarFieldEnum)[keyof typeof UserTranslationScalarFieldEnum]
 
 
-export const VerificationCodeScalarFieldEnum = {
+export const OtpCodeScalarFieldEnum = {
   id: 'id',
   email: 'email',
   code: 'code',
@@ -2226,7 +2226,7 @@ export const VerificationCodeScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type VerificationCodeScalarFieldEnum = (typeof VerificationCodeScalarFieldEnum)[keyof typeof VerificationCodeScalarFieldEnum]
+export type OtpCodeScalarFieldEnum = (typeof OtpCodeScalarFieldEnum)[keyof typeof OtpCodeScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
@@ -2590,16 +2590,16 @@ export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
- * Reference to a field of type 'VerificationCodeType'
+ * Reference to a field of type 'OtpCodeType'
  */
-export type EnumVerificationCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationCodeType'>
+export type EnumOtpCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtpCodeType'>
     
 
 
 /**
- * Reference to a field of type 'VerificationCodeType[]'
+ * Reference to a field of type 'OtpCodeType[]'
  */
-export type ListEnumVerificationCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VerificationCodeType[]'>
+export type ListEnumOtpCodeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OtpCodeType[]'>
     
 
 
@@ -2749,7 +2749,7 @@ export type GlobalOmitConfig = {
   language?: Prisma.LanguageOmit
   user?: Prisma.UserOmit
   userTranslation?: Prisma.UserTranslationOmit
-  verificationCode?: Prisma.VerificationCodeOmit
+  otpCode?: Prisma.OtpCodeOmit
   refreshToken?: Prisma.RefreshTokenOmit
   device?: Prisma.DeviceOmit
   permission?: Prisma.PermissionOmit

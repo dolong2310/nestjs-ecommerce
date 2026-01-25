@@ -54,7 +54,7 @@ export const ModelName = {
   Language: 'Language',
   User: 'User',
   UserTranslation: 'UserTranslation',
-  VerificationCode: 'VerificationCode',
+  OtpCode: 'OtpCode',
   RefreshToken: 'RefreshToken',
   Device: 'Device',
   Permission: 'Permission',
@@ -142,7 +142,7 @@ export const UserTranslationScalarFieldEnum = {
 export type UserTranslationScalarFieldEnum = (typeof UserTranslationScalarFieldEnum)[keyof typeof UserTranslationScalarFieldEnum]
 
 
-export const VerificationCodeScalarFieldEnum = {
+export const OtpCodeScalarFieldEnum = {
   id: 'id',
   email: 'email',
   code: 'code',
@@ -151,7 +151,7 @@ export const VerificationCodeScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type VerificationCodeScalarFieldEnum = (typeof VerificationCodeScalarFieldEnum)[keyof typeof VerificationCodeScalarFieldEnum]
+export type OtpCodeScalarFieldEnum = (typeof OtpCodeScalarFieldEnum)[keyof typeof OtpCodeScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
