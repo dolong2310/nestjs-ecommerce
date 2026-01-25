@@ -70,6 +70,7 @@ export class AuthService {
         email: body.email,
         password: hashedPassword,
         phoneNumber: body.phoneNumber,
+        avatar: null,
         roleId: userRoleId,
       });
 
@@ -138,10 +139,15 @@ export class AuthService {
       // }
 
       // 5. Generate tokens
-      const tokens = await this._generateTokens({ userId: user.id, deviceId: device.id, roleId: user.roleId, roleName: user.role.name });
+      const jwtTokens = await this.createAuthTokens({
+        userId: user.id,
+        deviceId: device.id,
+        roleId: user.roleId,
+        roleName: user.role.name,
+      });
 
       // 6. Return tokens
-      return tokens;
+      return jwtTokens;
     } catch (error) {
       throw error;
     }
@@ -200,13 +206,23 @@ export class AuthService {
       const deleteRefreshTokenPromise = this.authRepository.deleteRefreshToken({ token: body.refreshToken });
 
       // 6. Generate new tokens
-      const newTokensPromise = this._generateTokens({ userId: userId, deviceId: deviceId, roleId: user.roleId, roleName: user.role.name });
+      const createJwtTokensPromise = this.createAuthTokens({
+        userId: userId,
+        deviceId: deviceId,
+        roleId: user.roleId,
+        roleName: user.role.name,
+      });
 
       // 7. Execute promises
-      const [tokens] = await Promise.all([newTokensPromise, updateDevicePromise, verifyRefreshTokenPromise, deleteRefreshTokenPromise]);
+      const [jwtTokens] = await Promise.all([
+        createJwtTokensPromise,
+        updateDevicePromise,
+        verifyRefreshTokenPromise,
+        deleteRefreshTokenPromise,
+      ]);
 
       // 8. Return tokens
-      return tokens;
+      return jwtTokens;
     } catch (error) {
       // HttpException: Nếu throw error ở trong try {} thì chỗ này không cần custom throw error nữa mà throw trực tiếp luôn
       if (error instanceof HttpException) {
@@ -315,7 +331,7 @@ export class AuthService {
     }
   }
 
-  private async _generateTokens(payload: AccessTokenPayloadCreate): Promise<JwtTokenType> {
+  public async createAuthTokens(payload: AccessTokenPayloadCreate): Promise<JwtTokenType> {
     const { userId, deviceId, roleId, roleName } = payload;
 
     // 1. Generate tokens

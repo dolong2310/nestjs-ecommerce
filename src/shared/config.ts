@@ -31,6 +31,13 @@ const configSchema = z.object({
   OTP_EXPIRES_IN: z.string().min(1, 'OTP_EXPIRES_IN is required'),
 
   RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
+
+  FRONTEND_URL: z.string().min(1, 'FRONTEND_URL is required'),
+
+  GOOGLE_CLIENT_ID: z.string().min(1, 'GOOGLE_CLIENT_ID is required'),
+  GOOGLE_CLIENT_SECRET: z.string().min(1, 'GOOGLE_CLIENT_SECRET is required'),
+  GOOGLE_REDIRECT_URI: z.string().min(1, 'GOOGLE_REDIRECT_URI is required'),
+  GOOGLE_CLIENT_REDIRECT_URI: z.string().min(1, 'GOOGLE_CLIENT_REDIRECT_URI is required'), // # Uri này để redirect từ server chúng ta về browser client
 });
 
 const config = configSchema.safeParse(process.env);

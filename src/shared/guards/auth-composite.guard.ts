@@ -20,8 +20,6 @@ export class AuthCompositeGuard implements CanActivate {
       context.getHandler(),
     );
 
-    console.log('metadata: ', metadata);
-
     // No metadata = default to JWT auth (protect all routes by default)
     if (!metadata) {
       /**

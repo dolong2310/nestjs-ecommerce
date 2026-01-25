@@ -10,18 +10,37 @@ export class AuthRepository {
   constructor(private readonly prismaService: PrismaService) { }
 
   // User
-  createUser(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'roleId'>): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
+  createUser(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
     return this.prismaService.user.create({
       data: {
         name: body.name,
         email: body.email,
         password: body.password,
         phoneNumber: body.phoneNumber,
+        avatar: body.avatar,
         roleId: body.roleId,
       },
       omit: {
         password: true,
         totpSecret: true,
+      }
+    });
+  }
+
+  createUserIncludeRole(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<(UserType & { role: RoleType })> {
+    // Tại sao không omit password và totpSecret?
+    // Vì khi tạo user mới ở googleService -> method authCallback -> biến let user khi gán lại ở createUserIncludeRole phải cùng type trả về với method findUserUniqueIncludeRole
+    return this.prismaService.user.create({
+      data: {
+        name: body.name,
+        email: body.email,
+        password: body.password,
+        phoneNumber: body.phoneNumber,
+        avatar: body.avatar,
+        roleId: body.roleId,
+      },
+      include: {
+        role: true,
       }
     });
   }
@@ -33,7 +52,7 @@ export class AuthRepository {
       include: {
         role: true,
       },
-    }) as Promise<(UserType & { role: RoleType }) | null>;
+    });
   }
 
   // Refresh Token
@@ -66,7 +85,7 @@ export class AuthRepository {
           }
         }
       }
-    }) as Promise<(RefreshTokenType & { user: UserType & { role: RoleType } }) | null>
+    });
   }
 
   deleteRefreshToken(uniqueInput: { token: string }): Promise<RefreshTokenType> {

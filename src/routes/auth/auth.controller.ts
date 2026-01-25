@@ -1,15 +1,21 @@
-import { GetMeResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/auth.dto';
+import { GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/auth.dto';
 import { AuthService } from '@/routes/auth/auth.service';
+import { GoogleService } from '@/routes/auth/google.service';
+import envConfig from '@/shared/config';
 import { REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { AccessTokenPayload } from '@/shared/types/jwt.type';
-import { Body, Controller, Get, Headers, HttpCode, HttpStatus, Ip, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpCode, HttpException, HttpStatus, Ip, Post, Query, Request, Res } from '@nestjs/common';
+import type { Response } from 'express';
 import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly googleService: GoogleService,
+  ) { }
 
   @Post('register')
   @Public()
@@ -54,5 +60,30 @@ export class AuthController {
   sendOtp(@Body() body: SendOtpBodyDTO): Promise<MessageResponseDTO> {
     const { email, type } = body; // be explicit
     return this.authService.sendOtp({ email, type });
+  }
+
+  @Get('google/url')
+  @Public()
+  @ZodSerializerDto(GoogleAuthResponseDTO)
+  getAuthorizationUrl(@Ip() ip: string, @Headers('user-agent') userAgent: string): GoogleAuthResponseDTO {
+    return this.googleService.getAuthorizationUrl({ ip, userAgent });
+  }
+
+  @Get('google/callback')
+  @Public()
+  async authCallback(@Query() query: GoogleAuthCallbackQueryDTO, @Res() response: Response): Promise<void> {
+    try {
+      const { accessToken, refreshToken } = await this.googleService.authCallback({
+        state: query.state,
+        code: query.code,
+        scope: query.scope,
+        authuser: query.authuser,
+        prompt: query.prompt,
+      });
+      return response.redirect(`${envConfig.GOOGLE_CLIENT_REDIRECT_URI}?accessToken=${accessToken}&refreshToken=${refreshToken}`)
+    } catch (error) {
+      const errorMessage = error instanceof HttpException ? error.message : 'Failed to authenticate with Google';
+      return response.redirect(`${envConfig.GOOGLE_CLIENT_REDIRECT_URI}?errorMessage=${errorMessage}`)
+    }
   }
 }

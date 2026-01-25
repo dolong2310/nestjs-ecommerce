@@ -47,8 +47,8 @@ export const RoleSchema = z.object({
   name: z.string(),
   description: z.string(),
   isActive: z.boolean().default(true),
-  createdById: z.number().optional(),
-  updatedById: z.number().optional(),
+  createdById: z.number().nullable(),
+  updatedById: z.number().nullable(),
   deletedAt: z.date().nullable(),
   createdAt: z.date().default(new Date()),
   updatedAt: z.date().default(new Date()),
@@ -155,3 +155,25 @@ export const SendOtpBodySchema = VerificationCodeSchema.pick({
   email: true,
   type: true,
 }).strict();
+
+//////////////////////////////////////////
+// GOOGLE AUTH
+//////////////////////////////////////////
+export const GoogleAuthStateSchema = DeviceSchema.pick({
+  ip: true,
+  userAgent: true,
+}).strict();
+
+export const GoogleAuthResponseSchema = z.object({
+  url: z.url(),
+});
+
+export const GoogleAuthCallbackQuerySchema = z.object({
+  state: z.string(),
+  code: z.string(),
+  scope: z.string(),
+  authuser: z.string(),
+  prompt: z.string(),
+});
+
+export const GoogleAuthCallbackResponseSchema = JwtTokenSchema;
