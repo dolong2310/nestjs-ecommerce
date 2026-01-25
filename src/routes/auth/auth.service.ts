@@ -140,7 +140,7 @@ export class AuthService {
 
       // 2. Nếu không có refresh token thì return success, vì có đâu mà xoá trong database
       if (!refreshToken) {
-        return { message: 'Logout successful' };
+        return { message: 'Success.LogoutSuccessful' };
       }
 
       // 3. Delete refresh token from database
@@ -153,7 +153,7 @@ export class AuthService {
       await Promise.all([deleteRefreshTokenPromise, updateDevicePromise]);
 
       // 6. Return message success
-      return { message: 'Logout successful' };
+      return { message: 'Success.LogoutSuccessful' };
     } catch (error) {
       throw error;
     }
@@ -281,7 +281,8 @@ export class AuthService {
       }
 
       // 5. Do not return otp code, because user must get code from email
-      return { message: 'OTP code has been sent to email' };
+      // message: OTP code has been sent to email
+      return { message: 'Success.OtpCodeSentToEmail' };
     } catch (error) {
       throw error;
     }

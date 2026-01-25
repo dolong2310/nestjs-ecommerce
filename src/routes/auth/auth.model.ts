@@ -69,7 +69,7 @@ export const RegisterBodySchema = UserSchema.pick({
   if (data.password !== data.confirmPassword) {
     ctx.addIssue({
       code: 'custom',
-      message: 'Passwords do not match',
+      message: 'Error.PasswordNotMatch', // Passwords do not match
       path: ['confirmPassword'],
     });
   }
