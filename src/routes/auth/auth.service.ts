@@ -1,5 +1,6 @@
 import { AuthRepository } from '@/routes/auth/auth.repo';
 import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/auth.type';
+import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, UserNotFoundException } from '@/routes/auth/error.model';
 import { RolesService } from '@/routes/auth/roles.service';
 import envConfig from '@/shared/config';
 import { EnumOtpCode } from '@/shared/constants/auth.constant';
@@ -10,7 +11,7 @@ import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
 import { AccessTokenPayloadCreate } from '@/shared/types/jwt.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
-import { BadRequestException, HttpException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { addMilliseconds } from 'date-fns';
 import ms, { StringValue } from 'ms';
 
@@ -44,17 +45,11 @@ export class AuthService {
       });
 
       if (!otpCode) {
-        throw new BadRequestException([{
-          field: 'code',
-          message: 'Invalid OTP code',
-        }]);
+        throw InvalidOtpCodeException;
       }
 
       if (otpCode.expiresAt < new Date()) {
-        throw new BadRequestException([{
-          field: 'code',
-          message: 'OTP code has expired',
-        }]);
+        throw ExpiredOtpCodeException;
       }
 
       // 2. Create user
@@ -81,10 +76,7 @@ export class AuthService {
       return user;
     } catch (error) {
       if (isUniqueConstraintPrismaError(error)) {
-        throw new BadRequestException([{
-          field: 'email',
-          message: 'Email already exists',
-        }]);
+        throw EmailAlreadyExistsException;
       }
 
       throw error;
@@ -98,20 +90,14 @@ export class AuthService {
       // const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (!user) {
-        throw new NotFoundException([{
-          field: 'email',
-          message: 'Email not found',
-        }]);
+        throw EmailNotFoundException;
       }
 
       // 2. Check password is correct
       const comparePassword = await this.hashingService.compare(body.password, user.password);
 
       if (!comparePassword) {
-        throw new BadRequestException([{
-          field: 'password',
-          message: 'Invalid password',
-        }]);
+        throw InvalidPasswordException;
       }
 
       // 3. Create device
@@ -122,20 +108,14 @@ export class AuthService {
       });
 
       if (!device) {
-        throw new BadRequestException([{
-          field: 'device',
-          message: 'Failed to create device',
-        }]);
+        throw FailedToCreateDeviceException;
       }
 
       // 4. Get role name
       // const role = await this.authRepository.findRoleUnique({ id: user.roleId });
 
       // if (!role) {
-      //   throw new NotFoundException([{
-      //     field: 'role',
-      //     message: 'Role not found',
-      //   }]);
+      // throw RoleNotFoundException;
       // }
 
       // 5. Generate tokens
@@ -185,10 +165,7 @@ export class AuthService {
       const refreshToken = await this.authRepository.findRefreshTokenUniqueIncludeUserRole({ token: body.refreshToken });
 
       if (!refreshToken) {
-        throw new NotFoundException([{
-          field: 'refreshToken',
-          message: 'Refresh token not found',
-        }]);
+        throw RefreshTokenNotFoundException;
       }
 
       const { userId, deviceId, user } = refreshToken;
@@ -231,25 +208,16 @@ export class AuthService {
 
       // Handle JWT errors
       if (isTokenExpiredError(error)) {
-        throw new UnauthorizedException([{
-          field: 'refreshToken',
-          message: 'Refresh token has expired',
-        }]);
+        throw RefreshTokenExpiredException;
       }
 
       if (isJsonWebTokenError(error)) {
-        throw new UnauthorizedException([{
-          field: 'refreshToken',
-          message: 'Invalid refresh token',
-        }]);
+        throw InvalidRefreshTokenException;
       }
 
       // Handle Prisma errors
       if (isNotFoundPrismaError(error)) {
-        throw new UnauthorizedException([{
-          field: 'refreshToken',
-          message: 'Refresh token has been revoked',
-        }]);
+        throw RefreshTokenHasBeenRevokedException;
       }
 
       throw error;
@@ -262,19 +230,13 @@ export class AuthService {
       const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
-        throw new NotFoundException([{
-          field: 'userId',
-          message: 'User not found',
-        }]);
+        throw UserNotFoundException;
       }
 
       return user;
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
-        throw new NotFoundException([{
-          field: 'userId',
-          message: 'User not found',
-        }]);
+        throw UserNotFoundException;
       }
 
       throw error;
@@ -287,10 +249,7 @@ export class AuthService {
       const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (user) {
-        throw new BadRequestException([{
-          field: 'email',
-          message: 'Email already exists',
-        }]);
+        throw EmailAlreadyExistsException;
       }
 
       // 2. Create otp code
@@ -318,10 +277,7 @@ export class AuthService {
       if (emailError) {
         // Delete OTP code
         await this.authRepository.deleteOtpCode({ id: otpCode.id });
-        throw new BadRequestException([{
-          field: 'code',
-          message: 'Failed to send OTP code',
-        }]);
+        throw FailedToSendOtpCodeException;
       }
 
       // 5. Do not return otp code, because user must get code from email

@@ -1,10 +1,11 @@
 import { AuthRepository } from '@/routes/auth/auth.repo';
 import { AuthService } from '@/routes/auth/auth.service';
 import { GoogleAuthCallbackQueryType, GoogleAuthCallbackResponseType, GoogleAuthResponseType, GoogleAuthStateType } from '@/routes/auth/auth.type';
+import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/error.model';
 import { RolesService } from '@/routes/auth/roles.service';
 import envConfig from "@/shared/config";
 import { HashingService } from '@/shared/services/hashing.service';
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Credentials, OAuth2Client } from "google-auth-library";
 import { google } from 'googleapis';
 import { v4 as uuidv4 } from 'uuid';
@@ -80,10 +81,7 @@ export class GoogleService {
 
       // 3.1 Check if email is verified
       if (!data.verified_email || !data.email) {
-        throw new UnauthorizedException([{
-          field: 'email',
-          message: 'Email not verified',
-        }]);
+        throw EmailNotVerifiedException;
       }
 
       // 4. Find user by email
@@ -118,10 +116,7 @@ export class GoogleService {
       });
 
       if (!device) {
-        throw new BadRequestException([{
-          field: 'device',
-          message: 'Failed to create device',
-        }]);
+        throw FailedToCreateDeviceException;
       }
 
       // 7. Generate tokens

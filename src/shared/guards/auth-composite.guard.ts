@@ -1,6 +1,7 @@
 import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';
 import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
+import { AuthenticationRequiredException } from '@/shared/models/error.model';
 import { AUTH_TYPE_KEY, AuthMetadata, AuthType } from '@/shared/types/shared-auth.type';
 import { CanActivate, ExecutionContext, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -77,10 +78,7 @@ export class AuthCompositeGuard implements CanActivate {
       throw new UnauthorizedException();
     } catch (error) {
       if (error instanceof HttpException) {
-        throw new UnauthorizedException([{
-          field: 'authentication',
-          message: 'Authentication required',
-        }]);
+        throw AuthenticationRequiredException;
       }
       throw error;
     }
@@ -96,10 +94,7 @@ export class AuthCompositeGuard implements CanActivate {
       try {
         const result = await guard.canActivate(context);
         if (!result) {
-          throw new UnauthorizedException([{
-            field: 'authentication',
-            message: 'Authentication required',
-          }]);
+          throw AuthenticationRequiredException;
         }
       } catch (error) {
         errors.push(error);
@@ -132,9 +127,6 @@ export class AuthCompositeGuard implements CanActivate {
     }
 
     // All guards failed, throw combined error
-    throw new UnauthorizedException([{
-      field: 'authentication',
-      message: 'All authentication methods failed',
-    }]);
+    throw AuthenticationRequiredException;
   }
 }

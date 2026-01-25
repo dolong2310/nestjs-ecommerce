@@ -8,6 +8,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { AccessTokenExpiredException, InvalidAccessTokenException } from '@/shared/models/error.model';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -33,17 +34,11 @@ export class AuthGuard implements CanActivate {
     } catch (error) {
       // Handle JWT errors
       if (isTokenExpiredError(error)) {
-        throw new UnauthorizedException([{
-          field: 'accessToken',
-          message: 'Access token has expired',
-        }]);
+        throw AccessTokenExpiredException;
       }
 
       if (isJsonWebTokenError(error)) {
-        throw new UnauthorizedException([{
-          field: 'accessToken',
-          message: 'Invalid access token',
-        }]);
+        throw InvalidAccessTokenException;
       }
       throw error;
     }
