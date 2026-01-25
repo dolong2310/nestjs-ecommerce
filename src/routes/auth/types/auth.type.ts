@@ -1,4 +1,4 @@
-import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema } from "@/routes/auth/auth.model";
+import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema } from "@/routes/auth/models/auth.model";
 import z from "zod";
 
 export type JwtTokenType = z.infer<typeof JwtTokenSchema>;

@@ -1,6 +1,6 @@
-import { GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/auth.dto';
-import { AuthService } from '@/routes/auth/auth.service';
-import { GoogleService } from '@/routes/auth/google.service';
+import { GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/dtos/auth.dto';
+import { AuthService } from '@/routes/auth/services/auth.service';
+import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
 import { REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { Public } from '@/shared/decorators/auth.decorator';

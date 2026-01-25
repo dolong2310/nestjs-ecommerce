@@ -1,8 +1,8 @@
-import { AuthRepository } from '@/routes/auth/auth.repo';
-import { AuthService } from '@/routes/auth/auth.service';
-import { GoogleAuthCallbackQueryType, GoogleAuthCallbackResponseType, GoogleAuthResponseType, GoogleAuthStateType } from '@/routes/auth/auth.type';
-import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/error.model';
-import { RolesService } from '@/routes/auth/roles.service';
+import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
+import { AuthService } from '@/routes/auth/services/auth.service';
+import { GoogleAuthCallbackQueryType, GoogleAuthCallbackResponseType, GoogleAuthResponseType, GoogleAuthStateType } from '@/routes/auth/types/auth.type';
+import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/models/error.model';
+import { RolesService } from '@/routes/auth/services/roles.service';
 import envConfig from "@/shared/config";
 import { HashingService } from '@/shared/services/hashing.service';
 import { Injectable } from "@nestjs/common";
