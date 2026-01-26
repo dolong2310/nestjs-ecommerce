@@ -86,6 +86,10 @@ export const RegisterResponseSchema = UserSchema.omit({
 export const LoginBodySchema = UserSchema.pick({
   email: true,
   password: true,
+}).extend({
+  // vì có tính năng disable 2FA nên thêm optional và client browser không cần truyền body
+  totpCode: z.string().length(6).optional(), // 2FA code
+  emailOtpCode: z.string().length(6).optional(), // Email otp code
 }).strict();
 
 export const LoginResponseSchema = JwtTokenSchema;
@@ -195,3 +199,27 @@ export const GoogleAuthCallbackQuerySchema = z.object({
 });
 
 export const GoogleAuthCallbackResponseSchema = JwtTokenSchema;
+
+//////////////////////////////////////////
+// 2FA
+//////////////////////////////////////////
+export const Setup2FAResponseSchema = z.object({
+  secret: z.string(), // base32 encoded string: đây là secret key để tạo QR code 2FA, giả sử user không thể tạo được 2FA thì có thể dùng secret này để tạo 2FA
+  uri: z.url(), // URL của QR code 2FA, dùng để hiển thị QR code 2FA trên client browser
+});
+
+export const Disable2FABodySchema = z.object({
+  // client browser phải truyền 1 trong 2 trường này nên sẽ thêm optional(), không được truyền cả 2 trường 1 lúc
+  totpCode: z.string().length(6).optional(),
+  emailOtpCode: z.string().length(6).optional(),
+}).strict().superRefine((data, ctx) => {
+  const { totpCode, emailOtpCode } = data;
+  // nếu cả 2 trường đều có hoặc không có thì sẽ chạy vào if này
+  if ((totpCode !== undefined) === (emailOtpCode !== undefined)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+      path: ['totpCode', 'emailOtpCode'],
+    });
+  }
+});

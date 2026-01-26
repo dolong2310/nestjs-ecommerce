@@ -1,11 +1,12 @@
-import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, UserNotFoundException } from '@/routes/auth/models/error.model';
+import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, UserNotFoundException } from '@/routes/auth/models/error.model';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { RolesService } from '@/routes/auth/services/roles.service';
-import { ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/types/auth.type';
+import { ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType, Setup2FAResponseType } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
+import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';
 import { EmailService } from '@/shared/services/email.service';
 import { HashingService } from '@/shared/services/hashing.service';
 import { TokenService } from '@/shared/services/token.service';
@@ -24,6 +25,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
     private readonly rolesService: RolesService,
     private readonly emailService: EmailService,
+    private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,
   ) { }
 
   async register(body: RegisterBodyType): Promise<RegisterResponseType> {
@@ -319,6 +321,35 @@ export class AuthService {
     }
   }
 
+  async setup2fa(userId: number): Promise<Setup2FAResponseType> {
+    try {
+      // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
+
+      if (!user) {
+        throw UserNotFoundException;
+      }
+
+      if (Boolean(user.totpSecret)) {
+        throw TOTPAlreadyEnabledException;
+      }
+
+      // 2. Tạo secret key và URI cho 2FA
+      const { secret, uri } = this.twoFactorAuthenticationService.generateSecret(user.email);
+
+      // 3. Lưu secret key vào database
+      await this.authRepository.updateUser({ id: userId }, { totpSecret: secret });
+
+      // 4. Return secret key và URI
+      return {
+        secret,
+        uri,
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async createAuthTokens(payload: AccessTokenPayloadCreate): Promise<JwtTokenType> {
     const { userId, deviceId, roleId, roleName } = payload;
 
@@ -347,9 +378,11 @@ export class AuthService {
   private async _findAndValidateOtpCode(data: { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType> {
     try {
       const otpCode = await this.authRepository.findUniqueOtpCode({
-        email: data.email,
-        code: data.code,
-        type: data.type,
+        email_code_type: {
+          email: data.email,
+          code: data.code,
+          type: data.type,
+        }
       });
 
       if (!otpCode) {

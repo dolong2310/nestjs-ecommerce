@@ -107,7 +107,13 @@ export class AuthRepository {
     // email là unique nên chỉ có thể có 1 otp code cho 1 email (không thể tạo thêm -> auto throw error)
     return this.prismaService.otpCode.upsert({
       where: {
-        email: body.email,
+        // email: body.email, // vì email không là unique nữa nên không thể dùng để where
+        // dùng email_code_type để where vì email_code_type là unique trong schema prisma
+        email_code_type: {
+          email: body.email,
+          code: body.code,
+          type: body.type,
+        }
       },
       create: body,
       update: {
@@ -124,14 +130,15 @@ export class AuthRepository {
     });
   }
 
-  findUniqueOtpCode(where: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType | null> {
-    // query theo "email" hoặc "id" hoặc "email, code, type" vì được đánh index
+  findUniqueOtpCode(where: { id: number } | { email_code_type: { email: string, code: string, type: EnumOtpCodeType } }): Promise<OtpCodeType | null> {
+    // query theo 3 trường "email, code, type" vì được đánh index
     return this.prismaService.otpCode.findUnique({
       where,
     })
   }
 
-  deleteOtpCode(where: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType> {
+  deleteOtpCode(where: { id: number } | { email_code_type: { email: string, code: string, type: EnumOtpCodeType } }): Promise<OtpCodeType> {
+    // query theo 3 trường "email, code, type" vì được đánh index
     return this.prismaService.otpCode.delete({
       where,
     });

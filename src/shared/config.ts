@@ -15,6 +15,8 @@ if (!fs.existsSync(path.resolve('.env'))) {
 const configSchema = z.object({
   PORT: z.string().min(1, 'PORT is required'),
 
+  APP_NAME: z.string().min(1, 'APP_NAME is required'),
+
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 
   SECRET_API_KEY: z.string().min(1, 'SECRET_API_KEY is required'),

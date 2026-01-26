@@ -1,4 +1,4 @@
-import { ForgotPasswordBodySchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthResponseSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RegisterBodySchema, RegisterResponseSchema, SendOtpBodySchema } from '@/routes/auth/models/auth.model';
+import { Disable2FABodySchema, ForgotPasswordBodySchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthResponseSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RegisterBodySchema, RegisterResponseSchema, SendOtpBodySchema, Setup2FAResponseSchema } from '@/routes/auth/models/auth.model';
 import { createZodDto } from 'nestjs-zod';
 
 export class RegisterBodyDTO extends createZodDto(RegisterBodySchema) { }
@@ -13,3 +13,5 @@ export class RefreshJwtTokenResponseDTO extends createZodDto(RefreshJwtTokenResp
 export class SendOtpBodyDTO extends createZodDto(SendOtpBodySchema) { }
 export class GoogleAuthResponseDTO extends createZodDto(GoogleAuthResponseSchema) { }
 export class GoogleAuthCallbackQueryDTO extends createZodDto(GoogleAuthCallbackQuerySchema) { }
+export class Setup2FAResponseDTO extends createZodDto(Setup2FAResponseSchema) { }
+export class Disable2FABodyDTO extends createZodDto(Disable2FABodySchema) { }

@@ -1,9 +1,11 @@
-import { ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/dtos/auth.dto';
+import { ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO, Setup2FAResponseDTO } from '@/routes/auth/dtos/auth.dto';
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
 import { REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
+import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
+import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { AccessTokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Get, Headers, HttpCode, HttpException, HttpStatus, Ip, Post, Query, Request, Res } from '@nestjs/common';
@@ -69,8 +71,7 @@ export class AuthController {
 
   @Get('me')
   @ZodSerializerDto(GetMeResponseDTO)
-  getMe(@Request() req: Request & { [REQUEST_USER_KEY]: AccessTokenPayload }): Promise<GetMeResponseDTO> {
-    const userId = req[REQUEST_USER_KEY].userId;
+  getMe(@ActiveUser('userId') userId: number): Promise<GetMeResponseDTO> {
     return this.authService.getMe(userId);
   }
 
@@ -105,5 +106,19 @@ export class AuthController {
       const errorMessage = error instanceof HttpException ? error.message : 'Failed to authenticate with Google';
       return response.redirect(`${envConfig.GOOGLE_CLIENT_REDIRECT_URI}?errorMessage=${errorMessage}`)
     }
+  }
+
+  // Tại sao không dùng GET mà dùng POST? Khi mà body truyền là {}
+  // POST bảo mật hơn GET, vì GET có thể được kích hoạt thông qua URL trên trình duyệt, còn POST thì không thể
+  @Post('2fa/setup')
+  @ZodSerializerDto(Setup2FAResponseDTO)
+  setup2fa(@Body() _: EmptyBodyDTO, @ActiveUser('userId') userId: number): Promise<Setup2FAResponseDTO> {
+    // Không cần truyền body, chỉ cần lấy userId từ decorator
+    return this.authService.setup2fa(userId);
+  }
+
+  @Post('2fa/disable')
+  disable2fa(@Body() body: { code: string, otp: string }): any {
+    return body;
   }
 }

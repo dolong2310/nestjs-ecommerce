@@ -29,8 +29,10 @@ enum OrderStatus {
 }
 
 enum OtpCodeType {
+  LOGIN
   REGISTER
   FORGOT_PASSWORD
+  DISABLE_2FA
 }
 
 enum UserStatus {
@@ -167,14 +169,14 @@ model UserTranslation {
 
 model OtpCode {
   id    Int                  @id @default(autoincrement())
-  email String               @unique @db.VarChar(500)
+  email String               @db.VarChar(500)
   code  String               @db.VarChar(50)
-  type  OtpCodeType // REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu
+  type  OtpCodeType // LOGIN: mã đăng nhập bằng 2FA, REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu, DISABLE_2FA: mã vô hiệu hóa 2FA
 
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  @@index([email, code, type])
+  @@unique([email, code, type]) // vì 1 otp sẽ có nhiều email trùng nhau nhưng code và type sẽ khác nhau nên sẽ không unique trường email mà sẽ unique 1 bộ [email, code, type]
   @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các otp code đã hết hạn
 }
 

@@ -237,15 +237,16 @@ export type OtpCodeOrderByWithRelationInput = {
 
 export type OtpCodeWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  email?: string
+  email_code_type?: Prisma.OtpCodeEmailCodeTypeCompoundUniqueInput
   AND?: Prisma.OtpCodeWhereInput | Prisma.OtpCodeWhereInput[]
   OR?: Prisma.OtpCodeWhereInput[]
   NOT?: Prisma.OtpCodeWhereInput | Prisma.OtpCodeWhereInput[]
+  email?: Prisma.StringFilter<"OtpCode"> | string
   code?: Prisma.StringFilter<"OtpCode"> | string
   type?: Prisma.EnumOtpCodeTypeFilter<"OtpCode"> | $Enums.OtpCodeType
   expiresAt?: Prisma.DateTimeFilter<"OtpCode"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"OtpCode"> | Date | string
-}, "id" | "email">
+}, "id" | "email_code_type">
 
 export type OtpCodeOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -331,6 +332,12 @@ export type OtpCodeUncheckedUpdateManyInput = {
   type?: Prisma.EnumOtpCodeTypeFieldUpdateOperationsInput | $Enums.OtpCodeType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OtpCodeEmailCodeTypeCompoundUniqueInput = {
+  email: string
+  code: string
+  type: $Enums.OtpCodeType
 }
 
 export type OtpCodeCountOrderByAggregateInput = {

@@ -70,3 +70,25 @@ export const EmailNotVerifiedException = new UnauthorizedException([{
   field: 'email',
   message: 'Error.EmailNotVerified', // Email not verified
 }]);
+
+// TOTP Service
+export const TOTPAlreadyEnabledException = new BadRequestException([{
+  field: 'totpCode',
+  message: 'Error.TOTPAlreadyEnabled', // User already has 2FA
+}]);
+
+export const TOTPNotEnabledException = new BadRequestException([{
+  field: 'totpCode',
+  message: 'Error.TOTPNotEnabled', // User does not have 2FA enabled
+}]);
+
+export const InvalidTOTPOrEmailOtpCodeException = new BadRequestException([
+  {
+    field: 'totpCode',
+    message: 'Error.InvalidTOTPOrEmailOtpCode', // Invalid TOTP or email OTP code
+  },
+  {
+    field: 'emailOtpCode',
+    message: 'Error.InvalidTOTPOrEmailOtpCode', // Invalid TOTP or email OTP code
+  }
+]);

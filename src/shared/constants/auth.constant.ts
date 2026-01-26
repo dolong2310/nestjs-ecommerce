@@ -18,8 +18,10 @@ export const EnumUserStatus = {
 } as const;
 
 export const EnumOtpCode = {
+  LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
   FORGOT_PASSWORD: 'FORGOT_PASSWORD',
+  DISABLE_2FA: 'DISABLE_2FA',
 } as const;
 
 export type EnumOtpCodeType = (typeof EnumOtpCode)[keyof typeof EnumOtpCode];
