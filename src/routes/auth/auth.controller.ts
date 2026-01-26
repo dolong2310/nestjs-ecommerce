@@ -1,4 +1,4 @@
-import { GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/dtos/auth.dto';
+import { ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO } from '@/routes/auth/dtos/auth.dto';
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
@@ -22,7 +22,14 @@ export class AuthController {
   @ZodSerializerDto(RegisterResponseDTO)
   register(@Body() body: RegisterBodyDTO): Promise<RegisterResponseDTO> { // return dto to avoid exposing password and toptSecret
     const { name, email, password, confirmPassword, phoneNumber, code } = body; // be explicit
-    return this.authService.register({ name, email, password, confirmPassword, phoneNumber, code });
+    return this.authService.register({
+      name,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+      code,
+    });
   }
 
   @Post('login')
@@ -37,6 +44,19 @@ export class AuthController {
   @ZodSerializerDto(MessageResponseDTO)
   logout(@Body() body: LogoutBodyDTO): Promise<MessageResponseDTO> {
     return this.authService.logout({ refreshToken: body.refreshToken });
+  }
+
+  @Post('forgot-password')
+  @Public()
+  @ZodSerializerDto(MessageResponseDTO)
+  forgotPassword(@Body() body: ForgotPasswordBodyDTO): Promise<MessageResponseDTO> {
+    const { email, code, newPassword, confirmNewPassword } = body; // be explicit
+    return this.authService.forgotPassword({
+      email,
+      code,
+      newPassword,
+      confirmNewPassword,
+    });
   }
 
   @Post('refresh-token')

@@ -27,6 +27,13 @@ export class AuthRepository {
     });
   }
 
+  updateUser(where: { id: number } | { email: string }, data: Partial<Omit<UserType, 'id'>>): Promise<UserType> {
+    return this.prismaService.user.update({
+      where,
+      data,
+    });
+  }
+
   createUserIncludeRole(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<(UserType & { role: RoleType })> {
     // Tại sao không omit password và totpSecret?
     // Vì khi tạo user mới ở googleService -> method authCallback -> biến let user khi gán lại ở createUserIncludeRole phải cùng type trả về với method findUserUniqueIncludeRole
@@ -45,9 +52,9 @@ export class AuthRepository {
     });
   }
 
-  findUserUniqueIncludeRole(uniqueInput: { id: number } | { email: string }): Promise<(UserType & { role: RoleType }) | null> {
+  findUserUniqueIncludeRole(where: { id: number } | { email: string }): Promise<(UserType & { role: RoleType }) | null> {
     return this.prismaService.user.findUnique({
-      where: uniqueInput,
+      where,
       // include: Join Role table
       include: {
         role: true,
@@ -67,15 +74,15 @@ export class AuthRepository {
     });
   }
 
-  findRefreshTokenUnique(uniqueInput: { token: string }): Promise<RefreshTokenType | null> {
+  findRefreshTokenUnique(where: { token: string }): Promise<RefreshTokenType | null> {
     return this.prismaService.refreshToken.findUnique({
-      where: uniqueInput,
+      where,
     });
   }
 
-  findRefreshTokenUniqueIncludeUserRole(uniqueInput: { token: string }): Promise<(RefreshTokenType & { user: UserType & { role: RoleType } }) | null> {
+  findRefreshTokenUniqueIncludeUserRole(where: { token: string }): Promise<(RefreshTokenType & { user: UserType & { role: RoleType } }) | null> {
     return this.prismaService.refreshToken.findUnique({
-      where: uniqueInput,
+      where,
       // include: Join User table
       include: {
         user: {
@@ -88,9 +95,9 @@ export class AuthRepository {
     });
   }
 
-  deleteRefreshToken(uniqueInput: { token: string }): Promise<RefreshTokenType> {
+  deleteRefreshToken(where: { token: string }): Promise<RefreshTokenType> {
     return this.prismaService.refreshToken.delete({
-      where: uniqueInput,
+      where,
     });
   }
 
@@ -117,16 +124,16 @@ export class AuthRepository {
     });
   }
 
-  findUniqueOtpCode(uniqueInput: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType | null> {
+  findUniqueOtpCode(where: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType | null> {
     // query theo "email" hoặc "id" hoặc "email, code, type" vì được đánh index
     return this.prismaService.otpCode.findUnique({
-      where: uniqueInput,
+      where,
     })
   }
 
-  deleteOtpCode(uniqueInput: { id: number }): Promise<OtpCodeType> {
+  deleteOtpCode(where: { email: string } | { id: number } | { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType> {
     return this.prismaService.otpCode.delete({
-      where: uniqueInput,
+      where,
     });
   }
 
@@ -137,23 +144,23 @@ export class AuthRepository {
     });
   }
 
-  updateDevice(deviceId: number, body: Partial<DeviceType>): Promise<DeviceType> {
+  updateDevice(where: { id: number }, body: Partial<DeviceType>): Promise<DeviceType> {
     return this.prismaService.device.update({
-      where: { id: deviceId },
+      where,
       data: body,
     });
   }
 
-  findDeviceUnique(uniqueInput: { id: number }): Promise<DeviceType | null> {
+  findDeviceUnique(where: { id: number }): Promise<DeviceType | null> {
     return this.prismaService.device.findUnique({
-      where: uniqueInput,
+      where,
     });
   }
 
   // Role
-  findRoleUnique(uniqueInput: { id: number } | { name: string }) {
+  findRoleUnique(where: { id: number } | { name: string }) {
     return this.prismaService.role.findUnique({
-      where: uniqueInput,
+      where,
     });
   }
 }

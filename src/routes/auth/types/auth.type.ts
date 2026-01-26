@@ -1,4 +1,4 @@
-import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema } from "@/routes/auth/models/auth.model";
+import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, ForgotPasswordBodySchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema } from "@/routes/auth/models/auth.model";
 import z from "zod";
 
 export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
@@ -11,6 +11,7 @@ export type RegisterResponseType = z.infer<typeof RegisterResponseSchema>;
 export type LoginBodyType = z.infer<typeof LoginBodySchema>;
 export type LoginResponseType = z.infer<typeof LoginResponseSchema>;
 export type LogoutBodyType = z.infer<typeof LogoutBodySchema>;
+export type ForgotPasswordBodyType = z.infer<typeof ForgotPasswordBodySchema>;
 export type RefreshTokenType = z.infer<typeof RefreshTokenSchema>;
 export type CreateRefreshTokenBodyType = z.infer<typeof CreateRefreshTokenBodySchema>;
 export type CreateRefreshTokenResponseType = z.infer<typeof CreateRefreshTokenResponseSchema>;

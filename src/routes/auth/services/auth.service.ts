@@ -1,9 +1,9 @@
-import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
-import { GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/types/auth.type';
 import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, UserNotFoundException } from '@/routes/auth/models/error.model';
+import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { RolesService } from '@/routes/auth/services/roles.service';
+import { ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
-import { EnumOtpCode } from '@/shared/constants/auth.constant';
+import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { EmailService } from '@/shared/services/email.service';
@@ -38,19 +38,7 @@ export class AuthService {
     // 8. Return user (successfully registered)
     try {
       // 1. Check OTP code
-      const otpCode = await this.authRepository.findUniqueOtpCode({
-        email: body.email,
-        code: body.code,
-        type: EnumOtpCode.REGISTER,
-      });
-
-      if (!otpCode) {
-        throw InvalidOtpCodeException;
-      }
-
-      if (otpCode.expiresAt < new Date()) {
-        throw ExpiredOtpCodeException;
-      }
+      const otpCode = await this._findAndValidateOtpCode({ email: body.email, code: body.code, type: EnumOtpCode.REGISTER });
 
       // 2. Create user
       // 2.1 Get user role id
@@ -147,13 +135,52 @@ export class AuthService {
       const deleteRefreshTokenPromise = this.authRepository.deleteRefreshToken({ token: body.refreshToken });
 
       // 4. Update device isActive to false (device has been logged out) in database
-      const updateDevicePromise = this.authRepository.updateDevice(refreshToken.deviceId, { isActive: false, lastActiveAt: new Date() });
+      const updateDevicePromise = this.authRepository.updateDevice({ id: refreshToken.deviceId }, { isActive: false, lastActiveAt: new Date() });
 
       // 5. Execute promises
       await Promise.all([deleteRefreshTokenPromise, updateDevicePromise]);
 
       // 6. Return message success
       return { message: 'Success.LogoutSuccessful' };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async forgotPassword(body: ForgotPasswordBodyType): Promise<MessageResponseType> {
+    // Forgot Password Form:
+    // [email]
+    // [code] [button send otp]
+    // [new password]
+    // [confirm new password]
+    // [button submit]
+    try {
+      // 1. Check OTP code
+      const otpCode = await this._findAndValidateOtpCode({ email: body.email, code: body.code, type: EnumOtpCode.FORGOT_PASSWORD });
+
+      // 2. Check email exists in database
+      const user = await this.sharedUserRepository.findUnique({ email: body.email });
+
+      if (!user) {
+        // Delete OTP code
+        await this.authRepository.deleteOtpCode({ id: otpCode.id });
+        throw EmailNotFoundException;
+      }
+
+      // 3. Hash new password
+      const hashedPassword = await this.hashingService.hash(body.newPassword);
+
+      // 4. Update user password
+      const updateUserPasswordPromise = this.authRepository.updateUser({ id: user.id }, { password: hashedPassword });
+
+      // 5. Delete OTP code
+      const deleteOtpCodePromise = this.authRepository.deleteOtpCode({ id: otpCode.id });
+
+      // 6. Execute promises
+      await Promise.all([updateUserPasswordPromise, deleteOtpCodePromise]);
+
+      // 7. Return message success
+      return { message: 'Success.ForgotPasswordSuccessful' };
     } catch (error) {
       throw error;
     }
@@ -171,7 +198,7 @@ export class AuthService {
       const { userId, deviceId, user } = refreshToken;
 
       // 2. Update device in database
-      const updateDevicePromise = this.authRepository.updateDevice(deviceId, {
+      const updateDevicePromise = this.authRepository.updateDevice({ id: deviceId }, {
         ip: body.ip,
         userAgent: body.userAgent,
       });
@@ -245,11 +272,15 @@ export class AuthService {
 
   async sendOtp(body: SendOtpBodyType): Promise<MessageResponseType> {
     try {
-      // 1. Check email exists in database
+      // 1. Check email exists in database and check type
       const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
-      if (user) {
+      if (user && body.type === EnumOtpCode.REGISTER) {
         throw EmailAlreadyExistsException;
+      }
+
+      if (!user && body.type === EnumOtpCode.FORGOT_PASSWORD) {
+        throw EmailNotFoundException;
       }
 
       // 2. Create otp code
@@ -311,5 +342,29 @@ export class AuthService {
 
     // 4. Return tokens
     return { accessToken, refreshToken };
+  }
+
+  private async _findAndValidateOtpCode(data: { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType> {
+    try {
+      const otpCode = await this.authRepository.findUniqueOtpCode({
+        email: data.email,
+        code: data.code,
+        type: data.type,
+      });
+
+      if (!otpCode) {
+        throw InvalidOtpCodeException;
+      }
+
+      if (otpCode.expiresAt < new Date()) {
+        // Delete OTP code
+        await this.authRepository.deleteOtpCode({ id: otpCode.id });
+        throw ExpiredOtpCodeException;
+      }
+
+      return otpCode;
+    } catch (error) {
+      throw error;
+    }
   }
 }

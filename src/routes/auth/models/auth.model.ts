@@ -98,6 +98,24 @@ export const LogoutBodySchema = JwtTokenSchema.pick({
 }).strict();
 
 //////////////////////////////////////////
+// FORGOT PASSWORD
+//////////////////////////////////////////
+export const ForgotPasswordBodySchema = z.object({
+  email: z.email(),
+  code: z.string().length(6),
+  newPassword: z.string().min(6).max(100),
+  confirmNewPassword: z.string().min(6).max(100),
+}).strict().superRefine((data, ctx) => {
+  if (data.newPassword !== data.confirmNewPassword) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Error.PasswordNotMatch', // Passwords do not match
+      path: ['confirmNewPassword'],
+    });
+  }
+});
+
+//////////////////////////////////////////
 // REFRESH TOKEN
 //////////////////////////////////////////
 export const RefreshTokenSchema = z.object({
