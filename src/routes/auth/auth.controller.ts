@@ -2,13 +2,11 @@ import { Disable2FABodyDTO, ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthC
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
-import { REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
-import { AccessTokenPayload } from '@/shared/types/jwt.type';
-import { Body, Controller, Get, Headers, HttpCode, HttpException, HttpStatus, Ip, Post, Query, Request, Res } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpCode, HttpException, HttpStatus, Ip, Post, Query, Res } from '@nestjs/common';
 import type { Response } from 'express';
 import { ZodSerializerDto } from 'nestjs-zod';
 

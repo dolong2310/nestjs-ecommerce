@@ -78,7 +78,7 @@ model Language {
 
   deletedAt DateTime?
   createdAt DateTime  @default(now())
-  updatedAt DateTime
+  updatedAt DateTime  @updatedAt
 
   userTranslations     UserTranslation[]
   productTranslations  ProductTranslation[]

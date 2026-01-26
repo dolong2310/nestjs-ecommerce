@@ -312,7 +312,7 @@ export type LanguageCreateInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
@@ -328,7 +328,7 @@ export type LanguageUncheckedCreateInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -370,7 +370,7 @@ export type LanguageCreateManyInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
 }
 
 export type LanguageUpdateManyMutationInput = {
@@ -611,7 +611,7 @@ export type LanguageCreateWithoutCreatedByInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutLanguageInput
@@ -625,7 +625,7 @@ export type LanguageUncheckedCreateWithoutCreatedByInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -647,7 +647,7 @@ export type LanguageCreateWithoutUpdatedByInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutLanguageInput
@@ -661,7 +661,7 @@ export type LanguageUncheckedCreateWithoutUpdatedByInput = {
   createdById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -728,7 +728,7 @@ export type LanguageCreateWithoutUserTranslationsInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   productTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutLanguageInput
@@ -743,7 +743,7 @@ export type LanguageUncheckedCreateWithoutUserTranslationsInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
   brandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -796,7 +796,7 @@ export type LanguageCreateWithoutProductTranslationsInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
@@ -811,7 +811,7 @@ export type LanguageUncheckedCreateWithoutProductTranslationsInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
   brandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -864,7 +864,7 @@ export type LanguageCreateWithoutCategoryTranslationsInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
@@ -879,7 +879,7 @@ export type LanguageUncheckedCreateWithoutCategoryTranslationsInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   brandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -932,7 +932,7 @@ export type LanguageCreateWithoutBrandTranslationsInput = {
   name: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedLanguagesInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedLanguagesInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutLanguageInput
@@ -947,7 +947,7 @@ export type LanguageUncheckedCreateWithoutBrandTranslationsInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutLanguageInput
   productTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutLanguageInput
   categoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutLanguageInput
@@ -1001,7 +1001,7 @@ export type LanguageCreateManyCreatedByInput = {
   updatedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
 }
 
 export type LanguageCreateManyUpdatedByInput = {
@@ -1010,7 +1010,7 @@ export type LanguageCreateManyUpdatedByInput = {
   createdById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
-  updatedAt: Date | string
+  updatedAt?: Date | string
 }
 
 export type LanguageUpdateWithoutCreatedByInput = {
