@@ -9,7 +9,7 @@ export const UserSchema = z.object({
   name: z.string().min(1).max(100),
   email: z.email(),
   password: z.string().min(6).max(100),
-  phoneNumber: z.string().min(10).max(15),
+  phoneNumber: z.string().min(10).max(15).nullable(),
 
   avatar: z.string().nullable(),
   totpSecret: z.string().nullable(),

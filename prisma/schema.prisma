@@ -81,11 +81,10 @@ model User {
   email       String  @unique
   name        String  @db.VarChar(500)
   password    String  @db.VarChar(500)
-  phoneNumber String  @db.VarChar(50)
+  phoneNumber String? @db.VarChar(50) // optional vì user đăng ký/đăng nhập bằng tài khoản google không phải user nào cũng có phone number
   avatar      String? @db.VarChar(1000)
 
-  // field này có thể dùng để thực hiện chức năng quên mật khẩu, đăng nhập 2 bước
-  totpSecret String?    @unique @db.VarChar(1000)
+  totpSecret String?    @unique @db.VarChar(1000) // field này có thể dùng để thực hiện chức năng quên mật khẩu, đăng nhập 2 bước
   status     UserStatus @default(ACTIVE)
 
   roleId Int
@@ -168,9 +167,9 @@ model UserTranslation {
 }
 
 model OtpCode {
-  id    Int                  @id @default(autoincrement())
-  email String               @db.VarChar(500)
-  code  String               @db.VarChar(50)
+  id    Int         @id @default(autoincrement())
+  email String      @db.VarChar(500)
+  code  String      @db.VarChar(50)
   type  OtpCodeType // LOGIN: mã đăng nhập bằng 2FA, REGISTER: mã đăng ký, FORGOT_PASSWORD: mã quên mật khẩu, DISABLE_2FA: mã vô hiệu hóa 2FA
 
   expiresAt DateTime
@@ -195,15 +194,15 @@ model RefreshToken {
 }
 
 model Device {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   userId    Int
   userAgent String
   ip        String
-  isActive  Boolean  @default(true) // Trạng thái thiết bị (đang login hay đã logout)
+  isActive  Boolean @default(true) // Trạng thái thiết bị (đang login hay đã logout)
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
+  createdAt    DateTime @default(now())
   lastActiveAt DateTime @updatedAt // updatedAt sửa lại thành lastActiveAt nếu muốn rõ ngữ nghĩa hơn
 
   refreshTokens RefreshToken[] // liên kết 1-n với RefreshToken

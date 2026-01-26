@@ -1,4 +1,4 @@
-import { ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO, Setup2FAResponseDTO } from '@/routes/auth/dtos/auth.dto';
+import { Disable2FABodyDTO, ForgotPasswordBodyDTO, GetMeResponseDTO, GoogleAuthCallbackQueryDTO, GoogleAuthResponseDTO, LoginBodyDTO, LoginResponseDTO, LogoutBodyDTO, RefreshJwtTokenBodyDTO, RefreshJwtTokenResponseDTO, RegisterBodyDTO, RegisterResponseDTO, SendOtpBodyDTO, Setup2FAResponseDTO } from '@/routes/auth/dtos/auth.dto';
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
@@ -117,6 +117,7 @@ export class AuthController {
 
   // Tại sao không dùng GET mà dùng POST? Khi mà body truyền là {}
   // POST bảo mật hơn GET, vì GET có thể được kích hoạt thông qua URL trên trình duyệt, còn POST thì không thể
+  // User phải login thì mới enable 2FA (Authentication Required)
   @Post('2fa/setup')
   @ZodSerializerDto(Setup2FAResponseDTO)
   setup2fa(@Body() _: EmptyBodyDTO, @ActiveUser('userId') userId: number): Promise<Setup2FAResponseDTO> {
@@ -125,7 +126,13 @@ export class AuthController {
   }
 
   @Post('2fa/disable')
-  disable2fa(@Body() body: { code: string, otp: string }): any {
-    return body;
+  @ZodSerializerDto(MessageResponseDTO)
+  disable2fa(@Body() body: Disable2FABodyDTO, @ActiveUser('userId') userId: number): Promise<MessageResponseDTO> {
+    // User phải truyền 1 trong 2 trường totpCode hoặc emailOtpCode thì mới đủ chứng thực để có thể disable 2FA
+    // Tránh việc user có quyền tuỳ ý disable 2FA
+    return this.authService.disable2fa(userId, {
+      totpCode: body.totpCode,
+      emailOtpCode: body.emailOtpCode,
+    });
   }
 }
