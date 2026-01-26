@@ -56,9 +56,19 @@ enum HTTPMethod {
 //////////////////////////////////////////
 
 model Language {
-  id   Int    @id @default(autoincrement())
+  /**
+   * Tối ưu lại việc fetch data cho Language
+   * Vấn đề: client browser muốn fetch được data của Language thì phải truyền "code" lên, sau đó server dựa vào "code" để query find Language, sau đó extract "id" từ Language để query data -> tốn 2 lần fetch.
+   * Cách giải quyết:
+   * Cách 1: cache lại bảng Language thì sẽ giảm 1 lần query -> rườm rà không cần thiết.
+   * Cách 2: đổi trường "id" thành "code", nghĩa là bảng Language sẽ không còn "id" tự tăng nữa, muốn fetch thì phải truyền id unique. Qua đó, nếu dùng cách này thì sẽ giảm được 1 lần fetch và không phải cache.
+   */
+  id   String @id @unique @db.VarChar(10)
   name String @db.VarChar(500)
-  code String @unique @db.VarChar(10)
+
+  // id   Int    @id @default(autoincrement())
+  // name String @db.VarChar(500)
+  // code String @unique @db.VarChar(10)
 
   createdById Int?
   updatedById Int?
@@ -74,6 +84,8 @@ model Language {
   productTranslations  ProductTranslation[]
   categoryTranslations CategoryTranslation[]
   brandTranslations    BrandTranslation[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model User {
@@ -143,12 +155,14 @@ model User {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model UserTranslation {
   id          Int     @id @default(autoincrement())
   userId      Int
-  languageId  Int
+  languageId  String
   address     String? @db.VarChar(500)
   description String?
 
@@ -164,6 +178,8 @@ model UserTranslation {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model OtpCode {
@@ -229,6 +245,8 @@ model Permission {
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model Role {
@@ -252,6 +270,8 @@ model Role {
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 //////////////////////////////////////////
@@ -285,12 +305,14 @@ model Product {
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model ProductTranslation {
   id          Int    @id @default(autoincrement())
   productId   Int
-  languageId  Int
+  languageId  String
   name        String @db.VarChar(500)
   description String
 
@@ -306,6 +328,8 @@ model ProductTranslation {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model Category {
@@ -330,12 +354,14 @@ model Category {
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model CategoryTranslation {
   id          Int    @id @default(autoincrement())
   categoryId  Int
-  languageId  Int
+  languageId  String
   name        String @db.VarChar(500)
   description String
 
@@ -351,6 +377,8 @@ model CategoryTranslation {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model Variant {
@@ -371,6 +399,8 @@ model Variant {
   updatedAt DateTime  @updatedAt
 
   variantOptions VariantOption[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model VariantOption {
@@ -394,6 +424,8 @@ model VariantOption {
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // skusVariantOptions SkusVariantOptions[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model SKU {
@@ -423,6 +455,8 @@ model SKU {
 
   cartItems           CartItem[]
   productSKUSnapshots ProductSKUSnapshot[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 //////////////////////////////////////////
@@ -445,12 +479,14 @@ model Brand {
 
   products          Product[]
   brandTranslations BrandTranslation[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model BrandTranslation {
   id          Int    @id @default(autoincrement())
   brandId     Int
-  languageId  Int
+  languageId  String
   name        String @db.VarChar(500)
   description String
 
@@ -466,6 +502,8 @@ model BrandTranslation {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 //////////////////////////////////////////
@@ -504,6 +542,8 @@ model Order {
 
   // không cần price vì đã có trong SKU, nhân price với quantity để tính tổng tiền
   items ProductSKUSnapshot[]
+
+  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
 model ProductSKUSnapshot {

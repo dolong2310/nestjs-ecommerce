@@ -29,7 +29,6 @@ export type AggregateBrandTranslation = {
 export type BrandTranslationAvgAggregateOutputType = {
   id: number | null
   brandId: number | null
-  languageId: number | null
   createdById: number | null
   updatedById: number | null
 }
@@ -37,7 +36,6 @@ export type BrandTranslationAvgAggregateOutputType = {
 export type BrandTranslationSumAggregateOutputType = {
   id: number | null
   brandId: number | null
-  languageId: number | null
   createdById: number | null
   updatedById: number | null
 }
@@ -45,7 +43,7 @@ export type BrandTranslationSumAggregateOutputType = {
 export type BrandTranslationMinAggregateOutputType = {
   id: number | null
   brandId: number | null
-  languageId: number | null
+  languageId: string | null
   name: string | null
   description: string | null
   createdById: number | null
@@ -58,7 +56,7 @@ export type BrandTranslationMinAggregateOutputType = {
 export type BrandTranslationMaxAggregateOutputType = {
   id: number | null
   brandId: number | null
-  languageId: number | null
+  languageId: string | null
   name: string | null
   description: string | null
   createdById: number | null
@@ -86,7 +84,6 @@ export type BrandTranslationCountAggregateOutputType = {
 export type BrandTranslationAvgAggregateInputType = {
   id?: true
   brandId?: true
-  languageId?: true
   createdById?: true
   updatedById?: true
 }
@@ -94,7 +91,6 @@ export type BrandTranslationAvgAggregateInputType = {
 export type BrandTranslationSumAggregateInputType = {
   id?: true
   brandId?: true
-  languageId?: true
   createdById?: true
   updatedById?: true
 }
@@ -228,7 +224,7 @@ export type BrandTranslationGroupByArgs<ExtArgs extends runtime.Types.Extensions
 export type BrandTranslationGroupByOutputType = {
   id: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById: number | null
@@ -264,7 +260,7 @@ export type BrandTranslationWhereInput = {
   NOT?: Prisma.BrandTranslationWhereInput | Prisma.BrandTranslationWhereInput[]
   id?: Prisma.IntFilter<"BrandTranslation"> | number
   brandId?: Prisma.IntFilter<"BrandTranslation"> | number
-  languageId?: Prisma.IntFilter<"BrandTranslation"> | number
+  languageId?: Prisma.StringFilter<"BrandTranslation"> | string
   name?: Prisma.StringFilter<"BrandTranslation"> | string
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
@@ -301,7 +297,7 @@ export type BrandTranslationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.BrandTranslationWhereInput[]
   NOT?: Prisma.BrandTranslationWhereInput | Prisma.BrandTranslationWhereInput[]
   brandId?: Prisma.IntFilter<"BrandTranslation"> | number
-  languageId?: Prisma.IntFilter<"BrandTranslation"> | number
+  languageId?: Prisma.StringFilter<"BrandTranslation"> | string
   name?: Prisma.StringFilter<"BrandTranslation"> | string
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
@@ -339,7 +335,7 @@ export type BrandTranslationScalarWhereWithAggregatesInput = {
   NOT?: Prisma.BrandTranslationScalarWhereWithAggregatesInput | Prisma.BrandTranslationScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"BrandTranslation"> | number
   brandId?: Prisma.IntWithAggregatesFilter<"BrandTranslation"> | number
-  languageId?: Prisma.IntWithAggregatesFilter<"BrandTranslation"> | number
+  languageId?: Prisma.StringWithAggregatesFilter<"BrandTranslation"> | string
   name?: Prisma.StringWithAggregatesFilter<"BrandTranslation"> | string
   description?: Prisma.StringWithAggregatesFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableWithAggregatesFilter<"BrandTranslation"> | number | null
@@ -364,7 +360,7 @@ export type BrandTranslationCreateInput = {
 export type BrandTranslationUncheckedCreateInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -389,7 +385,7 @@ export type BrandTranslationUpdateInput = {
 export type BrandTranslationUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -402,7 +398,7 @@ export type BrandTranslationUncheckedUpdateInput = {
 export type BrandTranslationCreateManyInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -423,7 +419,7 @@ export type BrandTranslationUpdateManyMutationInput = {
 export type BrandTranslationUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -459,7 +455,6 @@ export type BrandTranslationCountOrderByAggregateInput = {
 export type BrandTranslationAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
-  languageId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -493,7 +488,6 @@ export type BrandTranslationMinOrderByAggregateInput = {
 export type BrandTranslationSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   brandId?: Prisma.SortOrder
-  languageId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
 }
@@ -721,7 +715,7 @@ export type BrandTranslationScalarWhereInput = {
   NOT?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
   id?: Prisma.IntFilter<"BrandTranslation"> | number
   brandId?: Prisma.IntFilter<"BrandTranslation"> | number
-  languageId?: Prisma.IntFilter<"BrandTranslation"> | number
+  languageId?: Prisma.StringFilter<"BrandTranslation"> | string
   name?: Prisma.StringFilter<"BrandTranslation"> | string
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
@@ -745,7 +739,7 @@ export type BrandTranslationCreateWithoutCreatedByInput = {
 export type BrandTranslationUncheckedCreateWithoutCreatedByInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   updatedById?: number | null
@@ -778,7 +772,7 @@ export type BrandTranslationCreateWithoutUpdatedByInput = {
 export type BrandTranslationUncheckedCreateWithoutUpdatedByInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -842,7 +836,7 @@ export type BrandTranslationCreateWithoutBrandInput = {
 
 export type BrandTranslationUncheckedCreateWithoutBrandInput = {
   id?: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -928,7 +922,7 @@ export type BrandTranslationUncheckedUpdateManyWithoutLanguageInput = {
 export type BrandTranslationCreateManyCreatedByInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   updatedById?: number | null
@@ -940,7 +934,7 @@ export type BrandTranslationCreateManyCreatedByInput = {
 export type BrandTranslationCreateManyUpdatedByInput = {
   id?: number
   brandId: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -963,7 +957,7 @@ export type BrandTranslationUpdateWithoutCreatedByInput = {
 export type BrandTranslationUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -975,7 +969,7 @@ export type BrandTranslationUncheckedUpdateWithoutCreatedByInput = {
 export type BrandTranslationUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -998,7 +992,7 @@ export type BrandTranslationUpdateWithoutUpdatedByInput = {
 export type BrandTranslationUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1010,7 +1004,7 @@ export type BrandTranslationUncheckedUpdateWithoutUpdatedByInput = {
 export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1021,7 +1015,7 @@ export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByInput = {
 
 export type BrandTranslationCreateManyBrandInput = {
   id?: number
-  languageId: number
+  languageId: string
   name: string
   description: string
   createdById?: number | null
@@ -1044,7 +1038,7 @@ export type BrandTranslationUpdateWithoutBrandInput = {
 
 export type BrandTranslationUncheckedUpdateWithoutBrandInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1056,7 +1050,7 @@ export type BrandTranslationUncheckedUpdateWithoutBrandInput = {
 
 export type BrandTranslationUncheckedUpdateManyWithoutBrandInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1163,7 +1157,7 @@ export type $BrandTranslationPayload<ExtArgs extends runtime.Types.Extensions.In
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     brandId: number
-    languageId: number
+    languageId: string
     name: string
     description: string
     createdById: number | null
@@ -1600,7 +1594,7 @@ export interface Prisma__BrandTranslationClient<T, Null = never, ExtArgs extends
 export interface BrandTranslationFieldRefs {
   readonly id: Prisma.FieldRef<"BrandTranslation", 'Int'>
   readonly brandId: Prisma.FieldRef<"BrandTranslation", 'Int'>
-  readonly languageId: Prisma.FieldRef<"BrandTranslation", 'Int'>
+  readonly languageId: Prisma.FieldRef<"BrandTranslation", 'String'>
   readonly name: Prisma.FieldRef<"BrandTranslation", 'String'>
   readonly description: Prisma.FieldRef<"BrandTranslation", 'String'>
   readonly createdById: Prisma.FieldRef<"BrandTranslation", 'Int'>
