@@ -1,4 +1,4 @@
-import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, UserNotFoundException } from '@/routes/auth/models/error.model';
+import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, InvalidTOTPException, InvalidTOTPOrEmailOtpCodeException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, UserNotFoundException } from '@/routes/auth/models/error.model';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { RolesService } from '@/routes/auth/services/roles.service';
 import { ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType, Setup2FAResponseType } from '@/routes/auth/types/auth.type';
@@ -90,7 +90,36 @@ export class AuthService {
         throw InvalidPasswordException;
       }
 
-      // 3. Create device
+      // 3. Check 2FA is enabled
+      if (!!user.totpSecret) {
+        // Throw error if body does not have totpCode and emailOtpCode
+        if (!body.totpCode && !body.emailOtpCode) {
+          throw InvalidTOTPOrEmailOtpCodeException;
+        }
+
+        // Check TOTP code is valid or email OTP code is valid
+        if (body.totpCode) {
+          const isTOTPValid = this.twoFactorAuthenticationService.verifyTOTP({
+            email: user.email,
+            secret: user.totpSecret,
+            token: body.totpCode,
+          })
+
+          if (!isTOTPValid) {
+            throw InvalidTOTPException;
+          }
+        } else if (body.emailOtpCode) {
+          // emailOtpCode là option nếu như user đã enable 2FA bằng TOTP nhưng giả sử không có thiết bị để lấy được TOTP code thì sẽ dùng OTP gửi qua email để login
+          // vì vậy không cần check email OTP code mỗi lần login
+          await this._findAndValidateOtpCode({
+            email: user.email,
+            code: body.emailOtpCode,
+            type: EnumOtpCode.LOGIN,
+          });
+        }
+      }
+
+      // 4. Create device
       const device = await this.authRepository.createDevice({
         userId: user.id,
         userAgent: body.userAgent,
@@ -101,14 +130,14 @@ export class AuthService {
         throw FailedToCreateDeviceException;
       }
 
-      // 4. Get role name
+      // 5. Get role name
       // const role = await this.authRepository.findRoleUnique({ id: user.roleId });
 
       // if (!role) {
       // throw RoleNotFoundException;
       // }
 
-      // 5. Generate tokens
+      // 6. Generate tokens
       const jwtTokens = await this.createAuthTokens({
         userId: user.id,
         deviceId: device.id,
@@ -116,7 +145,7 @@ export class AuthService {
         roleName: user.role.name,
       });
 
-      // 6. Return tokens
+      // 7. Return tokens
       return jwtTokens;
     } catch (error) {
       throw error;

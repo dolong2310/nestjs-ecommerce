@@ -90,7 +90,23 @@ export const LoginBodySchema = UserSchema.pick({
   // vì có tính năng disable 2FA nên thêm optional và client browser không cần truyền body
   totpCode: z.string().length(6).optional(), // 2FA code
   emailOtpCode: z.string().length(6).optional(), // Email otp code
-}).strict();
+}).strict().superRefine((data, ctx) => {
+  const { totpCode, emailOtpCode } = data;
+  // nếu cả 2 trường đều có thì sẽ chạy vào if này (true && true, không check false && false)
+  // bởi vì nếu truyền cả 2 nó vẫn sẽ throw error nhưng error là { "field": "totpCode", "message": "Error.InvalidTOTP" }
+  if ((totpCode !== undefined) && (emailOtpCode !== undefined)) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+      path: ['totpCode'],
+    });
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+      path: ['emailOtpCode'],
+    });
+  }
+});
 
 export const LoginResponseSchema = JwtTokenSchema;
 

@@ -71,7 +71,12 @@ export const EmailNotVerifiedException = new UnauthorizedException([{
   message: 'Error.EmailNotVerified', // Email not verified
 }]);
 
-// TOTP Service
+// TOTP Service (Time-Based One-Time Passwords)
+export const InvalidTOTPException = new BadRequestException([{
+  field: 'totpCode',
+  message: 'Error.InvalidTOTP', // Invalid TOTP code
+}]);
+
 export const TOTPAlreadyEnabledException = new BadRequestException([{
   field: 'totpCode',
   message: 'Error.TOTPAlreadyEnabled', // User already has 2FA

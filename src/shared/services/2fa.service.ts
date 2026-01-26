@@ -25,7 +25,7 @@ export class TwoFactorAuthenticationService {
     };
   }
 
-  verifyTOTP(data: { email: string, token: string, secret?: string }): boolean {
+  verifyTOTP(data: { email: string, secret?: string, token: string }): boolean {
     const totp = this.createTOTP(data.email, data?.secret);
     // window: 1 là số lượng khoảng thời gian (time step) mà token có thể hợp lệ
     // Giả sử period là 30s thì window: 1 là 30s, trong khoảng thời gian sau khi token mới được tạo ra thì token cũ vẫn còn hợp lệ

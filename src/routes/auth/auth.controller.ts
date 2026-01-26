@@ -38,8 +38,15 @@ export class AuthController {
   @Public()
   @ZodSerializerDto(LoginResponseDTO)
   login(@Body() body: LoginBodyDTO, @Ip() ip: string, @Headers('user-agent') userAgent: string): Promise<LoginResponseDTO> {
-    const { email, password } = body; // be explicit
-    return this.authService.login({ email, password, ip, userAgent });
+    const { email, password, totpCode, emailOtpCode } = body; // be explicit
+    return this.authService.login({
+      email,
+      password,
+      ip,
+      userAgent,
+      totpCode,
+      emailOtpCode,
+    });
   }
 
   @Post('logout')
