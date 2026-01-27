@@ -18,7 +18,7 @@ WHERE "deletedAt" IS NULL;
 6.
 npx prisma migrate dev
 
-7. nếu migrate failed thì cách 1 dùng rollback
+7. nếu migrate failed thì cách 1 dùng rollback (Kiểm tra trường "checksum" trên database và xoá nó đi => không lưu trường hợp failed trên database vì nó ko đồng bộ với các file migration ở local)
 npx prisma migrate resolve --rolled-back [FOLDER_MIGRATION_NAME]
 
 8. sửa file migration
