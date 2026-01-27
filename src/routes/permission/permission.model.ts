@@ -47,7 +47,7 @@ export const CreatePermissionBodySchema = PermissionSchema.pick({
   method: true,
 }).strict();
 
-export const UpdatePermissionBodySchema = CreatePermissionBodySchema;
+export const UpdatePermissionBodySchema = CreatePermissionBodySchema.strict();
 
 // Response
 // For offset-based pagination
