@@ -277,7 +277,7 @@ model Permission {
   // vì trong postgreSql xem null là khác nhau nên => không unique => có thể tạo lại mới trùng method và path.
   // cách giải quyết: dùng kỹ thuật "Partial Unique Index" để tạo index cho cặp "path" và "method" nhưng với điều kiện "deleteAt = null".
   // ví dụ: @@unique([path, method], { where: { deleteAt: null } }) => không quan tâm deleteAt: now() => đã có giá trị => đã xoá mềm, chỉ quan tâm chưa xoá mềm là deleteAt = null.
-  // @@unique([path, method])
+  // @@unique([path, method], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260127070521_permission_path_method_unique
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
@@ -305,6 +305,7 @@ model Role {
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
 
+  // @@unique([name], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260127125425_role_unique_name_default_description
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
