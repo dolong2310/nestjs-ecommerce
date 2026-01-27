@@ -246,6 +246,15 @@ model Permission {
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // permissionsRoles PermissionsRoles[]
 
+  // mong muốn path và method là unique theo cặp value ví dụ ("/api/v1/get-permissions", "GET") nghĩa là không thể có 2 records có cùng path và method.
+  // nhưng hiện tại đang vướng 1 vấn đề khác là trường "deleteAt" chỉ xoá mềm, nghĩa là không thể xoá record đó mà chỉ có thể set deletedAt = now() để xoá mềm.
+  // vì vậy không thể tạo 1 record mới có trùng path và method ("/api/v1/get-permissions", "GET").
+  // nếu dùng "deleteAt" làm unique @@unique([path, method, deleteAt]) thì postgreSql vẫn cho tạo lại record mới có cùng path và method.
+  // ví dụ: tạo 1 record mới có path = "/api/v1/get-permissions" và method = "GET" và deleteAt = null, sau đó tạo 1 record mới có path = "/api/v1/get-permissions" và method = "GET" và deleteAt = null thì postgreSql vẫn cho tạo lại.
+  // vì trong postgreSql xem null là khác nhau nên => không unique => có thể tạo lại mới trùng method và path.
+  // cách giải quyết: dùng kỹ thuật "Partial Unique Index" để tạo index cho cặp "path" và "method" nhưng với điều kiện "deleteAt = null".
+  // ví dụ: @@unique([path, method], { where: { deleteAt: null } }) => không quan tâm deleteAt: now() => đã có giá trị => đã xoá mềm, chỉ quan tâm chưa xoá mềm là deleteAt = null.
+  // @@unique([path, method])
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
