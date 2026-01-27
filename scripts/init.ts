@@ -1,3 +1,7 @@
+/**
+ * Nhớ chạy lệnh npx prisma generate để tạo file generated/prisma/client.ts
+ * Sau đó vào file "generated/prisma/client.ts" xoá đuôi .js trên các import file để không bị lỗi.
+ */
 import envConfig from "@/shared/config";
 import { RoleName } from "@/shared/constants/role.constant";
 import { HashingService } from "@/shared/services/hashing.service";
