@@ -37,7 +37,7 @@ export class LanguageService {
 
   async createLanguage(payload: { userId: number, body: CreateLanguageBodyType }): Promise<GetLanguageResponseType> {
     try {
-      const language = await this.languageRepository.create({ createdById: payload.userId, body: payload.body });
+      const language = await this.languageRepository.create(payload);
       return language;
     } catch (error) {
       if (isUniqueConstraintPrismaError(error)) {
@@ -49,11 +49,7 @@ export class LanguageService {
 
   async updateLanguage(payload: { id: string, userId: number, body: UpdateLanguageBodyType }): Promise<GetLanguageResponseType> {
     try {
-      const language = await this.languageRepository.update({
-        id: payload.id,
-        updatedById: payload.userId,
-        body: payload.body
-      });
+      const language = await this.languageRepository.update(payload);
       return language;
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
@@ -63,10 +59,11 @@ export class LanguageService {
     }
   }
 
-  async deleteLanguage(id: string): Promise<MessageResponseType> {
+  async deleteLanguage(payload: { userId: number, id: string }): Promise<MessageResponseType> {
     try {
       // hard delete vì id là mình tự tạo nên có thể bị conflict nếu như đã tồn tại trong database
-      await this.languageRepository.delete({ id, isHard: true });
+      const isHardDelete = true;
+      await this.languageRepository.delete(payload, isHardDelete);
       return {
         message: 'Success.LanguageDeleted',
       }

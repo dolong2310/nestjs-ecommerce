@@ -68,7 +68,7 @@ export class PermissionRepository {
   findOne(id: number): Promise<PermissionType | null> {
     return this.prisma.permission.findUnique({
       where: {
-        id: id,
+        id,
         deletedAt: null,
       }
     })
@@ -91,7 +91,7 @@ export class PermissionRepository {
     const { userId, id, body } = payload;
     return this.prisma.permission.update({
       where: {
-        id: id,
+        id,
         deletedAt: null,
       },
       data: {
@@ -109,12 +109,12 @@ export class PermissionRepository {
     return isHardDelete
       ? this.prisma.permission.delete({
         where: {
-          id: id,
+          id,
         },
       })
       : this.prisma.permission.update({
         where: {
-          id: id,
+          id,
           deletedAt: null,
         },
         data: {

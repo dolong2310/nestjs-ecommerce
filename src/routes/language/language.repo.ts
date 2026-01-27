@@ -21,44 +21,47 @@ export class LanguageRepository {
     });
   }
 
-  create(data: { createdById: number, body: CreateLanguageBodyType }): Promise<LanguageType> {
+  create(payload: { userId: number, body: CreateLanguageBodyType }): Promise<LanguageType> {
+    const { userId, body } = payload;
     return this.prismaService.language.create({
       data: {
-        id: data.body.id,
-        name: data.body.name,
-        createdById: data.createdById,
+        id: body.id,
+        name: body.name,
+        createdById: userId,
       },
     });
   }
 
-  update(data: { id: string, updatedById: number, body: UpdateLanguageBodyType }): Promise<LanguageType> {
+  update(payload: { id: string, userId: number, body: UpdateLanguageBodyType }): Promise<LanguageType> {
+    const { id, userId, body } = payload;
     return this.prismaService.language.update({
       where: {
-        id: data.id,
+        id,
         deletedAt: null,
       },
       data: {
-        name: data.body.name,
-        updatedById: data.updatedById,
+        name: body.name,
+        updatedById: userId,
       },
     });
   }
 
-  delete(data: { id: string, isHard?: boolean }): Promise<LanguageType> {
-    return data.isHard
+  delete(payload: { userId: number, id: string }, isHardDelete?: boolean): Promise<LanguageType> {
+    const { userId, id } = payload;
+    return isHardDelete
       ? this.prismaService.language.delete({
         where: {
-          id: data.id,
-          deletedAt: null,
+          id,
         },
       })
       : this.prismaService.language.update({
         where: {
-          id: data.id,
+          id,
           deletedAt: null,
         },
         data: {
           deletedAt: new Date(),
+          deletedById: userId,
         },
       });
   }

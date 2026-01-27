@@ -32,12 +32,12 @@ export class LanguageController {
   @Put(':id')
   @ZodSerializerDto(GetLanguageResponseDTO)
   updateLanguage(@Param() params: GetLanguageParamsDTO, @Body() body: UpdateLanguageBodyDTO, @ActiveUser("userId") userId: number): Promise<GetLanguageResponseDTO> {
-    return this.languageService.updateLanguage({ id: params.id, userId, body });
+    return this.languageService.updateLanguage({ userId, id: params.id, body });
   }
 
   @Delete(':id')
   @ZodSerializerDto(MessageResponseDTO)
-  deleteLanguage(@Param() params: GetLanguageParamsDTO): Promise<MessageResponseDTO> {
-    return this.languageService.deleteLanguage(params.id);
+  deleteLanguage(@Param() params: GetLanguageParamsDTO, @ActiveUser("userId") userId: number): Promise<MessageResponseDTO> {
+    return this.languageService.deleteLanguage({ userId, id: params.id });
   }
 }
