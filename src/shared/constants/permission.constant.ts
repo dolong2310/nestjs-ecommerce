@@ -7,3 +7,5 @@ export const EnumHttpMethod = {
   OPTIONS: 'OPTIONS',
   HEAD: 'HEAD',
 } as const;
+
+export type HttpMethodType = (typeof EnumHttpMethod)[keyof typeof EnumHttpMethod];

@@ -3,23 +3,28 @@ import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 import { AuthenticationRequiredException } from '@/shared/models/error.model';
 import { AUTH_TYPE_KEY, AuthMetadata, AuthType } from '@/shared/types/shared-auth.type';
-import { CanActivate, ExecutionContext, HttpException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, HttpException, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class AuthCompositeGuard implements CanActivate {
+  private readonly guardMap: Record<AuthType, CanActivate>;
+
   constructor(
     private readonly reflector: Reflector,
     private readonly authGuard: AuthGuard,
     private readonly apiKeyGuard: ApiKeyGuard,
-  ) { }
+  ) {
+    // Map auth types to guards
+    this.guardMap = {
+      [AuthKey.JWT]: this.authGuard,
+      [AuthKey.API_KEY]: this.apiKeyGuard,
+      [AuthKey.NONE]: { canActivate: async () => true },
+    };
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // Get metadata from decorator
-    const metadata = this.reflector.get<AuthMetadata>(
-      AUTH_TYPE_KEY,
-      context.getHandler(),
-    );
+    const metadata = this._getAuthMetadata(context);
 
     // No metadata = default to JWT auth (protect all routes by default)
     if (!metadata) {
@@ -35,24 +40,36 @@ export class AuthCompositeGuard implements CanActivate {
     }
 
     const { types, options } = metadata;
-    const condition = options?.condition || AuthConditionKey.AND;
 
     // Check if public route (no auth required)
     // Example: @Public() | @Private([AuthKey.NONE]) | @Private([])
-    if (types.length === 0 || types.includes(AuthKey.NONE)) {
-      return true; // Public route
+    if (this._isPublicRoute(types)) {
+      return true;
     }
 
-    // Map auth types to guards
-    const guardMap: Record<AuthType, CanActivate> = {
-      [AuthKey.JWT]: this.authGuard,
-      [AuthKey.API_KEY]: this.apiKeyGuard,
-      [AuthKey.NONE]: { canActivate: () => true },
-    };
+    const guards = this._getGuardsToExecute(types);
+    const condition = options?.condition || AuthConditionKey.AND;
 
-    // Get guards to execute
-    const guards = types.map(type => guardMap[type]).filter(Boolean);
+    return this._executeGuardsByCondition(guards, context, condition);
+  }
 
+  private _getAuthMetadata(context: ExecutionContext): AuthMetadata | undefined {
+    return this.reflector.get<AuthMetadata>(AUTH_TYPE_KEY, context.getHandler());
+  }
+
+  private _isPublicRoute(types: AuthType[]): boolean {
+    return types.length === 0 || types.includes(AuthKey.NONE);
+  }
+
+  private _getGuardsToExecute(types: AuthType[]): CanActivate[] {
+    return types.map(type => this.guardMap[type]).filter(Boolean);
+  }
+
+  private async _executeGuardsByCondition(
+    guards: CanActivate[],
+    context: ExecutionContext,
+    condition: (typeof AuthConditionKey)[keyof typeof AuthConditionKey],
+  ): Promise<boolean> {
     if (guards.length === 0) {
       return true;
     }
@@ -61,49 +78,44 @@ export class AuthCompositeGuard implements CanActivate {
       return this._executeGuard(guards[0], context);
     }
 
-    // Execute guards based on condition
-    if (condition === AuthConditionKey.AND) {
-      return this._executeGuardsAnd(guards, context);
-    } else {
-      return this._executeGuardsOr(guards, context);
-    }
+    return condition === AuthConditionKey.AND
+      ? this._executeGuardsAnd(guards, context)
+      : this._executeGuardsOr(guards, context);
   }
 
   private async _executeGuard(guard: CanActivate, context: ExecutionContext): Promise<boolean> {
-    try {
-      const result = await guard.canActivate(context);
-      if (result) {
-        return true;
-      }
-      throw new UnauthorizedException();
-    } catch (error) {
-      if (error instanceof HttpException) {
-        throw AuthenticationRequiredException;
-      }
-      throw error;
+    const canActivate = await guard.canActivate(context);
+    if (canActivate) {
+      return true;
     }
+    throw AuthenticationRequiredException;
   }
 
   private async _executeGuardsAnd(
     guards: CanActivate[],
     context: ExecutionContext,
   ): Promise<boolean> {
-    const errors: any[] = [];
+    const errors: Error[] = [];
 
     for (const guard of guards) {
       try {
-        const result = await guard.canActivate(context);
-        if (!result) {
+        const canActivate = await guard.canActivate(context);
+        if (!canActivate) {
           throw AuthenticationRequiredException;
         }
       } catch (error) {
-        errors.push(error);
+        errors.push(error as Error);
       }
     }
 
-    // If there are any errors, throw the first one
+    // If there are any errors, throw the first one to preserve original error
     if (errors.length > 0) {
-      throw errors[0];
+      const firstError = errors[0];
+      if (firstError instanceof HttpException) {
+        throw firstError;
+      }
+      // If not HttpException, throw it anyway to preserve error information
+      throw firstError;
     }
 
     return true;
@@ -113,20 +125,30 @@ export class AuthCompositeGuard implements CanActivate {
     guards: CanActivate[],
     context: ExecutionContext,
   ): Promise<boolean> {
-    const errors: any[] = [];
+    const errors: Error[] = [];
 
     for (const guard of guards) {
       try {
-        const result = await guard.canActivate(context);
-        if (result) {
+        const canActivate = await guard.canActivate(context);
+        if (canActivate) {
           return true; // At least one guard passed
         }
       } catch (error) {
-        errors.push(error);
+        errors.push(error as Error);
       }
     }
 
-    // All guards failed, throw combined error
+    // If all guards failed, throw the most relevant error
+    if (errors.length > 0) {
+      const lastError = errors[errors.length - 1];
+      if (lastError instanceof HttpException) {
+        throw lastError;
+      }
+      // If not HttpException, throw it anyway to preserve error information
+      throw lastError;
+    }
+
+    // If no errors but all guards returned false, throw authentication required
     throw AuthenticationRequiredException;
   }
 }

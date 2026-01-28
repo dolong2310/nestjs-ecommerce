@@ -4,15 +4,15 @@
  * Link stackoverflow tham khảo cách lấy availableRoutes: https://stackoverflow.com/questions/58255000/how-can-i-get-all-the-routes-from-all-the-modules-and-controllers-available-on/63333671#63333671
  */
 import { AppModule } from "@/app.module";
-import { NestFactory } from "@nestjs/core";
-import { EnumHttpMethod } from "@/shared/constants/permission.constant";
-import { PrismaService } from "@/shared/services/prisma.service";
+import { HttpMethodType } from "@/shared/constants/permission.constant";
 import { RoleName } from "@/shared/constants/role.constant";
+import { PrismaService } from "@/shared/services/prisma.service";
+import { NestFactory } from "@nestjs/core";
 
 type AvailableRoute = {
   name: string;
   path: string;
-  method: keyof typeof EnumHttpMethod;
+  method: HttpMethodType;
 };
 
 const PORT = 3030; // only for testing port
@@ -43,7 +43,7 @@ function getAvailableRoutes(router: any): AvailableRoute[] {
     .map(layer => {
       if (layer.route) {
         const path = layer.route?.path;
-        const method = layer.route?.stack[0].method.toUpperCase() as keyof typeof EnumHttpMethod;
+        const method = layer.route?.stack[0].method.toUpperCase() as HttpMethodType;
         return {
           name: `${method}+${path}`,
           path,
