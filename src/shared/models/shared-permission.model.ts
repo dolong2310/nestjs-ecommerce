@@ -7,6 +7,7 @@ export const PermissionSchema = z.object({
   description: z.string().default(''),
   path: z.string().max(1000),
   method: z.enum(EnumHttpMethod),
+  module: z.string().max(500).default(''),
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),

@@ -13,6 +13,7 @@ type AvailableRoute = {
   name: string;
   path: string;
   method: HttpMethodType;
+  module: string;
 };
 
 const PORT = 3030; // only for testing port
@@ -44,10 +45,12 @@ function getAvailableRoutes(router: any): AvailableRoute[] {
       if (layer.route) {
         const path = layer.route?.path;
         const method = layer.route?.stack[0].method.toUpperCase() as HttpMethodType;
+        const module = path.split('/')[1]?.toUpperCase() || '';
         return {
           name: `${method}+${path}`,
           path,
           method,
+          module,
         };
       }
     })
@@ -131,7 +134,6 @@ async function syncPermissionsToAdminRole() {
       deletedAt: null,
     },
   });
-  console.log("permissions: ", permissions);
 
   // 2. lấy role ADMIN từ database
   const adminRole = await prisma.role.findFirstOrThrow({
@@ -140,7 +142,6 @@ async function syncPermissionsToAdminRole() {
       deletedAt: null,
     },
   });
-  console.log("Admin role: ", adminRole);
 
   // 3. update permissions của role ADMIN
   const updatedRole = await prisma.role.update({
@@ -153,7 +154,29 @@ async function syncPermissionsToAdminRole() {
       },
     },
   });
-  console.log("Updated role: ", updatedRole);
+  console.log(`synced ${permissions.length} permissions to admin role: ${updatedRole.name}`);
 }
 
 main();
+
+// (async () => {
+//   try {
+//     const deleted = await prisma.permission.deleteMany();
+//     console.log(`Deleted ${deleted.count} permissions`);
+//     console.log("✅ Permissions deleted successfully!");
+//   } catch (error) {
+//     console.error("Error deleting permissions: ", error);
+//   } finally {
+//     process.exit(0);
+//   }
+// })()
+
+// Sample code to group permissions by module (Frontend will implement this)
+// const groupPermissionsByModule = permissions.reduce((result, permission) => {
+//   const module = permission.module;
+//   if (!result[module]) {
+//     result[module] = [];
+//   }
+//   result[module].push(permission);
+//   return result;
+// }, {} as Record<string, typeof permissions[number][]>)

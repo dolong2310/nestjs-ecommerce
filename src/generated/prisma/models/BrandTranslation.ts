@@ -50,10 +50,10 @@ export type BrandTranslationMinAggregateOutputType = {
   description: string | null
   createdById: number | null
   updatedById: number | null
+  deletedById: number | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  deletedById: number | null
 }
 
 export type BrandTranslationMaxAggregateOutputType = {
@@ -64,10 +64,10 @@ export type BrandTranslationMaxAggregateOutputType = {
   description: string | null
   createdById: number | null
   updatedById: number | null
+  deletedById: number | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
-  deletedById: number | null
 }
 
 export type BrandTranslationCountAggregateOutputType = {
@@ -78,10 +78,10 @@ export type BrandTranslationCountAggregateOutputType = {
   description: number
   createdById: number
   updatedById: number
+  deletedById: number
   deletedAt: number
   createdAt: number
   updatedAt: number
-  deletedById: number
   _all: number
 }
 
@@ -110,10 +110,10 @@ export type BrandTranslationMinAggregateInputType = {
   description?: true
   createdById?: true
   updatedById?: true
+  deletedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedById?: true
 }
 
 export type BrandTranslationMaxAggregateInputType = {
@@ -124,10 +124,10 @@ export type BrandTranslationMaxAggregateInputType = {
   description?: true
   createdById?: true
   updatedById?: true
+  deletedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedById?: true
 }
 
 export type BrandTranslationCountAggregateInputType = {
@@ -138,10 +138,10 @@ export type BrandTranslationCountAggregateInputType = {
   description?: true
   createdById?: true
   updatedById?: true
+  deletedById?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
-  deletedById?: true
   _all?: true
 }
 
@@ -239,10 +239,10 @@ export type BrandTranslationGroupByOutputType = {
   description: string
   createdById: number | null
   updatedById: number | null
+  deletedById: number | null
   deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
-  deletedById: number | null
   _count: BrandTranslationCountAggregateOutputType | null
   _avg: BrandTranslationAvgAggregateOutputType | null
   _sum: BrandTranslationSumAggregateOutputType | null
@@ -276,15 +276,15 @@ export type BrandTranslationWhereInput = {
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   updatedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
+  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BrandTranslation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
-  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   brand?: Prisma.XOR<Prisma.BrandScalarRelationFilter, Prisma.BrandWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   language?: Prisma.XOR<Prisma.LanguageScalarRelationFilter, Prisma.LanguageWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type BrandTranslationOrderByWithRelationInput = {
@@ -295,15 +295,15 @@ export type BrandTranslationOrderByWithRelationInput = {
   description?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
   brand?: Prisma.BrandOrderByWithRelationInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
-  deletedBy?: Prisma.UserOrderByWithRelationInput
   language?: Prisma.LanguageOrderByWithRelationInput
+  createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
+  deletedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type BrandTranslationWhereUniqueInput = Prisma.AtLeast<{
@@ -317,15 +317,15 @@ export type BrandTranslationWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   updatedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
+  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BrandTranslation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
-  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   brand?: Prisma.XOR<Prisma.BrandScalarRelationFilter, Prisma.BrandWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   language?: Prisma.XOR<Prisma.LanguageScalarRelationFilter, Prisma.LanguageWhereInput>
+  createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
 export type BrandTranslationOrderByWithAggregationInput = {
@@ -336,10 +336,10 @@ export type BrandTranslationOrderByWithAggregationInput = {
   description?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.BrandTranslationCountOrderByAggregateInput
   _avg?: Prisma.BrandTranslationAvgOrderByAggregateInput
   _max?: Prisma.BrandTranslationMaxOrderByAggregateInput
@@ -358,10 +358,10 @@ export type BrandTranslationScalarWhereWithAggregatesInput = {
   description?: Prisma.StringWithAggregatesFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableWithAggregatesFilter<"BrandTranslation"> | number | null
   updatedById?: Prisma.IntNullableWithAggregatesFilter<"BrandTranslation"> | number | null
+  deletedById?: Prisma.IntNullableWithAggregatesFilter<"BrandTranslation"> | number | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"BrandTranslation"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"BrandTranslation"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"BrandTranslation"> | Date | string
-  deletedById?: Prisma.IntNullableWithAggregatesFilter<"BrandTranslation"> | number | null
 }
 
 export type BrandTranslationCreateInput = {
@@ -371,10 +371,10 @@ export type BrandTranslationCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
-  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
   language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedBrandTranslationsInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
 }
 
 export type BrandTranslationUncheckedCreateInput = {
@@ -385,10 +385,10 @@ export type BrandTranslationUncheckedCreateInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationUpdateInput = {
@@ -398,10 +398,10 @@ export type BrandTranslationUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
-  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
   language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedBrandTranslationsNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
 }
 
 export type BrandTranslationUncheckedUpdateInput = {
@@ -412,10 +412,10 @@ export type BrandTranslationUncheckedUpdateInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationCreateManyInput = {
@@ -426,10 +426,10 @@ export type BrandTranslationCreateManyInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationUpdateManyMutationInput = {
@@ -448,10 +448,10 @@ export type BrandTranslationUncheckedUpdateManyInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationListRelationFilter = {
@@ -472,10 +472,10 @@ export type BrandTranslationCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  deletedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedById?: Prisma.SortOrder
 }
 
 export type BrandTranslationAvgOrderByAggregateInput = {
@@ -494,10 +494,10 @@ export type BrandTranslationMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  deletedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedById?: Prisma.SortOrder
 }
 
 export type BrandTranslationMinOrderByAggregateInput = {
@@ -508,10 +508,10 @@ export type BrandTranslationMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
+  deletedById?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  deletedById?: Prisma.SortOrder
 }
 
 export type BrandTranslationSumOrderByAggregateInput = {
@@ -571,17 +571,17 @@ export type BrandTranslationCreateNestedManyWithoutCreatedByInput = {
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
 }
 
-export type BrandTranslationCreateNestedManyWithoutDeletedByInput = {
-  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
-  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
-  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
-  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-}
-
 export type BrandTranslationCreateNestedManyWithoutUpdatedByInput = {
   create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput> | Prisma.BrandTranslationCreateWithoutUpdatedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput[]
   connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput | Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput[]
   createMany?: Prisma.BrandTranslationCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+}
+
+export type BrandTranslationCreateNestedManyWithoutDeletedByInput = {
+  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
+  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
+  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
 }
 
@@ -592,17 +592,17 @@ export type BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput = {
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
 }
 
-export type BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput = {
-  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
-  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
-  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
-  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-}
-
 export type BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput = {
   create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput> | Prisma.BrandTranslationCreateWithoutUpdatedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput[]
   connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput | Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput[]
   createMany?: Prisma.BrandTranslationCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+}
+
+export type BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput = {
+  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
+  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
+  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
 }
 
@@ -620,20 +620,6 @@ export type BrandTranslationUpdateManyWithoutCreatedByNestedInput = {
   deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
 }
 
-export type BrandTranslationUpdateManyWithoutDeletedByNestedInput = {
-  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
-  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
-  upsert?: Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput[]
-  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
-  set?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  disconnect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  delete?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput[]
-  updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput[]
-  deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
-}
-
 export type BrandTranslationUpdateManyWithoutUpdatedByNestedInput = {
   create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput> | Prisma.BrandTranslationCreateWithoutUpdatedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput[]
   connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput | Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput[]
@@ -645,6 +631,20 @@ export type BrandTranslationUpdateManyWithoutUpdatedByNestedInput = {
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
   update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutUpdatedByInput[]
   updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutUpdatedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
+}
+
+export type BrandTranslationUpdateManyWithoutDeletedByNestedInput = {
+  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
+  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
+  upsert?: Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput[]
+  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
+  set?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  disconnect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  delete?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput[]
+  updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput[]
   deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
 }
 
@@ -662,20 +662,6 @@ export type BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput = {
   deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
 }
 
-export type BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput = {
-  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
-  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
-  upsert?: Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput[]
-  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
-  set?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  disconnect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  delete?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
-  update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput[]
-  updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput[]
-  deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
-}
-
 export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput> | Prisma.BrandTranslationCreateWithoutUpdatedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput[]
   connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput | Prisma.BrandTranslationCreateOrConnectWithoutUpdatedByInput[]
@@ -687,6 +673,20 @@ export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
   update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutUpdatedByInput[]
   updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutUpdatedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
+}
+
+export type BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput = {
+  create?: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput> | Prisma.BrandTranslationCreateWithoutDeletedByInput[] | Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput[]
+  connectOrCreate?: Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput | Prisma.BrandTranslationCreateOrConnectWithoutDeletedByInput[]
+  upsert?: Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput[]
+  createMany?: Prisma.BrandTranslationCreateManyDeletedByInputEnvelope
+  set?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  disconnect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  delete?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  connect?: Prisma.BrandTranslationWhereUniqueInput | Prisma.BrandTranslationWhereUniqueInput[]
+  update?: Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput | Prisma.BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput[]
+  updateMany?: Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput | Prisma.BrandTranslationUpdateManyWithWhereWithoutDeletedByInput[]
   deleteMany?: Prisma.BrandTranslationScalarWhereInput | Prisma.BrandTranslationScalarWhereInput[]
 }
 
@@ -740,8 +740,8 @@ export type BrandTranslationCreateWithoutLanguageInput = {
   updatedAt?: Date | string
   brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
-  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedBrandTranslationsInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
 }
 
 export type BrandTranslationUncheckedCreateWithoutLanguageInput = {
@@ -751,10 +751,10 @@ export type BrandTranslationUncheckedCreateWithoutLanguageInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationCreateOrConnectWithoutLanguageInput = {
@@ -794,10 +794,10 @@ export type BrandTranslationScalarWhereInput = {
   description?: Prisma.StringFilter<"BrandTranslation"> | string
   createdById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   updatedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
+  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"BrandTranslation"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"BrandTranslation"> | Date | string
-  deletedById?: Prisma.IntNullableFilter<"BrandTranslation"> | number | null
 }
 
 export type BrandTranslationCreateWithoutCreatedByInput = {
@@ -807,9 +807,9 @@ export type BrandTranslationCreateWithoutCreatedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
-  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
   language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedBrandTranslationsInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
 }
 
 export type BrandTranslationUncheckedCreateWithoutCreatedByInput = {
@@ -819,10 +819,10 @@ export type BrandTranslationUncheckedCreateWithoutCreatedByInput = {
   name: string
   description: string
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationCreateOrConnectWithoutCreatedByInput = {
@@ -835,6 +835,41 @@ export type BrandTranslationCreateManyCreatedByInputEnvelope = {
   skipDuplicates?: boolean
 }
 
+export type BrandTranslationCreateWithoutUpdatedByInput = {
+  name: string
+  description: string
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
+  language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
+}
+
+export type BrandTranslationUncheckedCreateWithoutUpdatedByInput = {
+  id?: number
+  brandId: number
+  languageId: string
+  name: string
+  description: string
+  createdById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type BrandTranslationCreateOrConnectWithoutUpdatedByInput = {
+  where: Prisma.BrandTranslationWhereUniqueInput
+  create: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput>
+}
+
+export type BrandTranslationCreateManyUpdatedByInputEnvelope = {
+  data: Prisma.BrandTranslationCreateManyUpdatedByInput | Prisma.BrandTranslationCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
 export type BrandTranslationCreateWithoutDeletedByInput = {
   name: string
   description: string
@@ -842,8 +877,8 @@ export type BrandTranslationCreateWithoutDeletedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
   language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedBrandTranslationsInput
 }
 
@@ -870,41 +905,6 @@ export type BrandTranslationCreateManyDeletedByInputEnvelope = {
   skipDuplicates?: boolean
 }
 
-export type BrandTranslationCreateWithoutUpdatedByInput = {
-  name: string
-  description: string
-  deletedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  brand: Prisma.BrandCreateNestedOneWithoutBrandTranslationsInput
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
-  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
-  language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
-}
-
-export type BrandTranslationUncheckedCreateWithoutUpdatedByInput = {
-  id?: number
-  brandId: number
-  languageId: string
-  name: string
-  description: string
-  createdById?: number | null
-  deletedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedById?: number | null
-}
-
-export type BrandTranslationCreateOrConnectWithoutUpdatedByInput = {
-  where: Prisma.BrandTranslationWhereUniqueInput
-  create: Prisma.XOR<Prisma.BrandTranslationCreateWithoutUpdatedByInput, Prisma.BrandTranslationUncheckedCreateWithoutUpdatedByInput>
-}
-
-export type BrandTranslationCreateManyUpdatedByInputEnvelope = {
-  data: Prisma.BrandTranslationCreateManyUpdatedByInput | Prisma.BrandTranslationCreateManyUpdatedByInput[]
-  skipDuplicates?: boolean
-}
-
 export type BrandTranslationUpsertWithWhereUniqueWithoutCreatedByInput = {
   where: Prisma.BrandTranslationWhereUniqueInput
   update: Prisma.XOR<Prisma.BrandTranslationUpdateWithoutCreatedByInput, Prisma.BrandTranslationUncheckedUpdateWithoutCreatedByInput>
@@ -919,22 +919,6 @@ export type BrandTranslationUpdateWithWhereUniqueWithoutCreatedByInput = {
 export type BrandTranslationUpdateManyWithWhereWithoutCreatedByInput = {
   where: Prisma.BrandTranslationScalarWhereInput
   data: Prisma.XOR<Prisma.BrandTranslationUpdateManyMutationInput, Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByInput>
-}
-
-export type BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput = {
-  where: Prisma.BrandTranslationWhereUniqueInput
-  update: Prisma.XOR<Prisma.BrandTranslationUpdateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedUpdateWithoutDeletedByInput>
-  create: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput>
-}
-
-export type BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput = {
-  where: Prisma.BrandTranslationWhereUniqueInput
-  data: Prisma.XOR<Prisma.BrandTranslationUpdateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedUpdateWithoutDeletedByInput>
-}
-
-export type BrandTranslationUpdateManyWithWhereWithoutDeletedByInput = {
-  where: Prisma.BrandTranslationScalarWhereInput
-  data: Prisma.XOR<Prisma.BrandTranslationUpdateManyMutationInput, Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByInput>
 }
 
 export type BrandTranslationUpsertWithWhereUniqueWithoutUpdatedByInput = {
@@ -953,16 +937,32 @@ export type BrandTranslationUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.BrandTranslationUpdateManyMutationInput, Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
+export type BrandTranslationUpsertWithWhereUniqueWithoutDeletedByInput = {
+  where: Prisma.BrandTranslationWhereUniqueInput
+  update: Prisma.XOR<Prisma.BrandTranslationUpdateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedUpdateWithoutDeletedByInput>
+  create: Prisma.XOR<Prisma.BrandTranslationCreateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedCreateWithoutDeletedByInput>
+}
+
+export type BrandTranslationUpdateWithWhereUniqueWithoutDeletedByInput = {
+  where: Prisma.BrandTranslationWhereUniqueInput
+  data: Prisma.XOR<Prisma.BrandTranslationUpdateWithoutDeletedByInput, Prisma.BrandTranslationUncheckedUpdateWithoutDeletedByInput>
+}
+
+export type BrandTranslationUpdateManyWithWhereWithoutDeletedByInput = {
+  where: Prisma.BrandTranslationScalarWhereInput
+  data: Prisma.XOR<Prisma.BrandTranslationUpdateManyMutationInput, Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByInput>
+}
+
 export type BrandTranslationCreateWithoutBrandInput = {
   name: string
   description: string
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
-  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
   language: Prisma.LanguageCreateNestedOneWithoutBrandTranslationsInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedBrandTranslationsInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedBrandTranslationsInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedBrandTranslationsInput
 }
 
 export type BrandTranslationUncheckedCreateWithoutBrandInput = {
@@ -972,10 +972,10 @@ export type BrandTranslationUncheckedCreateWithoutBrandInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationCreateOrConnectWithoutBrandInput = {
@@ -1011,10 +1011,10 @@ export type BrandTranslationCreateManyLanguageInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationUpdateWithoutLanguageInput = {
@@ -1025,8 +1025,8 @@ export type BrandTranslationUpdateWithoutLanguageInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
-  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedBrandTranslationsNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
 }
 
 export type BrandTranslationUncheckedUpdateWithoutLanguageInput = {
@@ -1036,10 +1036,10 @@ export type BrandTranslationUncheckedUpdateWithoutLanguageInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationUncheckedUpdateManyWithoutLanguageInput = {
@@ -1049,10 +1049,10 @@ export type BrandTranslationUncheckedUpdateManyWithoutLanguageInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationCreateManyCreatedByInput = {
@@ -1062,10 +1062,23 @@ export type BrandTranslationCreateManyCreatedByInput = {
   name: string
   description: string
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+}
+
+export type BrandTranslationCreateManyUpdatedByInput = {
+  id?: number
+  brandId: number
+  languageId: string
+  name: string
+  description: string
+  createdById?: number | null
   deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type BrandTranslationCreateManyDeletedByInput = {
@@ -1081,19 +1094,6 @@ export type BrandTranslationCreateManyDeletedByInput = {
   updatedAt?: Date | string
 }
 
-export type BrandTranslationCreateManyUpdatedByInput = {
-  id?: number
-  brandId: number
-  languageId: string
-  name: string
-  description: string
-  createdById?: number | null
-  deletedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  deletedById?: number | null
-}
-
 export type BrandTranslationUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1101,9 +1101,9 @@ export type BrandTranslationUpdateWithoutCreatedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
-  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
   language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedBrandTranslationsNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
 }
 
 export type BrandTranslationUncheckedUpdateWithoutCreatedByInput = {
@@ -1113,10 +1113,10 @@ export type BrandTranslationUncheckedUpdateWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationUncheckedUpdateManyWithoutCreatedByInput = {
@@ -1126,10 +1126,48 @@ export type BrandTranslationUncheckedUpdateManyWithoutCreatedByInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BrandTranslationUpdateWithoutUpdatedByInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
+  language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
+}
+
+export type BrandTranslationUncheckedUpdateWithoutUpdatedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  brandId?: Prisma.IntFieldUpdateOperationsInput | number
+  languageId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type BrandTranslationUpdateWithoutDeletedByInput = {
@@ -1139,8 +1177,8 @@ export type BrandTranslationUpdateWithoutDeletedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
   language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedBrandTranslationsNestedInput
 }
 
@@ -1170,44 +1208,6 @@ export type BrandTranslationUncheckedUpdateManyWithoutDeletedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type BrandTranslationUpdateWithoutUpdatedByInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  brand?: Prisma.BrandUpdateOneRequiredWithoutBrandTranslationsNestedInput
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
-  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
-  language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
-}
-
-export type BrandTranslationUncheckedUpdateWithoutUpdatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-}
-
-export type BrandTranslationUncheckedUpdateManyWithoutUpdatedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  brandId?: Prisma.IntFieldUpdateOperationsInput | number
-  languageId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-}
-
 export type BrandTranslationCreateManyBrandInput = {
   id?: number
   languageId: string
@@ -1215,10 +1215,10 @@ export type BrandTranslationCreateManyBrandInput = {
   description: string
   createdById?: number | null
   updatedById?: number | null
+  deletedById?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  deletedById?: number | null
 }
 
 export type BrandTranslationUpdateWithoutBrandInput = {
@@ -1227,10 +1227,10 @@ export type BrandTranslationUpdateWithoutBrandInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
-  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
   language?: Prisma.LanguageUpdateOneRequiredWithoutBrandTranslationsNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedBrandTranslationsNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedBrandTranslationsNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedBrandTranslationsNestedInput
 }
 
 export type BrandTranslationUncheckedUpdateWithoutBrandInput = {
@@ -1240,10 +1240,10 @@ export type BrandTranslationUncheckedUpdateWithoutBrandInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type BrandTranslationUncheckedUpdateManyWithoutBrandInput = {
@@ -1253,10 +1253,10 @@ export type BrandTranslationUncheckedUpdateManyWithoutBrandInput = {
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1269,15 +1269,15 @@ export type BrandTranslationSelect<ExtArgs extends runtime.Types.Extensions.Inte
   description?: boolean
   createdById?: boolean
   updatedById?: boolean
+  deletedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedById?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }, ExtArgs["result"]["brandTranslation"]>
 
 export type BrandTranslationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1288,15 +1288,15 @@ export type BrandTranslationSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   description?: boolean
   createdById?: boolean
   updatedById?: boolean
+  deletedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedById?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }, ExtArgs["result"]["brandTranslation"]>
 
 export type BrandTranslationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1307,15 +1307,15 @@ export type BrandTranslationSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   description?: boolean
   createdById?: boolean
   updatedById?: boolean
+  deletedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedById?: boolean
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }, ExtArgs["result"]["brandTranslation"]>
 
 export type BrandTranslationSelectScalar = {
@@ -1326,43 +1326,43 @@ export type BrandTranslationSelectScalar = {
   description?: boolean
   createdById?: boolean
   updatedById?: boolean
+  deletedById?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  deletedById?: boolean
 }
 
-export type BrandTranslationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "brandId" | "languageId" | "name" | "description" | "createdById" | "updatedById" | "deletedAt" | "createdAt" | "updatedAt" | "deletedById", ExtArgs["result"]["brandTranslation"]>
+export type BrandTranslationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "brandId" | "languageId" | "name" | "description" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["brandTranslation"]>
 export type BrandTranslationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }
 export type BrandTranslationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }
 export type BrandTranslationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   brand?: boolean | Prisma.BrandDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
-  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
   language?: boolean | Prisma.LanguageDefaultArgs<ExtArgs>
+  createdBy?: boolean | Prisma.BrandTranslation$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.BrandTranslation$updatedByArgs<ExtArgs>
+  deletedBy?: boolean | Prisma.BrandTranslation$deletedByArgs<ExtArgs>
 }
 
 export type $BrandTranslationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "BrandTranslation"
   objects: {
     brand: Prisma.$BrandPayload<ExtArgs>
-    createdBy: Prisma.$UserPayload<ExtArgs> | null
-    deletedBy: Prisma.$UserPayload<ExtArgs> | null
     language: Prisma.$LanguagePayload<ExtArgs>
+    createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
+    deletedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1372,10 +1372,10 @@ export type $BrandTranslationPayload<ExtArgs extends runtime.Types.Extensions.In
     description: string
     createdById: number | null
     updatedById: number | null
+    deletedById: number | null
     deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
-    deletedById: number | null
   }, ExtArgs["result"]["brandTranslation"]>
   composites: {}
 }
@@ -1771,10 +1771,10 @@ readonly fields: BrandTranslationFieldRefs;
 export interface Prisma__BrandTranslationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   brand<T extends Prisma.BrandDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandDefaultArgs<ExtArgs>>): Prisma.Prisma__BrandClient<runtime.Types.Result.GetResult<Prisma.$BrandPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.BrandTranslation$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandTranslation$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  deletedBy<T extends Prisma.BrandTranslation$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandTranslation$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   language<T extends Prisma.LanguageDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LanguageDefaultArgs<ExtArgs>>): Prisma.Prisma__LanguageClient<runtime.Types.Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  createdBy<T extends Prisma.BrandTranslation$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandTranslation$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.BrandTranslation$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandTranslation$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  deletedBy<T extends Prisma.BrandTranslation$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.BrandTranslation$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1811,10 +1811,10 @@ export interface BrandTranslationFieldRefs {
   readonly description: Prisma.FieldRef<"BrandTranslation", 'String'>
   readonly createdById: Prisma.FieldRef<"BrandTranslation", 'Int'>
   readonly updatedById: Prisma.FieldRef<"BrandTranslation", 'Int'>
+  readonly deletedById: Prisma.FieldRef<"BrandTranslation", 'Int'>
   readonly deletedAt: Prisma.FieldRef<"BrandTranslation", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"BrandTranslation", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"BrandTranslation", 'DateTime'>
-  readonly deletedById: Prisma.FieldRef<"BrandTranslation", 'Int'>
 }
     
 
@@ -2230,9 +2230,9 @@ export type BrandTranslation$createdByArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * BrandTranslation.deletedBy
+ * BrandTranslation.updatedBy
  */
-export type BrandTranslation$deletedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type BrandTranslation$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */
@@ -2249,9 +2249,9 @@ export type BrandTranslation$deletedByArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
- * BrandTranslation.updatedBy
+ * BrandTranslation.deletedBy
  */
-export type BrandTranslation$updatedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type BrandTranslation$deletedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */

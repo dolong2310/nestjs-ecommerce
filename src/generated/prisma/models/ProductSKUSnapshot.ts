@@ -248,8 +248,8 @@ export type ProductSKUSnapshotWhereInput = {
   skuId?: Prisma.IntNullableFilter<"ProductSKUSnapshot"> | number | null
   orderId?: Prisma.IntNullableFilter<"ProductSKUSnapshot"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProductSKUSnapshot"> | Date | string
-  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   sku?: Prisma.XOR<Prisma.SKUNullableScalarRelationFilter, Prisma.SKUWhereInput> | null
+  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
 }
 
 export type ProductSKUSnapshotOrderByWithRelationInput = {
@@ -261,8 +261,8 @@ export type ProductSKUSnapshotOrderByWithRelationInput = {
   skuId?: Prisma.SortOrderInput | Prisma.SortOrder
   orderId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  order?: Prisma.OrderOrderByWithRelationInput
   sku?: Prisma.SKUOrderByWithRelationInput
+  order?: Prisma.OrderOrderByWithRelationInput
 }
 
 export type ProductSKUSnapshotWhereUniqueInput = Prisma.AtLeast<{
@@ -277,8 +277,8 @@ export type ProductSKUSnapshotWhereUniqueInput = Prisma.AtLeast<{
   skuId?: Prisma.IntNullableFilter<"ProductSKUSnapshot"> | number | null
   orderId?: Prisma.IntNullableFilter<"ProductSKUSnapshot"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProductSKUSnapshot"> | Date | string
-  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
   sku?: Prisma.XOR<Prisma.SKUNullableScalarRelationFilter, Prisma.SKUWhereInput> | null
+  order?: Prisma.XOR<Prisma.OrderNullableScalarRelationFilter, Prisma.OrderWhereInput> | null
 }, "id">
 
 export type ProductSKUSnapshotOrderByWithAggregationInput = {
@@ -317,8 +317,8 @@ export type ProductSKUSnapshotCreateInput = {
   images?: Prisma.ProductSKUSnapshotCreateimagesInput | string[]
   skuValue: string
   createdAt?: Date | string
-  order?: Prisma.OrderCreateNestedOneWithoutItemsInput
   sku?: Prisma.SKUCreateNestedOneWithoutProductSKUSnapshotsInput
+  order?: Prisma.OrderCreateNestedOneWithoutItemsInput
 }
 
 export type ProductSKUSnapshotUncheckedCreateInput = {
@@ -338,8 +338,8 @@ export type ProductSKUSnapshotUpdateInput = {
   images?: Prisma.ProductSKUSnapshotUpdateimagesInput | string[]
   skuValue?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  order?: Prisma.OrderUpdateOneWithoutItemsNestedInput
   sku?: Prisma.SKUUpdateOneWithoutProductSKUSnapshotsNestedInput
+  order?: Prisma.OrderUpdateOneWithoutItemsNestedInput
 }
 
 export type ProductSKUSnapshotUncheckedUpdateInput = {
@@ -724,8 +724,8 @@ export type ProductSKUSnapshotSelect<ExtArgs extends runtime.Types.Extensions.In
   skuId?: boolean
   orderId?: boolean
   createdAt?: boolean
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }, ExtArgs["result"]["productSKUSnapshot"]>
 
 export type ProductSKUSnapshotSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -737,8 +737,8 @@ export type ProductSKUSnapshotSelectCreateManyAndReturn<ExtArgs extends runtime.
   skuId?: boolean
   orderId?: boolean
   createdAt?: boolean
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }, ExtArgs["result"]["productSKUSnapshot"]>
 
 export type ProductSKUSnapshotSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -750,8 +750,8 @@ export type ProductSKUSnapshotSelectUpdateManyAndReturn<ExtArgs extends runtime.
   skuId?: boolean
   orderId?: boolean
   createdAt?: boolean
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }, ExtArgs["result"]["productSKUSnapshot"]>
 
 export type ProductSKUSnapshotSelectScalar = {
@@ -767,23 +767,23 @@ export type ProductSKUSnapshotSelectScalar = {
 
 export type ProductSKUSnapshotOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "productName" | "price" | "images" | "skuValue" | "skuId" | "orderId" | "createdAt", ExtArgs["result"]["productSKUSnapshot"]>
 export type ProductSKUSnapshotInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }
 export type ProductSKUSnapshotIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }
 export type ProductSKUSnapshotIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
   sku?: boolean | Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>
+  order?: boolean | Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>
 }
 
 export type $ProductSKUSnapshotPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ProductSKUSnapshot"
   objects: {
-    order: Prisma.$OrderPayload<ExtArgs> | null
     sku: Prisma.$SKUPayload<ExtArgs> | null
+    order: Prisma.$OrderPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1188,8 +1188,8 @@ readonly fields: ProductSKUSnapshotFieldRefs;
  */
 export interface Prisma__ProductSKUSnapshotClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  order<T extends Prisma.ProductSKUSnapshot$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sku<T extends Prisma.ProductSKUSnapshot$skuArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductSKUSnapshot$skuArgs<ExtArgs>>): Prisma.Prisma__SKUClient<runtime.Types.Result.GetResult<Prisma.$SKUPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  order<T extends Prisma.ProductSKUSnapshot$orderArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductSKUSnapshot$orderArgs<ExtArgs>>): Prisma.Prisma__OrderClient<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1623,25 +1623,6 @@ export type ProductSKUSnapshotDeleteManyArgs<ExtArgs extends runtime.Types.Exten
 }
 
 /**
- * ProductSKUSnapshot.order
- */
-export type ProductSKUSnapshot$orderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Order
-   */
-  select?: Prisma.OrderSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Order
-   */
-  omit?: Prisma.OrderOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OrderInclude<ExtArgs> | null
-  where?: Prisma.OrderWhereInput
-}
-
-/**
  * ProductSKUSnapshot.sku
  */
 export type ProductSKUSnapshot$skuArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1658,6 +1639,25 @@ export type ProductSKUSnapshot$skuArgs<ExtArgs extends runtime.Types.Extensions.
    */
   include?: Prisma.SKUInclude<ExtArgs> | null
   where?: Prisma.SKUWhereInput
+}
+
+/**
+ * ProductSKUSnapshot.order
+ */
+export type ProductSKUSnapshot$orderArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
 }
 
 /**

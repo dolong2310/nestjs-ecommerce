@@ -251,6 +251,7 @@ model Permission {
   description String     @default("")
   path        String     @db.VarChar(1000)
   method      HTTPMethod
+  module      String     @default("") @db.VarChar(500)
 
   createdById Int?
   updatedById Int?
