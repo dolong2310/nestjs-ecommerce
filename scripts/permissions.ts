@@ -7,18 +7,39 @@ import { AppModule } from "@/app.module";
 import { NestFactory } from "@nestjs/core";
 import { EnumHttpMethod } from "@/shared/constants/permission.constant";
 import { PrismaService } from "@/shared/services/prisma.service";
+import { RoleName } from "@/shared/constants/role.constant";
 
-const prisma = new PrismaService();
+type AvailableRoute = {
+  name: string;
+  path: string;
+  method: keyof typeof EnumHttpMethod;
+};
 
 const PORT = 3030; // only for testing port
 
-async function bootstrap() {
+const prisma = new PrismaService();
+
+async function main() {
   const app = await NestFactory.create(AppModule);
   await app.listen(PORT);
   const server = app.getHttpAdapter().getInstance();
   const router = server.router;
 
-  const availableRoutes: { name: string, path: string, method: keyof typeof EnumHttpMethod }[] = router.stack
+  // Get all available routes from router
+  const availableRoutes = getAvailableRoutes(router);
+
+  // Sync permissions between availableRoutes and database
+  await syncPermissions(availableRoutes);
+
+  // Sync permissions to ADMIN role
+  await syncPermissionsToAdminRole();
+
+  console.log("✅ Permissions synced successfully!");
+  process.exit(0);
+}
+
+function getAvailableRoutes(router: any): AvailableRoute[] {
+  return router.stack
     .map(layer => {
       if (layer.route) {
         const path = layer.route?.path;
@@ -31,10 +52,13 @@ async function bootstrap() {
       }
     })
     .filter(Boolean);
-  // console.log(`Found ${availableRoutes.length} available routes`);
-  // console.log("Available Routes: ", availableRoutes);
+}
 
-  // Cách 1:
+async function syncPermissions(availableRoutes: AvailableRoute[]) {
+  // Sync permissions between availableRoutes and database
+  // - Delete permissions that no longer exist in availableRoutes
+  // - Create new permissions from availableRoutes that don't exist in database
+
   // 1. Lấy tất cả permissions từ database
   const permissionsInDatabase = await prisma.permission.findMany({ where: { deletedAt: null } });
 
@@ -79,9 +103,6 @@ async function bootstrap() {
     console.log("2. No permissions to create");
   }
 
-  console.log("✅ Permissions synced successfully!");
-  process.exit(0);
-
   // Cách 2:
   // // Save permissions to database
   // try {
@@ -102,4 +123,37 @@ async function bootstrap() {
   //   process.exit(0);
   // }
 }
-bootstrap();
+
+async function syncPermissionsToAdminRole() {
+  // 1. lấy toàn bộ list permission từ database
+  const permissions = await prisma.permission.findMany({
+    where: {
+      deletedAt: null,
+    },
+  });
+  console.log("permissions: ", permissions);
+
+  // 2. lấy role ADMIN từ database
+  const adminRole = await prisma.role.findFirstOrThrow({
+    where: {
+      name: RoleName.Admin,
+      deletedAt: null,
+    },
+  });
+  console.log("Admin role: ", adminRole);
+
+  // 3. update permissions của role ADMIN
+  const updatedRole = await prisma.role.update({
+    where: {
+      id: adminRole.id,
+    },
+    data: {
+      permissions: {
+        set: permissions.map(p => ({ id: p.id }))
+      },
+    },
+  });
+  console.log("Updated role: ", updatedRole);
+}
+
+main();
