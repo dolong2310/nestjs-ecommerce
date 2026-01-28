@@ -91,7 +91,7 @@ export class RoleService {
 
     // 2.2. Nếu là delete, kiểm tra xem role có phải là 3 role cơ bản này không
     const baseRoles: RoleNameType[] = [RoleName.Admin, RoleName.User, RoleName.Seller];
-    if (baseRoles.includes(role.name as RoleNameType)) {
+    if (!isUpdate && baseRoles.includes(role.name as RoleNameType)) {
       throw RoleCannotBeDeletedException;
     }
   }
