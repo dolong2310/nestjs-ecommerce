@@ -1,6 +1,6 @@
 import { RoleAlreadyExistsException, RoleNotFoundException } from '@/routes/role/role.error';
 import { RoleRepository } from '@/routes/role/role.repo';
-import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleType, UpdateRoleBodyType } from '@/routes/role/role.type';
+import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleWithPermissionsType, UpdateRoleBodyType } from '@/routes/role/role.type';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { Injectable } from '@nestjs/common';
@@ -9,15 +9,15 @@ import { Injectable } from '@nestjs/common';
 export class RoleService {
   constructor(private readonly roleRepository: RoleRepository) { }
 
-  async getRoles({ page, limit }: RoleQueryType): Promise<GetRolesResponseType> {
+  async getRoles(payload: RoleQueryType): Promise<GetRolesResponseType> {
     try {
-      return await this.roleRepository.findAll({ page, limit });
+      return await this.roleRepository.findAll(payload);
     } catch (error) {
       throw error;
     }
   }
 
-  async getRoleById(id: number): Promise<RoleType> {
+  async getRoleById(id: number): Promise<RoleWithPermissionsType> {
     try {
       const role = await this.roleRepository.findOne(id);
       if (!role) {
@@ -32,7 +32,7 @@ export class RoleService {
     }
   }
 
-  async createRole(payload: { userId: number, body: CreateRoleBodyType }): Promise<RoleType> {
+  async createRole(payload: { userId: number, body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
     try {
       return await this.roleRepository.create(payload);
     } catch (error) {
@@ -43,7 +43,7 @@ export class RoleService {
     }
   }
 
-  async updateRole(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleType> {
+  async updateRole(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
     try {
       return await this.roleRepository.update(payload);
     } catch (error) {

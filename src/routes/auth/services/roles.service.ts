@@ -1,5 +1,7 @@
+import { RoleNotFoundException } from '@/routes/role/role.error';
 import { RoleName } from '@/shared/constants/role.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
+import { RoleType } from '@/shared/types/shared-role.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -15,11 +17,23 @@ export class RolesService {
     }
 
     try {
-      const userRole = await this.prismaService.role.findFirstOrThrow({
-        where: {
-          name: RoleName.User,
-        },
-      });
+      // Cách 1: Dùng raw query
+      const userRole: RoleType = await this.prismaService.$queryRaw`
+        SELECT * FROM "Role" WHERE name = ${RoleName.User} AND "deletedAt" IS NULL LIMIT 1;
+      `.then((res: RoleType[]) => {
+        // findFirstOrThrow
+        if (res.length === 0) {
+          throw RoleNotFoundException;
+        }
+        return res[0];
+      })
+
+      // Cách 2: Dùng findFirstOrThrow
+      // const userRole = await this.prismaService.role.findFirstOrThrow({
+      //   where: {
+      //     name: RoleName.User,
+      //   },
+      // });
 
       // cache user role id
       this.userRoleId = userRole.id;

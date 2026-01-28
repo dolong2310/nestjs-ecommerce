@@ -1,5 +1,6 @@
-import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleType, UpdateRoleBodyType } from "@/routes/role/role.type";
+import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleWithPermissionsType, UpdateRoleBodyType } from "@/routes/role/role.type";
 import { PrismaService } from "@/shared/services/prisma.service";
+import { RoleType } from "@/shared/types/shared-role.type";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -65,16 +66,19 @@ export class RoleRepository {
   //   }
   // }
 
-  findOne(id: number): Promise<RoleType | null> {
+  findOne(id: number): Promise<RoleWithPermissionsType | null> {
     return this.prisma.role.findUnique({
       where: {
         id,
         deletedAt: null,
-      }
+      },
+      include: {
+        permissions: true,
+      },
     })
   }
 
-  create(payload: { userId: number, body: CreateRoleBodyType }): Promise<RoleType> {
+  create(payload: { userId: number, body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
     const { userId, body } = payload;
     return this.prisma.role.create({
       data: {
@@ -82,11 +86,14 @@ export class RoleRepository {
         description: body.description,
         isActive: body.isActive,
         createdById: userId,
-      }
+      },
+      include: {
+        permissions: true, // tạo mới thì vẫn trả về permissions nhưng là [] rỗng
+      },
     })
   }
 
-  update(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleType> {
+  update(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
     const { userId, id, body } = payload;
     return this.prisma.role.update({
       where: {
@@ -97,9 +104,14 @@ export class RoleRepository {
         name: body.name,
         description: body.description,
         isActive: body.isActive,
-        // permissionIds: body.permissionIds,
+        permissions: {
+          set: body.permissionIds.map(id => ({ id })),
+        },
         updatedById: userId,
-      }
+      },
+      include: {
+        permissions: true,
+      },
     })
   }
 

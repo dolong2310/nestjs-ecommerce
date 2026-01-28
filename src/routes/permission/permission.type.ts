@@ -1,4 +1,5 @@
-import { CreatePermissionBodySchema, GetPermissionsResponseSchema, PermissionParamsSchema, PermissionQuerySchema, PermissionSchema, UpdatePermissionBodySchema } from "@/routes/permission/permission.model";
+import { CreatePermissionBodySchema, GetPermissionsResponseSchema, PermissionParamsSchema, PermissionQuerySchema, UpdatePermissionBodySchema } from "@/routes/permission/permission.model";
+import { PermissionSchema } from "@/shared/models/shared-permission.model";
 import z from "zod";
 
 export type PermissionType = z.infer<typeof PermissionSchema>;

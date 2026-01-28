@@ -163,11 +163,4 @@ export class AuthRepository {
       where,
     });
   }
-
-  // Role
-  findRoleUnique(where: { id: number } | { name: string }) {
-    return this.prismaService.role.findUnique({
-      where,
-    });
-  }
 }

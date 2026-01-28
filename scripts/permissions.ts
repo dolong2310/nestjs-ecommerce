@@ -5,7 +5,7 @@
  */
 import { AppModule } from "@/app.module";
 import { NestFactory } from "@nestjs/core";
-import { EnumHttpMethod } from "@/routes/permission/permission.model";
+import { EnumHttpMethod } from "@/shared/constants/permission.constant";
 import { PrismaService } from "@/shared/services/prisma.service";
 
 const prisma = new PrismaService();
