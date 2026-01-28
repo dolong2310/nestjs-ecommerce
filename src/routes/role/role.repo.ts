@@ -1,7 +1,7 @@
 import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleWithPermissionsType, UpdateRoleBodyType } from "@/routes/role/role.type";
 import { PrismaService } from "@/shared/services/prisma.service";
 import { RoleType } from "@/shared/types/shared-role.type";
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 
 @Injectable()
 export class RoleRepository {
@@ -73,7 +73,11 @@ export class RoleRepository {
         deletedAt: null,
       },
       include: {
-        permissions: true,
+        permissions: {
+          where: {
+            deletedAt: null,
+          }
+        },
       },
     })
   }
@@ -88,14 +92,67 @@ export class RoleRepository {
         createdById: userId,
       },
       include: {
-        permissions: true, // tạo mới thì vẫn trả về permissions nhưng là [] rỗng
+        // tạo mới thì vẫn trả về permissions nhưng là [] rỗng
+        permissions: {
+          where: {
+            deletedAt: null,
+          }
+        },
       },
     })
   }
 
-  update(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  async update(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
     const { userId, id, body } = payload;
-    return this.prisma.role.update({
+
+    // kiểm tra xem list permissionIds có item nào đã soft delete hoặc không tồn tại thì không cho phép update
+    if (body.permissionIds.length > 0) {
+      // 1. lấy toàn bộ item của permissionIds từ db
+      const permissions = await this.prisma.permission.findMany({
+        where: {
+          id: {
+            in: body.permissionIds,
+          }
+        }
+      });
+
+      let notFoundIds: number[] = [];
+      let deletedIds: number[] = [];
+
+      // 2. Kiểm tra xem có permission nào không tồn tại không (số lượng tìm được < số lượng gửi lên)
+      if (permissions.length !== body.permissionIds.length) {
+        const foundIds = permissions.map(p => p.id);
+        notFoundIds = body.permissionIds.filter(id => !foundIds.includes(id));
+      }
+
+      // 3. filter mảng permissions có item mà deletedAt: có giá trị new Date() => đã xoá
+      const deletedPermissions = permissions.filter(p => p.deletedAt !== null);
+      if (deletedPermissions.length > 0) {
+        deletedIds = deletedPermissions.map(p => p.id);
+      }
+
+      // 4. Nếu có permission nào không tồn tại hoặc đã xoá thì không cho phép update
+      if (notFoundIds.length > 0 || deletedIds.length > 0) {
+        const errorObjects: { field: string, message: string, value: string }[] = [];
+        if (notFoundIds.length > 0) {
+          errorObjects.push({
+            field: 'permissionIds',
+            message: 'Error.PermissionNotFound',
+            value: notFoundIds.join(', '),
+          });
+        }
+        if (deletedIds.length > 0) {
+          errorObjects.push({
+            field: 'permissionIds',
+            message: 'Error.PermissionDeleted',
+            value: deletedIds.join(', '),
+          });
+        }
+        throw new BadRequestException(errorObjects);
+      }
+    }
+
+    return await this.prisma.role.update({
       where: {
         id,
         deletedAt: null,
@@ -110,9 +167,13 @@ export class RoleRepository {
         updatedById: userId,
       },
       include: {
-        permissions: true,
+        permissions: {
+          where: {
+            deletedAt: null,
+          }
+        },
       },
-    })
+    });
   }
 
   delete(payload: { userId: number, id: number }, isHardDelete?: boolean): Promise<RoleType> {
