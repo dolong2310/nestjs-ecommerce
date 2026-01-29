@@ -1,7 +1,7 @@
 
 import { REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { extractTokenFromHeader, isJsonWebTokenError, isTokenExpiredError } from '@/shared/helpers';
-import { AccessTokenExpiredException, InvalidAccessTokenException } from '@/shared/models/error.model';
+import { AccessTokenExpiredException, InvalidAccessTokenException } from '@/shared/errors/shared-error.error';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
 import { AccessTokenPayload } from '@/shared/types/jwt.type';

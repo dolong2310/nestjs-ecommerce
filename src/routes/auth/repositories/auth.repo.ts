@@ -1,7 +1,7 @@
 import { CreateDeviceBodyType, CreateOtpCodeBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, DeviceType, OtpCodeType, RefreshTokenType, RegisterBodyType, RoleType } from "@/routes/auth/types/auth.type";
 import { EnumOtpCodeType } from "@/shared/constants/auth.constant";
-import { UserType } from "@/shared/models/shared-user.model";
 import { PrismaService } from "@/shared/services/prisma.service";
+import type { UserType } from "@/shared/types/shared-user.type";
 import { Injectable } from "@nestjs/common";
 
 

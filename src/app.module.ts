@@ -3,6 +3,7 @@ import { AppService } from '@/app.service';
 import { AuthModule } from '@/routes/auth/auth.module';
 import { LanguageModule } from '@/routes/language/language.module';
 import { PermissionModule } from '@/routes/permission/permission.module';
+import { ProfileModule } from '@/routes/profile/profile.module';
 import { RoleModule } from '@/routes/role/role.module';
 import { HttpExceptionFilter } from '@/shared/filters/http-exception.filter';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
@@ -14,7 +15,7 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 
 @Module({
-  imports: [ConfigModule.forRoot(), SharedModule, AuthModule, LanguageModule, PermissionModule, RoleModule],
+  imports: [ConfigModule.forRoot(), SharedModule, AuthModule, LanguageModule, PermissionModule, RoleModule, ProfileModule],
   controllers: [AppController],
   providers: [
     AppService,

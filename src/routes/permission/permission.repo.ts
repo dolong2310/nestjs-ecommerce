@@ -1,5 +1,6 @@
-import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, PermissionType, UpdatePermissionBodyType } from "@/routes/permission/permission.type";
+import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, UpdatePermissionBodyType } from "@/routes/permission/permission.type";
 import { PrismaService } from "@/shared/services/prisma.service";
+import type { PermissionType } from "@/shared/types/shared-permission.type";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()

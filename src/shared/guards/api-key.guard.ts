@@ -1,7 +1,7 @@
 
 import envConfig from '@/shared/config';
 import { extractApiKeyFromHeader } from '@/shared/helpers';
-import { InvalidApiKeyException } from '@/shared/models/error.model';
+import { InvalidApiKeyException } from '@/shared/errors/shared-error.error';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 @Injectable()

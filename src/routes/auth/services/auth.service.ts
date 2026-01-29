@@ -1,9 +1,10 @@
-import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidPasswordException, InvalidRefreshTokenException, InvalidTOTPException, InvalidTOTPOrEmailOtpCodeException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, TOTPNotEnabledException, UserNotFoundException } from '@/routes/auth/errors/auth.error';
+import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidRefreshTokenException, InvalidTOTPException, InvalidTOTPOrEmailOtpCodeException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, TOTPNotEnabledException } from '@/routes/auth/errors/auth.error';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { RolesService } from '@/routes/auth/services/roles.service';
 import { Disable2FABodyType, ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType, Setup2FAResponseType } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
+import { InvalidPasswordException, UserNotFoundException } from '@/shared/errors/shared-error.error';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';

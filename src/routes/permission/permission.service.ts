@@ -1,7 +1,8 @@
 import { PermissionAlreadyExistsException, PermissionNotFoundException } from '@/routes/permission/permission.error';
 import { PermissionRepository } from '@/routes/permission/permission.repo';
-import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, PermissionType, UpdatePermissionBodyType } from '@/routes/permission/permission.type';
+import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, UpdatePermissionBodyType } from '@/routes/permission/permission.type';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import type { PermissionType } from '@/shared/types/shared-permission.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { Injectable } from '@nestjs/common';
 

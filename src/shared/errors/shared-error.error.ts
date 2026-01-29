@@ -1,4 +1,4 @@
-import { UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, NotFoundException, UnauthorizedException } from "@nestjs/common";
 
 export const InvalidApiKeyException = new UnauthorizedException([{
   field: 'xApiKey',
@@ -18,4 +18,14 @@ export const AccessTokenExpiredException = new UnauthorizedException([{
 export const InvalidAccessTokenException = new UnauthorizedException([{
   field: 'accessToken',
   message: 'Error.InvalidAccessToken', // Invalid access token
+}]);
+
+export const UserNotFoundException = new NotFoundException([{
+  field: 'userId',
+  message: 'Error.UserNotFound', // User not found
+}]);
+
+export const InvalidPasswordException = new BadRequestException([{
+  field: 'password',
+  message: 'Error.InvalidPassword', // Invalid password
 }]);

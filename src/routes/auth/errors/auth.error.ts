@@ -20,11 +20,6 @@ export const EmailNotFoundException = new NotFoundException([{
   message: 'Error.EmailNotFound', // Email not found
 }]);
 
-export const InvalidPasswordException = new BadRequestException([{
-  field: 'password',
-  message: 'Error.InvalidPassword', // Invalid password
-}]);
-
 export const FailedToCreateDeviceException = new BadRequestException([{
   field: 'device',
   message: 'Error.FailedToCreateDevice', // Failed to create device
@@ -53,11 +48,6 @@ export const InvalidRefreshTokenException = new UnauthorizedException([{
 export const RefreshTokenHasBeenRevokedException = new UnauthorizedException([{
   field: 'refreshToken',
   message: 'Error.RefreshTokenHasBeenRevoked', // Refresh token has been revoked
-}]);
-
-export const UserNotFoundException = new NotFoundException([{
-  field: 'userId',
-  message: 'Error.UserNotFound', // User not found
 }]);
 
 export const FailedToSendOtpCodeException = new BadRequestException([{
