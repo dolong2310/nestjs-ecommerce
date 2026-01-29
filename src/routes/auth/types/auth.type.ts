@@ -5,7 +5,6 @@ export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
 export type GetMeResponseType = z.infer<typeof GetMeResponseSchema>;
 export type DeviceType = z.infer<typeof DeviceSchema>;
 export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> & Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
-export type RoleType = z.infer<typeof RoleSchema>;
 export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
 export type RegisterResponseType = z.infer<typeof RegisterResponseSchema>;
 export type LoginBodyType = z.infer<typeof LoginBodySchema>;

@@ -1,6 +1,7 @@
 import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
+import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';
 import { EmailService } from '@/shared/services/email.service';
@@ -14,7 +15,7 @@ import { JwtModule } from '@nestjs/jwt';
 import '@/shared/config';
 
 const sharedServices = [PrismaService, HashingService, TokenService, EmailService, TwoFactorAuthenticationService];
-const sharedRepositories = [SharedUserRepository];
+const sharedRepositories = [SharedUserRepository, SharedRoleRepository];
 const sharedGuards = [AuthGuard, ApiKeyGuard, AuthCompositeGuard];
 
 @Global()

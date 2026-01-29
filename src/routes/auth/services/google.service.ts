@@ -1,9 +1,9 @@
+import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/errors/auth.error';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleAuthCallbackQueryType, GoogleAuthCallbackResponseType, GoogleAuthResponseType, GoogleAuthStateType } from '@/routes/auth/types/auth.type';
-import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/errors/auth.error';
-import { RolesService } from '@/routes/auth/services/roles.service';
 import envConfig from "@/shared/config";
+import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { HashingService } from '@/shared/services/hashing.service';
 import { Injectable } from "@nestjs/common";
 import { Credentials, OAuth2Client } from "google-auth-library";
@@ -17,7 +17,7 @@ export class GoogleService {
   constructor(
     private readonly authRepository: AuthRepository,
     private readonly authService: AuthService,
-    private readonly rolesService: RolesService,
+    private readonly sharedRoleRepository: SharedRoleRepository,
     private readonly hashingService: HashingService,
   ) {
     this.oauth2Client = new google.auth.OAuth2(
@@ -90,7 +90,7 @@ export class GoogleService {
       // 5. If user not found, register new user
       if (!user) {
         // 5.1 Get user role id
-        const userRoleIdPromise = this.rolesService.getUserRoleId();
+        const userRoleIdPromise = this.sharedRoleRepository.getUserRoleId();
         // 5.2 Generate random password
         const randomPassword = uuidv4();
         // 5.3 Hash password

@@ -1,11 +1,11 @@
 import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidRefreshTokenException, InvalidTOTPException, InvalidTOTPOrEmailOtpCodeException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, TOTPNotEnabledException } from '@/routes/auth/errors/auth.error';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
-import { RolesService } from '@/routes/auth/services/roles.service';
 import { Disable2FABodyType, ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType, Setup2FAResponseType } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { InvalidPasswordException, UserNotFoundException } from '@/shared/errors/shared-error.error';
 import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';
 import { EmailService } from '@/shared/services/email.service';
@@ -24,7 +24,7 @@ export class AuthService {
     private readonly sharedUserRepository: SharedUserRepository,
     private readonly authRepository: AuthRepository,
     private readonly tokenService: TokenService,
-    private readonly rolesService: RolesService,
+    private readonly sharedRoleRepository: SharedRoleRepository,
     private readonly emailService: EmailService,
     private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,
   ) { }
@@ -45,7 +45,7 @@ export class AuthService {
 
       // 2. Create user
       // 2.1 Get user role id
-      const userRoleIdPromise = this.rolesService.getUserRoleId();
+      const userRoleIdPromise = this.sharedRoleRepository.getUserRoleId();
       // 2.2 Hash password
       const hashedPasswordPromise = this.hashingService.hash(body.password);
       // 2.3 Execute promises
