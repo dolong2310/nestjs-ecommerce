@@ -12,7 +12,7 @@ export class PermissionService {
 
   async getPermissions({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
     try {
-      return await this.permissionRepository.findAll({ page, limit });
+      return await this.permissionRepository.findMany({ page, limit });
     } catch (error) {
       throw error;
     }

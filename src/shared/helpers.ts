@@ -5,11 +5,15 @@ import { Request } from "express";
 
 // Prisma errors
 export function isUniqueConstraintPrismaError(error: any): error is Prisma.PrismaClientKnownRequestError {
-  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002';
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002'; // nếu truyền body có "email" đã tồn tại trong database thì sẽ throw error này
 }
 
 export function isNotFoundPrismaError(error: any): error is Prisma.PrismaClientKnownRequestError {
   return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025';
+}
+
+export function isForeignKeyConstraintPrismaError(error: any): error is Prisma.PrismaClientKnownRequestError {
+  return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2003'; // nếu truyền body có "id" không tồn tại trong database thì sẽ throw error này
 }
 
 // JWT errors

@@ -1,6 +1,6 @@
-import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, RoleWithPermissionsType, UpdateRoleBodyType } from "@/routes/role/role.type";
+import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from "@/routes/role/role.type";
 import { PrismaService } from "@/shared/services/prisma.service";
-import { RoleType } from "@/shared/types/shared-role.type";
+import { RoleType, RoleWithPermissionsType } from "@/shared/types/shared-role.type";
 import { BadRequestException, Injectable } from "@nestjs/common";
 
 @Injectable()
@@ -8,7 +8,7 @@ export class RoleRepository {
   constructor(private readonly prisma: PrismaService) { }
 
   // For offset-based pagination
-  async findAll({ page, limit }: RoleQueryType): Promise<GetRolesResponseType> {
+  async findMany({ page, limit }: RoleQueryType): Promise<GetRolesResponseType> {
     const rolesPromise = this.prisma.role.findMany({
       skip: (page - 1) * limit,
       take: limit,
@@ -35,7 +35,7 @@ export class RoleRepository {
   }
 
   // For cursor-based pagination
-  // async findAll({ cursor, limit }: RoleQueryType): Promise<GetRolesResponseType> {
+  // async findMany({ cursor, limit }: RoleQueryType): Promise<GetRolesResponseType> {
   //   // Lấy thêm 1 record để kiểm tra có page tiếp theo không
   //   const roles = await this.prisma.role.findMany({
   //     take: limit + 1, // Lấy thêm 1 để check hasNextPage

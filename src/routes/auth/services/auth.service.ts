@@ -17,6 +17,28 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { addMilliseconds } from 'date-fns';
 import ms, { StringValue } from 'ms';
 
+// TEST BCRYPT HASH & COMPARE (uncomment để test)
+// const hashingServiceInstance = new HashingService();
+// (async () => {
+//   const password = '123123';
+//   const hash = await hashingServiceInstance.hash(password);
+//   console.log('Password:', password);
+//   console.log('Hash:', hash);
+  
+//   // Test compare với chính hash vừa tạo
+//   const isMatch = await hashingServiceInstance.compare(password, hash);
+//   console.log('Compare result:', isMatch); // Phải true
+  
+//   // Test với hash khác (hash lại lần 2)
+//   const hash2 = await hashingServiceInstance.hash(password);
+//   console.log('Hash 2:', hash2);
+//   console.log('Hash 1 === Hash 2:', hash === hash2); // Sẽ false
+  
+//   // Nhưng compare vẫn true vì bcrypt extract salt từ hash
+//   const isMatch2 = await hashingServiceInstance.compare(password, hash2);
+//   console.log('Compare with hash2:', isMatch2); // Vẫn true
+// })();
+
 @Injectable()
 export class AuthService {
   constructor(

@@ -1,10 +1,5 @@
-import { PermissionSchema } from "@/shared/models/shared-permission.model";
-import { RoleSchema } from "@/shared/models/shared-role.model";
+import { RoleSchema, RoleWithPermissionsSchema } from "@/shared/models/shared-role.model";
 import z from "zod";
-
-export const RoleWithPermissionsSchema = RoleSchema.extend({
-  permissions: z.array(PermissionSchema),
-});
 
 export const RoleParamsSchema = z.object({
   id: z.coerce.number(),

@@ -6,7 +6,7 @@ import { Injectable } from "@nestjs/common";
 export class LanguageRepository {
   constructor(private readonly prismaService: PrismaService) { }
 
-  findAll(): Promise<LanguageType[]> {
+  findMany(): Promise<LanguageType[]> {
     return this.prismaService.language.findMany({
       where: { deletedAt: null },
     });

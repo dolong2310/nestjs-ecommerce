@@ -1,5 +1,5 @@
-import { CreateRoleBodySchema, GetRolesResponseSchema, RoleParamsSchema, RoleQuerySchema, RoleWithPermissionsSchema, UpdateRoleBodySchema } from "@/routes/role/role.model";
-import { RoleSchema } from "@/shared/models/shared-role.model";
+import { CreateRoleBodySchema, GetRolesResponseSchema, RoleParamsSchema, RoleQuerySchema, UpdateRoleBodySchema } from "@/routes/role/role.model";
+import { RoleSchema, RoleWithPermissionsSchema } from "@/shared/models/shared-role.model";
 import { createZodDto } from "nestjs-zod";
 
 export class CreateRoleBodyDTO extends createZodDto(CreateRoleBodySchema) { }

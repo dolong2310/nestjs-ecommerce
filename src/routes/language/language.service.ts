@@ -13,7 +13,7 @@ export class LanguageService {
 
   async getLanguages(): Promise<GetLanguagesResponseType> {
     try {
-      const languages = await this.languageRepository.findAll();
+      const languages = await this.languageRepository.findMany();
       return {
         data: languages,
         totalItems: languages.length,

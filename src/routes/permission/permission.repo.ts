@@ -8,7 +8,7 @@ export class PermissionRepository {
   constructor(private readonly prisma: PrismaService) { }
 
   // For offset-based pagination
-  async findAll({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
+  async findMany({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
     const permissionsPromise = this.prisma.permission.findMany({
       skip: (page - 1) * limit,
       take: limit,
@@ -35,7 +35,7 @@ export class PermissionRepository {
   }
 
   // For cursor-based pagination
-  // async findAll({ cursor, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
+  // async findMany({ cursor, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
   //   // Lấy thêm 1 record để kiểm tra có page tiếp theo không
   //   const permissions = await this.prisma.permission.findMany({
   //     take: limit + 1, // Lấy thêm 1 để check hasNextPage
