@@ -4,7 +4,7 @@ import { RoleType } from "@/shared/types/shared-role.type";
 import type { UserType } from "@/shared/types/shared-user.type";
 import { Injectable } from "@nestjs/common";
 
-export type WhereUniqueInputType = { id: number, [key: string]: any } | { email: string, [key: string]: any };
+export type WhereUniqueInputType = { id: number } | { email: string };
 export type UserIncludeRolePermissionsType = UserType & { role: RoleType & { permissions: PermissionType[] } };
 
 @Injectable()
@@ -12,14 +12,24 @@ export class SharedUserRepository {
   constructor(private readonly prismaService: PrismaService) { }
 
   findUnique(where: WhereUniqueInputType): Promise<UserType | null> {
-    return this.prismaService.user.findUnique({
-      where,
+    return this.prismaService.user.findFirst({
+      where: {
+        ...where,
+        deletedAt: null,
+      },
     });
+    // return this.prismaService.user.findUnique({
+    //   where,
+    // });
   }
 
   findUniqueIncludeRolePermissions(where: WhereUniqueInputType): Promise<UserIncludeRolePermissionsType | null> {
-    return this.prismaService.user.findUnique({
-      where,
+    // findUnique => findFirst
+    return this.prismaService.user.findFirst({
+      where: {
+        ...where,
+        deletedAt: null,
+      },
       include: {
         role: {
           include: {
@@ -34,9 +44,12 @@ export class SharedUserRepository {
     });
   }
 
-  update(where: WhereUniqueInputType, data: Partial<Omit<UserType, 'id'>>): Promise<UserType | null> {
+  update(where: { id: number }, data: Partial<Omit<UserType, 'id'>>): Promise<UserType | null> {
     return this.prismaService.user.update({
-      where,
+      where: {
+        ...where,
+        deletedAt: null,
+      },
       data,
     });
   }

@@ -48,13 +48,23 @@ export class AuthRepository {
   }
 
   findUserUniqueIncludeRole(where: WhereUniqueInputType): Promise<(UserType & { role: RoleType }) | null> {
-    return this.prismaService.user.findUnique({
-      where,
+    return this.prismaService.user.findFirst({
+      where: {
+        ...where,
+        deletedAt: null,
+      },
       // include: Join Role table
       include: {
         role: true,
       },
     });
+    // return this.prismaService.user.findUnique({
+    //   where,
+    //   // include: Join Role table
+    //   include: {
+    //     role: true,
+    //   },
+    // });
   }
 
   // Refresh Token

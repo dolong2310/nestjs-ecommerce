@@ -24,16 +24,16 @@ import ms, { StringValue } from 'ms';
 //   const hash = await hashingServiceInstance.hash(password);
 //   console.log('Password:', password);
 //   console.log('Hash:', hash);
-  
+
 //   // Test compare với chính hash vừa tạo
 //   const isMatch = await hashingServiceInstance.compare(password, hash);
 //   console.log('Compare result:', isMatch); // Phải true
-  
+
 //   // Test với hash khác (hash lại lần 2)
 //   const hash2 = await hashingServiceInstance.hash(password);
 //   console.log('Hash 2:', hash2);
 //   console.log('Hash 1 === Hash 2:', hash === hash2); // Sẽ false
-  
+
 //   // Nhưng compare vẫn true vì bcrypt extract salt từ hash
 //   const isMatch2 = await hashingServiceInstance.compare(password, hash2);
 //   console.log('Compare with hash2:', isMatch2); // Vẫn true
@@ -99,7 +99,7 @@ export class AuthService {
   async login(body: LoginBodyType & { ip: string, userAgent: string }): Promise<LoginResponseType> {
     try {
       // 1. Check email exists in database
-      const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email, deletedAt: null });
+      const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email });
       // const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (!user) {
@@ -196,7 +196,7 @@ export class AuthService {
       const otpCode = await this._findAndValidateOtpCode({ email: body.email, code: body.code, type: EnumOtpCode.FORGOT_PASSWORD });
 
       // 2. Check email exists in database
-      const user = await this.sharedUserRepository.findUnique({ email: body.email, deletedAt: null });
+      const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (!user) {
         // Delete OTP code
@@ -208,10 +208,7 @@ export class AuthService {
       const hashedPassword = await this.hashingService.hash(body.newPassword);
 
       // 4. Update user password
-      const updateUserPasswordPromise = this.sharedUserRepository.update({
-        id: user.id,
-        deletedAt: null,
-      }, {
+      const updateUserPasswordPromise = this.sharedUserRepository.update({ id: user.id }, {
         password: hashedPassword,
         updatedById: user.id,
       });
@@ -297,7 +294,7 @@ export class AuthService {
   async getMe(userId: number): Promise<GetMeResponseType> {
     try {
       // TODO: omit password and totpSecret in type
-      const user = await this.sharedUserRepository.findUnique({ id: userId, deletedAt: null });
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
         throw UserNotFoundException;
@@ -316,7 +313,7 @@ export class AuthService {
   async sendOtp(body: SendOtpBodyType): Promise<MessageResponseType> {
     try {
       // 1. Check email exists in database and check type
-      const user = await this.sharedUserRepository.findUnique({ email: body.email, deletedAt: null });
+      const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
       if (user && body.type === EnumOtpCode.REGISTER) {
         throw EmailAlreadyExistsException;
@@ -365,7 +362,7 @@ export class AuthService {
   async setup2fa(userId: number): Promise<Setup2FAResponseType> {
     try {
       // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
-      const user = await this.sharedUserRepository.findUnique({ id: userId, deletedAt: null });
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
         throw UserNotFoundException;
@@ -379,10 +376,7 @@ export class AuthService {
       const { secret, uri } = this.twoFactorAuthenticationService.generateSecret(user.email);
 
       // 3. Lưu secret key vào database
-      await this.sharedUserRepository.update({
-        id: userId,
-        deletedAt: null,
-      }, {
+      await this.sharedUserRepository.update({ id: userId }, {
         totpSecret: secret,
         updatedById: userId,
       });
@@ -400,7 +394,7 @@ export class AuthService {
   async disable2fa(userId: number, body: Disable2FABodyType): Promise<MessageResponseType> {
     try {
       // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
-      const user = await this.sharedUserRepository.findUnique({ id: userId, deletedAt: null });
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
         throw UserNotFoundException;
@@ -420,10 +414,7 @@ export class AuthService {
       });
 
       // 3. Delete secret key of user from database
-      await this.sharedUserRepository.update({
-        id: userId,
-        deletedAt: null,
-      }, {
+      await this.sharedUserRepository.update({ id: userId }, {
         totpSecret: null,
         updatedById: userId,
       });

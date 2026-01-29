@@ -29,11 +29,7 @@ export class UserService {
 
   async getUserById(id: number): Promise<UserIncludeRolePermissionsType> {
     try {
-      // TODO: Sửa lại sharedUserRepository.findUnique nếu cần
-      const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({
-        id,
-        deletedAt: null
-      });
+      const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({ id });
       if (!user) {
         throw UserNotFoundException;
       }
@@ -96,7 +92,6 @@ export class UserService {
       const user = await this.sharedUserRepository.update(
         {
           id: payload.id,
-          deletedAt: null
         },
         {
           email: payload.body.email,
@@ -203,10 +198,7 @@ export class UserService {
   }
 
   private async _getRoleIdByCurrentUserId(userId: number): Promise<number> {
-    const currentUser = await this.sharedUserRepository.findUnique({
-      id: userId,
-      deletedAt: null
-    });
+    const currentUser = await this.sharedUserRepository.findUnique({ id: userId });
 
     if (!currentUser) {
       throw UserNotFoundException;

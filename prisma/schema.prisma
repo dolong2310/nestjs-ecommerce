@@ -92,13 +92,13 @@ model Language {
 
 model User {
   id          Int     @id @default(autoincrement())
-  email       String  @unique
+  email       String // @unique // email cần set unique index với điều kiện deletedAt = null
   name        String  @db.VarChar(500)
   password    String  @db.VarChar(100)
   phoneNumber String? @db.VarChar(50) // optional vì user đăng ký/đăng nhập bằng tài khoản google không phải user nào cũng có phone number
   avatar      String? @db.VarChar(1000)
 
-  totpSecret String?    @unique @db.VarChar(1000) // field này có thể dùng để thực hiện chức năng quên mật khẩu, đăng nhập 2 bước
+  totpSecret String?    @db.VarChar(1000) // field này có thể dùng để thực hiện chức năng quên mật khẩu, đăng nhập 2 bước
   status     UserStatus @default(ACTIVE)
 
   roleId Int

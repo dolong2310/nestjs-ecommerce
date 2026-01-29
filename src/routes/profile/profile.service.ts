@@ -16,10 +16,7 @@ export class ProfileService {
 
   async getProfile(userId: number): Promise<GetUserProfileResponseType> {
     try {
-      const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({
-        id: userId,
-        deletedAt: null,
-      });
+      const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({ id: userId });
 
       if (!user) {
         throw UserNotFoundException;
@@ -33,10 +30,7 @@ export class ProfileService {
 
   async updateProfile(userId: number, body: UpdateProfileBodyType): Promise<UserType> {
     try {
-      const user = await this.sharedUserRepository.update({
-        id: userId,
-        deletedAt: null,
-      }, {
+      const user = await this.sharedUserRepository.update({ id: userId }, {
         ...body,
         updatedById: userId,
       });
@@ -54,10 +48,7 @@ export class ProfileService {
   async changePassword(userId: number, body: ChangePasswordBodyType): Promise<MessageResponseType> {
     try {
       // 1. Lấy user trong database
-      const user = await this.sharedUserRepository.findUnique({
-        id: userId,
-        deletedAt: null,
-      });
+      const user = await this.sharedUserRepository.findUnique({ id: userId });
 
       if (!user) {
         throw UserNotFoundException;
@@ -74,10 +65,7 @@ export class ProfileService {
       const hashedPassword = await this.hashingService.hash(body.newPassword);
 
       // 4. Cập nhật newPassword vào database
-      await this.sharedUserRepository.update({
-        id: userId,
-        deletedAt: null,
-      }, {
+      await this.sharedUserRepository.update({ id: userId }, {
         password: hashedPassword,
         updatedById: userId,
       });
