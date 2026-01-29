@@ -4,8 +4,8 @@ import { RoleType } from "@/shared/types/shared-role.type";
 import type { UserType } from "@/shared/types/shared-user.type";
 import { Injectable } from "@nestjs/common";
 
-type WhereUniqueInputType = { id: number, [key: string]: any } | { email: string, [key: string]: any };
-type UserIncludeRolePermissionsType = UserType & { role: RoleType & { permissions: PermissionType[] } };
+export type WhereUniqueInputType = { id: number, [key: string]: any } | { email: string, [key: string]: any };
+export type UserIncludeRolePermissionsType = UserType & { role: RoleType & { permissions: PermissionType[] } };
 
 @Injectable()
 export class SharedUserRepository {
@@ -34,7 +34,7 @@ export class SharedUserRepository {
     });
   }
 
-  update(where: WhereUniqueInputType, data: Partial<UserType>): Promise<UserType | null> {
+  update(where: WhereUniqueInputType, data: Partial<Omit<UserType, 'id'>>): Promise<UserType | null> {
     return this.prismaService.user.update({
       where,
       data,

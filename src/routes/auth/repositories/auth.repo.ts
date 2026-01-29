@@ -1,5 +1,6 @@
 import { CreateDeviceBodyType, CreateOtpCodeBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, DeviceType, OtpCodeType, RefreshTokenType, RegisterBodyType, RoleType } from "@/routes/auth/types/auth.type";
 import { EnumOtpCodeType } from "@/shared/constants/auth.constant";
+import { WhereUniqueInputType } from "@/shared/repositories/shared-user.repo";
 import { PrismaService } from "@/shared/services/prisma.service";
 import type { UserType } from "@/shared/types/shared-user.type";
 import { Injectable } from "@nestjs/common";
@@ -27,13 +28,6 @@ export class AuthRepository {
     });
   }
 
-  updateUser(where: { id: number } | { email: string }, data: Partial<Omit<UserType, 'id'>>): Promise<UserType> {
-    return this.prismaService.user.update({
-      where,
-      data,
-    });
-  }
-
   createUserIncludeRole(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<(UserType & { role: RoleType })> {
     // Tại sao không omit password và totpSecret?
     // Vì khi tạo user mới ở googleService -> method authCallback -> biến let user khi gán lại ở createUserIncludeRole phải cùng type trả về với method findUserUniqueIncludeRole
@@ -52,7 +46,7 @@ export class AuthRepository {
     });
   }
 
-  findUserUniqueIncludeRole(where: { id: number } | { email: string }): Promise<(UserType & { role: RoleType }) | null> {
+  findUserUniqueIncludeRole(where: WhereUniqueInputType): Promise<(UserType & { role: RoleType }) | null> {
     return this.prismaService.user.findUnique({
       where,
       // include: Join Role table
