@@ -1,7 +1,7 @@
-import z from 'zod';
 import { config as dotenvConfig } from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import z from 'zod';
 
 dotenvConfig({
   path: '.env', // path.resolve('.env'),
@@ -40,6 +40,13 @@ const configSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1, 'GOOGLE_CLIENT_SECRET is required'),
   GOOGLE_REDIRECT_URI: z.string().min(1, 'GOOGLE_REDIRECT_URI is required'),
   GOOGLE_CLIENT_REDIRECT_URI: z.string().min(1, 'GOOGLE_CLIENT_REDIRECT_URI is required'), // # Uri này để redirect từ server chúng ta về browser client
+
+  MEDIA_STATIC_PREFIX_URL: z.string().min(1, 'MEDIA_STATIC_PREFIX_URL is required'),
+
+  AWS_S3_REGION: z.string().min(1, 'AWS_S3_REGION is required'),
+  AWS_S3_ACCESS_KEY: z.string().min(1, 'AWS_S3_ACCESS_KEY is required'),
+  AWS_S3_SECRET_ACCESS_KEY: z.string().min(1, 'AWS_S3_SECRET_ACCESS_KEY is required'),
+  AWS_S3_BUCKET_NAME: z.string().min(1, 'AWS_S3_BUCKET_NAME is required'),
 });
 
 const config = configSchema.safeParse(process.env);

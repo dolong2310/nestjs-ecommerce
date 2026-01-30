@@ -14,9 +14,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
+import { MediaModule } from './routes/media/media.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), SharedModule, AuthModule, LanguageModule, PermissionModule, RoleModule, ProfileModule, UserModule],
+  imports: [ConfigModule.forRoot(), SharedModule, AuthModule, LanguageModule, PermissionModule, RoleModule, ProfileModule, UserModule, MediaModule],
   controllers: [AppController],
   providers: [
     AppService,
