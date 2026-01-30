@@ -1,3 +1,8 @@
+import {
+  PresignedUrlUploadFileBodyDTO,
+  PresignedUrlUploadFileResponseDTO,
+  UploadFileResponseDTO,
+} from '@/routes/media/media.dto';
 import { MediaService } from '@/routes/media/media.service';
 import { ParseFilePipeWithUnlink } from '@/routes/media/parse-file-pipe-with-unlink.pipe';
 import { UPLOAD_DIR } from '@/shared/constants/common.constant';
@@ -17,6 +22,7 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
+import { ZodSerializerDto } from 'nestjs-zod';
 import path from 'path';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
@@ -35,6 +41,7 @@ export class MediaController {
       // }
     }),
   )
+  @ZodSerializerDto(UploadFileResponseDTO)
   uploadFile(
     @UploadedFiles(
       new ParseFilePipeWithUnlink({
@@ -48,7 +55,7 @@ export class MediaController {
       }),
     )
     files: Array<Express.Multer.File>,
-  ) {
+  ): Promise<UploadFileResponseDTO> {
     return this.mediaService.uploadFile(files);
   }
 
@@ -82,7 +89,10 @@ export class MediaController {
    */
   @Post('images/upload/presigned-url')
   @Public()
-  createPresignedUrl(@Body('filename') filename: string) {
-    return this.mediaService.createPresignedUrl(filename);
+  @ZodSerializerDto(PresignedUrlUploadFileResponseDTO)
+  createPresignedUrl(@Body() body: PresignedUrlUploadFileBodyDTO): Promise<PresignedUrlUploadFileResponseDTO> {
+    // mục đích khai báo file size trong PresignedUrlUploadFileBodyDTO
+    // => để validate file size trong schema
+    return this.mediaService.createPresignedUrl(body.filename);
   }
 }
