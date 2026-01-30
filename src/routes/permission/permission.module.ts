@@ -5,6 +5,6 @@ import { Module } from '@nestjs/common';
 
 @Module({
   controllers: [PermissionController],
-  providers: [PermissionRepository, PermissionService]
+  providers: [PermissionRepository, PermissionService],
 })
-export class PermissionModule { }
+export class PermissionModule {}

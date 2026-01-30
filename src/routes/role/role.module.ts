@@ -5,6 +5,6 @@ import { Module } from '@nestjs/common';
 
 @Module({
   controllers: [RoleController],
-  providers: [RoleRepository, RoleService]
+  providers: [RoleRepository, RoleService],
 })
-export class RoleModule { }
+export class RoleModule {}

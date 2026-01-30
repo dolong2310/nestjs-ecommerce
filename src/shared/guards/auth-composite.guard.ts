@@ -62,7 +62,7 @@ export class AuthCompositeGuard implements CanActivate {
   }
 
   private _getGuardsToExecute(types: AuthType[]): CanActivate[] {
-    return types.map(type => this.guardMap[type]).filter(Boolean);
+    return types.map((type) => this.guardMap[type]).filter(Boolean);
   }
 
   private async _executeGuardsByCondition(
@@ -91,10 +91,7 @@ export class AuthCompositeGuard implements CanActivate {
     throw AuthenticationRequiredException;
   }
 
-  private async _executeGuardsAnd(
-    guards: CanActivate[],
-    context: ExecutionContext,
-  ): Promise<boolean> {
+  private async _executeGuardsAnd(guards: CanActivate[], context: ExecutionContext): Promise<boolean> {
     const errors: Error[] = [];
 
     for (const guard of guards) {
@@ -121,10 +118,7 @@ export class AuthCompositeGuard implements CanActivate {
     return true;
   }
 
-  private async _executeGuardsOr(
-    guards: CanActivate[],
-    context: ExecutionContext,
-  ): Promise<boolean> {
+  private async _executeGuardsOr(guards: CanActivate[], context: ExecutionContext): Promise<boolean> {
     const errors: Error[] = [];
 
     for (const guard of guards) {

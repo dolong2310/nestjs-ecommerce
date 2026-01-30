@@ -1,11 +1,11 @@
-import { CreateUserBodyType, GetUsersResponseType, UserQueryType } from "@/routes/user/user.type";
-import { PrismaService } from "@/shared/services/prisma.service";
-import type { UserType } from "@/shared/types/shared-user.type";
-import { Injectable } from "@nestjs/common";
+import { CreateUserBodyType, GetUsersResponseType, UserQueryType } from '@/routes/user/user.type';
+import { PrismaService } from '@/shared/services/prisma.service';
+import type { UserType } from '@/shared/types/shared-user.type';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // For offset-based pagination
   async findMany({ page, limit }: UserQueryType): Promise<GetUsersResponseType> {
@@ -30,7 +30,7 @@ export class UserRepository {
     const totalUsersPromise = this.prisma.user.count({
       where: {
         deletedAt: null,
-      }
+      },
     });
     const [users, totalUsers] = await Promise.all([usersPromise, totalUsersPromise]);
     return {
@@ -39,10 +39,10 @@ export class UserRepository {
       totalPages: Math.ceil(totalUsers / limit),
       currentPage: page,
       limit: limit,
-    }
+    };
   }
 
-  create(payload: { userId: number, body: CreateUserBodyType }): Promise<UserType> {
+  create(payload: { userId: number; body: CreateUserBodyType }): Promise<UserType> {
     const { userId, body } = payload;
     return this.prisma.user.create({
       data: {
@@ -58,23 +58,23 @@ export class UserRepository {
     });
   }
 
-  delete(payload: { userId: number, id: number }, isHardDelete?: boolean): Promise<UserType> {
+  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<UserType> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prisma.user.delete({
-        where: {
-          id,
-        },
-      })
+          where: {
+            id,
+          },
+        })
       : this.prisma.user.update({
-        where: {
-          id,
-          deletedAt: null,
-        },
-        data: {
-          deletedAt: new Date(),
-          deletedById: userId,
-        },
-      })
+          where: {
+            id,
+            deletedAt: null,
+          },
+          data: {
+            deletedAt: new Date(),
+            deletedById: userId,
+          },
+        });
   }
 }

@@ -1,4 +1,3 @@
-
 import { REQUEST_ROLE_PERMISSIONS_KEY, REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { HttpMethodType } from '@/shared/constants/permission.constant';
 import { AccessTokenExpiredException, InvalidAccessTokenException } from '@/shared/errors/shared-error.error';
@@ -6,13 +5,7 @@ import { extractTokenFromHeader, isJsonWebTokenError, isTokenExpiredError } from
 import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
 import { AccessTokenPayload } from '@/shared/types/jwt.type';
-import {
-  CanActivate,
-  ExecutionContext,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Request } from 'express';
 
 @Injectable()
@@ -20,7 +13,7 @@ export class AuthGuard implements CanActivate {
   constructor(
     private readonly tokenService: TokenService,
     private readonly prismaService: PrismaService,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -85,9 +78,9 @@ export class AuthGuard implements CanActivate {
             deletedAt: null,
             method: method,
             path: path,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     if (!roleWithPermissions) {

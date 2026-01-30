@@ -1,5 +1,11 @@
-import { CreateLanguageBodySchema, GetLanguageResponseSchema, GetLanguagesResponseSchema, LanguageSchema, UpdateLanguageBodySchema } from "@/routes/language/language.model";
-import z from "zod";
+import {
+  CreateLanguageBodySchema,
+  GetLanguageResponseSchema,
+  GetLanguagesResponseSchema,
+  LanguageSchema,
+  UpdateLanguageBodySchema,
+} from '@/routes/language/language.model';
+import z from 'zod';
 
 export type LanguageType = z.infer<typeof LanguageSchema>;
 export type CreateLanguageBodyType = z.infer<typeof CreateLanguageBodySchema>;

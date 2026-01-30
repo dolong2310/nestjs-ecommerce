@@ -2,8 +2,20 @@ import { MediaService } from '@/routes/media/media.service';
 import { ParseFilePipeWithUnlink } from '@/routes/media/parse-file-pipe-with-unlink.pipe';
 import { UPLOAD_DIR } from '@/shared/constants/common.constant';
 import { Public } from '@/shared/decorators/auth.decorator';
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, NotFoundException, Param, Post, Res, UploadedFiles, UseInterceptors } from '@nestjs/common';
-import { FilesInterceptor } from "@nestjs/platform-express";
+import {
+  Body,
+  Controller,
+  FileTypeValidator,
+  Get,
+  MaxFileSizeValidator,
+  NotFoundException,
+  Param,
+  Post,
+  Res,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
 import path from 'path';
 
@@ -13,25 +25,30 @@ const FILE_TYPE = /^(image\/)(png|jpg|jpeg|webp)$/;
 
 @Controller('media')
 export class MediaController {
-  constructor(private readonly mediaService: MediaService) { }
+  constructor(private readonly mediaService: MediaService) {}
 
   @Post('images/upload')
-  @UseInterceptors(FilesInterceptor('files', MAX_COUNT, {
-    // limits: {
-    //   fileSize: 1024 * 1024 * 5, // 5MB
-    // }
-  }))
-  uploadFile(@UploadedFiles(
-    new ParseFilePipeWithUnlink({
-      validators: [
-        new MaxFileSizeValidator({ maxSize: MAX_FILE_SIZE }),
-        new FileTypeValidator({
-          fileType: FILE_TYPE,
-          fallbackToMimetype: true, // Fallback to mimetype if magic number detection fails
-        }),
-      ],
+  @UseInterceptors(
+    FilesInterceptor('files', MAX_COUNT, {
+      // limits: {
+      //   fileSize: 1024 * 1024 * 5, // 5MB
+      // }
     }),
-  ) files: Array<Express.Multer.File>) {
+  )
+  uploadFile(
+    @UploadedFiles(
+      new ParseFilePipeWithUnlink({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: MAX_FILE_SIZE }),
+          new FileTypeValidator({
+            fileType: FILE_TYPE,
+            fallbackToMimetype: true, // Fallback to mimetype if magic number detection fails
+          }),
+        ],
+      }),
+    )
+    files: Array<Express.Multer.File>,
+  ) {
     return this.mediaService.uploadFile(files);
   }
 

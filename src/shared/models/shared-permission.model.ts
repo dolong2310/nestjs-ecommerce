@@ -1,5 +1,5 @@
-import { EnumHttpMethod } from "@/shared/constants/permission.constant";
-import z from "zod";
+import { EnumHttpMethod } from '@/shared/constants/permission.constant';
+import z from 'zod';
 
 export const PermissionSchema = z.object({
   id: z.number(),

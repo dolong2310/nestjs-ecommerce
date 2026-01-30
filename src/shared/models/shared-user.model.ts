@@ -1,7 +1,7 @@
-import { EnumUserStatus } from "@/shared/constants/auth.constant";
-import { PermissionSchema } from "@/shared/models/shared-permission.model";
-import { RoleSchema } from "@/shared/models/shared-role.model";
-import z from "zod";
+import { EnumUserStatus } from '@/shared/constants/auth.constant';
+import { PermissionSchema } from '@/shared/models/shared-permission.model';
+import { RoleSchema } from '@/shared/models/shared-role.model';
+import z from 'zod';
 
 // export const UserSchema = z.object({
 //   id: z.number(),
@@ -50,13 +50,17 @@ export const GetUserProfileResponseSchema = UserSchema.omit({
     id: true,
     name: true,
   }).extend({
-    permissions: z.array(PermissionSchema.pick({
-      id: true,
-      name: true,
-      path: true,
-      method: true,
-      module: true,
-    })).default([]),
+    permissions: z
+      .array(
+        PermissionSchema.pick({
+          id: true,
+          name: true,
+          path: true,
+          method: true,
+          module: true,
+        }),
+      )
+      .default([]),
   }),
 });
 

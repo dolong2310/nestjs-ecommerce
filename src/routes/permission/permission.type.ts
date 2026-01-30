@@ -1,5 +1,11 @@
-import { CreatePermissionBodySchema, GetPermissionsResponseSchema, PermissionParamsSchema, PermissionQuerySchema, UpdatePermissionBodySchema } from "@/routes/permission/permission.model";
-import z from "zod";
+import {
+  CreatePermissionBodySchema,
+  GetPermissionsResponseSchema,
+  PermissionParamsSchema,
+  PermissionQuerySchema,
+  UpdatePermissionBodySchema,
+} from '@/routes/permission/permission.model';
+import z from 'zod';
 
 export type GetPermissionsResponseType = z.infer<typeof GetPermissionsResponseSchema>;
 export type CreatePermissionBodyType = z.infer<typeof CreatePermissionBodySchema>;

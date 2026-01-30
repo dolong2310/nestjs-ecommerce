@@ -1,11 +1,16 @@
-import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, UpdatePermissionBodyType } from "@/routes/permission/permission.type";
-import { PrismaService } from "@/shared/services/prisma.service";
-import type { PermissionType } from "@/shared/types/shared-permission.type";
-import { Injectable } from "@nestjs/common";
+import {
+  CreatePermissionBodyType,
+  GetPermissionsResponseType,
+  PermissionQueryType,
+  UpdatePermissionBodyType,
+} from '@/routes/permission/permission.type';
+import { PrismaService } from '@/shared/services/prisma.service';
+import type { PermissionType } from '@/shared/types/shared-permission.type';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PermissionRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // For offset-based pagination
   async findMany({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
@@ -22,7 +27,7 @@ export class PermissionRepository {
     const totalPermissionsPromise = this.prisma.permission.count({
       where: {
         deletedAt: null,
-      }
+      },
     });
     const [permissions, totalPermissions] = await Promise.all([permissionsPromise, totalPermissionsPromise]);
     return {
@@ -31,7 +36,7 @@ export class PermissionRepository {
       totalPages: Math.ceil(totalPermissions / limit),
       currentPage: page,
       limit: limit,
-    }
+    };
   }
 
   // For cursor-based pagination
@@ -71,11 +76,11 @@ export class PermissionRepository {
       where: {
         id,
         deletedAt: null,
-      }
-    })
+      },
+    });
   }
 
-  create(payload: { userId: number, body: CreatePermissionBodyType }): Promise<PermissionType> {
+  create(payload: { userId: number; body: CreatePermissionBodyType }): Promise<PermissionType> {
     const { userId, body } = payload;
     return this.prisma.permission.create({
       data: {
@@ -84,11 +89,11 @@ export class PermissionRepository {
         path: body.path,
         method: body.method,
         createdById: userId,
-      }
-    })
+      },
+    });
   }
 
-  update(payload: { userId: number, id: number, body: UpdatePermissionBodyType }): Promise<PermissionType> {
+  update(payload: { userId: number; id: number; body: UpdatePermissionBodyType }): Promise<PermissionType> {
     const { userId, id, body } = payload;
     return this.prisma.permission.update({
       where: {
@@ -101,27 +106,27 @@ export class PermissionRepository {
         path: body.path,
         method: body.method,
         updatedById: userId,
-      }
-    })
+      },
+    });
   }
 
-  delete(payload: { userId: number, id: number }, isHardDelete?: boolean): Promise<PermissionType> {
+  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<PermissionType> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prisma.permission.delete({
-        where: {
-          id,
-        },
-      })
+          where: {
+            id,
+          },
+        })
       : this.prisma.permission.update({
-        where: {
-          id,
-          deletedAt: null,
-        },
-        data: {
-          deletedAt: new Date(),
-          deletedById: userId,
-        },
-      })
+          where: {
+            id,
+            deletedAt: null,
+          },
+          data: {
+            deletedAt: new Date(),
+            deletedById: userId,
+          },
+        });
   }
 }

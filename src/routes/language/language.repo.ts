@@ -1,10 +1,10 @@
-import { CreateLanguageBodyType, LanguageType, UpdateLanguageBodyType } from "@/routes/language/language.type";
-import { PrismaService } from "@/shared/services/prisma.service";
-import { Injectable } from "@nestjs/common";
+import { CreateLanguageBodyType, LanguageType, UpdateLanguageBodyType } from '@/routes/language/language.type';
+import { PrismaService } from '@/shared/services/prisma.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class LanguageRepository {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   findMany(): Promise<LanguageType[]> {
     return this.prismaService.language.findMany({
@@ -21,7 +21,7 @@ export class LanguageRepository {
     });
   }
 
-  create(payload: { userId: number, body: CreateLanguageBodyType }): Promise<LanguageType> {
+  create(payload: { userId: number; body: CreateLanguageBodyType }): Promise<LanguageType> {
     const { userId, body } = payload;
     return this.prismaService.language.create({
       data: {
@@ -32,7 +32,7 @@ export class LanguageRepository {
     });
   }
 
-  update(payload: { id: string, userId: number, body: UpdateLanguageBodyType }): Promise<LanguageType> {
+  update(payload: { id: string; userId: number; body: UpdateLanguageBodyType }): Promise<LanguageType> {
     const { id, userId, body } = payload;
     return this.prismaService.language.update({
       where: {
@@ -46,23 +46,23 @@ export class LanguageRepository {
     });
   }
 
-  delete(payload: { userId: number, id: string }, isHardDelete?: boolean): Promise<LanguageType> {
+  delete(payload: { userId: number; id: string }, isHardDelete?: boolean): Promise<LanguageType> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prismaService.language.delete({
-        where: {
-          id,
-        },
-      })
+          where: {
+            id,
+          },
+        })
       : this.prismaService.language.update({
-        where: {
-          id,
-          deletedAt: null,
-        },
-        data: {
-          deletedAt: new Date(),
-          deletedById: userId,
-        },
-      });
+          where: {
+            id,
+            deletedAt: null,
+          },
+          data: {
+            deletedAt: new Date(),
+            deletedById: userId,
+          },
+        });
   }
 }

@@ -1,5 +1,11 @@
-import { CreateRoleBodySchema, GetRolesResponseSchema, RoleParamsSchema, RoleQuerySchema, UpdateRoleBodySchema } from "@/routes/role/role.model";
-import z from "zod";
+import {
+  CreateRoleBodySchema,
+  GetRolesResponseSchema,
+  RoleParamsSchema,
+  RoleQuerySchema,
+  UpdateRoleBodySchema,
+} from '@/routes/role/role.model';
+import z from 'zod';
 
 export type RoleParamsType = z.infer<typeof RoleParamsSchema>;
 export type RoleQueryType = z.infer<typeof RoleQuerySchema>;

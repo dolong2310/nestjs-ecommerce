@@ -1,18 +1,28 @@
-import { CreateDeviceBodyType, CreateOtpCodeBodyType, CreateRefreshTokenBodyType, CreateRefreshTokenResponseType, DeviceType, OtpCodeType, RefreshTokenType, RegisterBodyType } from "@/routes/auth/types/auth.type";
-import { EnumOtpCodeType } from "@/shared/constants/auth.constant";
-import { WhereUniqueInputType } from "@/shared/repositories/shared-user.repo";
-import { PrismaService } from "@/shared/services/prisma.service";
-import { RoleType } from "@/shared/types/shared-role.type";
-import type { UserType } from "@/shared/types/shared-user.type";
-import { Injectable } from "@nestjs/common";
-
+import {
+  CreateDeviceBodyType,
+  CreateOtpCodeBodyType,
+  CreateRefreshTokenBodyType,
+  CreateRefreshTokenResponseType,
+  DeviceType,
+  OtpCodeType,
+  RefreshTokenType,
+  RegisterBodyType,
+} from '@/routes/auth/types/auth.type';
+import { EnumOtpCodeType } from '@/shared/constants/auth.constant';
+import { WhereUniqueInputType } from '@/shared/repositories/shared-user.repo';
+import { PrismaService } from '@/shared/services/prisma.service';
+import { RoleType } from '@/shared/types/shared-role.type';
+import type { UserType } from '@/shared/types/shared-user.type';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthRepository {
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   // User
-  createUser(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
+  createUser(
+    body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>,
+  ): Promise<Omit<UserType, 'password' | 'totpSecret'>> {
     return this.prismaService.user.create({
       data: {
         name: body.name,
@@ -25,11 +35,13 @@ export class AuthRepository {
       omit: {
         password: true,
         totpSecret: true,
-      }
+      },
     });
   }
 
-  createUserIncludeRole(body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>): Promise<(UserType & { role: RoleType })> {
+  createUserIncludeRole(
+    body: Omit<RegisterBodyType, 'confirmPassword' | 'code'> & Pick<UserType, 'avatar' | 'roleId'>,
+  ): Promise<UserType & { role: RoleType }> {
     // Tại sao không omit password và totpSecret?
     // Vì khi tạo user mới ở googleService -> method authCallback -> biến let user khi gán lại ở createUserIncludeRole phải cùng type trả về với method findUserUniqueIncludeRole
     return this.prismaService.user.create({
@@ -43,7 +55,7 @@ export class AuthRepository {
       },
       include: {
         role: true,
-      }
+      },
     });
   }
 
@@ -85,7 +97,9 @@ export class AuthRepository {
     });
   }
 
-  findRefreshTokenUniqueIncludeUserRole(where: { token: string }): Promise<(RefreshTokenType & { user: UserType & { role: RoleType } }) | null> {
+  findRefreshTokenUniqueIncludeUserRole(where: {
+    token: string;
+  }): Promise<(RefreshTokenType & { user: UserType & { role: RoleType } }) | null> {
     return this.prismaService.refreshToken.findUnique({
       where,
       // include: Join User table
@@ -94,9 +108,9 @@ export class AuthRepository {
           // include: Join Role table from User table
           include: {
             role: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 
@@ -118,7 +132,7 @@ export class AuthRepository {
           email: body.email,
           code: body.code,
           type: body.type,
-        }
+        },
       },
       create: body,
       update: {
@@ -135,14 +149,18 @@ export class AuthRepository {
     });
   }
 
-  findUniqueOtpCode(where: { id: number } | { email_code_type: { email: string, code: string, type: EnumOtpCodeType } }): Promise<OtpCodeType | null> {
+  findUniqueOtpCode(
+    where: { id: number } | { email_code_type: { email: string; code: string; type: EnumOtpCodeType } },
+  ): Promise<OtpCodeType | null> {
     // query theo 3 trường "email, code, type" vì được đánh index
     return this.prismaService.otpCode.findUnique({
       where,
-    })
+    });
   }
 
-  deleteOtpCode(where: { id: number } | { email_code_type: { email: string, code: string, type: EnumOtpCodeType } }): Promise<OtpCodeType> {
+  deleteOtpCode(
+    where: { id: number } | { email_code_type: { email: string; code: string; type: EnumOtpCodeType } },
+  ): Promise<OtpCodeType> {
     // query theo 3 trường "email, code, type" vì được đánh index
     return this.prismaService.otpCode.delete({
       where,

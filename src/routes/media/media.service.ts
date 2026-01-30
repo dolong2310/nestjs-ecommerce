@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class MediaService {
-  constructor(private readonly s3Service: S3Service) { }
+  constructor(private readonly s3Service: S3Service) {}
 
   async uploadFile(files: Array<Express.Multer.File>) {
     try {
@@ -12,13 +12,12 @@ export class MediaService {
       const uploadedFiles = await Promise.all(files.map(this._uploadFileToS3.bind(this)));
 
       // 2. Delete local files
-      await Promise.all(files.map(file => deleteFile(file.path)));
+      await Promise.all(files.map((file) => deleteFile(file.path)));
 
       // 3. Return uploaded files
       return uploadedFiles;
-
     } catch (error) {
-      console.log("error upload file: ", error);
+      console.log('error upload file: ', error);
       throw error;
     }
   }
@@ -46,6 +45,6 @@ export class MediaService {
     // hoặc search google: "Setting permissions for website access"
     return {
       url: result.Location,
-    }
+    };
   }
 }

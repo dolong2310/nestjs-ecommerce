@@ -1,11 +1,11 @@
-import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from "@/routes/role/role.type";
-import { PrismaService } from "@/shared/services/prisma.service";
-import { RoleType, RoleWithPermissionsType } from "@/shared/types/shared-role.type";
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from '@/routes/role/role.type';
+import { PrismaService } from '@/shared/services/prisma.service';
+import { RoleType, RoleWithPermissionsType } from '@/shared/types/shared-role.type';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RoleRepository {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   // For offset-based pagination
   async findMany({ page, limit }: RoleQueryType): Promise<GetRolesResponseType> {
@@ -22,7 +22,7 @@ export class RoleRepository {
     const totalRolesPromise = this.prisma.role.count({
       where: {
         deletedAt: null,
-      }
+      },
     });
     const [roles, totalRoles] = await Promise.all([rolesPromise, totalRolesPromise]);
     return {
@@ -31,7 +31,7 @@ export class RoleRepository {
       totalPages: Math.ceil(totalRoles / limit),
       currentPage: page,
       limit: limit,
-    }
+    };
   }
 
   // For cursor-based pagination
@@ -76,13 +76,13 @@ export class RoleRepository {
         permissions: {
           where: {
             deletedAt: null,
-          }
+          },
         },
       },
-    })
+    });
   }
 
-  create(payload: { userId: number, body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  create(payload: { userId: number; body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
     const { userId, body } = payload;
     return this.prisma.role.create({
       data: {
@@ -96,13 +96,13 @@ export class RoleRepository {
         permissions: {
           where: {
             deletedAt: null,
-          }
+          },
         },
       },
-    })
+    });
   }
 
-  async update(payload: { userId: number, id: number, body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  async update(payload: { userId: number; id: number; body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
     const { userId, id, body } = payload;
 
     // kiểm tra xem list permissionIds có item nào đã soft delete hoặc không tồn tại thì không cho phép update
@@ -112,8 +112,8 @@ export class RoleRepository {
         where: {
           id: {
             in: body.permissionIds,
-          }
-        }
+          },
+        },
       });
 
       let notFoundIds: number[] = [];
@@ -121,19 +121,19 @@ export class RoleRepository {
 
       // 2. Kiểm tra xem có permission nào không tồn tại không (số lượng tìm được < số lượng gửi lên)
       if (permissions.length !== body.permissionIds.length) {
-        const foundIds = permissions.map(p => p.id);
-        notFoundIds = body.permissionIds.filter(id => !foundIds.includes(id));
+        const foundIds = permissions.map((p) => p.id);
+        notFoundIds = body.permissionIds.filter((id) => !foundIds.includes(id));
       }
 
       // 3. filter mảng permissions có item mà deletedAt: có giá trị new Date() => đã xoá
-      const deletedPermissions = permissions.filter(p => p.deletedAt !== null);
+      const deletedPermissions = permissions.filter((p) => p.deletedAt !== null);
       if (deletedPermissions.length > 0) {
-        deletedIds = deletedPermissions.map(p => p.id);
+        deletedIds = deletedPermissions.map((p) => p.id);
       }
 
       // 4. Nếu có permission nào không tồn tại hoặc đã xoá thì không cho phép update
       if (notFoundIds.length > 0 || deletedIds.length > 0) {
-        const errorObjects: { field: string, message: string, value: string }[] = [];
+        const errorObjects: { field: string; message: string; value: string }[] = [];
         if (notFoundIds.length > 0) {
           errorObjects.push({
             field: 'permissionIds',
@@ -162,7 +162,7 @@ export class RoleRepository {
         description: body.description,
         isActive: body.isActive,
         permissions: {
-          set: body.permissionIds.map(id => ({ id })),
+          set: body.permissionIds.map((id) => ({ id })),
         },
         updatedById: userId,
       },
@@ -170,29 +170,29 @@ export class RoleRepository {
         permissions: {
           where: {
             deletedAt: null,
-          }
+          },
         },
       },
     });
   }
 
-  delete(payload: { userId: number, id: number }, isHardDelete?: boolean): Promise<RoleType> {
+  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<RoleType> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prisma.role.delete({
-        where: {
-          id,
-        },
-      })
+          where: {
+            id,
+          },
+        })
       : this.prisma.role.update({
-        where: {
-          id,
-          deletedAt: null,
-        },
-        data: {
-          deletedAt: new Date(),
-          deletedById: userId,
-        },
-      })
+          where: {
+            id,
+            deletedAt: null,
+          },
+          data: {
+            deletedAt: new Date(),
+            deletedById: userId,
+          },
+        });
   }
 }

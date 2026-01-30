@@ -1,6 +1,6 @@
-import { EnumOtpCode } from "@/shared/constants/auth.constant";
-import { UserSchema } from "@/shared/models/shared-user.model";
-import z from "zod";
+import { EnumOtpCode } from '@/shared/constants/auth.constant';
+import { UserSchema } from '@/shared/models/shared-user.model';
+import z from 'zod';
 
 //////////////////////////////////////////
 // JWT TOKEN
@@ -62,18 +62,21 @@ export const RegisterBodySchema = UserSchema.pick({
   email: true,
   password: true,
   phoneNumber: true,
-}).extend({
-  confirmPassword: z.string().min(6).max(100),
-  code: z.string().length(6),
-}).strict().superRefine((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Error.PasswordNotMatch', // Passwords do not match
-      path: ['confirmPassword'],
-    });
-  }
-});
+})
+  .extend({
+    confirmPassword: z.string().min(6).max(100),
+    code: z.string().length(6),
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Error.PasswordNotMatch', // Passwords do not match
+        path: ['confirmPassword'],
+      });
+    }
+  });
 
 export const RegisterResponseSchema = UserSchema.omit({
   password: true,
@@ -86,27 +89,30 @@ export const RegisterResponseSchema = UserSchema.omit({
 export const LoginBodySchema = UserSchema.pick({
   email: true,
   password: true,
-}).extend({
-  // vì có tính năng disable 2FA nên thêm optional và client browser không cần truyền body
-  totpCode: z.string().length(6).optional(), // 2FA code
-  emailOtpCode: z.string().length(6).optional(), // Email otp code
-}).strict().superRefine((data, ctx) => {
-  const { totpCode, emailOtpCode } = data;
-  // nếu cả 2 trường đều có thì sẽ chạy vào if này (true && true, không check false && false)
-  // bởi vì nếu truyền cả 2 nó vẫn sẽ throw error nhưng error là { "field": "totpCode", "message": "Error.InvalidTOTP" }
-  if ((totpCode !== undefined) && (emailOtpCode !== undefined)) {
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
-      path: ['totpCode'],
-    });
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
-      path: ['emailOtpCode'],
-    });
-  }
-});
+})
+  .extend({
+    // vì có tính năng disable 2FA nên thêm optional và client browser không cần truyền body
+    totpCode: z.string().length(6).optional(), // 2FA code
+    emailOtpCode: z.string().length(6).optional(), // Email otp code
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    const { totpCode, emailOtpCode } = data;
+    // nếu cả 2 trường đều có thì sẽ chạy vào if này (true && true, không check false && false)
+    // bởi vì nếu truyền cả 2 nó vẫn sẽ throw error nhưng error là { "field": "totpCode", "message": "Error.InvalidTOTP" }
+    if (totpCode !== undefined && emailOtpCode !== undefined) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+        path: ['totpCode'],
+      });
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+        path: ['emailOtpCode'],
+      });
+    }
+  });
 
 export const LoginResponseSchema = JwtTokenSchema;
 
@@ -120,20 +126,23 @@ export const LogoutBodySchema = JwtTokenSchema.pick({
 //////////////////////////////////////////
 // FORGOT PASSWORD
 //////////////////////////////////////////
-export const ForgotPasswordBodySchema = z.object({
-  email: z.email(),
-  code: z.string().length(6),
-  newPassword: z.string().min(6).max(100),
-  confirmNewPassword: z.string().min(6).max(100),
-}).strict().superRefine((data, ctx) => {
-  if (data.newPassword !== data.confirmNewPassword) {
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Error.PasswordNotMatch', // Passwords do not match
-      path: ['confirmNewPassword'],
-    });
-  }
-});
+export const ForgotPasswordBodySchema = z
+  .object({
+    email: z.email(),
+    code: z.string().length(6),
+    newPassword: z.string().min(6).max(100),
+    confirmNewPassword: z.string().min(6).max(100),
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    if (data.newPassword !== data.confirmNewPassword) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Error.PasswordNotMatch', // Passwords do not match
+        path: ['confirmNewPassword'],
+      });
+    }
+  });
 
 //////////////////////////////////////////
 // REFRESH TOKEN
@@ -224,18 +233,21 @@ export const Setup2FAResponseSchema = z.object({
   uri: z.url(), // URL của QR code 2FA, dùng để hiển thị QR code 2FA trên client browser
 });
 
-export const Disable2FABodySchema = z.object({
-  // client browser phải truyền 1 trong 2 trường này nên sẽ thêm optional(), không được truyền cả 2 trường 1 lúc
-  totpCode: z.string().length(6).optional(),
-  emailOtpCode: z.string().length(6).optional(),
-}).strict().superRefine((data, ctx) => {
-  const { totpCode, emailOtpCode } = data;
-  // nếu cả 2 trường đều có hoặc không có thì sẽ chạy vào if này
-  if ((totpCode !== undefined) === (emailOtpCode !== undefined)) {
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
-      path: ['totpCode', 'emailOtpCode'],
-    });
-  }
-});
+export const Disable2FABodySchema = z
+  .object({
+    // client browser phải truyền 1 trong 2 trường này nên sẽ thêm optional(), không được truyền cả 2 trường 1 lúc
+    totpCode: z.string().length(6).optional(),
+    emailOtpCode: z.string().length(6).optional(),
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    const { totpCode, emailOtpCode } = data;
+    // nếu cả 2 trường đều có hoặc không có thì sẽ chạy vào if này
+    if ((totpCode !== undefined) === (emailOtpCode !== undefined)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Error.OnlyOneOfFieldsRequired', // Only one of the fields is allowed, not both
+        path: ['totpCode', 'emailOtpCode'],
+      });
+    }
+  });

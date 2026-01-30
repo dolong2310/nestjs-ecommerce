@@ -1,6 +1,11 @@
 import { PermissionAlreadyExistsException, PermissionNotFoundException } from '@/routes/permission/permission.error';
 import { PermissionRepository } from '@/routes/permission/permission.repo';
-import { CreatePermissionBodyType, GetPermissionsResponseType, PermissionQueryType, UpdatePermissionBodyType } from '@/routes/permission/permission.type';
+import {
+  CreatePermissionBodyType,
+  GetPermissionsResponseType,
+  PermissionQueryType,
+  UpdatePermissionBodyType,
+} from '@/routes/permission/permission.type';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import type { PermissionType } from '@/shared/types/shared-permission.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
@@ -8,7 +13,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PermissionService {
-  constructor(private readonly permissionRepository: PermissionRepository) { }
+  constructor(private readonly permissionRepository: PermissionRepository) {}
 
   async getPermissions({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
     try {
@@ -33,7 +38,7 @@ export class PermissionService {
     }
   }
 
-  async createPermission(payload: { userId: number, body: CreatePermissionBodyType }): Promise<PermissionType> {
+  async createPermission(payload: { userId: number; body: CreatePermissionBodyType }): Promise<PermissionType> {
     try {
       return await this.permissionRepository.create(payload);
     } catch (error) {
@@ -44,7 +49,11 @@ export class PermissionService {
     }
   }
 
-  async updatePermission(payload: { userId: number, id: number, body: UpdatePermissionBodyType }): Promise<PermissionType> {
+  async updatePermission(payload: {
+    userId: number;
+    id: number;
+    body: UpdatePermissionBodyType;
+  }): Promise<PermissionType> {
     try {
       return await this.permissionRepository.update(payload);
     } catch (error) {
@@ -58,13 +67,13 @@ export class PermissionService {
     }
   }
 
-  async deletePermission(payload: { userId: number, id: number }): Promise<MessageResponseType> {
+  async deletePermission(payload: { userId: number; id: number }): Promise<MessageResponseType> {
     try {
       const isHardDelete = true;
       await this.permissionRepository.delete(payload, isHardDelete);
       return {
         message: 'Success.PermissionDeleted',
-      }
+      };
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw PermissionNotFoundException;
@@ -72,5 +81,4 @@ export class PermissionService {
       throw error;
     }
   }
-
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
 
 export const UserNotFoundException = new NotFoundException([
   {
@@ -18,14 +18,14 @@ export const UserCannotBeDeletedException = new ForbiddenException([
   {
     field: 'user',
     message: 'Error.UserCannotBeDeleted', // User cannot be deleted
-  }
+  },
 ]);
 
 export const UserCannotBeUpdatedException = new ForbiddenException([
   {
     field: 'user',
     message: 'Error.UserCannotBeUpdated', // User cannot be updated
-  }
+  },
 ]);
 
 // Chỉ Admin mới có thể đặt role là ADMIN
@@ -33,7 +33,7 @@ export const UserCannotBeSetAsAdminException = new ForbiddenException([
   {
     field: 'user',
     message: 'Error.UserCannotBeSetAsAdmin', // User cannot be set as admin
-  }
+  },
 ]);
 
 export const RoleNotFoundException = new NotFoundException([
@@ -43,4 +43,6 @@ export const RoleNotFoundException = new NotFoundException([
   },
 ]);
 
-export const UserCannotUpdateOrDeleteYourselfException = new ForbiddenException('Error.UserCannotUpdateOrDeleteYourself');
+export const UserCannotUpdateOrDeleteYourselfException = new ForbiddenException(
+  'Error.UserCannotUpdateOrDeleteYourself',
+);

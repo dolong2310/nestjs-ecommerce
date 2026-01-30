@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request } from 'express';
 
 // Extract token from header
 export function extractTokenFromHeader(request: Request): string | undefined {

@@ -1,8 +1,8 @@
 import envConfig from '@/shared/config';
-import { PutObjectCommand, S3 } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { Injectable } from "@nestjs/common";
+import { PutObjectCommand, S3 } from '@aws-sdk/client-s3';
+import { Upload } from '@aws-sdk/lib-storage';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { Injectable } from '@nestjs/common';
 import { readFileSync } from 'fs';
 import mime from 'mime-types';
 
@@ -24,11 +24,7 @@ export class S3Service {
     // });
   }
 
-  async uploadFile({
-    filename,
-    filepath,
-    contentType,
-  }: { filename: string, filepath: string, contentType: string }) {
+  async uploadFile({ filename, filepath, contentType }: { filename: string; filepath: string; contentType: string }) {
     try {
       const parallelUploads3 = new Upload({
         client: this.s3,
@@ -55,7 +51,7 @@ export class S3Service {
 
       return await parallelUploads3.done();
     } catch (error) {
-      console.log("error upload file to S3 service: ", error);
+      console.log('error upload file to S3 service: ', error);
       throw error;
     }
   }
@@ -68,7 +64,7 @@ export class S3Service {
       ContentType: contentType,
     });
     return getSignedUrl(this.s3, command, { expiresIn: 10 }); // 10 seconds
-  };
+  }
 }
 
 // Test upload file to S3

@@ -1,5 +1,5 @@
-import { Prisma } from "@/generated/prisma/client";
-import { JsonWebTokenError, TokenExpiredError } from "@nestjs/jwt";
+import { Prisma } from '@/generated/prisma/client';
+import { JsonWebTokenError, TokenExpiredError } from '@nestjs/jwt';
 
 // Prisma errors
 export function isUniqueConstraintPrismaError(error: any): error is Prisma.PrismaClientKnownRequestError {

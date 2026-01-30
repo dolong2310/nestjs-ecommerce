@@ -1,10 +1,46 @@
-import { EmailAlreadyExistsException, EmailNotFoundException, ExpiredOtpCodeException, FailedToCreateDeviceException, FailedToSendOtpCodeException, InvalidOtpCodeException, InvalidRefreshTokenException, InvalidTOTPException, InvalidTOTPOrEmailOtpCodeException, RefreshTokenExpiredException, RefreshTokenHasBeenRevokedException, RefreshTokenNotFoundException, TOTPAlreadyEnabledException, TOTPNotEnabledException } from '@/routes/auth/errors/auth.error';
+import {
+  EmailAlreadyExistsException,
+  EmailNotFoundException,
+  ExpiredOtpCodeException,
+  FailedToCreateDeviceException,
+  FailedToSendOtpCodeException,
+  InvalidOtpCodeException,
+  InvalidRefreshTokenException,
+  InvalidTOTPException,
+  InvalidTOTPOrEmailOtpCodeException,
+  RefreshTokenExpiredException,
+  RefreshTokenHasBeenRevokedException,
+  RefreshTokenNotFoundException,
+  TOTPAlreadyEnabledException,
+  TOTPNotEnabledException,
+} from '@/routes/auth/errors/auth.error';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
-import { Disable2FABodyType, ForgotPasswordBodyType, GetMeResponseType, JwtTokenType, LoginBodyType, LoginResponseType, LogoutBodyType, OtpCodeType, RefreshJwtTokenBodyType, RefreshJwtTokenResponseType, RegisterBodyType, RegisterResponseType, SendOtpBodyType, Setup2FAResponseType } from '@/routes/auth/types/auth.type';
+import {
+  Disable2FABodyType,
+  ForgotPasswordBodyType,
+  GetMeResponseType,
+  JwtTokenType,
+  LoginBodyType,
+  LoginResponseType,
+  LogoutBodyType,
+  OtpCodeType,
+  RefreshJwtTokenBodyType,
+  RefreshJwtTokenResponseType,
+  RegisterBodyType,
+  RegisterResponseType,
+  SendOtpBodyType,
+  Setup2FAResponseType,
+} from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { InvalidPasswordException, UserNotFoundException } from '@/shared/errors/shared-error.error';
-import { generateOtpCode, isJsonWebTokenError, isNotFoundPrismaError, isTokenExpiredError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import {
+  generateOtpCode,
+  isJsonWebTokenError,
+  isNotFoundPrismaError,
+  isTokenExpiredError,
+  isUniqueConstraintPrismaError,
+} from '@/shared/helpers';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';
@@ -49,7 +85,7 @@ export class AuthService {
     private readonly sharedRoleRepository: SharedRoleRepository,
     private readonly emailService: EmailService,
     private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,
-  ) { }
+  ) {}
 
   async register(body: RegisterBodyType): Promise<RegisterResponseType> {
     // flow register:
@@ -63,7 +99,11 @@ export class AuthService {
     // 8. Return user (successfully registered)
     try {
       // 1. Check OTP code
-      const otpCode = await this._findAndValidateOtpCode({ email: body.email, code: body.code, type: EnumOtpCode.REGISTER });
+      const otpCode = await this._findAndValidateOtpCode({
+        email: body.email,
+        code: body.code,
+        type: EnumOtpCode.REGISTER,
+      });
 
       // 2. Create user
       // 2.1 Get user role id
@@ -96,7 +136,7 @@ export class AuthService {
     }
   }
 
-  async login(body: LoginBodyType & { ip: string, userAgent: string }): Promise<LoginResponseType> {
+  async login(body: LoginBodyType & { ip: string; userAgent: string }): Promise<LoginResponseType> {
     try {
       // 1. Check email exists in database
       const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email });
@@ -172,7 +212,10 @@ export class AuthService {
       const deleteRefreshTokenPromise = this.authRepository.deleteRefreshToken({ token: body.refreshToken });
 
       // 4. Update device isActive to false (device has been logged out) in database
-      const updateDevicePromise = this.authRepository.updateDevice({ id: refreshToken.deviceId }, { isActive: false, lastActiveAt: new Date() });
+      const updateDevicePromise = this.authRepository.updateDevice(
+        { id: refreshToken.deviceId },
+        { isActive: false, lastActiveAt: new Date() },
+      );
 
       // 5. Execute promises
       await Promise.all([deleteRefreshTokenPromise, updateDevicePromise]);
@@ -193,7 +236,11 @@ export class AuthService {
     // [button submit]
     try {
       // 1. Check OTP code
-      const otpCode = await this._findAndValidateOtpCode({ email: body.email, code: body.code, type: EnumOtpCode.FORGOT_PASSWORD });
+      const otpCode = await this._findAndValidateOtpCode({
+        email: body.email,
+        code: body.code,
+        type: EnumOtpCode.FORGOT_PASSWORD,
+      });
 
       // 2. Check email exists in database
       const user = await this.sharedUserRepository.findUnique({ email: body.email });
@@ -208,10 +255,13 @@ export class AuthService {
       const hashedPassword = await this.hashingService.hash(body.newPassword);
 
       // 4. Update user password
-      const updateUserPasswordPromise = this.sharedUserRepository.update({ id: user.id }, {
-        password: hashedPassword,
-        updatedById: user.id,
-      });
+      const updateUserPasswordPromise = this.sharedUserRepository.update(
+        { id: user.id },
+        {
+          password: hashedPassword,
+          updatedById: user.id,
+        },
+      );
 
       // 5. Delete OTP code
       const deleteOtpCodePromise = this.authRepository.deleteOtpCode({ id: otpCode.id });
@@ -226,10 +276,14 @@ export class AuthService {
     }
   }
 
-  async refreshToken(body: RefreshJwtTokenBodyType & { ip: string, userAgent: string }): Promise<RefreshJwtTokenResponseType> {
+  async refreshToken(
+    body: RefreshJwtTokenBodyType & { ip: string; userAgent: string },
+  ): Promise<RefreshJwtTokenResponseType> {
     try {
       // 1. Find refresh token in database (includes device, user, role)
-      const refreshToken = await this.authRepository.findRefreshTokenUniqueIncludeUserRole({ token: body.refreshToken });
+      const refreshToken = await this.authRepository.findRefreshTokenUniqueIncludeUserRole({
+        token: body.refreshToken,
+      });
 
       if (!refreshToken) {
         throw RefreshTokenNotFoundException;
@@ -238,10 +292,13 @@ export class AuthService {
       const { userId, deviceId, user } = refreshToken;
 
       // 2. Update device in database
-      const updateDevicePromise = this.authRepository.updateDevice({ id: deviceId }, {
-        ip: body.ip,
-        userAgent: body.userAgent,
-      });
+      const updateDevicePromise = this.authRepository.updateDevice(
+        { id: deviceId },
+        {
+          ip: body.ip,
+          userAgent: body.userAgent,
+        },
+      );
 
       // 3. Check valid refresh token + Decode refresh token get user id
       const verifyRefreshTokenPromise = this.tokenService.verifyRefreshToken(body.refreshToken);
@@ -340,7 +397,7 @@ export class AuthService {
         code: generatedOtpCode,
         to: body.email,
         subject: 'OTP Code',
-      })
+      });
 
       // 4. Execute promises
       const [otpCode, { error: emailError }] = await Promise.all([otpCodePromise, sendOtpPromise]);
@@ -376,10 +433,13 @@ export class AuthService {
       const { secret, uri } = this.twoFactorAuthenticationService.generateSecret(user.email);
 
       // 3. Lưu secret key vào database
-      await this.sharedUserRepository.update({ id: userId }, {
-        totpSecret: secret,
-        updatedById: userId,
-      });
+      await this.sharedUserRepository.update(
+        { id: userId },
+        {
+          totpSecret: secret,
+          updatedById: userId,
+        },
+      );
 
       // 4. Return secret key và URI
       return {
@@ -414,13 +474,16 @@ export class AuthService {
       });
 
       // 3. Delete secret key of user from database
-      await this.sharedUserRepository.update({ id: userId }, {
-        totpSecret: null,
-        updatedById: userId,
-      });
+      await this.sharedUserRepository.update(
+        { id: userId },
+        {
+          totpSecret: null,
+          updatedById: userId,
+        },
+      );
 
       // 4. Return message success
-      return { message: "Success.2FADisabled" };
+      return { message: 'Success.2FADisabled' };
     } catch (error) {
       throw error;
     }
@@ -451,14 +514,18 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  private async _findAndValidateOtpCode(data: { email: string, code: string, type: EnumOtpCodeType }): Promise<OtpCodeType> {
+  private async _findAndValidateOtpCode(data: {
+    email: string;
+    code: string;
+    type: EnumOtpCodeType;
+  }): Promise<OtpCodeType> {
     try {
       const otpCode = await this.authRepository.findUniqueOtpCode({
         email_code_type: {
           email: data.email,
           code: data.code,
           type: data.type,
-        }
+        },
       });
 
       if (!otpCode) {
@@ -482,13 +549,13 @@ export class AuthService {
     emailOtpCode,
     totpSecret,
     email,
-    type
+    type,
   }: {
-    totpCode?: string,
-    emailOtpCode?: string,
-    totpSecret: string,
-    email: string,
-    type: EnumOtpCodeType
+    totpCode?: string;
+    emailOtpCode?: string;
+    totpSecret: string;
+    email: string;
+    type: EnumOtpCodeType;
   }): Promise<void> {
     try {
       // Check TOTP code is valid or email OTP code is valid
@@ -504,7 +571,7 @@ export class AuthService {
           email: email,
           secret: totpSecret,
           token: totpCode,
-        })
+        });
 
         if (!isTOTPValid) {
           throw InvalidTOTPException;

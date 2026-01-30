@@ -1,4 +1,4 @@
-import { AuthConditionKey, AuthKey } from "@/shared/constants/auth.constant";
+import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';
 
 export const AUTH_TYPE_KEY = 'authType';
 

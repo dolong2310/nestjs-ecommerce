@@ -1,12 +1,17 @@
 import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/errors/auth.error';
 import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
 import { AuthService } from '@/routes/auth/services/auth.service';
-import { GoogleAuthCallbackQueryType, GoogleAuthCallbackResponseType, GoogleAuthResponseType, GoogleAuthStateType } from '@/routes/auth/types/auth.type';
-import envConfig from "@/shared/config";
+import {
+  GoogleAuthCallbackQueryType,
+  GoogleAuthCallbackResponseType,
+  GoogleAuthResponseType,
+  GoogleAuthStateType,
+} from '@/routes/auth/types/auth.type';
+import envConfig from '@/shared/config';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { HashingService } from '@/shared/services/hashing.service';
-import { Injectable } from "@nestjs/common";
-import { Credentials, OAuth2Client } from "google-auth-library";
+import { Injectable } from '@nestjs/common';
+import { Credentials, OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -58,15 +63,15 @@ export class GoogleService {
     const { state, code } = query;
 
     // 1. Get ip and userAgent from state
-    let ip = "Unknown";
-    let userAgent = "Unknown";
+    let ip = 'Unknown';
+    let userAgent = 'Unknown';
 
     try {
       const stateData = JSON.parse(Buffer.from(state, 'base64').toString('utf-8'));
       ip = stateData.ip;
       userAgent = stateData.userAgent;
     } catch (error) {
-      console.log("error parsing state: ", error);
+      console.log('error parsing state: ', error);
     }
 
     try {
@@ -99,10 +104,10 @@ export class GoogleService {
         const [userRoleId, hashedPassword] = await Promise.all([userRoleIdPromise, hashedPasswordPromise]);
         // 5.5 Create user
         user = await this.authRepository.createUserIncludeRole({
-          name: data.name ?? "",
+          name: data.name ?? '',
           email: data.email,
           password: hashedPassword,
-          phoneNumber: "",
+          phoneNumber: '',
           avatar: data.picture ?? null,
           roleId: userRoleId,
         });

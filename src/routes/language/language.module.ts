@@ -5,6 +5,6 @@ import { Module } from '@nestjs/common';
 
 @Module({
   controllers: [LanguageController],
-  providers: [LanguageRepository, LanguageService]
+  providers: [LanguageRepository, LanguageService],
 })
-export class LanguageModule { }
+export class LanguageModule {}

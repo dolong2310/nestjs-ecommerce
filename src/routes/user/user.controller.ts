@@ -1,4 +1,13 @@
-import { CreateUserBodyDTO, CreateUserResponseDTO, GetUserResponseDTO, GetUsersResponseDTO, UpdateUserBodyDTO, UpdateUserResponseDTO, UserParamsDTO, UserQueryDTO } from '@/routes/user/user.dto';
+import {
+  CreateUserBodyDTO,
+  CreateUserResponseDTO,
+  GetUserResponseDTO,
+  GetUsersResponseDTO,
+  UpdateUserBodyDTO,
+  UpdateUserResponseDTO,
+  UserParamsDTO,
+  UserQueryDTO,
+} from '@/routes/user/user.dto';
 import { UserService } from '@/routes/user/user.service';
 import type { RoleNameType } from '@/shared/constants/role.constant';
 import { ActiveRolePermissions } from '@/shared/decorators/active-role-permissions.decorator';
@@ -9,7 +18,7 @@ import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @ZodSerializerDto(GetUsersResponseDTO)
@@ -29,8 +38,8 @@ export class UserController {
   @ZodSerializerDto(CreateUserResponseDTO)
   createUser(
     @Body() body: CreateUserBodyDTO,
-    @ActiveUser("userId") userId: number,
-    @ActiveRolePermissions("name") roleName: RoleNameType,
+    @ActiveUser('userId') userId: number,
+    @ActiveRolePermissions('name') roleName: RoleNameType,
   ): Promise<CreateUserResponseDTO> {
     return this.userService.createUser({ userId, roleName, body });
   }
@@ -40,8 +49,8 @@ export class UserController {
   updateUser(
     @Param() params: UserParamsDTO,
     @Body() body: UpdateUserBodyDTO,
-    @ActiveUser("userId") userId: number,
-    @ActiveRolePermissions("name") roleName: RoleNameType,
+    @ActiveUser('userId') userId: number,
+    @ActiveRolePermissions('name') roleName: RoleNameType,
   ): Promise<UpdateUserResponseDTO> {
     return this.userService.updateUser({ userId, roleName, id: params.id, body });
   }
@@ -50,8 +59,8 @@ export class UserController {
   @ZodSerializerDto(MessageResponseDTO)
   deleteUser(
     @Param('id', ParseIntPipe) id: number,
-    @ActiveUser("userId") userId: number,
-    @ActiveRolePermissions("name") roleName: RoleNameType,
+    @ActiveUser('userId') userId: number,
+    @ActiveRolePermissions('name') roleName: RoleNameType,
   ): Promise<MessageResponseDTO> {
     return this.userService.deleteUser({ userId, roleName, id });
   }

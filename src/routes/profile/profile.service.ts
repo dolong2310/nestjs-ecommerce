@@ -1,4 +1,3 @@
-
 import { ChangePasswordBodyType, UpdateProfileBodyType } from '@/routes/profile/profile.type';
 import { InvalidPasswordException, UserNotFoundException } from '@/shared/errors/shared-error.error';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
@@ -12,7 +11,7 @@ export class ProfileService {
   constructor(
     private readonly sharedUserRepository: SharedUserRepository,
     private readonly hashingService: HashingService,
-  ) { }
+  ) {}
 
   async getProfile(userId: number): Promise<GetUserProfileResponseType> {
     try {
@@ -30,10 +29,13 @@ export class ProfileService {
 
   async updateProfile(userId: number, body: UpdateProfileBodyType): Promise<UserType> {
     try {
-      const user = await this.sharedUserRepository.update({ id: userId }, {
-        ...body,
-        updatedById: userId,
-      });
+      const user = await this.sharedUserRepository.update(
+        { id: userId },
+        {
+          ...body,
+          updatedById: userId,
+        },
+      );
 
       if (!user) {
         throw UserNotFoundException;
@@ -65,15 +67,18 @@ export class ProfileService {
       const hashedPassword = await this.hashingService.hash(body.newPassword);
 
       // 4. Cập nhật newPassword vào database
-      await this.sharedUserRepository.update({ id: userId }, {
-        password: hashedPassword,
-        updatedById: userId,
-      });
+      await this.sharedUserRepository.update(
+        { id: userId },
+        {
+          password: hashedPassword,
+          updatedById: userId,
+        },
+      );
 
       // 5. Trả về message thành công
       return {
-        message: "Success.PasswordChanged",
-      }
+        message: 'Success.PasswordChanged',
+      };
     } catch (error) {
       throw error;
     }

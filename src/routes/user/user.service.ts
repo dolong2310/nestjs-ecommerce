@@ -1,8 +1,18 @@
-import { RoleNotFoundException, UserAlreadyExistsException, UserCannotBeSetAsAdminException, UserCannotUpdateOrDeleteYourselfException, UserNotFoundException } from '@/routes/user/user.error';
+import {
+  RoleNotFoundException,
+  UserAlreadyExistsException,
+  UserCannotBeSetAsAdminException,
+  UserCannotUpdateOrDeleteYourselfException,
+  UserNotFoundException,
+} from '@/routes/user/user.error';
 import { UserRepository } from '@/routes/user/user.repo';
 import { CreateUserBodyType, GetUsersResponseType, UpdateUserBodyType, UserQueryType } from '@/routes/user/user.type';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
-import { isForeignKeyConstraintPrismaError, isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import {
+  isForeignKeyConstraintPrismaError,
+  isNotFoundPrismaError,
+  isUniqueConstraintPrismaError,
+} from '@/shared/helpers';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { SharedUserRepository, UserIncludeRolePermissionsType } from '@/shared/repositories/shared-user.repo';
 import { HashingService } from '@/shared/services/hashing.service';
@@ -17,7 +27,7 @@ export class UserService {
     private readonly sharedUserRepository: SharedUserRepository,
     private readonly sharedRoleRepository: SharedRoleRepository,
     private readonly hashingService: HashingService,
-  ) { }
+  ) {}
 
   async getUsers({ page, limit }: UserQueryType): Promise<GetUsersResponseType> {
     try {
@@ -43,9 +53,9 @@ export class UserService {
   }
 
   async createUser(payload: {
-    userId: number, // user id from access token
-    roleName: RoleNameType, // Current role name of user who is sending request
-    body: CreateUserBodyType,
+    userId: number; // user id from access token
+    roleName: RoleNameType; // Current role name of user who is sending request
+    body: CreateUserBodyType;
   }): Promise<UserType> {
     try {
       // 1. Check role: Chỉ có admin mới có quyền tạo user có role là admin
@@ -69,10 +79,10 @@ export class UserService {
   }
 
   async updateUser(payload: {
-    userId: number, // user id from access token
-    roleName: RoleNameType, // Current role name of user who is sending request
-    id: number, // user id from params
-    body: UpdateUserBodyType
+    userId: number; // user id from access token
+    roleName: RoleNameType; // Current role name of user who is sending request
+    id: number; // user id from params
+    body: UpdateUserBodyType;
   }): Promise<UserType> {
     try {
       // 1. Check if user is trying to update themself
@@ -102,7 +112,7 @@ export class UserService {
           roleId: payload.body.roleId,
           status: payload.body.status,
           updatedById: payload.userId,
-        }
+        },
       );
 
       if (!user) {
@@ -126,9 +136,9 @@ export class UserService {
   }
 
   async deleteUser(payload: {
-    userId: number, // user id from access token
-    roleName: RoleNameType, // Current role name of user who is sending request
-    id: number, // user id from params
+    userId: number; // user id from access token
+    roleName: RoleNameType; // Current role name of user who is sending request
+    id: number; // user id from params
   }): Promise<MessageResponseType> {
     try {
       // 1. Check if user is trying to delete themself
@@ -151,7 +161,7 @@ export class UserService {
       // 5. Return success
       return {
         message: 'Success.UserDeleted',
-      }
+      };
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw UserNotFoundException;
@@ -165,7 +175,13 @@ export class UserService {
    * Người thực hiện có role là admin mới được quyền: tạo admin user, update roleId của các user khác, xoá user.
    * Còn nếu người thực hiện không phải role admin thì không được phép tác động đến người có role là admin
    */
-  private async _verifyRole({ roleName, bodyRoleId }: { roleName: RoleNameType, bodyRoleId: number }): Promise<boolean> {
+  private async _verifyRole({
+    roleName,
+    bodyRoleId,
+  }: {
+    roleName: RoleNameType;
+    bodyRoleId: number;
+  }): Promise<boolean> {
     try {
       // Current user is admin => ALLOW all actions
       if (roleName === RoleName.Admin) {
@@ -188,8 +204,8 @@ export class UserService {
     paramsUserId,
     currentUserId,
   }: {
-    paramsUserId: number,
-    currentUserId: number,
+    paramsUserId: number;
+    currentUserId: number;
   }): boolean {
     if (paramsUserId === currentUserId) {
       throw UserCannotUpdateOrDeleteYourselfException;

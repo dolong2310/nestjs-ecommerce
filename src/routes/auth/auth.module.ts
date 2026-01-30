@@ -8,4 +8,4 @@ import { Module } from '@nestjs/common';
   controllers: [AuthController],
   providers: [AuthRepository, AuthService, GoogleService],
 })
-export class AuthModule { }
+export class AuthModule {}

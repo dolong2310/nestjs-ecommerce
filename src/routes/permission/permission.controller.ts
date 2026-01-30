@@ -1,4 +1,11 @@
-import { CreatePermissionBodyDTO, GetPermissionsResponseDTO, PermissionParamsDTO, PermissionQueryDTO, PermissionResponseDTO, UpdatePermissionBodyDTO } from '@/routes/permission/permission.dto';
+import {
+  CreatePermissionBodyDTO,
+  GetPermissionsResponseDTO,
+  PermissionParamsDTO,
+  PermissionQueryDTO,
+  PermissionResponseDTO,
+  UpdatePermissionBodyDTO,
+} from '@/routes/permission/permission.dto';
 import { PermissionService } from '@/routes/permission/permission.service';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
@@ -7,7 +14,7 @@ import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('permissions')
 export class PermissionController {
-  constructor(private readonly permissionService: PermissionService) { }
+  constructor(private readonly permissionService: PermissionService) {}
 
   @Get()
   @ZodSerializerDto(GetPermissionsResponseDTO)
@@ -25,19 +32,29 @@ export class PermissionController {
 
   @Post()
   @ZodSerializerDto(PermissionResponseDTO)
-  createPermission(@Body() body: CreatePermissionBodyDTO, @ActiveUser("userId") userId: number): Promise<PermissionResponseDTO> {
+  createPermission(
+    @Body() body: CreatePermissionBodyDTO,
+    @ActiveUser('userId') userId: number,
+  ): Promise<PermissionResponseDTO> {
     return this.permissionService.createPermission({ userId, body });
   }
 
   @Put(':id')
   @ZodSerializerDto(PermissionResponseDTO)
-  updatePermission(@Param() params: PermissionParamsDTO, @Body() body: UpdatePermissionBodyDTO, @ActiveUser("userId") userId: number): Promise<PermissionResponseDTO> {
+  updatePermission(
+    @Param() params: PermissionParamsDTO,
+    @Body() body: UpdatePermissionBodyDTO,
+    @ActiveUser('userId') userId: number,
+  ): Promise<PermissionResponseDTO> {
     return this.permissionService.updatePermission({ userId, id: params.id, body });
   }
 
   @Delete(':id')
   @ZodSerializerDto(MessageResponseDTO)
-  deletePermission(@Param('id', ParseIntPipe) id: number, @ActiveUser("userId") userId: number): Promise<MessageResponseDTO> {
+  deletePermission(
+    @Param('id', ParseIntPipe) id: number,
+    @ActiveUser('userId') userId: number,
+  ): Promise<MessageResponseDTO> {
     return this.permissionService.deletePermission({ userId, id });
   }
 }

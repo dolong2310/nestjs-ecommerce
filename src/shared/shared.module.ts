@@ -15,7 +15,14 @@ import { TokenService } from '@/shared/services/token.service';
 import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-const sharedServices = [PrismaService, HashingService, TokenService, EmailService, TwoFactorAuthenticationService, S3Service];
+const sharedServices = [
+  PrismaService,
+  HashingService,
+  TokenService,
+  EmailService,
+  TwoFactorAuthenticationService,
+  S3Service,
+];
 const sharedRepositories = [SharedUserRepository, SharedRoleRepository];
 const sharedGuards = [AuthGuard, ApiKeyGuard, AuthCompositeGuard];
 
@@ -25,4 +32,4 @@ const sharedGuards = [AuthGuard, ApiKeyGuard, AuthCompositeGuard];
   providers: [...sharedServices, ...sharedRepositories, ...sharedGuards],
   exports: [...sharedServices, ...sharedRepositories, ...sharedGuards],
 })
-export class SharedModule { }
+export class SharedModule {}

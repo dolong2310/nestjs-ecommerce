@@ -1,6 +1,6 @@
-import { RoleSchema } from "@/shared/models/shared-role.model";
-import { GetUserProfileResponseSchema, UserSchema } from "@/shared/models/shared-user.model";
-import z from "zod";
+import { RoleSchema } from '@/shared/models/shared-role.model';
+import { GetUserProfileResponseSchema, UserSchema } from '@/shared/models/shared-user.model';
+import z from 'zod';
 
 export const UsersResponseSchema = UserSchema.omit({
   password: true,
@@ -9,17 +9,21 @@ export const UsersResponseSchema = UserSchema.omit({
   role: RoleSchema.pick({
     id: true,
     name: true,
-  })
+  }),
 });
 
-export const UserParamsSchema = z.object({
-  id: z.coerce.number(),
-}).strict();
+export const UserParamsSchema = z
+  .object({
+    id: z.coerce.number(),
+  })
+  .strict();
 
-export const UserQuerySchema = z.object({
-  page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().positive().default(10),
-}).strict();
+export const UserQuerySchema = z
+  .object({
+    page: z.coerce.number().int().positive().default(1),
+    limit: z.coerce.number().int().positive().default(10),
+  })
+  .strict();
 
 export const CreateUserBodySchema = UserSchema.pick({
   email: true,

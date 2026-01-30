@@ -1,5 +1,14 @@
-import { CreateUserBodySchema, GetUsersResponseSchema, UserParamsSchema, UserQuerySchema, UpdateUserBodySchema, GetUserResponseSchema, CreateUserResponseSchema, UpdateUserResponseSchema } from "@/routes/user/user.model";
-import z from "zod";
+import {
+  CreateUserBodySchema,
+  GetUsersResponseSchema,
+  UserParamsSchema,
+  UserQuerySchema,
+  UpdateUserBodySchema,
+  GetUserResponseSchema,
+  CreateUserResponseSchema,
+  UpdateUserResponseSchema,
+} from '@/routes/user/user.model';
+import z from 'zod';
 
 export type CreateUserBodyType = z.infer<typeof CreateUserBodySchema>;
 export type UpdateUserBodyType = z.infer<typeof UpdateUserBodySchema>;

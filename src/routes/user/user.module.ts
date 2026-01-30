@@ -5,6 +5,6 @@ import { Module } from '@nestjs/common';
 
 @Module({
   controllers: [UserController],
-  providers: [UserRepository, UserService]
+  providers: [UserRepository, UserService],
 })
-export class UserModule { }
+export class UserModule {}

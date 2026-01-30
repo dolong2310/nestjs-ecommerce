@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const fileName = generateRandomFilename(file.originalname);
     cb(null, fileName);
-  }
+  },
 });
 
 @Module({
@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
     }),
   ],
   controllers: [MediaController],
-  providers: [MediaService]
+  providers: [MediaService],
 })
 export class MediaModule {
   constructor() {

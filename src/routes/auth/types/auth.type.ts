@@ -1,10 +1,37 @@
-import { CreateDeviceBodySchema, CreateOtpCodeBodySchema, CreateRefreshTokenBodySchema, CreateRefreshTokenResponseSchema, DeviceSchema, Disable2FABodySchema, ForgotPasswordBodySchema, GetMeResponseSchema, GoogleAuthCallbackQuerySchema, GoogleAuthCallbackResponseSchema, GoogleAuthResponseSchema, GoogleAuthStateSchema, JwtTokenSchema, LoginBodySchema, LoginResponseSchema, LogoutBodySchema, OtpCodeSchema, RefreshJwtTokenBodySchema, RefreshJwtTokenResponseSchema, RefreshTokenSchema, RegisterBodySchema, RegisterResponseSchema, RoleSchema, SendOtpBodySchema, Setup2FAResponseSchema } from "@/routes/auth/models/auth.model";
-import z from "zod";
+import {
+  CreateDeviceBodySchema,
+  CreateOtpCodeBodySchema,
+  CreateRefreshTokenBodySchema,
+  CreateRefreshTokenResponseSchema,
+  DeviceSchema,
+  Disable2FABodySchema,
+  ForgotPasswordBodySchema,
+  GetMeResponseSchema,
+  GoogleAuthCallbackQuerySchema,
+  GoogleAuthCallbackResponseSchema,
+  GoogleAuthResponseSchema,
+  GoogleAuthStateSchema,
+  JwtTokenSchema,
+  LoginBodySchema,
+  LoginResponseSchema,
+  LogoutBodySchema,
+  OtpCodeSchema,
+  RefreshJwtTokenBodySchema,
+  RefreshJwtTokenResponseSchema,
+  RefreshTokenSchema,
+  RegisterBodySchema,
+  RegisterResponseSchema,
+  RoleSchema,
+  SendOtpBodySchema,
+  Setup2FAResponseSchema,
+} from '@/routes/auth/models/auth.model';
+import z from 'zod';
 
 export type JwtTokenType = z.infer<typeof JwtTokenSchema>;
 export type GetMeResponseType = z.infer<typeof GetMeResponseSchema>;
 export type DeviceType = z.infer<typeof DeviceSchema>;
-export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> & Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
+export type CreateDeviceBodyType = z.infer<typeof CreateDeviceBodySchema> &
+  Partial<Pick<DeviceType, 'isActive' | 'lastActiveAt'>>;
 export type RegisterBodyType = z.infer<typeof RegisterBodySchema>;
 export type RegisterResponseType = z.infer<typeof RegisterResponseSchema>;
 export type LoginBodyType = z.infer<typeof LoginBodySchema>;

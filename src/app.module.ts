@@ -17,7 +17,17 @@ import { ZodSerializerInterceptor } from 'nestjs-zod';
 import { MediaModule } from './routes/media/media.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), SharedModule, AuthModule, LanguageModule, PermissionModule, RoleModule, ProfileModule, UserModule, MediaModule],
+  imports: [
+    ConfigModule.forRoot(),
+    SharedModule,
+    AuthModule,
+    LanguageModule,
+    PermissionModule,
+    RoleModule,
+    ProfileModule,
+    UserModule,
+    MediaModule,
+  ],
   controllers: [AppController],
   providers: [
     AppService,
@@ -39,4 +49,4 @@ import { MediaModule } from './routes/media/media.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}

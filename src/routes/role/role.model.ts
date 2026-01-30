@@ -1,16 +1,20 @@
-import { RoleSchema, RoleWithPermissionsSchema } from "@/shared/models/shared-role.model";
-import z from "zod";
+import { RoleSchema, RoleWithPermissionsSchema } from '@/shared/models/shared-role.model';
+import z from 'zod';
 
-export const RoleParamsSchema = z.object({
-  id: z.coerce.number(),
-}).strict();
+export const RoleParamsSchema = z
+  .object({
+    id: z.coerce.number(),
+  })
+  .strict();
 
 // For offset-based pagination
-export const RoleQuerySchema = z.object({
-  // .int() kiểu integer, .positive() kiểu số dương
-  page: z.coerce.number().int().positive().default(1), // coerce: convert string to number because "query" is string by default
-  limit: z.coerce.number().int().positive().default(10), // coerce: convert string to number because "query" is string by default
-}).strict();
+export const RoleQuerySchema = z
+  .object({
+    // .int() kiểu integer, .positive() kiểu số dương
+    page: z.coerce.number().int().positive().default(1), // coerce: convert string to number because "query" is string by default
+    limit: z.coerce.number().int().positive().default(10), // coerce: convert string to number because "query" is string by default
+  })
+  .strict();
 // For cursor-based pagination
 // export const RoleQuerySchema = z.object({
 //   cursor: z.coerce.number().int().positive().optional(), // ID của record cuối cùng từ page trước

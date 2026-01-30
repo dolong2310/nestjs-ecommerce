@@ -10,7 +10,7 @@ dotenvConfig({
 if (!fs.existsSync(path.resolve('.env'))) {
   console.error('Environment file not found');
   process.exit(1);
-};
+}
 
 const configSchema = z.object({
   PORT: z.string().min(1, 'PORT is required'),

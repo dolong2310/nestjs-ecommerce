@@ -8,4 +8,4 @@ import { Module } from '@nestjs/common';
   providers: [ProfileService],
   exports: [ProfileService],
 })
-export class ProfileModule { }
+export class ProfileModule {}

@@ -1,10 +1,10 @@
-import { BadRequestException, NotFoundException } from "@nestjs/common";
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 export const PermissionNotFoundException = new NotFoundException([
   {
     field: 'permission',
     message: 'Error.PermissionNotFound', // Permission not found
-  }
+  },
 ]);
 
 export const PermissionAlreadyExistsException = new BadRequestException([
@@ -15,5 +15,5 @@ export const PermissionAlreadyExistsException = new BadRequestException([
   {
     field: 'method',
     message: 'Error.PermissionAlreadyExists', // Permission already exists
-  }
+  },
 ]);

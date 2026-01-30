@@ -1,4 +1,10 @@
-import { CreateLanguageBodyDTO, GetLanguageParamsDTO, GetLanguageResponseDTO, GetLanguagesResponseDTO, UpdateLanguageBodyDTO } from '@/routes/language/language.dto';
+import {
+  CreateLanguageBodyDTO,
+  GetLanguageParamsDTO,
+  GetLanguageResponseDTO,
+  GetLanguagesResponseDTO,
+  UpdateLanguageBodyDTO,
+} from '@/routes/language/language.dto';
 import { LanguageService } from '@/routes/language/language.service';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
@@ -7,7 +13,7 @@ import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('languages')
 export class LanguageController {
-  constructor(private readonly languageService: LanguageService) { }
+  constructor(private readonly languageService: LanguageService) {}
 
   @Get()
   @ZodSerializerDto(GetLanguagesResponseDTO)
@@ -23,7 +29,10 @@ export class LanguageController {
 
   @Post()
   @ZodSerializerDto(GetLanguageResponseDTO)
-  createLanguage(@Body() body: CreateLanguageBodyDTO, @ActiveUser("userId") userId: number): Promise<GetLanguageResponseDTO> {
+  createLanguage(
+    @Body() body: CreateLanguageBodyDTO,
+    @ActiveUser('userId') userId: number,
+  ): Promise<GetLanguageResponseDTO> {
     return this.languageService.createLanguage({ userId, body });
   }
 
@@ -31,13 +40,20 @@ export class LanguageController {
   // Kiểm tra soft delete: Theo nguyên tắc chung của soft delete, không nên cho phép update record đã bị soft delete. Trừ khi có yêu cầu đặc biệt (ví dụ: khôi phục hoặc chỉnh sửa dữ liệu lịch sử).
   @Put(':id')
   @ZodSerializerDto(GetLanguageResponseDTO)
-  updateLanguage(@Param() params: GetLanguageParamsDTO, @Body() body: UpdateLanguageBodyDTO, @ActiveUser("userId") userId: number): Promise<GetLanguageResponseDTO> {
+  updateLanguage(
+    @Param() params: GetLanguageParamsDTO,
+    @Body() body: UpdateLanguageBodyDTO,
+    @ActiveUser('userId') userId: number,
+  ): Promise<GetLanguageResponseDTO> {
     return this.languageService.updateLanguage({ userId, id: params.id, body });
   }
 
   @Delete(':id')
   @ZodSerializerDto(MessageResponseDTO)
-  deleteLanguage(@Param() params: GetLanguageParamsDTO, @ActiveUser("userId") userId: number): Promise<MessageResponseDTO> {
+  deleteLanguage(
+    @Param() params: GetLanguageParamsDTO,
+    @ActiveUser('userId') userId: number,
+  ): Promise<MessageResponseDTO> {
     return this.languageService.deleteLanguage({ userId, id: params.id });
   }
 }

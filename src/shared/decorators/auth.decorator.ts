@@ -5,10 +5,7 @@ import { applyDecorators, SetMetadata } from '@nestjs/common';
 
 // auth decorator -> auth required
 // Example: @Private([AuthKey.JWT, AuthKey.API_KEY], { condition: AuthConditionKey.AND })
-export function Private(
-  types: AuthType[],
-  options?: AuthOptions,
-) {
+export function Private(types: AuthType[], options?: AuthOptions) {
   const metadata: AuthMetadata = {
     types,
     options: {
@@ -25,5 +22,5 @@ export function Private(
 // public decorator -> no auth required
 // Example: @Public() | @Private([AuthKey.NONE]) | @Private([])
 export function Public() {
-  return Private([AuthKey.NONE])
+  return Private([AuthKey.NONE]);
 }

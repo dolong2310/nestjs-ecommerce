@@ -10,7 +10,7 @@ export class SharedRoleRepository {
   private adminRoleId: number | null = null;
   private sellerRoleId: number | null = null;
 
-  constructor(private readonly prismaService: PrismaService) { }
+  constructor(private readonly prismaService: PrismaService) {}
 
   async getAdminRoleId(): Promise<number> {
     // if role id is cached, return it
@@ -19,7 +19,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.Admin)
+      const role = await this._getRole(RoleName.Admin);
       this.adminRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {
@@ -34,7 +34,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.User)
+      const role = await this._getRole(RoleName.User);
       this.userRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {
@@ -49,7 +49,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.Seller)
+      const role = await this._getRole(RoleName.Seller);
       this.sellerRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {
@@ -67,7 +67,7 @@ export class SharedRoleRepository {
         throw RoleNotFoundException;
       }
       return res[0];
-    })
+    });
 
     // Cách 2: Dùng findFirstOrThrow
     // const role = await this.prismaService.role.findFirstOrThrow({
@@ -77,6 +77,6 @@ export class SharedRoleRepository {
     //   },
     // });
 
-    return role
+    return role;
   }
 }

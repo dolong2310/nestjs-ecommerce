@@ -1,4 +1,4 @@
-import { randomInt } from "crypto";
+import { randomInt } from 'crypto';
 
 // Generate otp code
 export function generateOtpCode(): string {
