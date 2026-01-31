@@ -10,6 +10,7 @@ import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { I18nContext } from 'nestjs-i18n';
 import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('brands')
@@ -21,14 +22,16 @@ export class BrandController {
   @ZodSerializerDto(GetBrandsIncludeTranslationsResponseDTO)
   getBrands(@Query() query: GetBrandsQueryDTO): Promise<GetBrandsIncludeTranslationsResponseDTO> {
     const { page, limit } = query;
-    return this.brandService.getBrands({ page, limit });
+    const lang = I18nContext.current()!.lang;
+    return this.brandService.getBrands({ page, limit, lang });
   }
 
   @Get(':id')
   @Public()
   @ZodSerializerDto(BrandIncludeTranslationsResponseDTO)
   getBrand(@Param('id', ParseIntPipe) id: number): Promise<BrandIncludeTranslationsResponseDTO> {
-    return this.brandService.getBrandById(id);
+    const lang = I18nContext.current()!.lang;
+    return this.brandService.getBrandById(id, lang);
   }
 
   @Post()

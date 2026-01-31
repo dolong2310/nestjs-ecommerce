@@ -16,7 +16,9 @@ import { SharedModule } from '@/shared/shared.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
+import path from 'path';
 
 @Module({
   imports: [
@@ -31,6 +33,15 @@ import { ZodSerializerInterceptor } from 'nestjs-zod';
     MediaModule,
     BrandModule,
     BrandTranslationModule,
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.resolve('src/i18n/'),
+        watch: true,
+      },
+      typesOutputPath: path.resolve('src/generated/i18n.generated.ts'),
+      resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
+    }),
   ],
   controllers: [AppController],
   providers: [

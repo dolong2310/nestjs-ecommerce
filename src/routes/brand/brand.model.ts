@@ -15,7 +15,9 @@ export const BrandSchema = z.object({
   deletedAt: z.date().nullable(),
 });
 
-export const GetBrandsQuerySchema = PaginationQuerySchema.strict();
+export const GetBrandsQuerySchema = PaginationQuerySchema.extend({
+  lang: z.string().optional().default('en'),
+}).strict();
 
 export const CreateBrandBodySchema = BrandSchema.pick({
   name: true,
@@ -29,7 +31,9 @@ export const BrandIncludeTranslationsResponseSchema = BrandSchema.extend({
   brandTranslations: z.array(BrandTranslationSchema),
 });
 
-export const GetBrandsIncludeTranslationsResponseSchema = createPaginationResponseSchema(BrandIncludeTranslationsResponseSchema);
+export const GetBrandsIncludeTranslationsResponseSchema = createPaginationResponseSchema(
+  BrandIncludeTranslationsResponseSchema,
+);
 
 // export const GetBrandsResponseSchema = z.object({
 //   data: z.array(BrandResponseSchema),

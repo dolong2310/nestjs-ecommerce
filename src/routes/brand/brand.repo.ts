@@ -2,10 +2,11 @@ import {
   BrandIncludeTranslationsResponseType,
   BrandType,
   CreateBrandBodyType,
-  GetBrandsQueryType,
   GetBrandsIncludeTranslationsResponseType,
+  GetBrandsQueryType,
   UpdateBrandBodyType,
 } from '@/routes/brand/brand.type';
+import { ALL_LANGUAGE_CODE } from '@/shared/constants/common.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -15,7 +16,7 @@ export class BrandRepository {
 
   async findMany(
     { page, limit }: GetBrandsQueryType,
-    languageId?: string,
+    languageId: string,
   ): Promise<GetBrandsIncludeTranslationsResponseType> {
     const totalBrandsPromise = this.prismaService.brand.count({
       where: {
@@ -28,14 +29,15 @@ export class BrandRepository {
       },
       include: {
         brandTranslations: {
-          where: languageId
-            ? {
-                languageId,
-                deletedAt: null,
-              }
-            : {
-                deletedAt: null,
-              },
+          where:
+            languageId === ALL_LANGUAGE_CODE
+              ? {
+                  deletedAt: null,
+                }
+              : {
+                  languageId,
+                  deletedAt: null,
+                },
           orderBy: {
             createdAt: 'asc',
           },
@@ -54,7 +56,7 @@ export class BrandRepository {
     };
   }
 
-  findOne(id: number, languageId?: string): Promise<BrandIncludeTranslationsResponseType | null> {
+  findOne(id: number, languageId: string): Promise<BrandIncludeTranslationsResponseType | null> {
     return this.prismaService.brand.findUnique({
       where: {
         id: id,
@@ -62,14 +64,15 @@ export class BrandRepository {
       },
       include: {
         brandTranslations: {
-          where: languageId
-            ? {
-                languageId,
-                deletedAt: null,
-              }
-            : {
-                deletedAt: null,
-              },
+          where:
+            languageId === ALL_LANGUAGE_CODE
+              ? {
+                  deletedAt: null,
+                }
+              : {
+                  languageId,
+                  deletedAt: null,
+                },
           orderBy: {
             createdAt: 'asc',
           },

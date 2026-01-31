@@ -1,3 +1,4 @@
+import { I18nTranslations } from '@/generated/i18n.generated';
 import { BrandNotFoundException } from '@/routes/brand/brand.error';
 import { BrandRepository } from '@/routes/brand/brand.repo';
 import {
@@ -10,22 +11,27 @@ import {
 import { isNotFoundPrismaError } from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { Injectable } from '@nestjs/common';
+import { I18nService } from 'nestjs-i18n';
 
 @Injectable()
 export class BrandService {
-  constructor(private readonly brandRepository: BrandRepository) {}
+  constructor(
+    private readonly brandRepository: BrandRepository,
+    private readonly i18n: I18nService<I18nTranslations>,
+  ) {}
 
   async getBrands(query: GetBrandsQueryType): Promise<GetBrandsIncludeTranslationsResponseType> {
+    // console.log(this.i18n.t('error.NOT_FOUND', { lang: I18nContext.current()?.lang }));
     try {
-      return await this.brandRepository.findMany(query);
+      return await this.brandRepository.findMany(query, query.lang);
     } catch (error) {
       throw error;
     }
   }
 
-  async getBrandById(id: number): Promise<BrandIncludeTranslationsResponseType> {
+  async getBrandById(id: number, lang: string): Promise<BrandIncludeTranslationsResponseType> {
     try {
-      const brand = await this.brandRepository.findOne(id);
+      const brand = await this.brandRepository.findOne(id, lang);
       if (!brand) {
         throw BrandNotFoundException;
       }
