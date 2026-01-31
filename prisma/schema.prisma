@@ -515,6 +515,7 @@ model SKU {
 
 model Brand {
   id   Int    @id @default(autoincrement())
+  name String @default("") @db.VarChar(500)
   logo String @db.VarChar(1000)
 
   createdById Int?
@@ -557,6 +558,7 @@ model BrandTranslation {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  // @@unique([brandId, languageId], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260131125425_brand_translation_unique_brand_id_language_id_where_deleted_at_null
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 

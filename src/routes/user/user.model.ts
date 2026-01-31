@@ -1,3 +1,4 @@
+import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { RoleSchema } from '@/shared/models/shared-role.model';
 import { GetUserProfileResponseSchema, UserSchema } from '@/shared/models/shared-user.model';
 import z from 'zod';
@@ -18,12 +19,7 @@ export const UserParamsSchema = z
   })
   .strict();
 
-export const UserQuerySchema = z
-  .object({
-    page: z.coerce.number().int().positive().default(1),
-    limit: z.coerce.number().int().positive().default(10),
-  })
-  .strict();
+export const UserQuerySchema = PaginationQuerySchema.strict();
 
 export const CreateUserBodySchema = UserSchema.pick({
   email: true,

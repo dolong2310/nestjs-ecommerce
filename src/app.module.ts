@@ -1,7 +1,10 @@
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { AuthModule } from '@/routes/auth/auth.module';
+import { BrandTranslationModule } from '@/routes/brand/brand-translation/brand-translation.module';
+import { BrandModule } from '@/routes/brand/brand.module';
 import { LanguageModule } from '@/routes/language/language.module';
+import { MediaModule } from '@/routes/media/media.module';
 import { PermissionModule } from '@/routes/permission/permission.module';
 import { ProfileModule } from '@/routes/profile/profile.module';
 import { RoleModule } from '@/routes/role/role.module';
@@ -14,7 +17,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
-import { MediaModule } from './routes/media/media.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { MediaModule } from './routes/media/media.module';
     ProfileModule,
     UserModule,
     MediaModule,
+    BrandModule,
+    BrandTranslationModule,
   ],
   controllers: [AppController],
   providers: [
