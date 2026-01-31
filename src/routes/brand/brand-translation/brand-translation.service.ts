@@ -1,6 +1,7 @@
 import {
   BrandTranslationAlreadyExistsException,
   BrandTranslationNotFoundException,
+  LanguageNotFoundException,
 } from '@/routes/brand/brand-translation/brand-translation.error';
 import { BrandTranslationRepository } from '@/routes/brand/brand-translation/brand-translation.repo';
 import {
@@ -8,7 +9,11 @@ import {
   CreateBrandTranslationBodyType,
   UpdateBrandTranslationBodyType,
 } from '@/routes/brand/brand-translation/brand-translation.type';
-import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import {
+  isForeignKeyConstraintPrismaError,
+  isNotFoundPrismaError,
+  isUniqueConstraintPrismaError,
+} from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { Injectable } from '@nestjs/common';
 
@@ -52,6 +57,9 @@ export class BrandTranslationService {
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw BrandTranslationNotFoundException;
+      }
+      if (isForeignKeyConstraintPrismaError(error)) {
+        throw LanguageNotFoundException;
       }
       if (isUniqueConstraintPrismaError(error)) {
         throw BrandTranslationAlreadyExistsException;

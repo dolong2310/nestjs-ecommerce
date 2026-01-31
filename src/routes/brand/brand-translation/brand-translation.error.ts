@@ -17,3 +17,10 @@ export const BrandTranslationAlreadyExistsException = new BadRequestException([
     message: 'Error.BrandTranslationAlreadyExists',
   },
 ]);
+
+export const LanguageNotFoundException = new NotFoundException([
+  {
+    field: 'languageId',
+    message: 'Error.LanguageNotFound',
+  },
+]);

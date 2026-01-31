@@ -1,17 +1,17 @@
 import {
-  BrandTranslationResponseType,
-  CreateBrandTranslationBodyType,
-  UpdateBrandTranslationBodyType,
-} from '@/routes/brand/brand-translation/brand-translation.type';
+  CategoryTranslationResponseType,
+  CreateCategoryTranslationBodyType,
+  UpdateCategoryTranslationBodyType,
+} from '@/routes/category/category-translation/category-translation.type';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class BrandTranslationRepository {
+export class CategoryTranslationRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findOne(id: number): Promise<BrandTranslationResponseType | null> {
-    return this.prismaService.brandTranslation.findUnique({
+  async findOne(id: number): Promise<CategoryTranslationResponseType | null> {
+    return this.prismaService.categoryTranslation.findUnique({
       where: {
         id,
         deletedAt: null,
@@ -21,12 +21,12 @@ export class BrandTranslationRepository {
 
   async create(payload: {
     userId: number;
-    body: CreateBrandTranslationBodyType;
-  }): Promise<BrandTranslationResponseType> {
+    body: CreateCategoryTranslationBodyType;
+  }): Promise<CategoryTranslationResponseType> {
     const { userId, body } = payload;
-    return this.prismaService.brandTranslation.create({
+    return this.prismaService.categoryTranslation.create({
       data: {
-        brandId: body.brandId,
+        categoryId: body.categoryId,
         languageId: body.languageId,
         name: body.name,
         description: body.description,
@@ -38,16 +38,16 @@ export class BrandTranslationRepository {
   async update(payload: {
     id: number;
     userId: number;
-    body: UpdateBrandTranslationBodyType;
-  }): Promise<BrandTranslationResponseType> {
+    body: UpdateCategoryTranslationBodyType;
+  }): Promise<CategoryTranslationResponseType> {
     const { id, userId, body } = payload;
-    return this.prismaService.brandTranslation.update({
+    return this.prismaService.categoryTranslation.update({
       where: {
         id,
         deletedAt: null,
       },
       data: {
-        brandId: body.brandId,
+        categoryId: body.categoryId,
         languageId: body.languageId,
         name: body.name,
         description: body.description,
@@ -59,15 +59,15 @@ export class BrandTranslationRepository {
   async delete(
     payload: { id: number; userId: number },
     isHardDelete: boolean = false,
-  ): Promise<BrandTranslationResponseType> {
+  ): Promise<CategoryTranslationResponseType> {
     const { id, userId } = payload;
     return isHardDelete
-      ? this.prismaService.brandTranslation.delete({
+      ? this.prismaService.categoryTranslation.delete({
           where: {
             id,
           },
         })
-      : this.prismaService.brandTranslation.update({
+      : this.prismaService.categoryTranslation.update({
           where: {
             id,
             deletedAt: null,

@@ -373,7 +373,9 @@ model ProductTranslation {
 }
 
 model Category {
-  id               Int  @id @default(autoincrement())
+  id               Int     @id @default(autoincrement())
+  name             String  @db.VarChar(500)
+  logo             String? @db.VarChar(1000)
   parentCategoryId Int?
 
   parentCategory     Category?  @relation("CategoryParentCategories", fields: [parentCategoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -422,6 +424,7 @@ model CategoryTranslation {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  // @@unique([categoryId, languageId], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260131124838_category_add_name_and_logo
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
