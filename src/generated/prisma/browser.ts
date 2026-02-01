@@ -78,16 +78,6 @@ export type Category = Prisma.CategoryModel
  */
 export type CategoryTranslation = Prisma.CategoryTranslationModel
 /**
- * Model Variant
- * 
- */
-export type Variant = Prisma.VariantModel
-/**
- * Model VariantOption
- * 
- */
-export type VariantOption = Prisma.VariantOptionModel
-/**
  * Model SKU
  * 
  */

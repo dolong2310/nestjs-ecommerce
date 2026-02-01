@@ -122,12 +122,6 @@ model User {
   createdCategories           Category[]            @relation("CategoryCreatedBy")
   updatedCategories           Category[]            @relation("CategoryUpdatedBy")
   deletedCategories           Category[]            @relation("CategoryDeletedBy")
-  createdVariants             Variant[]             @relation("VariantCreatedBy")
-  updatedVariants             Variant[]             @relation("VariantUpdatedBy")
-  deletedVariants             Variant[]             @relation("VariantDeletedBy")
-  createdVariantOptions       VariantOption[]       @relation("VariantOptionCreatedBy")
-  updatedVariantOptions       VariantOption[]       @relation("VariantOptionUpdatedBy")
-  deletedVariantOptions       VariantOption[]       @relation("VariantOptionDeletedBy")
   createdSkus                 SKU[]                 @relation("SkuCreatedBy")
   updatedSkus                 SKU[]                 @relation("SkuUpdatedBy")
   deletedSkus                 SKU[]                 @relation("SkuDeletedBy")
@@ -315,11 +309,13 @@ model Role {
 //////////////////////////////////////////
 
 model Product {
-  id            Int      @id @default(autoincrement())
-  base_price    Float
-  virtual_price Float
-  brandId       Int
-  images        String[]
+  id           Int       @id @default(autoincrement())
+  name         String    @db.VarChar(500)
+  basePrice    Float
+  virtualPrice Float
+  brandId      Int
+  images       String[]
+  publishedAt  DateTime?
 
   brand Brand @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -336,7 +332,7 @@ model Product {
   updatedAt DateTime  @updatedAt
 
   productTranslations ProductTranslation[]
-  variants            Variant[]
+  variants            Json
   skus                SKU[]
   reviews             Review[]
   categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
@@ -428,63 +424,12 @@ model CategoryTranslation {
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
-model Variant {
-  id        Int    @id @default(autoincrement())
-  name      String @db.VarChar(500)
-  productId Int
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  createdById Int?
-  updatedById Int?
-  deletedById Int?
-
-  createdBy User? @relation("VariantCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-  updatedBy User? @relation("VariantUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-  deletedBy User? @relation("VariantDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-
-  deletedAt DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  variantOptions VariantOption[]
-
-  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
-}
-
-model VariantOption {
-  id        Int    @id @default(autoincrement())
-  value     String @db.VarChar(500)
-  variantId Int
-
-  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  createdById Int?
-  updatedById Int?
-  deletedById Int?
-
-  createdBy User? @relation("VariantOptionCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-  updatedBy User? @relation("VariantOptionUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-  deletedBy User? @relation("VariantOptionDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
-
-  deletedAt DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  skus SKU[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
-
-  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
-  // skusVariantOptions SkusVariantOptions[]
-
-  @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
-}
-
 model SKU {
   id        Int      @id @default(autoincrement())
   value     String   @db.VarChar(500)
   price     Float
   stock     Int
-  images    String[]
+  image    String
   productId Int
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -500,11 +445,6 @@ model SKU {
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-
-  variantOptions VariantOption[] // SkusVariantOptions[] - Implicit many-to-many (Prisma tự động tạo bảng _SKUToVariantOption)
-
-  // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
-  // skusVariantOptions SkusVariantOptions[]
 
   cartItems           CartItem[]
   productSKUSnapshots ProductSKUSnapshot[]
