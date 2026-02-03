@@ -5,9 +5,9 @@ import {
   GetProductResponseSchema,
   GetProductsQuerySchema,
   GetProductsResponseSchema,
-  ProductSchema,
   UpdateProductBodySchema,
 } from '@/routes/product/product.model';
+import { ProductSchema } from '@/shared/models/shared-product.model';
 import { createZodDto } from 'nestjs-zod';
 
 export class CreateProductBodyDTO extends createZodDto(CreateProductBodySchema) {}

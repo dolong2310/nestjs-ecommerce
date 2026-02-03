@@ -3,11 +3,11 @@ import {
   CreateProductBodyType,
   GetProductResponseType,
   GetProductsResponseType,
-  ProductType,
   UpdateProductBodyType,
 } from '@/routes/product/product.type';
 import { ALL_LANGUAGE_CODE, EnumSortBy, OrderByType, SortByType } from '@/shared/constants/common.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
+import { ProductType } from '@/shared/types/shared-product.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -219,7 +219,8 @@ export class ProductRepository {
   }
 
   async create(payload: { userId: number; body: CreateProductBodyType }): Promise<GetProductResponseType> {
-    const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = payload.body;
+    const { userId, body } = payload;
+    const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
     const product = await this.prismaService.product.create({
       data: {
         name,
@@ -234,8 +235,8 @@ export class ProductRepository {
         // Khi setup schema many to many thì trong database có 1 bảng trung gian, ví dụ như ở product và category thì prisma sẽ tạo bảng trung gian là _CategoryToProduct, nên dùng connect để tạo relationship với bảng trung gian
         categories: { connect: categories.map((categoryId) => ({ id: categoryId })) },
         // Tại sao skus lại dùng createMany? Vì ta cần tạo skus mới nên khác với connect
-        skus: { createMany: { data: skus } },
-        createdById: payload.userId,
+        skus: { createMany: { data: skus.map((sku) => ({ ...sku, createdById: userId })) } },
+        createdById: userId,
       },
       include: {
         productTranslations: {

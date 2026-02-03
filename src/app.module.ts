@@ -3,6 +3,7 @@ import { AppService } from '@/app.service';
 import { AuthModule } from '@/routes/auth/auth.module';
 import { BrandTranslationModule } from '@/routes/brand/brand-translation/brand-translation.module';
 import { BrandModule } from '@/routes/brand/brand.module';
+import { CartModule } from '@/routes/cart/cart.module';
 import { CategoryTranslationModule } from '@/routes/category/category-translation/category-translation.module';
 import { CategoryModule } from '@/routes/category/category.module';
 import { LanguageModule } from '@/routes/language/language.module';
@@ -27,6 +28,15 @@ import path from 'path';
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.resolve('src/i18n/'),
+        watch: true,
+      },
+      typesOutputPath: path.resolve('src/generated/i18n.generated.ts'),
+      resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
+    }),
     SharedModule,
     AuthModule,
     LanguageModule,
@@ -41,15 +51,7 @@ import path from 'path';
     CategoryTranslationModule,
     ProductModule,
     ProductTranslationModule,
-    I18nModule.forRoot({
-      fallbackLanguage: 'en',
-      loaderOptions: {
-        path: path.resolve('src/i18n/'),
-        watch: true,
-      },
-      typesOutputPath: path.resolve('src/generated/i18n.generated.ts'),
-      resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
-    }),
+    CartModule,
   ],
   controllers: [AppController],
   providers: [

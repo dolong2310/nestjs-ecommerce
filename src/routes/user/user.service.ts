@@ -184,7 +184,7 @@ export class UserService {
   }): Promise<boolean> {
     try {
       // Current user is admin => ALLOW all actions
-      if (roleName === RoleName.Admin) {
+      if (roleName === RoleName.ADMIN) {
         return true;
       } else {
         // Or current user is not admin && body role id is admin => NOT ALLOW to action

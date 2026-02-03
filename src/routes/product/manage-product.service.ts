@@ -5,11 +5,11 @@ import {
   GetManageProductsQueryType,
   GetProductResponseType,
   GetProductsResponseType,
-  ProductType,
   UpdateProductBodyType,
 } from '@/routes/product/product.type';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
 import { isNotFoundPrismaError } from '@/shared/helpers';
+import { ProductType } from '@/shared/types/shared-product.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { I18nContext } from 'nestjs-i18n';
@@ -95,7 +95,7 @@ export class ManageProductService {
       const { userId, body, roleName } = props;
 
       // NOTE: only admin and seller can create product
-      if (roleName !== RoleName.Admin && roleName !== RoleName.Seller) {
+      if (roleName !== RoleName.ADMIN && roleName !== RoleName.SELLER) {
         throw new ForbiddenException();
       }
 
@@ -182,7 +182,7 @@ export class ManageProductService {
     roleName: RoleNameType;
     creatorId?: number | null;
   }): boolean {
-    if (userId !== creatorId && roleName !== RoleName.Admin) {
+    if (userId !== creatorId && roleName !== RoleName.ADMIN) {
       throw new ForbiddenException();
     }
     return true;

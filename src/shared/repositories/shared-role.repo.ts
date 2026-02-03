@@ -19,7 +19,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.Admin);
+      const role = await this._getRole(RoleName.ADMIN);
       this.adminRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {
@@ -34,7 +34,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.User);
+      const role = await this._getRole(RoleName.USER);
       this.userRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {
@@ -49,7 +49,7 @@ export class SharedRoleRepository {
     }
 
     try {
-      const role = await this._getRole(RoleName.Seller);
+      const role = await this._getRole(RoleName.SELLER);
       this.sellerRoleId = role.id; // cache role id
       return role.id;
     } catch (error) {

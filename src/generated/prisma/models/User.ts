@@ -1433,12 +1433,10 @@ export type UserCreateNestedOneWithoutDeletedProductsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCreatedProductsNestedInput = {
+export type UserUpdateOneRequiredWithoutCreatedProductsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedProductsInput, Prisma.UserUncheckedCreateWithoutCreatedProductsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedProductsInput
   upsert?: Prisma.UserUpsertWithoutCreatedProductsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedProductsInput, Prisma.UserUpdateWithoutCreatedProductsInput>, Prisma.UserUncheckedUpdateWithoutCreatedProductsInput>
 }
@@ -1625,12 +1623,10 @@ export type UserCreateNestedOneWithoutDeletedSkusInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutCreatedSkusNestedInput = {
+export type UserUpdateOneRequiredWithoutCreatedSkusNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedSkusInput, Prisma.UserUncheckedCreateWithoutCreatedSkusInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedSkusInput
   upsert?: Prisma.UserUpsertWithoutCreatedSkusInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedSkusInput, Prisma.UserUpdateWithoutCreatedSkusInput>, Prisma.UserUncheckedUpdateWithoutCreatedSkusInput>
 }

@@ -95,12 +95,12 @@ export class RoleService {
 
     // 2. Kiểm tra xem role có thể được update hay delete không
     // 2.1. Nếu là update, kiểm tra xem role có phải là role ADMIN không
-    if (isUpdate && RoleName.Admin === (role.name as RoleNameType)) {
+    if (isUpdate && RoleName.ADMIN === (role.name as RoleNameType)) {
       throw RoleCannotBeUpdatedException;
     }
 
     // 2.2. Nếu là delete, kiểm tra xem role có phải là 3 role cơ bản này không
-    const baseRoles: RoleNameType[] = [RoleName.Admin, RoleName.User, RoleName.Seller];
+    const baseRoles: RoleNameType[] = [RoleName.ADMIN, RoleName.SELLER, RoleName.USER];
     if (!isUpdate && baseRoles.includes(role.name as RoleNameType)) {
       throw RoleCannotBeDeletedException;
     }

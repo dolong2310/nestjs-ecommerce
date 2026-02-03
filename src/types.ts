@@ -1,4 +1,4 @@
-import { VariantsType } from '@/routes/product/product.type';
+import { VariantsType } from '@/shared/types/shared-product.type';
 
 declare global {
   namespace PrismaJson {

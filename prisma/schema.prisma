@@ -325,11 +325,11 @@ model Product {
 
   brand Brand @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
-  createdById Int?
+  createdById Int
   updatedById Int?
   deletedById Int?
 
-  createdBy User? @relation("ProductCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  createdBy User  @relation("ProductCreatedBy", fields: [createdById], references: [id], onDelete: Cascade, onUpdate: NoAction) // onDelete: Cascade => khi shop (user) bị xoá thì các product của shop đó cũng phải bị xoá
   updatedBy User? @relation("ProductUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
   deletedBy User? @relation("ProductDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
@@ -441,11 +441,11 @@ model SKU {
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
-  createdById Int?
+  createdById Int
   updatedById Int?
   deletedById Int?
 
-  createdBy User? @relation("SkuCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  createdBy User  @relation("SkuCreatedBy", fields: [createdById], references: [id], onDelete: Cascade, onUpdate: NoAction) // onDelete: Cascade => khi shop (user) bị xoá thì các `product` của `shop` đó cũng phải bị xoá VÀ khi `product` bị xoá thì `sku` của `product` đó cũng phải bị xoá
   updatedBy User? @relation("SkuUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
   deletedBy User? @relation("SkuDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
@@ -458,6 +458,7 @@ model SKU {
 
   // @@unique([productId, value], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260201070626_refactor_product
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
+  @@index([productId])
 }
 
 //////////////////////////////////////////
@@ -523,11 +524,13 @@ model CartItem {
   skuId    Int
   userId   Int
 
-  sku  SKU  @relation(fields: [skuId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  sku  SKU  @relation(fields: [skuId], references: [id], onDelete: Cascade, onUpdate: NoAction) // onDelete: Cascade => khi sku bị xoá thì cart item trong giỏ hàng của user cũng phải bị xoá
   user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId]) // mục đích index trường "userId" để khi query các item theo userId sẽ nhanh hơn.
 }
 
 model Order {

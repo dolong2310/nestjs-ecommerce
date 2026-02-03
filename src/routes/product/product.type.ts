@@ -5,14 +5,9 @@ import {
   GetProductResponseSchema,
   GetProductsQuerySchema,
   GetProductsResponseSchema,
-  ProductSchema,
   UpdateProductBodySchema,
-  VariantsSchema,
 } from '@/routes/product/product.model';
 import z from 'zod';
-
-export type ProductType = z.infer<typeof ProductSchema>;
-export type VariantsType = z.infer<typeof VariantsSchema>;
 
 export type CreateProductBodyType = z.infer<typeof CreateProductBodySchema>;
 export type UpdateProductBodyType = z.infer<typeof UpdateProductBodySchema>;

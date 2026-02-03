@@ -17,9 +17,10 @@ type AvailableRoute = {
 };
 
 const PORT = 3030; // only for testing port
-const SELLER_MODULE = ['AUTH', 'MEDIA', 'MANAGE_PRODUCT', 'PRODUCT_TRANSLATION', 'PROFILE'];
+const SELLER_MODULE = ['AUTH', 'MEDIA', 'MANAGE_PRODUCT', 'PRODUCT_TRANSLATION', 'PROFILE', 'CART'];
+const USER_MODULE = ['AUTH', 'MEDIA', 'PROFILE', 'CART'];
 
-const prisma = new PrismaService();
+const prismaService = new PrismaService();
 
 async function main() {
   const app = await NestFactory.create(AppModule);
@@ -34,7 +35,7 @@ async function main() {
   await syncPermissions(availableRoutes);
 
   // lấy toàn bộ list permission từ database
-  const permissions = await prisma.permission.findMany({
+  const permissions = await prismaService.permission.findMany({
     where: {
       deletedAt: null,
     },
@@ -43,15 +44,20 @@ async function main() {
   // Sync permissions to ADMIN role
   const adminPermissionIds = permissions.map((p) => ({ id: p.id }));
   const syncedAdminPermissions =
-    adminPermissionIds.length > 0 ? syncPermissionsToRole(RoleName.Admin, adminPermissionIds) : Promise.resolve();
+    adminPermissionIds.length > 0 ? syncPermissionsToRole(RoleName.ADMIN, adminPermissionIds) : Promise.resolve();
 
   // Sync permissions to SELLER role
   const sellerPermissionIds = permissions.filter((p) => SELLER_MODULE.includes(p.module)).map((p) => ({ id: p.id }));
   const syncedSellerPermissions =
-    sellerPermissionIds.length > 0 ? syncPermissionsToRole(RoleName.Seller, sellerPermissionIds) : Promise.resolve();
+    sellerPermissionIds.length > 0 ? syncPermissionsToRole(RoleName.SELLER, sellerPermissionIds) : Promise.resolve();
+
+  // Sync permissions to USER role
+  const userPermissionIds = permissions.filter((p) => USER_MODULE.includes(p.module)).map((p) => ({ id: p.id }));
+  const syncedUserPermissions =
+    userPermissionIds.length > 0 ? syncPermissionsToRole(RoleName.USER, userPermissionIds) : Promise.resolve();
 
   // Excute promises
-  await Promise.all([syncedAdminPermissions, syncedSellerPermissions]);
+  await Promise.all([syncedAdminPermissions, syncedSellerPermissions, syncedUserPermissions]);
 
   console.log('✅ Permissions synced successfully!');
   process.exit(0);
@@ -81,7 +87,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
   // - Create new permissions from availableRoutes that don't exist in database
 
   // 1. Lấy tất cả permissions từ database
-  const permissionsInDatabase = await prisma.permission.findMany({ where: { deletedAt: null } });
+  const permissionsInDatabase = await prismaService.permission.findMany({ where: { deletedAt: null } });
 
   // 2. Tạo object permissionsInDatabaseMap với key là [method-path]
   const permissionsInDatabaseMap: Record<string, (typeof permissionsInDatabase)[number]> = permissionsInDatabase.reduce(
@@ -105,7 +111,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
 
   // 5. Xoá permissions không tồn tại trong availableRoutes
   if (permissionsToDelete.length > 0) {
-    const deletedPermissions = await prisma.permission.deleteMany({
+    const deletedPermissions = await prismaService.permission.deleteMany({
       where: {
         id: { in: permissionsToDelete.map((permission) => permission.id) },
       },
@@ -120,7 +126,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
 
   // 7. Tạo permissions không tồn tại trong permissionsInDatabase
   if (routesToCreate.length > 0) {
-    const createdRoutes = await prisma.permission.createMany({
+    const createdRoutes = await prismaService.permission.createMany({
       data: routesToCreate,
       skipDuplicates: true,
     });
@@ -133,10 +139,10 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
   // // Save permissions to database
   // try {
   //   // 1. Delete all permissions if exist in database => sync 100% database with availableRoutes
-  //   const deleted = await prisma.permission.deleteMany();
+  //   const deleted = await prismaService.permission.deleteMany();
   //   console.log(`Deleted ${deleted.count} permissions`);
   //   // 2. Create new permissions
-  //   const permissions = await prisma.permission.createMany({
+  //   const permissions = await prismaService.permission.createMany({
   //     data: availableRoutes,
   //     // skipDuplicates: true, // skip if permission already exists
   //   });
@@ -152,7 +158,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
 
 async function syncPermissionsToRole(roleName: RoleNameType, permissionIds: { id: number }[]) {
   // 1. lấy role ROLE_NAME từ database
-  const role = await prisma.role.findFirstOrThrow({
+  const role = await prismaService.role.findFirstOrThrow({
     where: {
       name: roleName,
       deletedAt: null,
@@ -160,7 +166,7 @@ async function syncPermissionsToRole(roleName: RoleNameType, permissionIds: { id
   });
 
   // 2. update permissions của role ROLE_NAME
-  const updatedRole = await prisma.role.update({
+  const updatedRole = await prismaService.role.update({
     where: {
       id: role.id,
     },
@@ -177,7 +183,7 @@ main();
 
 // (async () => {
 //   try {
-//     const deleted = await prisma.permission.deleteMany();
+//     const deleted = await prismaService.permission.deleteMany();
 //     console.log(`Deleted ${deleted.count} permissions`);
 //     console.log("✅ Permissions deleted successfully!");
 //   } catch (error) {
