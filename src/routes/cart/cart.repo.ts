@@ -188,7 +188,7 @@ export class CartRepository {
                 ), '[]'::json)
               )
             )
-          )
+          ) ORDER BY "CartItem"."updatedAt" DESC
         ) AS "cartItems",
         jsonb_build_object(
           'id', "User"."id",
@@ -228,11 +228,24 @@ export class CartRepository {
     const { skuId, quantity } = body;
 
     // 1. Validate sku
-    await this._validateSku(skuId);
+    await this._validateSku(skuId, quantity);
 
-    // 2. Create cart item
-    const cartItem = await this.prismaService.cartItem.create({
-      data: {
+    // 2. Upsert cart item
+    // Mục đích: nếu cart item đã tồn tại thì tăng quantity lên, nếu không thì tạo mới
+    // Vì vậy trong bảng CartItem sẽ có unique constraint trên cặp (userId, skuId)
+    const cartItem = await this.prismaService.cartItem.upsert({
+      where: {
+        userId_skuId: {
+          userId,
+          skuId,
+        },
+      },
+      update: {
+        quantity: {
+          increment: quantity,
+        },
+      },
+      create: {
         userId,
         skuId,
         quantity,
@@ -247,7 +260,7 @@ export class CartRepository {
     const { skuId, quantity } = body;
 
     // 1. Validate sku
-    await this._validateSku(skuId);
+    await this._validateSku(skuId, quantity);
 
     // 2. Update cart item
     const cartItem = await this.prismaService.cartItem.update({
@@ -270,7 +283,7 @@ export class CartRepository {
     return result;
   }
 
-  private async _validateSku(skuId: number): Promise<SkuType> {
+  private async _validateSku(skuId: number, quantity: number): Promise<SkuType> {
     // 1. lấy danh sách sku theo skuId
     const sku = await this.prismaService.sKU.findUnique({
       where: {
@@ -286,8 +299,8 @@ export class CartRepository {
       throw SkuNotFoundException;
     }
 
-    // 2. Kiểm tra sku có hết hàng không
-    if (sku.stock <= 0) {
+    // 2. Kiểm tra sku có hết hàng không hoặc số lượng cần thêm vào cart lớn hơn số lượng trong kho
+    if (sku.stock <= 0 || sku.stock < quantity) {
       throw OutOfStockSkuException;
     }
 

@@ -319,6 +319,7 @@ export type UserWhereInput = {
   devices?: Prisma.DeviceListRelationFilter
   carts?: Prisma.CartItemListRelationFilter
   orders?: Prisma.OrderListRelationFilter
+  soldOrders?: Prisma.OrderListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   createdPermissions?: Prisma.PermissionListRelationFilter
   updatedPermissions?: Prisma.PermissionListRelationFilter
@@ -388,6 +389,7 @@ export type UserOrderByWithRelationInput = {
   devices?: Prisma.DeviceOrderByRelationAggregateInput
   carts?: Prisma.CartItemOrderByRelationAggregateInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
+  soldOrders?: Prisma.OrderOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   createdPermissions?: Prisma.PermissionOrderByRelationAggregateInput
   updatedPermissions?: Prisma.PermissionOrderByRelationAggregateInput
@@ -460,6 +462,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   devices?: Prisma.DeviceListRelationFilter
   carts?: Prisma.CartItemListRelationFilter
   orders?: Prisma.OrderListRelationFilter
+  soldOrders?: Prisma.OrderListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   createdPermissions?: Prisma.PermissionListRelationFilter
   updatedPermissions?: Prisma.PermissionListRelationFilter
@@ -568,6 +571,7 @@ export type UserCreateInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -636,6 +640,7 @@ export type UserUncheckedCreateInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -697,6 +702,7 @@ export type UserUpdateInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -765,6 +771,7 @@ export type UserUncheckedUpdateInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -1767,6 +1774,12 @@ export type UserCreateNestedOneWithoutOrdersInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutSoldOrdersInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSoldOrdersInput, Prisma.UserUncheckedCreateWithoutSoldOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSoldOrdersInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserCreateNestedOneWithoutCreatedOrdersInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedOrdersInput, Prisma.UserUncheckedCreateWithoutCreatedOrdersInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedOrdersInput
@@ -1791,6 +1804,16 @@ export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
   upsert?: Prisma.UserUpsertWithoutOrdersInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrdersInput, Prisma.UserUpdateWithoutOrdersInput>, Prisma.UserUncheckedUpdateWithoutOrdersInput>
+}
+
+export type UserUpdateOneWithoutSoldOrdersNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSoldOrdersInput, Prisma.UserUncheckedCreateWithoutSoldOrdersInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSoldOrdersInput
+  upsert?: Prisma.UserUpsertWithoutSoldOrdersInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSoldOrdersInput, Prisma.UserUpdateWithoutSoldOrdersInput>, Prisma.UserUncheckedUpdateWithoutSoldOrdersInput>
 }
 
 export type UserUpdateOneWithoutCreatedOrdersNestedInput = {
@@ -1881,6 +1904,7 @@ export type UserCreateWithoutCreatedLanguagesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -1948,6 +1972,7 @@ export type UserUncheckedCreateWithoutCreatedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -2013,6 +2038,7 @@ export type UserCreateWithoutUpdatedLanguagesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -2080,6 +2106,7 @@ export type UserUncheckedCreateWithoutUpdatedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -2145,6 +2172,7 @@ export type UserCreateWithoutDeletedLanguagesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -2212,6 +2240,7 @@ export type UserUncheckedCreateWithoutDeletedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -2288,6 +2317,7 @@ export type UserUpdateWithoutCreatedLanguagesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -2355,6 +2385,7 @@ export type UserUncheckedUpdateWithoutCreatedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -2426,6 +2457,7 @@ export type UserUpdateWithoutUpdatedLanguagesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -2493,6 +2525,7 @@ export type UserUncheckedUpdateWithoutUpdatedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -2564,6 +2597,7 @@ export type UserUpdateWithoutDeletedLanguagesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -2631,6 +2665,7 @@ export type UserUncheckedUpdateWithoutDeletedLanguagesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -2691,6 +2726,7 @@ export type UserCreateWithoutCreatedUsersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -2758,6 +2794,7 @@ export type UserUncheckedCreateWithoutCreatedUsersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -2823,6 +2860,7 @@ export type UserCreateWithoutUpdatedUsersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -2890,6 +2928,7 @@ export type UserUncheckedCreateWithoutUpdatedUsersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -2955,6 +2994,7 @@ export type UserCreateWithoutDeletedUsersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -3022,6 +3062,7 @@ export type UserUncheckedCreateWithoutDeletedUsersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -3087,6 +3128,7 @@ export type UserCreateWithoutCreatedByInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -3153,6 +3195,7 @@ export type UserUncheckedCreateWithoutCreatedByInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -3224,6 +3267,7 @@ export type UserCreateWithoutUpdatedByInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -3290,6 +3334,7 @@ export type UserUncheckedCreateWithoutUpdatedByInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -3361,6 +3406,7 @@ export type UserCreateWithoutDeletedByInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -3427,6 +3473,7 @@ export type UserUncheckedCreateWithoutDeletedByInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -3509,6 +3556,7 @@ export type UserUpdateWithoutCreatedUsersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -3576,6 +3624,7 @@ export type UserUncheckedUpdateWithoutCreatedUsersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -3647,6 +3696,7 @@ export type UserUpdateWithoutUpdatedUsersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -3714,6 +3764,7 @@ export type UserUncheckedUpdateWithoutUpdatedUsersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -3785,6 +3836,7 @@ export type UserUpdateWithoutDeletedUsersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -3852,6 +3904,7 @@ export type UserUncheckedUpdateWithoutDeletedUsersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -3981,6 +4034,7 @@ export type UserCreateWithoutUserTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -4048,6 +4102,7 @@ export type UserUncheckedCreateWithoutUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -4113,6 +4168,7 @@ export type UserCreateWithoutCreatedUserTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -4180,6 +4236,7 @@ export type UserUncheckedCreateWithoutCreatedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -4245,6 +4302,7 @@ export type UserCreateWithoutUpdatedUserTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -4312,6 +4370,7 @@ export type UserUncheckedCreateWithoutUpdatedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -4377,6 +4436,7 @@ export type UserCreateWithoutDeletedUserTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -4444,6 +4504,7 @@ export type UserUncheckedCreateWithoutDeletedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -4520,6 +4581,7 @@ export type UserUpdateWithoutUserTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -4587,6 +4649,7 @@ export type UserUncheckedUpdateWithoutUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -4658,6 +4721,7 @@ export type UserUpdateWithoutCreatedUserTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -4725,6 +4789,7 @@ export type UserUncheckedUpdateWithoutCreatedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -4796,6 +4861,7 @@ export type UserUpdateWithoutUpdatedUserTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -4863,6 +4929,7 @@ export type UserUncheckedUpdateWithoutUpdatedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -4934,6 +5001,7 @@ export type UserUpdateWithoutDeletedUserTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -5001,6 +5069,7 @@ export type UserUncheckedUpdateWithoutDeletedUserTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -5060,6 +5129,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -5127,6 +5197,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -5203,6 +5274,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -5270,6 +5342,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -5330,6 +5403,7 @@ export type UserCreateWithoutDevicesInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -5397,6 +5471,7 @@ export type UserUncheckedCreateWithoutDevicesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -5473,6 +5548,7 @@ export type UserUpdateWithoutDevicesInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -5540,6 +5616,7 @@ export type UserUncheckedUpdateWithoutDevicesInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -5601,6 +5678,7 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
   deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
@@ -5668,6 +5746,7 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5733,6 +5812,7 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
@@ -5800,6 +5880,7 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5865,6 +5946,7 @@ export type UserCreateWithoutDeletedPermissionsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -5932,6 +6014,7 @@ export type UserUncheckedCreateWithoutDeletedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -6008,6 +6091,7 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
   deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
@@ -6075,6 +6159,7 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6146,6 +6231,7 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
@@ -6213,6 +6299,7 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6284,6 +6371,7 @@ export type UserUpdateWithoutDeletedPermissionsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -6351,6 +6439,7 @@ export type UserUncheckedUpdateWithoutDeletedPermissionsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -6411,6 +6500,7 @@ export type UserCreateWithoutCreatedRolesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -6478,6 +6568,7 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -6543,6 +6634,7 @@ export type UserCreateWithoutUpdatedRolesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -6610,6 +6702,7 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -6675,6 +6768,7 @@ export type UserCreateWithoutDeletedRolesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -6742,6 +6836,7 @@ export type UserUncheckedCreateWithoutDeletedRolesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -6806,6 +6901,7 @@ export type UserCreateWithoutRoleInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -6873,6 +6969,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -6955,6 +7052,7 @@ export type UserUpdateWithoutCreatedRolesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -7022,6 +7120,7 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -7093,6 +7192,7 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -7160,6 +7260,7 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -7231,6 +7332,7 @@ export type UserUpdateWithoutDeletedRolesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -7298,6 +7400,7 @@ export type UserUncheckedUpdateWithoutDeletedRolesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -7374,6 +7477,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -7441,6 +7545,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -7506,6 +7611,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -7573,6 +7679,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -7638,6 +7745,7 @@ export type UserCreateWithoutDeletedProductsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -7705,6 +7813,7 @@ export type UserUncheckedCreateWithoutDeletedProductsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -7781,6 +7890,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -7848,6 +7958,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -7919,6 +8030,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -7986,6 +8098,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8057,6 +8170,7 @@ export type UserUpdateWithoutDeletedProductsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -8124,6 +8238,7 @@ export type UserUncheckedUpdateWithoutDeletedProductsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8184,6 +8299,7 @@ export type UserCreateWithoutCreatedProductTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -8251,6 +8367,7 @@ export type UserUncheckedCreateWithoutCreatedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -8316,6 +8433,7 @@ export type UserCreateWithoutUpdatedProductTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -8383,6 +8501,7 @@ export type UserUncheckedCreateWithoutUpdatedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -8448,6 +8567,7 @@ export type UserCreateWithoutDeletedProductTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -8515,6 +8635,7 @@ export type UserUncheckedCreateWithoutDeletedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -8591,6 +8712,7 @@ export type UserUpdateWithoutCreatedProductTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -8658,6 +8780,7 @@ export type UserUncheckedUpdateWithoutCreatedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8729,6 +8852,7 @@ export type UserUpdateWithoutUpdatedProductTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -8796,6 +8920,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8867,6 +8992,7 @@ export type UserUpdateWithoutDeletedProductTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -8934,6 +9060,7 @@ export type UserUncheckedUpdateWithoutDeletedProductTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -8994,6 +9121,7 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -9061,6 +9189,7 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -9126,6 +9255,7 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -9193,6 +9323,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -9258,6 +9389,7 @@ export type UserCreateWithoutDeletedCategoriesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -9325,6 +9457,7 @@ export type UserUncheckedCreateWithoutDeletedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -9401,6 +9534,7 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -9468,6 +9602,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -9539,6 +9674,7 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -9606,6 +9742,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -9677,6 +9814,7 @@ export type UserUpdateWithoutDeletedCategoriesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -9744,6 +9882,7 @@ export type UserUncheckedUpdateWithoutDeletedCategoriesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -9804,6 +9943,7 @@ export type UserCreateWithoutCreatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -9871,6 +10011,7 @@ export type UserUncheckedCreateWithoutCreatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -9936,6 +10077,7 @@ export type UserCreateWithoutUpdatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -10003,6 +10145,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -10068,6 +10211,7 @@ export type UserCreateWithoutDeletedCategoryTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -10135,6 +10279,7 @@ export type UserUncheckedCreateWithoutDeletedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -10211,6 +10356,7 @@ export type UserUpdateWithoutCreatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -10278,6 +10424,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -10349,6 +10496,7 @@ export type UserUpdateWithoutUpdatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -10416,6 +10564,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -10487,6 +10636,7 @@ export type UserUpdateWithoutDeletedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -10554,6 +10704,7 @@ export type UserUncheckedUpdateWithoutDeletedCategoryTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -10614,6 +10765,7 @@ export type UserCreateWithoutCreatedSkusInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -10681,6 +10833,7 @@ export type UserUncheckedCreateWithoutCreatedSkusInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -10746,6 +10899,7 @@ export type UserCreateWithoutUpdatedSkusInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -10813,6 +10967,7 @@ export type UserUncheckedCreateWithoutUpdatedSkusInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -10878,6 +11033,7 @@ export type UserCreateWithoutDeletedSkusInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -10945,6 +11101,7 @@ export type UserUncheckedCreateWithoutDeletedSkusInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -11021,6 +11178,7 @@ export type UserUpdateWithoutCreatedSkusInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -11088,6 +11246,7 @@ export type UserUncheckedUpdateWithoutCreatedSkusInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -11159,6 +11318,7 @@ export type UserUpdateWithoutUpdatedSkusInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -11226,6 +11386,7 @@ export type UserUncheckedUpdateWithoutUpdatedSkusInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -11297,6 +11458,7 @@ export type UserUpdateWithoutDeletedSkusInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -11364,6 +11526,7 @@ export type UserUncheckedUpdateWithoutDeletedSkusInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -11424,6 +11587,7 @@ export type UserCreateWithoutCreatedBrandsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -11491,6 +11655,7 @@ export type UserUncheckedCreateWithoutCreatedBrandsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -11556,6 +11721,7 @@ export type UserCreateWithoutUpdatedBrandsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -11623,6 +11789,7 @@ export type UserUncheckedCreateWithoutUpdatedBrandsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -11688,6 +11855,7 @@ export type UserCreateWithoutDeletedBrandsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -11755,6 +11923,7 @@ export type UserUncheckedCreateWithoutDeletedBrandsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -11831,6 +12000,7 @@ export type UserUpdateWithoutCreatedBrandsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -11898,6 +12068,7 @@ export type UserUncheckedUpdateWithoutCreatedBrandsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -11969,6 +12140,7 @@ export type UserUpdateWithoutUpdatedBrandsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -12036,6 +12208,7 @@ export type UserUncheckedUpdateWithoutUpdatedBrandsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -12107,6 +12280,7 @@ export type UserUpdateWithoutDeletedBrandsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -12174,6 +12348,7 @@ export type UserUncheckedUpdateWithoutDeletedBrandsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -12234,6 +12409,7 @@ export type UserCreateWithoutCreatedBrandTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -12301,6 +12477,7 @@ export type UserUncheckedCreateWithoutCreatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -12366,6 +12543,7 @@ export type UserCreateWithoutUpdatedBrandTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -12433,6 +12611,7 @@ export type UserUncheckedCreateWithoutUpdatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -12498,6 +12677,7 @@ export type UserCreateWithoutDeletedBrandTranslationsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -12565,6 +12745,7 @@ export type UserUncheckedCreateWithoutDeletedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -12641,6 +12822,7 @@ export type UserUpdateWithoutCreatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -12708,6 +12890,7 @@ export type UserUncheckedUpdateWithoutCreatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -12779,6 +12962,7 @@ export type UserUpdateWithoutUpdatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -12846,6 +13030,7 @@ export type UserUncheckedUpdateWithoutUpdatedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -12917,6 +13102,7 @@ export type UserUpdateWithoutDeletedBrandTranslationsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -12984,6 +13170,7 @@ export type UserUncheckedUpdateWithoutDeletedBrandTranslationsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -13043,6 +13230,7 @@ export type UserCreateWithoutCartsInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -13110,6 +13298,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -13186,6 +13375,7 @@ export type UserUpdateWithoutCartsInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -13253,6 +13443,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -13313,6 +13504,7 @@ export type UserCreateWithoutOrdersInput = {
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -13380,6 +13572,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -13430,6 +13623,140 @@ export type UserCreateOrConnectWithoutOrdersInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutOrdersInput, Prisma.UserUncheckedCreateWithoutOrdersInput>
 }
 
+export type UserCreateWithoutSoldOrdersInput = {
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
+  createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserUncheckedCreateWithoutSoldOrdersInput = {
+  id?: number
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  roleId: number
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserCreateOrConnectWithoutSoldOrdersInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSoldOrdersInput, Prisma.UserUncheckedCreateWithoutSoldOrdersInput>
+}
+
 export type UserCreateWithoutCreatedOrdersInput = {
   email: string
   name: string
@@ -13446,6 +13773,7 @@ export type UserCreateWithoutCreatedOrdersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -13513,6 +13841,7 @@ export type UserUncheckedCreateWithoutCreatedOrdersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -13578,6 +13907,7 @@ export type UserCreateWithoutUpdatedOrdersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -13645,6 +13975,7 @@ export type UserUncheckedCreateWithoutUpdatedOrdersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -13710,6 +14041,7 @@ export type UserCreateWithoutDeletedOrdersInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -13777,6 +14109,7 @@ export type UserUncheckedCreateWithoutDeletedOrdersInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -13852,6 +14185,7 @@ export type UserUpdateWithoutOrdersInput = {
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -13919,6 +14253,147 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUpsertWithoutSoldOrdersInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSoldOrdersInput, Prisma.UserUncheckedUpdateWithoutSoldOrdersInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSoldOrdersInput, Prisma.UserUncheckedCreateWithoutSoldOrdersInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSoldOrdersInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSoldOrdersInput, Prisma.UserUncheckedUpdateWithoutSoldOrdersInput>
+}
+
+export type UserUpdateWithoutSoldOrdersInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
+  createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSoldOrdersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -13991,6 +14466,7 @@ export type UserUpdateWithoutCreatedOrdersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -14058,6 +14534,7 @@ export type UserUncheckedUpdateWithoutCreatedOrdersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -14129,6 +14606,7 @@ export type UserUpdateWithoutUpdatedOrdersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -14196,6 +14674,7 @@ export type UserUncheckedUpdateWithoutUpdatedOrdersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -14267,6 +14746,7 @@ export type UserUpdateWithoutDeletedOrdersInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -14334,6 +14814,7 @@ export type UserUncheckedUpdateWithoutDeletedOrdersInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -14394,6 +14875,7 @@ export type UserCreateWithoutReviewsInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
   deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
@@ -14461,6 +14943,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14537,6 +15020,7 @@ export type UserUpdateWithoutReviewsInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
   deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
@@ -14604,6 +15088,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14664,6 +15149,7 @@ export type UserCreateWithoutSentMessagesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -14731,6 +15217,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -14796,6 +15283,7 @@ export type UserCreateWithoutReceivedMessagesInput = {
   devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
@@ -14863,6 +15351,7 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
   carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
   createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
   updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
@@ -14939,6 +15428,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15006,6 +15496,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15077,6 +15568,7 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15144,6 +15636,7 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15255,6 +15748,7 @@ export type UserUpdateWithoutCreatedByInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15321,6 +15815,7 @@ export type UserUncheckedUpdateWithoutCreatedByInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15399,6 +15894,7 @@ export type UserUpdateWithoutUpdatedByInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15465,6 +15961,7 @@ export type UserUncheckedUpdateWithoutUpdatedByInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15543,6 +16040,7 @@ export type UserUpdateWithoutDeletedByInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15609,6 +16107,7 @@ export type UserUncheckedUpdateWithoutDeletedByInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15703,6 +16202,7 @@ export type UserUpdateWithoutRoleInput = {
   devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
@@ -15770,6 +16270,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
   carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
   createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
@@ -15842,6 +16343,7 @@ export type UserCountOutputType = {
   devices: number
   carts: number
   orders: number
+  soldOrders: number
   reviews: number
   createdPermissions: number
   updatedPermissions: number
@@ -15892,6 +16394,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   devices?: boolean | UserCountOutputTypeCountDevicesArgs
   carts?: boolean | UserCountOutputTypeCountCartsArgs
   orders?: boolean | UserCountOutputTypeCountOrdersArgs
+  soldOrders?: boolean | UserCountOutputTypeCountSoldOrdersArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   createdPermissions?: boolean | UserCountOutputTypeCountCreatedPermissionsArgs
   updatedPermissions?: boolean | UserCountOutputTypeCountUpdatedPermissionsArgs
@@ -15972,6 +16475,13 @@ export type UserCountOutputTypeCountCartsArgs<ExtArgs extends runtime.Types.Exte
  * UserCountOutputType without action
  */
 export type UserCountOutputTypeCountOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrderWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSoldOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.OrderWhereInput
 }
 
@@ -16298,6 +16808,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   devices?: boolean | Prisma.User$devicesArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
+  soldOrders?: boolean | Prisma.User$soldOrdersArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   createdPermissions?: boolean | Prisma.User$createdPermissionsArgs<ExtArgs>
   updatedPermissions?: boolean | Prisma.User$updatedPermissionsArgs<ExtArgs>
@@ -16416,6 +16927,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   devices?: boolean | Prisma.User$devicesArgs<ExtArgs>
   carts?: boolean | Prisma.User$cartsArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
+  soldOrders?: boolean | Prisma.User$soldOrdersArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   createdPermissions?: boolean | Prisma.User$createdPermissionsArgs<ExtArgs>
   updatedPermissions?: boolean | Prisma.User$updatedPermissionsArgs<ExtArgs>
@@ -16485,6 +16997,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     devices: Prisma.$DevicePayload<ExtArgs>[]
     carts: Prisma.$CartItemPayload<ExtArgs>[]
     orders: Prisma.$OrderPayload<ExtArgs>[]
+    soldOrders: Prisma.$OrderPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     createdPermissions: Prisma.$PermissionPayload<ExtArgs>[]
     updatedPermissions: Prisma.$PermissionPayload<ExtArgs>[]
@@ -16947,6 +17460,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   devices<T extends Prisma.User$devicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$devicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   carts<T extends Prisma.User$cartsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  soldOrders<T extends Prisma.User$soldOrdersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$soldOrdersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdPermissions<T extends Prisma.User$createdPermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedPermissions<T extends Prisma.User$updatedPermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17508,6 +18022,30 @@ export type User$cartsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
  * User.orders
  */
 export type User$ordersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Order
+   */
+  select?: Prisma.OrderSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Order
+   */
+  omit?: Prisma.OrderOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderInclude<ExtArgs> | null
+  where?: Prisma.OrderWhereInput
+  orderBy?: Prisma.OrderOrderByWithRelationInput | Prisma.OrderOrderByWithRelationInput[]
+  cursor?: Prisma.OrderWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrderScalarFieldEnum | Prisma.OrderScalarFieldEnum[]
+}
+
+/**
+ * User.soldOrders
+ */
+export type User$soldOrdersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Order
    */

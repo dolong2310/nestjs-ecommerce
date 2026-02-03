@@ -24,7 +24,7 @@ datasource db {
 //////////////////////////////////////////
 
 enum OrderStatus {
-  PENDING_CONFIRMATION
+  PENDING_PAYMENT
   PENDING_PICKUP
   PENDING_DELIVERY
   DELIVERED
@@ -112,6 +112,7 @@ model User {
   devices       Device[] // liên kết 1-n với Device
   carts         CartItem[]
   orders        Order[]
+  soldOrders    Order[]        @relation("Shop")
   reviews       Review[]
 
   createdPermissions          Permission[]          @relation("PermissionCreatedBy")
@@ -342,6 +343,7 @@ model Product {
   reviews             Review[]
   categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
   orders              Order[] // ProductsOrders[] - Implicit many-to-many (Prisma tự động tạo bảng _ProductToOrder)
+  productSKUSnapshots ProductSKUSnapshot[]
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
@@ -531,14 +533,19 @@ model CartItem {
   updatedAt DateTime @updatedAt
 
   @@index([userId]) // mục đích index trường "userId" để khi query các item theo userId sẽ nhanh hơn.
+  @@unique([userId, skuId]) // mục đích vì nghiệp ở vụ hàm `create` trong 'cart.repo.ts' => nếu user thêm vào cart item với skuId đã có trong cart thì sẽ tăng quantity lên chứ không thêm mới.
 }
 
 model Order {
-  id     Int         @id @default(autoincrement())
-  userId Int
-  status OrderStatus
+  id       Int         @id @default(autoincrement())
+  userId   Int
+  status   OrderStatus
+  /// [Receiver]
+  receiver Json // thông tin người nhận (JSONB)
+  shopId   Int?
 
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user User  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shop User? @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
   createdById Int?
   updatedById Int?
@@ -555,22 +562,30 @@ model Order {
   // không cần price vì đã có trong SKU, nhân price với quantity để tính tổng tiền
   items    ProductSKUSnapshot[]
   products Product[] // ProductsOrders[] - Implicit many-to-many (Prisma tự động tạo bảng _ProductToOrder)
+  // reviews     Review[]
+  // paymentId   Int
+  // payment     Payment              @relation(fields: [paymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
   @@index([deletedAt, status])
 }
 
 model ProductSKUSnapshot {
-  id          Int      @id @default(autoincrement())
-  productName String   @db.VarChar(500)
-  price       Float
-  images      String[]
-  skuValue    String   @db.VarChar(500)
-  skuId       Int?
-  orderId     Int?
+  id                  Int    @id @default(autoincrement())
+  productName         String @db.VarChar(500)
+  image               String // 1 ảnh (TEXT NOT NULL)
+  /// [ProductTranslations]
+  productTranslations Json // bản dịch sản phẩm (JSONB NOT NULL)
+  quantity            Int
+  skuPrice            Float // DOUBLE PRECISION NOT NULL
+  skuValue            String @db.VarChar(500)
+  skuId               Int?
+  orderId             Int?
+  productId           Int?
 
-  sku   SKU?   @relation(fields: [skuId], references: [id], onDelete: SetNull, onUpdate: NoAction)
-  order Order? @relation(fields: [orderId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  sku     SKU?     @relation(fields: [skuId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  order   Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
   createdAt DateTime @default(now())
 }
