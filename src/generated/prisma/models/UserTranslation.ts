@@ -8,6 +8,8 @@
  *
  * 🟢 You can import this file directly.
  */
+
+import type * as PJTG from '../pjtg';
 import type * as runtime from "@prisma/client/runtime/client"
 import type * as $Enums from "../enums.js"
 import type * as Prisma from "../internal/prismaNamespace.js"

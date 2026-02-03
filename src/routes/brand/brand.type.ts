@@ -1,11 +1,10 @@
 import {
-  BrandIncludeTranslationsResponseSchema,
-  BrandSchema,
   CreateBrandBodySchema,
   GetBrandsIncludeTranslationsResponseSchema,
   GetBrandsQuerySchema,
   UpdateBrandBodySchema,
 } from '@/routes/brand/brand.model';
+import { BrandIncludeTranslationsResponseSchema, BrandSchema } from '@/shared/models/shared-brand.model';
 import z from 'zod';
 
 export type BrandType = z.infer<typeof BrandSchema>;

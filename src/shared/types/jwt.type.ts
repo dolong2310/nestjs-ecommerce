@@ -1,9 +1,11 @@
+import type { RoleNameType } from '@/shared/constants/role.constant';
+
 // Access Token
 export interface AccessTokenPayloadCreate {
   userId: number;
   deviceId: number;
   roleId: number;
-  roleName: string;
+  roleName: RoleNameType;
 }
 
 export interface AccessTokenPayload extends AccessTokenPayloadCreate {

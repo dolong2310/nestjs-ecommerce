@@ -1,11 +1,10 @@
 import {
-  CategoryIncludeTranslationsResponseSchema,
-  CategorySchema,
   CreateCategoryBodySchema,
   GetCategoriesIncludeTranslationsResponseSchema,
   GetCategoriesQuerySchema,
   UpdateCategoryBodySchema,
 } from '@/routes/category/category.model';
+import { CategoryIncludeTranslationsResponseSchema, CategorySchema } from '@/shared/models/shared-category.model';
 import z from 'zod';
 
 export type CategoryType = z.infer<typeof CategorySchema>;

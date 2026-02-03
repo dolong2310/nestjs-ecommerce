@@ -8,6 +8,7 @@ import {
   GoogleAuthStateType,
 } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
+import { RoleNameType } from '@/shared/constants/role.constant';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { HashingService } from '@/shared/services/hashing.service';
 import { Injectable } from '@nestjs/common';
@@ -129,7 +130,7 @@ export class GoogleService {
         userId: user.id,
         deviceId: device.id,
         roleId: user.roleId,
-        roleName: user.role.name,
+        roleName: user.role.name as RoleNameType,
       });
 
       // 8. Return tokens

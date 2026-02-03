@@ -8,6 +8,8 @@ import { CategoryModule } from '@/routes/category/category.module';
 import { LanguageModule } from '@/routes/language/language.module';
 import { MediaModule } from '@/routes/media/media.module';
 import { PermissionModule } from '@/routes/permission/permission.module';
+import { ProductTranslationModule } from '@/routes/product/product-translation/product-translation.module';
+import { ProductModule } from '@/routes/product/product.module';
 import { ProfileModule } from '@/routes/profile/profile.module';
 import { RoleModule } from '@/routes/role/role.module';
 import { UserModule } from '@/routes/user/user.module';
@@ -37,6 +39,8 @@ import path from 'path';
     BrandTranslationModule,
     CategoryModule,
     CategoryTranslationModule,
+    ProductModule,
+    ProductTranslationModule,
     I18nModule.forRoot({
       fallbackLanguage: 'en',
       loaderOptions: {

@@ -11,6 +11,10 @@ generator client {
   generatedFileExtension = "ts"
 }
 
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -316,6 +320,8 @@ model Product {
   brandId      Int
   images       String[]
   publishedAt  DateTime?
+  /// [ProductVariantType]
+  variants     Json // { value: string, options: string[] }[] => install prisma json type generator => declare type global => npx prisma generate type
 
   brand Brand @relation(fields: [brandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -332,10 +338,10 @@ model Product {
   updatedAt DateTime  @updatedAt
 
   productTranslations ProductTranslation[]
-  variants            Json
   skus                SKU[]
   reviews             Review[]
   categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
+  orders              Order[] // ProductsOrders[] - Implicit many-to-many (Prisma tự động tạo bảng _ProductToOrder)
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
@@ -365,6 +371,7 @@ model ProductTranslation {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 
+  // @@unique([productId, languageId], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260201070626_refactor_product
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
@@ -425,11 +432,11 @@ model CategoryTranslation {
 }
 
 model SKU {
-  id        Int      @id @default(autoincrement())
-  value     String   @db.VarChar(500)
+  id        Int    @id @default(autoincrement())
+  value     String @db.VarChar(500)
   price     Float
   stock     Int
-  image    String
+  image     String
   productId Int
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -449,6 +456,7 @@ model SKU {
   cartItems           CartItem[]
   productSKUSnapshots ProductSKUSnapshot[]
 
+  // @@unique([productId, value], { where: { deletedAt: null } }) // Đã set trong SQL migration 20260201070626_refactor_product
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
 }
 
@@ -542,9 +550,11 @@ model Order {
   updatedAt DateTime  @updatedAt
 
   // không cần price vì đã có trong SKU, nhân price với quantity để tính tổng tiền
-  items ProductSKUSnapshot[]
+  items    ProductSKUSnapshot[]
+  products Product[] // ProductsOrders[] - Implicit many-to-many (Prisma tự động tạo bảng _ProductToOrder)
 
   @@index([deletedAt]) // mục đích index trường "deletedAt" để khi query các item là null (nghĩa là chưa xoá mềm) sẽ nhanh hơn.
+  @@index([deletedAt, status])
 }
 
 model ProductSKUSnapshot {

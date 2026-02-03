@@ -33,6 +33,7 @@ import {
 } from '@/routes/auth/types/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
+import { RoleNameType } from '@/shared/constants/role.constant';
 import { InvalidPasswordException, UserNotFoundException } from '@/shared/errors/shared-error.error';
 import {
   generateOtpCode,
@@ -113,7 +114,7 @@ export class AuthService {
       // 2.3 Execute promises
       const [userRoleId, hashedPassword] = await Promise.all([userRoleIdPromise, hashedPasswordPromise]);
       // 2.4 Create user
-      const user = await this.authRepository.createUser({
+      const createUserPromise = this.authRepository.createUser({
         name: body.name,
         email: body.email,
         password: hashedPassword,
@@ -123,9 +124,12 @@ export class AuthService {
       });
 
       // 3. Delete OTP code
-      await this.authRepository.deleteOtpCode({ id: otpCode.id });
+      const deleteOtpCodePromise = this.authRepository.deleteOtpCode({ id: otpCode.id });
 
-      // 4. Return user (successfully registered)
+      // 4. Execute promises
+      const [user] = await Promise.all([createUserPromise, deleteOtpCodePromise]);
+
+      // 5. Return user (successfully registered)
       return user;
     } catch (error) {
       if (isUniqueConstraintPrismaError(error)) {
@@ -188,7 +192,7 @@ export class AuthService {
         userId: user.id,
         deviceId: device.id,
         roleId: user.roleId,
-        roleName: user.role.name,
+        roleName: user.role.name as RoleNameType,
       });
 
       // 7. Return tokens
@@ -311,7 +315,7 @@ export class AuthService {
         userId: userId,
         deviceId: deviceId,
         roleId: user.roleId,
-        roleName: user.role.name,
+        roleName: user.role.name as RoleNameType,
       });
 
       // 7. Execute promises

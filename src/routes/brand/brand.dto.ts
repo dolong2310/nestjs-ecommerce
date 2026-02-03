@@ -1,10 +1,10 @@
 import {
-  BrandIncludeTranslationsResponseSchema,
   CreateBrandBodySchema,
-  GetBrandsQuerySchema,
   GetBrandsIncludeTranslationsResponseSchema,
+  GetBrandsQuerySchema,
   UpdateBrandBodySchema,
 } from '@/routes/brand/brand.model';
+import { BrandIncludeTranslationsResponseSchema } from '@/shared/models/shared-brand.model';
 import { createZodDto } from 'nestjs-zod';
 
 export class GetBrandsQueryDTO extends createZodDto(GetBrandsQuerySchema) {}
