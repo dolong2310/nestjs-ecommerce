@@ -17,8 +17,8 @@ type AvailableRoute = {
 };
 
 const PORT = 3030; // only for testing port
-const SELLER_MODULE = ['AUTH', 'MEDIA', 'MANAGE_PRODUCT', 'PRODUCT_TRANSLATION', 'PROFILE', 'CART'];
-const USER_MODULE = ['AUTH', 'MEDIA', 'PROFILE', 'CART'];
+const SELLER_MODULE = ['AUTH', 'MEDIA', 'MANAGE_PRODUCT', 'PRODUCT_TRANSLATION', 'PROFILE', 'CART', 'ORDERS'];
+const USER_MODULE = ['AUTH', 'MEDIA', 'PROFILE', 'CART', 'ORDERS'];
 
 const prismaService = new PrismaService();
 

@@ -1,6 +1,10 @@
 import z from 'zod';
 
-export const EmptyBodySchema = z.object({}).strict(); // strict: không được truyền thêm trường nào khác
+// Chỉ chấp nhận: không gửi body (undefined/null) hoặc empty object {}
+export const EmptyBodySchema = z.preprocess(
+  (val) => (val === undefined || val === null ? {} : val),
+  z.object({}).strict() // strict: reject nếu có thêm fields
+);
 
 export const PaginationQuerySchema = z.object({
   // .int() kiểu integer, .positive() kiểu số dương

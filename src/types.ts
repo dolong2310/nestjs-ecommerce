@@ -7,7 +7,7 @@ declare global {
     type ProductTranslations = Pick<ProductTranslationType, 'id' | 'name' | 'description' | 'languageId'>[];
     type Receiver = {
       name: string;
-      phone: string;
+      phoneNumber: string;
       address: string;
     };
   }

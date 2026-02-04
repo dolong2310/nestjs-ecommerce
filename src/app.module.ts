@@ -8,6 +8,7 @@ import { CategoryTranslationModule } from '@/routes/category/category-translatio
 import { CategoryModule } from '@/routes/category/category.module';
 import { LanguageModule } from '@/routes/language/language.module';
 import { MediaModule } from '@/routes/media/media.module';
+import { OrderModule } from '@/routes/order/order.module';
 import { PermissionModule } from '@/routes/permission/permission.module';
 import { ProductTranslationModule } from '@/routes/product/product-translation/product-translation.module';
 import { ProductModule } from '@/routes/product/product.module';
@@ -52,6 +53,7 @@ import path from 'path';
     ProductModule,
     ProductTranslationModule,
     CartModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [

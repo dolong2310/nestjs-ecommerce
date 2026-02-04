@@ -532,8 +532,8 @@ model CartItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userId]) // mục đích index trường "userId" để khi query các item theo userId sẽ nhanh hơn.
   @@unique([userId, skuId]) // mục đích vì nghiệp ở vụ hàm `create` trong 'cart.repo.ts' => nếu user thêm vào cart item với skuId đã có trong cart thì sẽ tăng quantity lên chứ không thêm mới.
+  @@index([userId]) // mục đích index trường "userId" để khi query các item theo userId sẽ nhanh hơn.
 }
 
 model Order {
@@ -542,7 +542,7 @@ model Order {
   status   OrderStatus
   /// [Receiver]
   receiver Json // thông tin người nhận (JSONB)
-  shopId   Int?
+  shopId   Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
 
   user User  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   shop User? @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)
@@ -570,18 +570,23 @@ model Order {
   @@index([deletedAt, status])
 }
 
+/**
+ * Mục đích của bảng này là để lưu lại snapshot của sản phẩm khi user đặt hàng.
+ * Tránh việc sản phẩm bị xoá/cập nhật thì khi user xem lại order thì sản phẩm bị mất/thay đổi sku.
+ */
 model ProductSKUSnapshot {
   id                  Int    @id @default(autoincrement())
+  productId           Int?
   productName         String @db.VarChar(500)
   image               String // 1 ảnh (TEXT NOT NULL)
   /// [ProductTranslations]
   productTranslations Json // bản dịch sản phẩm (JSONB NOT NULL)
   quantity            Int
-  skuPrice            Float // DOUBLE PRECISION NOT NULL
-  skuValue            String @db.VarChar(500)
-  skuId               Int?
   orderId             Int?
-  productId           Int?
+
+  skuId    Int?
+  skuPrice Float // DOUBLE PRECISION NOT NULL
+  skuValue String @db.VarChar(500)
 
   sku     SKU?     @relation(fields: [skuId], references: [id], onDelete: SetNull, onUpdate: NoAction)
   order   Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull, onUpdate: NoAction)
