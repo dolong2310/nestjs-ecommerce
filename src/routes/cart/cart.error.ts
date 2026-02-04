@@ -27,3 +27,10 @@ export const SkuNotFoundException = new NotFoundException([
     message: 'Error.SkuNotFound',
   },
 ]);
+
+export const InvalidQuantityException = new BadRequestException([
+  {
+    field: 'quantity',
+    message: 'Error.InvalidQuantity',
+  },
+]);

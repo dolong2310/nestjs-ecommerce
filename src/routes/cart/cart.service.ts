@@ -38,10 +38,10 @@ export class CartService {
     }
   }
 
-  async updateCart(props: { id: number; body: UpdateCartBodyType }): Promise<CartItemType> {
+  async updateCart(props: { userId: number; id: number; body: UpdateCartBodyType }): Promise<CartItemType> {
     try {
-      const { id, body } = props;
-      return await this.cartRepository.update({ id, body });
+      const { userId, id, body } = props;
+      return await this.cartRepository.update({ userId, id, body });
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw CartItemNotFoundException;

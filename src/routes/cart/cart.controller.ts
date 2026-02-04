@@ -30,8 +30,12 @@ export class CartController {
 
   @Put(':id')
   @ZodSerializerDto(CartItemDTO)
-  updateCart(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateCartBodyDTO): Promise<CartItemDTO> {
-    return this.cartService.updateCart({ id, body });
+  updateCart(
+    @ActiveUser('userId') userId: number,
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateCartBodyDTO,
+  ): Promise<CartItemDTO> {
+    return this.cartService.updateCart({ userId, id, body });
   }
 
   @Post('delete') // Method DELETE không được phép gửi body, nên sử dụng POST và thêm endpoint là delete

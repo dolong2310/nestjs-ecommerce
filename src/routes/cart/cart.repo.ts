@@ -1,5 +1,11 @@
 import { Prisma } from '@/generated/prisma/client';
-import { OutOfStockSkuException, ProductNotFoundException, SkuNotFoundException } from '@/routes/cart/cart.error';
+import {
+  CartItemNotFoundException,
+  InvalidQuantityException,
+  OutOfStockSkuException,
+  ProductNotFoundException,
+  SkuNotFoundException,
+} from '@/routes/cart/cart.error';
 import {
   AddToCartBodyType,
   CartItemDetailType,
@@ -228,7 +234,7 @@ export class CartRepository {
     const { skuId, quantity } = body;
 
     // 1. Validate sku
-    await this._validateSku(skuId, quantity);
+    await this._validateSku({ userId, skuId, quantity, isCreate: true });
 
     // 2. Upsert cart item
     // Mục đích: nếu cart item đã tồn tại thì tăng quantity lên, nếu không thì tạo mới
@@ -255,17 +261,18 @@ export class CartRepository {
     return cartItem;
   }
 
-  async update(props: { id: number; body: UpdateCartBodyType }): Promise<CartItemType> {
-    const { id, body } = props;
+  async update(props: { userId: number; id: number; body: UpdateCartBodyType }): Promise<CartItemType> {
+    const { userId, id, body } = props;
     const { skuId, quantity } = body;
 
     // 1. Validate sku
-    await this._validateSku(skuId, quantity);
+    await this._validateSku({ userId, skuId, quantity, isCreate: false });
 
     // 2. Update cart item
     const cartItem = await this.prismaService.cartItem.update({
       where: {
         id,
+        userId,
       },
       data: { skuId, quantity },
     });
@@ -283,28 +290,57 @@ export class CartRepository {
     return result;
   }
 
-  private async _validateSku(skuId: number, quantity: number): Promise<SkuType> {
+  private async _validateSku({
+    userId,
+    skuId,
+    quantity,
+    isCreate,
+  }: {
+    userId: number;
+    skuId: number;
+    quantity: number;
+    isCreate: boolean;
+  }): Promise<SkuType> {
     // 1. lấy danh sách sku theo skuId
-    const sku = await this.prismaService.sKU.findUnique({
-      where: {
-        id: skuId,
-        deletedAt: null,
-      },
-      include: {
-        product: true,
-      },
-    });
+    const [sku, cartItem] = await Promise.all([
+      this.prismaService.sKU.findUnique({
+        where: {
+          id: skuId,
+          deletedAt: null,
+        },
+        include: {
+          product: true,
+        },
+      }),
+      isCreate
+        ? this.prismaService.cartItem.findUnique({
+            where: {
+              userId_skuId: {
+                userId,
+                skuId,
+              },
+            },
+          })
+        : Promise.resolve(null),
+    ]);
 
     if (!sku) {
       throw SkuNotFoundException;
     }
 
-    // 2. Kiểm tra sku có hết hàng không hoặc số lượng cần thêm vào cart lớn hơn số lượng trong kho
+    // 2. Trong trường hợp add to cart (isCreate = true):
+    // Kiểm tra số lượng cần thêm vào cart có lớn hơn số lượng trong kho không.
+    // Trường hợp update cart item: không cần kiểm tra vì số lượng quantity khi update là replace (quantity mới) chứ không phải cộng thêm.
+    if (isCreate && cartItem && cartItem.quantity + quantity > sku.stock) {
+      throw InvalidQuantityException;
+    }
+
+    // 3. Kiểm tra sku có hết hàng không hoặc số lượng cần thêm vào cart lớn hơn số lượng trong kho
     if (sku.stock <= 0 || sku.stock < quantity) {
       throw OutOfStockSkuException;
     }
 
-    // 3. Kiểm tra product có tồn tại không hoặc có isPublished không
+    // 4. Kiểm tra product có tồn tại không hoặc có isPublished không
     const product = sku.product;
     if (
       product.deletedAt !== null || // product đã bị xoá mềm
@@ -314,7 +350,7 @@ export class CartRepository {
       throw ProductNotFoundException;
     }
 
-    // 4. Return sku
+    // 5. Return sku
     return sku;
   }
 }
