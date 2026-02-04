@@ -20,6 +20,7 @@ const configSchema = z.object({
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
 
   SECRET_API_KEY: z.string().min(1, 'SECRET_API_KEY is required'),
+  SECRET_PAYMENT_API_KEY: z.string().min(1, 'SECRET_PAYMENT_API_KEY is required'),
   ACCESS_TOKEN_SECRET: z.string().min(1, 'ACCESS_TOKEN_SECRET is required'),
   ACCESS_TOKEN_EXPIRES_IN: z.string().min(1, 'ACCESS_TOKEN_EXPIRES_IN is required'),
   REFRESH_TOKEN_SECRET: z.string().min(1, 'REFRESH_TOKEN_SECRET is required'),

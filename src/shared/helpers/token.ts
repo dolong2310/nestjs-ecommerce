@@ -7,6 +7,6 @@ export function extractTokenFromHeader(request: Request): string | undefined {
 }
 
 // Extract API key from header
-export function extractApiKeyFromHeader(request: Request): string | string[] | undefined {
-  return request.headers['x-api-key'];
+export function extractApiKeyFromHeader(request: Request, key: string = 'x-api-key'): string | string[] | undefined {
+  return request.headers[key];
 }

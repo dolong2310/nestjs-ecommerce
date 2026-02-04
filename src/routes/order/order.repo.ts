@@ -15,6 +15,7 @@ import {
   GetOrdersResponseType,
 } from '@/routes/order/order.type';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
+import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -150,50 +151,46 @@ export class OrderRepository {
 
     // 2. Tạo order và Xoá cartItem trong cùng 1 transaction
     const orders = await this.prismaService.$transaction(async (tx) => {
-      // 2.0. Kiểm tra stock của sku
-      // const skuIds = cartItems.map((item) => item.sku.id);
-      // const currentSkus = await tx.sKU.findMany({
-      //   where: {
-      //     id: {
-      //       in: skuIds,
-      //     },
-      //   },
-      //   select: {
-      //     id: true,
-      //     stock: true,
-      //   },
-      // });
+      // 2.1. Kiểm tra stock của sku
+      const skuIds = cartItems.map((item) => item.sku.id);
+      const currentSkus = await tx.sKU.findMany({
+        where: {
+          id: {
+            in: skuIds,
+          },
+        },
+        select: {
+          id: true,
+          stock: true,
+        },
+      });
 
-      // const skuStockMap = new Map(currentSkus.map((s) => [s.id, s.stock]));
+      const skuStockMap = new Map(currentSkus.map((s) => [s.id, s.stock]));
 
-      // for (const cartItem of cartItems) {
-      //   const currentStock = skuStockMap.get(cartItem.sku.id)!;
-      //   if (currentStock < cartItem.quantity) {
-      //     throw SkuOutOfStockException;
-      //   }
-      // }
+      for (const cartItem of cartItems) {
+        const currentStock = skuStockMap.get(cartItem.sku.id)!;
+        if (currentStock < cartItem.quantity) {
+          throw SkuOutOfStockException;
+        }
+      }
 
-      // // Update stock ngay lập tức
-      // await tx.sKU.updateMany({
-      //   where: {
-      //     id: { in: skuIds },
-      //   },
-      //   data: {
-      //     stock: {
-      //       decrement: cartItems.reduce((acc, item) => acc + item.quantity, 0),
-      //     },
-      //   },
-      // });
+      // 2.2 Tạo Payment với status PENDING
+      const payment = await tx.payment.create({
+        data: {
+          status: EnumPaymentStatus.PENDING,
+        },
+      });
 
       // 2.1. Tạo order
       // NOTE: tại sao không dùng tx.order.createMany?
       // Vì createMany không hỗ trợ tạo relationship với các model khác.
       // Model cần tạo cùng với order là items (ProductSKUSnapshot[]) và products.
-      const createdOrders = await Promise.all(
+      const createdOrdersPromise = Promise.all(
         bodyOrderItems.map((orderItem) =>
           tx.order.create({
             data: {
               userId,
+              paymentId: payment.id,
               status: EnumOrderStatus.PENDING_PAYMENT,
               receiver: orderItem.receiver,
               createdById: userId,
@@ -233,8 +230,8 @@ export class OrderRepository {
         ),
       );
 
-      // 2.2. Xoá cartItem
-      await tx.cartItem.deleteMany({
+      // 2.3. Xoá cartItem
+      const deletedCartItemsPromise = tx.cartItem.deleteMany({
         where: {
           id: {
             in: allBodyCartItemIds,
@@ -242,7 +239,25 @@ export class OrderRepository {
         },
       });
 
-      // 2.3. Trả về order vừa tạo
+      // 2.4. Cập nhật stock của sku
+      const updatedSkusPromise = Promise.all(
+        cartItems.map((cartItem) => {
+          return tx.sKU.update({
+            where: {
+              id: cartItem.sku.id,
+            },
+            data: {
+              stock: {
+                decrement: cartItem.quantity,
+              },
+            },
+          });
+        }),
+      );
+
+      const [createdOrders] = await Promise.all([createdOrdersPromise, deletedCartItemsPromise, updatedSkusPromise]);
+
+      // 2.5. Trả về order vừa tạo
       return createdOrders;
     });
 

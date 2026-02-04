@@ -245,7 +245,7 @@ export type PaymentTransactionGroupByOutputType = {
   id: number
   gateway: string
   transactionDate: Date
-  accountNumber: string
+  accountNumber: string | null
   subAccount: string | null
   amountIn: number
   amountOut: number
@@ -284,7 +284,7 @@ export type PaymentTransactionWhereInput = {
   id?: Prisma.IntFilter<"PaymentTransaction"> | number
   gateway?: Prisma.StringFilter<"PaymentTransaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"PaymentTransaction"> | Date | string
-  accountNumber?: Prisma.StringFilter<"PaymentTransaction"> | string
+  accountNumber?: Prisma.StringNullableFilter<"PaymentTransaction"> | string | null
   subAccount?: Prisma.StringNullableFilter<"PaymentTransaction"> | string | null
   amountIn?: Prisma.IntFilter<"PaymentTransaction"> | number
   amountOut?: Prisma.IntFilter<"PaymentTransaction"> | number
@@ -300,7 +300,7 @@ export type PaymentTransactionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   gateway?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
-  accountNumber?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   subAccount?: Prisma.SortOrderInput | Prisma.SortOrder
   amountIn?: Prisma.SortOrder
   amountOut?: Prisma.SortOrder
@@ -319,7 +319,7 @@ export type PaymentTransactionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PaymentTransactionWhereInput | Prisma.PaymentTransactionWhereInput[]
   gateway?: Prisma.StringFilter<"PaymentTransaction"> | string
   transactionDate?: Prisma.DateTimeFilter<"PaymentTransaction"> | Date | string
-  accountNumber?: Prisma.StringFilter<"PaymentTransaction"> | string
+  accountNumber?: Prisma.StringNullableFilter<"PaymentTransaction"> | string | null
   subAccount?: Prisma.StringNullableFilter<"PaymentTransaction"> | string | null
   amountIn?: Prisma.IntFilter<"PaymentTransaction"> | number
   amountOut?: Prisma.IntFilter<"PaymentTransaction"> | number
@@ -335,7 +335,7 @@ export type PaymentTransactionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   gateway?: Prisma.SortOrder
   transactionDate?: Prisma.SortOrder
-  accountNumber?: Prisma.SortOrder
+  accountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   subAccount?: Prisma.SortOrderInput | Prisma.SortOrder
   amountIn?: Prisma.SortOrder
   amountOut?: Prisma.SortOrder
@@ -359,7 +359,7 @@ export type PaymentTransactionScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"PaymentTransaction"> | number
   gateway?: Prisma.StringWithAggregatesFilter<"PaymentTransaction"> | string
   transactionDate?: Prisma.DateTimeWithAggregatesFilter<"PaymentTransaction"> | Date | string
-  accountNumber?: Prisma.StringWithAggregatesFilter<"PaymentTransaction"> | string
+  accountNumber?: Prisma.StringNullableWithAggregatesFilter<"PaymentTransaction"> | string | null
   subAccount?: Prisma.StringNullableWithAggregatesFilter<"PaymentTransaction"> | string | null
   amountIn?: Prisma.IntWithAggregatesFilter<"PaymentTransaction"> | number
   amountOut?: Prisma.IntWithAggregatesFilter<"PaymentTransaction"> | number
@@ -374,7 +374,7 @@ export type PaymentTransactionScalarWhereWithAggregatesInput = {
 export type PaymentTransactionCreateInput = {
   gateway: string
   transactionDate?: Date | string
-  accountNumber: string
+  accountNumber?: string | null
   subAccount?: string | null
   amountIn?: number
   amountOut?: number
@@ -390,7 +390,7 @@ export type PaymentTransactionUncheckedCreateInput = {
   id?: number
   gateway: string
   transactionDate?: Date | string
-  accountNumber: string
+  accountNumber?: string | null
   subAccount?: string | null
   amountIn?: number
   amountOut?: number
@@ -405,7 +405,7 @@ export type PaymentTransactionUncheckedCreateInput = {
 export type PaymentTransactionUpdateInput = {
   gateway?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountIn?: Prisma.IntFieldUpdateOperationsInput | number
   amountOut?: Prisma.IntFieldUpdateOperationsInput | number
@@ -421,7 +421,7 @@ export type PaymentTransactionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   gateway?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountIn?: Prisma.IntFieldUpdateOperationsInput | number
   amountOut?: Prisma.IntFieldUpdateOperationsInput | number
@@ -437,7 +437,7 @@ export type PaymentTransactionCreateManyInput = {
   id?: number
   gateway: string
   transactionDate?: Date | string
-  accountNumber: string
+  accountNumber?: string | null
   subAccount?: string | null
   amountIn?: number
   amountOut?: number
@@ -452,7 +452,7 @@ export type PaymentTransactionCreateManyInput = {
 export type PaymentTransactionUpdateManyMutationInput = {
   gateway?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountIn?: Prisma.IntFieldUpdateOperationsInput | number
   amountOut?: Prisma.IntFieldUpdateOperationsInput | number
@@ -468,7 +468,7 @@ export type PaymentTransactionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   gateway?: Prisma.StringFieldUpdateOperationsInput | string
   transactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  accountNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  accountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amountIn?: Prisma.IntFieldUpdateOperationsInput | number
   amountOut?: Prisma.IntFieldUpdateOperationsInput | number
@@ -617,7 +617,7 @@ export type $PaymentTransactionPayload<ExtArgs extends runtime.Types.Extensions.
     id: number
     gateway: string
     transactionDate: Date
-    accountNumber: string
+    accountNumber: string | null
     subAccount: string | null
     amountIn: number
     amountOut: number

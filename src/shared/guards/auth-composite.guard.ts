@@ -1,7 +1,8 @@
 import { AuthConditionKey, AuthKey } from '@/shared/constants/auth.constant';
+import { AuthenticationRequiredException } from '@/shared/errors/shared-error.error';
 import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
-import { AuthenticationRequiredException } from '@/shared/errors/shared-error.error';
+import { PaymentApiKeyGuard } from '@/shared/guards/payment-api-key.guard';
 import { AUTH_TYPE_KEY, AuthMetadata, AuthType } from '@/shared/types/shared-auth.type';
 import { CanActivate, ExecutionContext, HttpException, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -14,11 +15,13 @@ export class AuthCompositeGuard implements CanActivate {
     private readonly reflector: Reflector,
     private readonly authGuard: AuthGuard,
     private readonly apiKeyGuard: ApiKeyGuard,
+    private readonly paymentApiKeyGuard: PaymentApiKeyGuard,
   ) {
     // Map auth types to guards
     this.guardMap = {
       [AuthKey.JWT]: this.authGuard,
       [AuthKey.API_KEY]: this.apiKeyGuard,
+      [AuthKey.PAYMENT_API_KEY]: this.paymentApiKeyGuard,
       [AuthKey.NONE]: { canActivate: async () => true },
     };
   }
@@ -34,6 +37,8 @@ export class AuthCompositeGuard implements CanActivate {
       // const guardMap: Record<Exclude<AuthType, typeof AuthKey.NONE>, CanActivate> = {
       //   [AuthKey.JWT]: this.authGuard,
       //   [AuthKey.API_KEY]: this.apiKeyGuard,
+      //   [AuthKey.PAYMENT_API_KEY]: this.paymentApiKeyGuard,
+      //   [AuthKey.NONE]: { canActivate: async () => true },
       // };
       // return this._executeGuardsAnd(Object.values(guardMap), context);
       return this._executeGuard(this.authGuard, context);

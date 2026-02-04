@@ -23,6 +23,12 @@ datasource db {
 // ENUMS
 //////////////////////////////////////////
 
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
 enum OrderStatus {
   PENDING_PAYMENT
   PENDING_PICKUP
@@ -537,15 +543,17 @@ model CartItem {
 }
 
 model Order {
-  id       Int         @id @default(autoincrement())
-  userId   Int
-  status   OrderStatus
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  shopId    Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
+  paymentId Int
+  status    OrderStatus
   /// [Receiver]
-  receiver Json // thông tin người nhận (JSONB)
-  shopId   Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
+  receiver  Json // thông tin người nhận (JSONB)
 
-  user User  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  shop User? @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  user    User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shop    User?   @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   createdById Int?
   updatedById Int?
@@ -617,7 +625,7 @@ model PaymentTransaction {
   id                 Int      @id @default(autoincrement())
   gateway            String   @db.VarChar(100)
   transactionDate    DateTime @default(now())
-  accountNumber      String   @db.VarChar(100)
+  accountNumber      String?  @db.VarChar(100)
   subAccount         String?  @db.VarChar(250)
   amountIn           Int      @default(0)
   amountOut          Int      @default(0)
@@ -628,6 +636,16 @@ model PaymentTransaction {
   body               String?  @db.Text
 
   createdAt DateTime @default(now())
+}
+
+model Payment {
+  id     Int           @id @default(autoincrement())
+  status PaymentStatus
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Message {

@@ -3,7 +3,8 @@ export const REQUEST_ROLE_PERMISSIONS_KEY = 'role-permissions';
 
 export const AuthKey = {
   JWT: 'jwt',
-  API_KEY: 'apiKey',
+  API_KEY: 'api-key',
+  PAYMENT_API_KEY: 'payment-api-key',
   NONE: 'none',
 } as const;
 

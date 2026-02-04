@@ -7,6 +7,13 @@ export const InvalidApiKeyException = new UnauthorizedException([
   },
 ]);
 
+export const InvalidPaymentApiKeyException = new UnauthorizedException([
+  {
+    field: 'paymentApiKey',
+    message: 'Error.InvalidPaymentApiKey', // Invalid payment API key
+  },
+]);
+
 export const AuthenticationRequiredException = new UnauthorizedException([
   {
     field: 'authentication',

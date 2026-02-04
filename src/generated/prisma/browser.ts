@@ -104,7 +104,9 @@ export type CartItem = Prisma.CartItemModel
 export type Order = Prisma.OrderModel
 /**
  * Model ProductSKUSnapshot
- * 
+ * *
+ *  * Mục đích của bảng này là để lưu lại snapshot của sản phẩm khi user đặt hàng.
+ *  * Tránh việc sản phẩm bị xoá/cập nhật thì khi user xem lại order thì sản phẩm bị mất/thay đổi sku.
  */
 export type ProductSKUSnapshot = Prisma.ProductSKUSnapshotModel
 /**
@@ -117,6 +119,11 @@ export type Review = Prisma.ReviewModel
  * 
  */
 export type PaymentTransaction = Prisma.PaymentTransactionModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
 /**
  * Model Message
  * 
