@@ -13,7 +13,9 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly orderRepository: OrderRepository) {}
+  constructor(
+    private readonly orderRepository: OrderRepository
+  ) {}
 
   async getOrders(props: { userId: number; query: GetOrdersQueryType }): Promise<GetOrdersResponseType> {
     try {
@@ -26,8 +28,8 @@ export class OrderService {
 
   async createOrder(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {
     try {
-      const order = await this.orderRepository.create(props);
-      return order;
+      const orders = await this.orderRepository.create(props);
+      return orders;
     } catch (error) {
       throw error;
     }

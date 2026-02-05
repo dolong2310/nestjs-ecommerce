@@ -16,10 +16,12 @@ import { ProductModule } from '@/routes/product/product.module';
 import { ProfileModule } from '@/routes/profile/profile.module';
 import { RoleModule } from '@/routes/role/role.module';
 import { UserModule } from '@/routes/user/user.module';
+import envConfig from '@/shared/config';
 import { HttpExceptionFilter } from '@/shared/filters/http-exception.filter';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { CustomZodValidationPipe } from '@/shared/pipes/custom-zod-validation.pipe';
 import { SharedModule } from '@/shared/shared.module';
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
@@ -38,6 +40,11 @@ import path from 'path';
       },
       typesOutputPath: path.resolve('src/generated/i18n.generated.ts'),
       resolvers: [{ use: QueryResolver, options: ['lang'] }, AcceptLanguageResolver],
+    }),
+    BullModule.forRoot({
+      connection: {
+        url: envConfig.REDIS_URL,
+      },
     }),
     SharedModule,
     AuthModule,

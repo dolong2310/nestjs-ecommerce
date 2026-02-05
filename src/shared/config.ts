@@ -48,6 +48,8 @@ const configSchema = z.object({
   AWS_S3_ACCESS_KEY: z.string().min(1, 'AWS_S3_ACCESS_KEY is required'),
   AWS_S3_SECRET_ACCESS_KEY: z.string().min(1, 'AWS_S3_SECRET_ACCESS_KEY is required'),
   AWS_S3_BUCKET_NAME: z.string().min(1, 'AWS_S3_BUCKET_NAME is required'),
+
+  REDIS_URL: z.string().min(1, 'REDIS_URL is required'),
 });
 
 const config = configSchema.safeParse(process.env);

@@ -5,6 +5,7 @@ import { ApiKeyGuard } from '@/shared/guards/api-key.guard';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { AuthGuard } from '@/shared/guards/auth.guard';
 import { PaymentApiKeyGuard } from '@/shared/guards/payment-api-key.guard';
+import { SharedPaymentRepository } from '@/shared/repositories/shared-payment.repo';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { SharedUserRepository } from '@/shared/repositories/shared-user.repo';
 import { TwoFactorAuthenticationService } from '@/shared/services/2fa.service';
@@ -24,7 +25,7 @@ const sharedServices = [
   TwoFactorAuthenticationService,
   S3Service,
 ];
-const sharedRepositories = [SharedUserRepository, SharedRoleRepository];
+const sharedRepositories = [SharedUserRepository, SharedRoleRepository, SharedPaymentRepository];
 const sharedGuards = [AuthGuard, ApiKeyGuard, PaymentApiKeyGuard, AuthCompositeGuard];
 
 @Global()

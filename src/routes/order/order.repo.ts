@@ -2,10 +2,12 @@ import {
   CannotCancelOrderException,
   CartItemDuplicatedException,
   CartItemNotFoundException,
+  OrderNotFoundException,
   ProductNotFoundException,
   SkuNotBelongToShopException,
   SkuOutOfStockException,
 } from '@/routes/order/order.error';
+import { OrderProducer } from '@/routes/order/order.producer';
 import {
   CancelOrderResponseType,
   CreateOrderBodyType,
@@ -21,7 +23,10 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OrderRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly orderProducer: OrderProducer,
+  ) {}
 
   async findMany(props: { userId: number; query: GetOrdersQueryType }): Promise<GetOrdersResponseType> {
     const { userId, query } = props;
@@ -255,7 +260,15 @@ export class OrderRepository {
         }),
       );
 
-      const [createdOrders] = await Promise.all([createdOrdersPromise, deletedCartItemsPromise, updatedSkusPromise]);
+      // 2.5. Thêm job cancel payment vào queue
+      const addedJobPromise = this.orderProducer.addJobCancelPayment(payment.id);
+
+      const [createdOrders] = await Promise.all([
+        createdOrdersPromise,
+        deletedCartItemsPromise,
+        updatedSkusPromise,
+        addedJobPromise,
+      ]);
 
       // 2.5. Trả về order vừa tạo
       return createdOrders;
@@ -281,32 +294,75 @@ export class OrderRepository {
 
   async cancel(props: { userId: number; id: number }): Promise<CancelOrderResponseType> {
     const { userId, id: orderId } = props;
-    // Chỉ được cancel order nếu status là PENDING_PAYMENT.
-    // 1. kiểm tra status của order có phải là PENDING_PAYMENT không.
-    const order = await this.prismaService.order.findUniqueOrThrow({
-      where: {
-        userId,
-        id: orderId,
-        deletedAt: null,
-      },
+    // Tạo transaction để update Payment Status, Order Status và cập nhật stock của sku
+    const updatedOrder = await this.prismaService.$transaction(async (tx) => {
+      // Chỉ được cancel order nếu status là PENDING_PAYMENT.
+      const order = await this.findById({ userId, id: orderId });
+
+      if (!order) {
+        throw OrderNotFoundException;
+      }
+      // 1. kiểm tra status của order có phải là PENDING_PAYMENT không.
+      // const order = await this.prismaService.order.findUniqueOrThrow({
+      //   where: {
+      //     userId,
+      //     id: orderId,
+      //     deletedAt: null,
+      //   },
+      // });
+
+      if (order.status !== EnumOrderStatus.PENDING_PAYMENT) {
+        throw CannotCancelOrderException;
+      }
+
+      // 2. update status của order thành CANCELLED
+      const updatedOrderPromise = this.prismaService.order.update({
+        where: {
+          userId,
+          id: orderId,
+          deletedAt: null,
+        },
+        data: {
+          status: EnumOrderStatus.CANCELLED,
+          updatedById: userId,
+        },
+      });
+
+      // 3. update status của payment thành CANCELLED
+      const updatedPaymentPromise = tx.payment.update({
+        where: {
+          id: order.paymentId,
+        },
+        data: {
+          status: EnumPaymentStatus.FAILED,
+        },
+      });
+
+      // 4. update Stock items sku của order
+      const updatedStockItemsSkuPromises = Promise.all(
+        order.items
+          .filter((sku) => Boolean(sku.skuId))
+          .map((sku) => {
+            return tx.sKU.update({
+              where: { id: sku.skuId as number, deletedAt: null },
+              data: {
+                stock: {
+                  increment: sku.quantity, // khôi phục stock của sku khi order bị cancelled
+                },
+              },
+            });
+          }),
+      );
+
+      const [updatedOrder] = await Promise.all([
+        updatedOrderPromise,
+        updatedPaymentPromise,
+        updatedStockItemsSkuPromises,
+      ]);
+
+      return updatedOrder;
     });
 
-    if (order.status !== EnumOrderStatus.PENDING_PAYMENT) {
-      throw CannotCancelOrderException;
-    }
-
-    // 2. update status của order thành CANCELLED
-    const updatedOrder = await this.prismaService.order.update({
-      where: {
-        userId,
-        id: orderId,
-        deletedAt: null,
-      },
-      data: {
-        status: EnumOrderStatus.CANCELLED,
-        updatedById: userId,
-      },
-    });
     return updatedOrder;
   }
 }

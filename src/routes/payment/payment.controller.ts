@@ -14,7 +14,6 @@ export class PaymentController {
   @ZodSerializerDto(MessageResponseDTO)
   @Private([AuthKey.PAYMENT_API_KEY])
   receiver(@Body() body: WebhookPaymentBodyDTO): Promise<MessageResponseDTO> {
-    return Promise.resolve({ message: 'Payment receiver success' });
-    // return this.paymentService.receiver({ body });
+    return this.paymentService.receiver({ body });
   }
 }

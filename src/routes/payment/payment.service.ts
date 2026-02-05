@@ -7,11 +7,7 @@ import { Injectable } from '@nestjs/common';
 export class PaymentService {
   constructor(private readonly paymentRepository: PaymentRepository) {}
 
-  async receiver(props: { body: WebhookPaymentBodyType }): Promise<MessageResponseType> {
-    try {
-      return this.paymentRepository.receiver(props);
-    } catch (error) {
-      throw error;
-    }
+  receiver(props: { body: WebhookPaymentBodyType }): Promise<MessageResponseType> {
+    return this.paymentRepository.receiver(props);
   }
 }
