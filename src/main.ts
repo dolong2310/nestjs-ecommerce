@@ -21,6 +21,9 @@ async function bootstrap() {
   //   prefix: '/media/static',
   // });
 
+  // Cấu hình phục vụ cho các proxy nginx hoặc apache để bảo vệ nestjs server từ việc bị tấn công DoS (Denial of Service) hoặc DDOS (Distributed Denial of Service)
+  app.set('trust proxy', 'loopback'); // Trust requests from the loopback address
+
   await app.listen(envConfig.PORT ?? 3000);
 }
 bootstrap();

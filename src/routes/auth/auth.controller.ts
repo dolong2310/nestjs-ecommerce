@@ -34,10 +34,12 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+// import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
 import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('auth')
+// @SkipThrottle()
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
@@ -60,6 +62,7 @@ export class AuthController {
     });
   }
 
+  // @SkipThrottle({ default: false })
   @Post('login')
   @Public()
   @ZodSerializerDto(LoginResponseDTO)
