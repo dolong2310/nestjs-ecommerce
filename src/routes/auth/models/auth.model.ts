@@ -1,4 +1,5 @@
 import { EnumOtpCode } from '@/shared/constants/auth.constant';
+import { stringToDate } from '@/shared/models/codecs';
 import { UserSchema } from '@/shared/models/shared-user.model';
 import z from 'zod';
 
@@ -27,8 +28,8 @@ export const DeviceSchema = z.object({
   userAgent: z.string(),
   ip: z.string(),
   isActive: z.boolean().default(true),
-  lastActiveAt: z.date().default(new Date()),
-  createdAt: z.date().default(new Date()),
+  lastActiveAt: stringToDate.default(new Date()),
+  createdAt: stringToDate.default(new Date()),
 });
 
 export const CreateDeviceBodySchema = DeviceSchema.pick({
@@ -49,9 +50,9 @@ export const RoleSchema = z.object({
   isActive: z.boolean().default(true),
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
-  deletedAt: z.date().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  deletedAt: stringToDate.nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });
 
 //////////////////////////////////////////
@@ -151,8 +152,8 @@ export const RefreshTokenSchema = z.object({
   token: z.string().min(1).max(1000),
   userId: z.number(),
   deviceId: z.number(),
-  expiresAt: z.date(),
-  createdAt: z.date(),
+  expiresAt: stringToDate,
+  createdAt: stringToDate,
 });
 
 //////////////////////////////////////////
@@ -184,8 +185,8 @@ export const OtpCodeSchema = z.object({
   email: z.email(),
   code: z.string().length(6),
   type: z.enum(EnumOtpCode),
-  expiresAt: z.date(),
-  createdAt: z.date(),
+  expiresAt: stringToDate,
+  createdAt: stringToDate,
 });
 
 export const CreateOtpCodeBodySchema = OtpCodeSchema.pick({

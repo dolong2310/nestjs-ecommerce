@@ -1,10 +1,12 @@
 import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
+import { stringToDate } from '@/shared/models/codecs';
 import z from 'zod';
 
 export const PaymentTransactionSchema = z.object({
   id: z.number(),
   gateway: z.string().max(100),
-  transactionDate: z.coerce.date().default(new Date()),
+  transactionDate: stringToDate.default(new Date()),
+  // transactionDate: z.coerce.date().default(new Date()),
   accountNumber: z.string().max(100).nullable(),
   subAccount: z.string().max(250).nullable(),
   amountIn: z.number().default(0),
@@ -15,7 +17,7 @@ export const PaymentTransactionSchema = z.object({
   referenceNumber: z.string().max(255).nullable(),
   body: z.string().nullable(),
 
-  createdAt: z.date().default(new Date()),
+  createdAt: stringToDate.default(new Date()),
 });
 
 /**
@@ -54,6 +56,6 @@ export const WebhookPaymentBodySchema = z.object({
 export const PaymentSchema = z.object({
   id: z.number(),
   status: z.enum(EnumPaymentStatus),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });

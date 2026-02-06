@@ -4,11 +4,11 @@ import {
   GetCategoriesQuerySchema,
   UpdateCategoryBodySchema,
 } from '@/routes/category/category.model';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 import { CategoryIncludeTranslationsResponseSchema } from '@/shared/models/shared-category.model';
-import { createZodDto } from 'nestjs-zod';
 
-export class GetCategoriesQueryDTO extends createZodDto(GetCategoriesQuerySchema) {}
-export class CreateCategoryBodyDTO extends createZodDto(CreateCategoryBodySchema) {}
-export class UpdateCategoryBodyDTO extends createZodDto(UpdateCategoryBodySchema) {}
-export class GetCategoriesIncludeTranslationsResponseDTO extends createZodDto(GetCategoriesIncludeTranslationsResponseSchema) {}
-export class CategoryIncludeTranslationsResponseDTO extends createZodDto(CategoryIncludeTranslationsResponseSchema) {}
+export class GetCategoriesQueryDTO extends createRequestDto(GetCategoriesQuerySchema) {}
+export class CreateCategoryBodyDTO extends createRequestDto(CreateCategoryBodySchema) {}
+export class UpdateCategoryBodyDTO extends createRequestDto(UpdateCategoryBodySchema) {}
+export class GetCategoriesIncludeTranslationsResponseDTO extends createResponseDto(GetCategoriesIncludeTranslationsResponseSchema) {}
+export class CategoryIncludeTranslationsResponseDTO extends createResponseDto(CategoryIncludeTranslationsResponseSchema) {}

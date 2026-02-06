@@ -8,13 +8,13 @@ import {
   UserParamsSchema,
   UserQuerySchema,
 } from '@/routes/user/user.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class UserParamsDTO extends createZodDto(UserParamsSchema) {}
-export class UserQueryDTO extends createZodDto(UserQuerySchema) {}
-export class GetUsersResponseDTO extends createZodDto(GetUsersResponseSchema) {}
-export class GetUserResponseDTO extends createZodDto(GetUserResponseSchema) {}
-export class CreateUserBodyDTO extends createZodDto(CreateUserBodySchema) {}
-export class UpdateUserBodyDTO extends createZodDto(UpdateUserBodySchema) {}
-export class CreateUserResponseDTO extends createZodDto(CreateUserResponseSchema) {}
-export class UpdateUserResponseDTO extends createZodDto(UpdateUserResponseSchema) {}
+export class UserParamsDTO extends createRequestDto(UserParamsSchema) {}
+export class UserQueryDTO extends createRequestDto(UserQuerySchema) {}
+export class GetUsersResponseDTO extends createResponseDto(GetUsersResponseSchema) {}
+export class GetUserResponseDTO extends createResponseDto(GetUserResponseSchema) {}
+export class CreateUserBodyDTO extends createRequestDto(CreateUserBodySchema) {}
+export class UpdateUserBodyDTO extends createRequestDto(UpdateUserBodySchema) {}
+export class CreateUserResponseDTO extends createResponseDto(CreateUserResponseSchema) {}
+export class UpdateUserResponseDTO extends createResponseDto(UpdateUserResponseSchema) {}

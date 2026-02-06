@@ -1,3 +1,4 @@
+import { stringToDate } from '@/shared/models/codecs';
 import { PermissionSchema } from '@/shared/models/shared-permission.model';
 import z from 'zod';
 
@@ -12,9 +13,9 @@ export const RoleSchema = z.object({
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),
-  deletedAt: z.date().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  deletedAt: stringToDate.nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });
 
 export const RoleWithPermissionsSchema = RoleSchema.extend({

@@ -14,19 +14,19 @@ import {
   SendOtpBodySchema,
   Setup2FAResponseSchema,
 } from '@/routes/auth/models/auth.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class RegisterBodyDTO extends createZodDto(RegisterBodySchema) {}
-export class RegisterResponseDTO extends createZodDto(RegisterResponseSchema) {}
-export class LoginBodyDTO extends createZodDto(LoginBodySchema) {}
-export class LoginResponseDTO extends createZodDto(LoginResponseSchema) {}
-export class LogoutBodyDTO extends createZodDto(LogoutBodySchema) {}
-export class ForgotPasswordBodyDTO extends createZodDto(ForgotPasswordBodySchema) {}
-export class GetMeResponseDTO extends createZodDto(GetMeResponseSchema) {}
-export class RefreshJwtTokenBodyDTO extends createZodDto(RefreshJwtTokenBodySchema) {}
-export class RefreshJwtTokenResponseDTO extends createZodDto(RefreshJwtTokenResponseSchema) {}
-export class SendOtpBodyDTO extends createZodDto(SendOtpBodySchema) {}
-export class GoogleAuthResponseDTO extends createZodDto(GoogleAuthResponseSchema) {}
-export class GoogleAuthCallbackQueryDTO extends createZodDto(GoogleAuthCallbackQuerySchema) {}
-export class Setup2FAResponseDTO extends createZodDto(Setup2FAResponseSchema) {}
-export class Disable2FABodyDTO extends createZodDto(Disable2FABodySchema) {}
+export class RegisterBodyDTO extends createRequestDto(RegisterBodySchema) {}
+export class RegisterResponseDTO extends createResponseDto(RegisterResponseSchema) {}
+export class LoginBodyDTO extends createRequestDto(LoginBodySchema) {}
+export class LoginResponseDTO extends createResponseDto(LoginResponseSchema) {}
+export class LogoutBodyDTO extends createRequestDto(LogoutBodySchema) {}
+export class ForgotPasswordBodyDTO extends createRequestDto(ForgotPasswordBodySchema) {}
+export class GetMeResponseDTO extends createResponseDto(GetMeResponseSchema) {}
+export class RefreshJwtTokenBodyDTO extends createRequestDto(RefreshJwtTokenBodySchema) {}
+export class RefreshJwtTokenResponseDTO extends createResponseDto(RefreshJwtTokenResponseSchema) {}
+export class SendOtpBodyDTO extends createRequestDto(SendOtpBodySchema) {}
+export class GoogleAuthResponseDTO extends createResponseDto(GoogleAuthResponseSchema) {}
+export class GoogleAuthCallbackQueryDTO extends createRequestDto(GoogleAuthCallbackQuerySchema) {}
+export class Setup2FAResponseDTO extends createResponseDto(Setup2FAResponseSchema) {}
+export class Disable2FABodyDTO extends createRequestDto(Disable2FABodySchema) {}

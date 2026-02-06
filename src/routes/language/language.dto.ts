@@ -5,10 +5,10 @@ import {
   GetLanguagesResponseSchema,
   UpdateLanguageBodySchema,
 } from '@/routes/language/language.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class CreateLanguageBodyDTO extends createZodDto(CreateLanguageBodySchema) {}
-export class UpdateLanguageBodyDTO extends createZodDto(UpdateLanguageBodySchema) {}
-export class GetLanguageParamsDTO extends createZodDto(GetLanguageParamsSchema) {}
-export class GetLanguageResponseDTO extends createZodDto(GetLanguageResponseSchema) {}
-export class GetLanguagesResponseDTO extends createZodDto(GetLanguagesResponseSchema) {}
+export class CreateLanguageBodyDTO extends createRequestDto(CreateLanguageBodySchema) {}
+export class UpdateLanguageBodyDTO extends createRequestDto(UpdateLanguageBodySchema) {}
+export class GetLanguageParamsDTO extends createRequestDto(GetLanguageParamsSchema) {}
+export class GetLanguageResponseDTO extends createResponseDto(GetLanguageResponseSchema) {}
+export class GetLanguagesResponseDTO extends createResponseDto(GetLanguagesResponseSchema) {}

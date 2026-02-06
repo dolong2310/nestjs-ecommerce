@@ -7,14 +7,14 @@ import {
   GetProductsResponseSchema,
   UpdateProductBodySchema,
 } from '@/routes/product/product.model';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 import { ProductSchema } from '@/shared/models/shared-product.model';
-import { createZodDto } from 'nestjs-zod';
 
-export class CreateProductBodyDTO extends createZodDto(CreateProductBodySchema) {}
-export class UpdateProductBodyDTO extends createZodDto(UpdateProductBodySchema) {}
-export class GetProductsQueryDTO extends createZodDto(GetProductsQuerySchema) {}
-export class GetManageProductsQueryDTO extends createZodDto(GetManageProductsQuerySchema) {}
-export class GetProductParamsDTO extends createZodDto(GetProductParamsSchema) {}
-export class GetProductsResponseDTO extends createZodDto(GetProductsResponseSchema) {}
-export class GetProductResponseDTO extends createZodDto(GetProductResponseSchema) {}
-export class ProductResponseDTO extends createZodDto(ProductSchema) {}
+export class CreateProductBodyDTO extends createRequestDto(CreateProductBodySchema) {}
+export class UpdateProductBodyDTO extends createRequestDto(UpdateProductBodySchema) {}
+export class GetProductsQueryDTO extends createRequestDto(GetProductsQuerySchema) {}
+export class GetManageProductsQueryDTO extends createRequestDto(GetManageProductsQuerySchema) {}
+export class GetProductParamsDTO extends createRequestDto(GetProductParamsSchema) {}
+export class GetProductsResponseDTO extends createResponseDto(GetProductsResponseSchema) {}
+export class GetProductResponseDTO extends createResponseDto(GetProductResponseSchema) {}
+export class ProductResponseDTO extends createResponseDto(ProductSchema) {}

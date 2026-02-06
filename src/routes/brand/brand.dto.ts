@@ -4,11 +4,13 @@ import {
   GetBrandsQuerySchema,
   UpdateBrandBodySchema,
 } from '@/routes/brand/brand.model';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 import { BrandIncludeTranslationsResponseSchema } from '@/shared/models/shared-brand.model';
-import { createZodDto } from 'nestjs-zod';
 
-export class GetBrandsQueryDTO extends createZodDto(GetBrandsQuerySchema) {}
-export class CreateBrandBodyDTO extends createZodDto(CreateBrandBodySchema) {}
-export class UpdateBrandBodyDTO extends createZodDto(UpdateBrandBodySchema) {}
-export class GetBrandsIncludeTranslationsResponseDTO extends createZodDto(GetBrandsIncludeTranslationsResponseSchema) {}
-export class BrandIncludeTranslationsResponseDTO extends createZodDto(BrandIncludeTranslationsResponseSchema) {}
+export class GetBrandsQueryDTO extends createRequestDto(GetBrandsQuerySchema) {}
+export class CreateBrandBodyDTO extends createRequestDto(CreateBrandBodySchema) {}
+export class UpdateBrandBodyDTO extends createRequestDto(UpdateBrandBodySchema) {}
+export class GetBrandsIncludeTranslationsResponseDTO extends createResponseDto(
+  GetBrandsIncludeTranslationsResponseSchema,
+) {}
+export class BrandIncludeTranslationsResponseDTO extends createResponseDto(BrandIncludeTranslationsResponseSchema) {}

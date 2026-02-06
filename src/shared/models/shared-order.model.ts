@@ -1,4 +1,5 @@
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
+import { stringToDate } from '@/shared/models/codecs';
 import z from 'zod';
 
 export const OrderSchema = z.object({
@@ -15,9 +16,9 @@ export const OrderSchema = z.object({
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),
-  deletedAt: z.date().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  deletedAt: stringToDate.nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });
 
 export const ProductSKUSnapshotSchema = z.object({
@@ -38,7 +39,7 @@ export const ProductSKUSnapshotSchema = z.object({
   skuId: z.number().nullable(),
   skuPrice: z.number().min(0),
   skuValue: z.string().max(500),
-  createdAt: z.date().default(new Date()),
+  createdAt: stringToDate.default(new Date()),
 });
 
 export const OrderIncludeProductSkuSnapshotSchema = OrderSchema.extend({

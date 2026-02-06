@@ -4,9 +4,11 @@ import { AuthKey } from '@/shared/constants/auth.constant';
 import { Private } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiSecurity } from '@nestjs/swagger';
 import { ZodSerializerDto } from 'nestjs-zod';
 
 @Controller('payment')
+@ApiSecurity('payment-api-key')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 

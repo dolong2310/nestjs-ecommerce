@@ -1,5 +1,6 @@
+import { stringToDate } from '@/shared/models/codecs';
+import { CategoryTranslationSchema } from '@/shared/models/shared-category-translation.model';
 import z from 'zod';
-import { CategoryTranslationSchema } from './shared-category-translation.model';
 
 export const CategorySchema = z.object({
   id: z.number(),
@@ -9,9 +10,9 @@ export const CategorySchema = z.object({
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
-  deletedAt: z.date().nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
+  deletedAt: stringToDate.nullable(),
 });
 
 // Response
