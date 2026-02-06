@@ -11,4 +11,8 @@ export function generateOtpCode(): string {
 
 export function generateCancelPaymentJobId(paymentId: number): string {
   return `${CANCEL_PAYMENT_JOB_NAME}-${paymentId}`;
-};
+}
+
+export function generateRoomUserId(userId: number): string {
+  return `room-user-${userId}`;
+}

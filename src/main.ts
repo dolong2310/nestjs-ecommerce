@@ -6,14 +6,21 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
   app.enableCors({
     origin: [envConfig.FRONTEND_URL],
     credentials: true,
   });
-  app.useWebSocketAdapter(new WebsocketAdapter(app));
+
+  const websocketAdapter = new WebsocketAdapter(app);
+  await websocketAdapter.connectToRedis();
+
+  app.useWebSocketAdapter(websocketAdapter);
+
   // app.useStaticAssets(UPLOAD_DIR, {
   //   prefix: '/media/static',
   // });
+
   await app.listen(envConfig.PORT ?? 3000);
 }
 bootstrap();
