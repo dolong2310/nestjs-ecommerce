@@ -72,7 +72,8 @@ export const ModelName = {
   Review: 'Review',
   PaymentTransaction: 'PaymentTransaction',
   Payment: 'Payment',
-  Message: 'Message'
+  Message: 'Message',
+  WebSocket: 'WebSocket'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -432,6 +433,15 @@ export const MessageScalarFieldEnum = {
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const WebSocketScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type WebSocketScalarFieldEnum = (typeof WebSocketScalarFieldEnum)[keyof typeof WebSocketScalarFieldEnum]
 
 
 export const SortOrder = {

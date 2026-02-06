@@ -149,3 +149,8 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type Message = Prisma.MessageModel
+/**
+ * Model WebSocket
+ * 
+ */
+export type WebSocket = Prisma.WebSocketModel

@@ -20,7 +20,7 @@ export class PaymentRepository {
    * Hàm này được gọi khi có giao dịch thanh toán mới được tạo trên hệ thống SePay.
    * Nếu hàm này bị failed thì chưa tăng stock của sku. Stock chỉ tăng khi payment transaction expired (khoảng 24h) mà user vẫn chưa thanh toàn thành công hoặc user bấm cancel order.
    */
-  async receiver(props: { body: WebhookPaymentBodyType }): Promise<MessageResponseType> {
+  async receiver(props: { body: WebhookPaymentBodyType }): Promise<number> {
     const { body } = props;
     const {
       id,
@@ -59,7 +59,7 @@ export class PaymentRepository {
     }
 
     // 2. Tạo transaction và cập nhật trạng thái thanh toán thành "Thành công" và đơn hàng thành "Chờ lấy hàng"
-    await this.prismaService.$transaction(async (tx) => {
+    const userId = await this.prismaService.$transaction(async (tx) => {
       // 2.1. Thêm payment transaction vào database
       await this.prismaService.paymentTransaction.create({
         data: {
@@ -108,6 +108,7 @@ export class PaymentRepository {
       }
 
       const { orders } = payment;
+      const userId = orders[0].userId;
 
       const totalAmount = this._getTotalAmount(orders);
 
@@ -142,10 +143,12 @@ export class PaymentRepository {
       const removedJobPromise = this.paymentProducer.removeJob(paymentId);
 
       await Promise.all([updatedPaymentPromise, updatedOrderPromise, removedJobPromise]);
+
+      return userId;
     });
 
     // 3. Trả về message thành công
-    return { message: 'Payment Successful' };
+    return userId;
   }
 
   private _getTotalAmount(orders: OrderIncludeProductSkuSnapshotType[]): number {

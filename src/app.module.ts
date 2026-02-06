@@ -21,6 +21,7 @@ import { HttpExceptionFilter } from '@/shared/filters/http-exception.filter';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { CustomZodValidationPipe } from '@/shared/pipes/custom-zod-validation.pipe';
 import { SharedModule } from '@/shared/shared.module';
+import { WebsocketModule } from '@/websockets/websocket.module';
 import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -63,6 +64,7 @@ import path from 'path';
     CartModule,
     OrderModule,
     PaymentModule,
+    WebsocketModule,
   ],
   controllers: [AppController],
   providers: [

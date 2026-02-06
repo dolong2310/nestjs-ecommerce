@@ -360,6 +360,7 @@ export type UserWhereInput = {
   userTranslations?: Prisma.UserTranslationListRelationFilter
   sentMessages?: Prisma.MessageListRelationFilter
   receivedMessages?: Prisma.MessageListRelationFilter
+  webSockets?: Prisma.WebSocketListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -430,6 +431,7 @@ export type UserOrderByWithRelationInput = {
   userTranslations?: Prisma.UserTranslationOrderByRelationAggregateInput
   sentMessages?: Prisma.MessageOrderByRelationAggregateInput
   receivedMessages?: Prisma.MessageOrderByRelationAggregateInput
+  webSockets?: Prisma.WebSocketOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   deletedBy?: Prisma.UserOrderByWithRelationInput
@@ -503,6 +505,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   userTranslations?: Prisma.UserTranslationListRelationFilter
   sentMessages?: Prisma.MessageListRelationFilter
   receivedMessages?: Prisma.MessageListRelationFilter
+  webSockets?: Prisma.WebSocketListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -612,6 +615,7 @@ export type UserCreateInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -681,6 +685,7 @@ export type UserUncheckedCreateInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -743,6 +748,7 @@ export type UserUpdateInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -812,6 +818,7 @@ export type UserUncheckedUpdateInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -1888,6 +1895,20 @@ export type UserUpdateOneRequiredWithoutReceivedMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedMessagesInput, Prisma.UserUpdateWithoutReceivedMessagesInput>, Prisma.UserUncheckedUpdateWithoutReceivedMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutWebSocketsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWebSocketsInput, Prisma.UserUncheckedCreateWithoutWebSocketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWebSocketsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWebSocketsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWebSocketsInput, Prisma.UserUncheckedCreateWithoutWebSocketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWebSocketsInput
+  upsert?: Prisma.UserUpsertWithoutWebSocketsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWebSocketsInput, Prisma.UserUpdateWithoutWebSocketsInput>, Prisma.UserUncheckedUpdateWithoutWebSocketsInput>
+}
+
 export type UserCreateWithoutCreatedLanguagesInput = {
   email: string
   name: string
@@ -1944,6 +1965,7 @@ export type UserCreateWithoutCreatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2012,6 +2034,7 @@ export type UserUncheckedCreateWithoutCreatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2078,6 +2101,7 @@ export type UserCreateWithoutUpdatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2146,6 +2170,7 @@ export type UserUncheckedCreateWithoutUpdatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2212,6 +2237,7 @@ export type UserCreateWithoutDeletedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2280,6 +2306,7 @@ export type UserUncheckedCreateWithoutDeletedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2357,6 +2384,7 @@ export type UserUpdateWithoutCreatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2425,6 +2453,7 @@ export type UserUncheckedUpdateWithoutCreatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2497,6 +2526,7 @@ export type UserUpdateWithoutUpdatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2565,6 +2595,7 @@ export type UserUncheckedUpdateWithoutUpdatedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2637,6 +2668,7 @@ export type UserUpdateWithoutDeletedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2705,6 +2737,7 @@ export type UserUncheckedUpdateWithoutDeletedLanguagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2767,6 +2800,7 @@ export type UserCreateWithoutCreatedUsersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2835,6 +2869,7 @@ export type UserUncheckedCreateWithoutCreatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
 }
@@ -2901,6 +2936,7 @@ export type UserCreateWithoutUpdatedUsersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2969,6 +3005,7 @@ export type UserUncheckedCreateWithoutUpdatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
 }
@@ -3035,6 +3072,7 @@ export type UserCreateWithoutDeletedUsersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -3103,6 +3141,7 @@ export type UserUncheckedCreateWithoutDeletedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -3169,6 +3208,7 @@ export type UserCreateWithoutCreatedByInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3236,6 +3276,7 @@ export type UserUncheckedCreateWithoutCreatedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3308,6 +3349,7 @@ export type UserCreateWithoutUpdatedByInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3375,6 +3417,7 @@ export type UserUncheckedCreateWithoutUpdatedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3447,6 +3490,7 @@ export type UserCreateWithoutDeletedByInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3514,6 +3558,7 @@ export type UserUncheckedCreateWithoutDeletedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3597,6 +3642,7 @@ export type UserUpdateWithoutCreatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3665,6 +3711,7 @@ export type UserUncheckedUpdateWithoutCreatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
 }
@@ -3737,6 +3784,7 @@ export type UserUpdateWithoutUpdatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3805,6 +3853,7 @@ export type UserUncheckedUpdateWithoutUpdatedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
 }
@@ -3877,6 +3926,7 @@ export type UserUpdateWithoutDeletedUsersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3945,6 +3995,7 @@ export type UserUncheckedUpdateWithoutDeletedUsersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -4074,6 +4125,7 @@ export type UserCreateWithoutUserTranslationsInput = {
   deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4142,6 +4194,7 @@ export type UserUncheckedCreateWithoutUserTranslationsInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4208,6 +4261,7 @@ export type UserCreateWithoutCreatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4276,6 +4330,7 @@ export type UserUncheckedCreateWithoutCreatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4342,6 +4397,7 @@ export type UserCreateWithoutUpdatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4410,6 +4466,7 @@ export type UserUncheckedCreateWithoutUpdatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4476,6 +4533,7 @@ export type UserCreateWithoutDeletedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4544,6 +4602,7 @@ export type UserUncheckedCreateWithoutDeletedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4621,6 +4680,7 @@ export type UserUpdateWithoutUserTranslationsInput = {
   deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -4689,6 +4749,7 @@ export type UserUncheckedUpdateWithoutUserTranslationsInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -4761,6 +4822,7 @@ export type UserUpdateWithoutCreatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -4829,6 +4891,7 @@ export type UserUncheckedUpdateWithoutCreatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -4901,6 +4964,7 @@ export type UserUpdateWithoutUpdatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -4969,6 +5033,7 @@ export type UserUncheckedUpdateWithoutUpdatedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5041,6 +5106,7 @@ export type UserUpdateWithoutDeletedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5109,6 +5175,7 @@ export type UserUncheckedUpdateWithoutDeletedUserTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5170,6 +5237,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5238,6 +5306,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5315,6 +5384,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5383,6 +5453,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5444,6 +5515,7 @@ export type UserCreateWithoutDevicesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5512,6 +5584,7 @@ export type UserUncheckedCreateWithoutDevicesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5589,6 +5662,7 @@ export type UserUpdateWithoutDevicesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5657,6 +5731,7 @@ export type UserUncheckedUpdateWithoutDevicesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5718,6 +5793,7 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5786,6 +5862,7 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5852,6 +5929,7 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5920,6 +5998,7 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5986,6 +6065,7 @@ export type UserCreateWithoutDeletedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6054,6 +6134,7 @@ export type UserUncheckedCreateWithoutDeletedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6131,6 +6212,7 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6199,6 +6281,7 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6271,6 +6354,7 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6339,6 +6423,7 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6411,6 +6496,7 @@ export type UserUpdateWithoutDeletedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6479,6 +6565,7 @@ export type UserUncheckedUpdateWithoutDeletedPermissionsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6540,6 +6627,7 @@ export type UserCreateWithoutCreatedRolesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6608,6 +6696,7 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6674,6 +6763,7 @@ export type UserCreateWithoutUpdatedRolesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6742,6 +6832,7 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6808,6 +6899,7 @@ export type UserCreateWithoutDeletedRolesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6876,6 +6968,7 @@ export type UserUncheckedCreateWithoutDeletedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6942,6 +7035,7 @@ export type UserCreateWithoutRoleInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7010,6 +7104,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7092,6 +7187,7 @@ export type UserUpdateWithoutCreatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7160,6 +7256,7 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7232,6 +7329,7 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7300,6 +7398,7 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7372,6 +7471,7 @@ export type UserUpdateWithoutDeletedRolesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7440,6 +7540,7 @@ export type UserUncheckedUpdateWithoutDeletedRolesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7517,6 +7618,7 @@ export type UserCreateWithoutCreatedProductsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7585,6 +7687,7 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7651,6 +7754,7 @@ export type UserCreateWithoutUpdatedProductsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7719,6 +7823,7 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7785,6 +7890,7 @@ export type UserCreateWithoutDeletedProductsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7853,6 +7959,7 @@ export type UserUncheckedCreateWithoutDeletedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7930,6 +8037,7 @@ export type UserUpdateWithoutCreatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7998,6 +8106,7 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8070,6 +8179,7 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8138,6 +8248,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8210,6 +8321,7 @@ export type UserUpdateWithoutDeletedProductsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8278,6 +8390,7 @@ export type UserUncheckedUpdateWithoutDeletedProductsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8339,6 +8452,7 @@ export type UserCreateWithoutCreatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8407,6 +8521,7 @@ export type UserUncheckedCreateWithoutCreatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8473,6 +8588,7 @@ export type UserCreateWithoutUpdatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8541,6 +8657,7 @@ export type UserUncheckedCreateWithoutUpdatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8607,6 +8724,7 @@ export type UserCreateWithoutDeletedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8675,6 +8793,7 @@ export type UserUncheckedCreateWithoutDeletedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8752,6 +8871,7 @@ export type UserUpdateWithoutCreatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8820,6 +8940,7 @@ export type UserUncheckedUpdateWithoutCreatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8892,6 +9013,7 @@ export type UserUpdateWithoutUpdatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8960,6 +9082,7 @@ export type UserUncheckedUpdateWithoutUpdatedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9032,6 +9155,7 @@ export type UserUpdateWithoutDeletedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9100,6 +9224,7 @@ export type UserUncheckedUpdateWithoutDeletedProductTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9161,6 +9286,7 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9229,6 +9355,7 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9295,6 +9422,7 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9363,6 +9491,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9429,6 +9558,7 @@ export type UserCreateWithoutDeletedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9497,6 +9627,7 @@ export type UserUncheckedCreateWithoutDeletedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9574,6 +9705,7 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9642,6 +9774,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9714,6 +9847,7 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9782,6 +9916,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9854,6 +9989,7 @@ export type UserUpdateWithoutDeletedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9922,6 +10058,7 @@ export type UserUncheckedUpdateWithoutDeletedCategoriesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9983,6 +10120,7 @@ export type UserCreateWithoutCreatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10051,6 +10189,7 @@ export type UserUncheckedCreateWithoutCreatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10117,6 +10256,7 @@ export type UserCreateWithoutUpdatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10185,6 +10325,7 @@ export type UserUncheckedCreateWithoutUpdatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10251,6 +10392,7 @@ export type UserCreateWithoutDeletedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10319,6 +10461,7 @@ export type UserUncheckedCreateWithoutDeletedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10396,6 +10539,7 @@ export type UserUpdateWithoutCreatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10464,6 +10608,7 @@ export type UserUncheckedUpdateWithoutCreatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10536,6 +10681,7 @@ export type UserUpdateWithoutUpdatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10604,6 +10750,7 @@ export type UserUncheckedUpdateWithoutUpdatedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10676,6 +10823,7 @@ export type UserUpdateWithoutDeletedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10744,6 +10892,7 @@ export type UserUncheckedUpdateWithoutDeletedCategoryTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10805,6 +10954,7 @@ export type UserCreateWithoutCreatedSkusInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10873,6 +11023,7 @@ export type UserUncheckedCreateWithoutCreatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10939,6 +11090,7 @@ export type UserCreateWithoutUpdatedSkusInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11007,6 +11159,7 @@ export type UserUncheckedCreateWithoutUpdatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11073,6 +11226,7 @@ export type UserCreateWithoutDeletedSkusInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11141,6 +11295,7 @@ export type UserUncheckedCreateWithoutDeletedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11218,6 +11373,7 @@ export type UserUpdateWithoutCreatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11286,6 +11442,7 @@ export type UserUncheckedUpdateWithoutCreatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11358,6 +11515,7 @@ export type UserUpdateWithoutUpdatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11426,6 +11584,7 @@ export type UserUncheckedUpdateWithoutUpdatedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11498,6 +11657,7 @@ export type UserUpdateWithoutDeletedSkusInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11566,6 +11726,7 @@ export type UserUncheckedUpdateWithoutDeletedSkusInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11627,6 +11788,7 @@ export type UserCreateWithoutCreatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11695,6 +11857,7 @@ export type UserUncheckedCreateWithoutCreatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11761,6 +11924,7 @@ export type UserCreateWithoutUpdatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11829,6 +11993,7 @@ export type UserUncheckedCreateWithoutUpdatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11895,6 +12060,7 @@ export type UserCreateWithoutDeletedBrandsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11963,6 +12129,7 @@ export type UserUncheckedCreateWithoutDeletedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12040,6 +12207,7 @@ export type UserUpdateWithoutCreatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12108,6 +12276,7 @@ export type UserUncheckedUpdateWithoutCreatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12180,6 +12349,7 @@ export type UserUpdateWithoutUpdatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12248,6 +12418,7 @@ export type UserUncheckedUpdateWithoutUpdatedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12320,6 +12491,7 @@ export type UserUpdateWithoutDeletedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12388,6 +12560,7 @@ export type UserUncheckedUpdateWithoutDeletedBrandsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12449,6 +12622,7 @@ export type UserCreateWithoutCreatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12517,6 +12691,7 @@ export type UserUncheckedCreateWithoutCreatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12583,6 +12758,7 @@ export type UserCreateWithoutUpdatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12651,6 +12827,7 @@ export type UserUncheckedCreateWithoutUpdatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12717,6 +12894,7 @@ export type UserCreateWithoutDeletedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12785,6 +12963,7 @@ export type UserUncheckedCreateWithoutDeletedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12862,6 +13041,7 @@ export type UserUpdateWithoutCreatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12930,6 +13110,7 @@ export type UserUncheckedUpdateWithoutCreatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13002,6 +13183,7 @@ export type UserUpdateWithoutUpdatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13070,6 +13252,7 @@ export type UserUncheckedUpdateWithoutUpdatedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13142,6 +13325,7 @@ export type UserUpdateWithoutDeletedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13210,6 +13394,7 @@ export type UserUncheckedUpdateWithoutDeletedBrandTranslationsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13271,6 +13456,7 @@ export type UserCreateWithoutCartsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13339,6 +13525,7 @@ export type UserUncheckedCreateWithoutCartsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13416,6 +13603,7 @@ export type UserUpdateWithoutCartsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13484,6 +13672,7 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13545,6 +13734,7 @@ export type UserCreateWithoutOrdersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13613,6 +13803,7 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13679,6 +13870,7 @@ export type UserCreateWithoutSoldOrdersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13747,6 +13939,7 @@ export type UserUncheckedCreateWithoutSoldOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13813,6 +14006,7 @@ export type UserCreateWithoutCreatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13881,6 +14075,7 @@ export type UserUncheckedCreateWithoutCreatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13947,6 +14142,7 @@ export type UserCreateWithoutUpdatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14015,6 +14211,7 @@ export type UserUncheckedCreateWithoutUpdatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14081,6 +14278,7 @@ export type UserCreateWithoutDeletedOrdersInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14149,6 +14347,7 @@ export type UserUncheckedCreateWithoutDeletedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14226,6 +14425,7 @@ export type UserUpdateWithoutOrdersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14294,6 +14494,7 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14366,6 +14567,7 @@ export type UserUpdateWithoutSoldOrdersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14434,6 +14636,7 @@ export type UserUncheckedUpdateWithoutSoldOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14506,6 +14709,7 @@ export type UserUpdateWithoutCreatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14574,6 +14778,7 @@ export type UserUncheckedUpdateWithoutCreatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14646,6 +14851,7 @@ export type UserUpdateWithoutUpdatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14714,6 +14920,7 @@ export type UserUncheckedUpdateWithoutUpdatedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14786,6 +14993,7 @@ export type UserUpdateWithoutDeletedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14854,6 +15062,7 @@ export type UserUncheckedUpdateWithoutDeletedOrdersInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14915,6 +15124,7 @@ export type UserCreateWithoutReviewsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14983,6 +15193,7 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15060,6 +15271,7 @@ export type UserUpdateWithoutReviewsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15128,6 +15340,7 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15189,6 +15402,7 @@ export type UserCreateWithoutSentMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -15257,6 +15471,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15323,6 +15538,7 @@ export type UserCreateWithoutReceivedMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -15391,6 +15607,7 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15468,6 +15685,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15536,6 +15754,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15608,6 +15827,7 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15676,6 +15896,285 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserCreateWithoutWebSocketsInput = {
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
+  createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserUncheckedCreateWithoutWebSocketsInput = {
+  id?: number
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  roleId: number
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserCreateOrConnectWithoutWebSocketsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWebSocketsInput, Prisma.UserUncheckedCreateWithoutWebSocketsInput>
+}
+
+export type UserUpsertWithoutWebSocketsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWebSocketsInput, Prisma.UserUncheckedUpdateWithoutWebSocketsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWebSocketsInput, Prisma.UserUncheckedCreateWithoutWebSocketsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWebSocketsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWebSocketsInput, Prisma.UserUncheckedUpdateWithoutWebSocketsInput>
+}
+
+export type UserUpdateWithoutWebSocketsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
+  createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWebSocketsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15789,6 +16288,7 @@ export type UserUpdateWithoutCreatedByInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -15856,6 +16356,7 @@ export type UserUncheckedUpdateWithoutCreatedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15935,6 +16436,7 @@ export type UserUpdateWithoutUpdatedByInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -16002,6 +16504,7 @@ export type UserUncheckedUpdateWithoutUpdatedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16081,6 +16584,7 @@ export type UserUpdateWithoutDeletedByInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -16148,6 +16652,7 @@ export type UserUncheckedUpdateWithoutDeletedByInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16243,6 +16748,7 @@ export type UserUpdateWithoutRoleInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -16311,6 +16817,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16384,6 +16891,7 @@ export type UserCountOutputType = {
   userTranslations: number
   sentMessages: number
   receivedMessages: number
+  webSockets: number
   createdUsers: number
   updatedUsers: number
   deletedUsers: number
@@ -16435,6 +16943,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   userTranslations?: boolean | UserCountOutputTypeCountUserTranslationsArgs
   sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
   receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
+  webSockets?: boolean | UserCountOutputTypeCountWebSocketsArgs
   createdUsers?: boolean | UserCountOutputTypeCountCreatedUsersArgs
   updatedUsers?: boolean | UserCountOutputTypeCountUpdatedUsersArgs
   deletedUsers?: boolean | UserCountOutputTypeCountDeletedUsersArgs
@@ -16768,6 +17277,13 @@ export type UserCountOutputTypeCountReceivedMessagesArgs<ExtArgs extends runtime
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountWebSocketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WebSocketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCreatedUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserWhereInput
 }
@@ -16849,6 +17365,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   userTranslations?: boolean | Prisma.User$userTranslationsArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
+  webSockets?: boolean | Prisma.User$webSocketsArgs<ExtArgs>
   createdBy?: boolean | Prisma.User$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.User$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.User$deletedByArgs<ExtArgs>
@@ -16968,6 +17485,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userTranslations?: boolean | Prisma.User$userTranslationsArgs<ExtArgs>
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
+  webSockets?: boolean | Prisma.User$webSocketsArgs<ExtArgs>
   createdBy?: boolean | Prisma.User$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.User$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.User$deletedByArgs<ExtArgs>
@@ -17038,6 +17556,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     userTranslations: Prisma.$UserTranslationPayload<ExtArgs>[]
     sentMessages: Prisma.$MessagePayload<ExtArgs>[]
     receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
+    webSockets: Prisma.$WebSocketPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     deletedBy: Prisma.$UserPayload<ExtArgs> | null
@@ -17501,6 +18020,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   userTranslations<T extends Prisma.User$userTranslationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userTranslationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedMessages<T extends Prisma.User$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  webSockets<T extends Prisma.User$webSocketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$webSocketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WebSocketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.User$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.User$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deletedBy<T extends Prisma.User$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -19024,6 +19544,30 @@ export type User$receivedMessagesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * User.webSockets
+ */
+export type User$webSocketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WebSocket
+   */
+  select?: Prisma.WebSocketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WebSocket
+   */
+  omit?: Prisma.WebSocketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WebSocketInclude<ExtArgs> | null
+  where?: Prisma.WebSocketWhereInput
+  orderBy?: Prisma.WebSocketOrderByWithRelationInput | Prisma.WebSocketOrderByWithRelationInput[]
+  cursor?: Prisma.WebSocketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WebSocketScalarFieldEnum | Prisma.WebSocketScalarFieldEnum[]
 }
 
 /**
