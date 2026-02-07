@@ -525,9 +525,8 @@ export class AuthService {
   }): Promise<OtpCodeType> {
     try {
       const otpCode = await this.authRepository.findUniqueOtpCode({
-        email_code_type: {
+        email_type: {
           email: data.email,
-          code: data.code,
           type: data.type,
         },
       });

@@ -223,7 +223,7 @@ model OtpCode {
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  @@unique([email, code, type]) // vì 1 otp sẽ có nhiều email trùng nhau nhưng code và type sẽ khác nhau nên sẽ không unique trường email mà sẽ unique 1 bộ [email, code, type]
+  @@unique([email, type]) // vì 1 otp sẽ có nhiều email trùng nhau nhưng code và type sẽ khác nhau nên sẽ không unique trường email mà sẽ unique 1 bộ [email, code, type]
   @@index([expiresAt]) // mục đích index trường này là sau này dùng cronjob để xóa các otp code đã hết hạn
 }
 
