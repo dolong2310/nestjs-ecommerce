@@ -14,6 +14,7 @@ import { PermissionModule } from '@/routes/permission/permission.module';
 import { ProductTranslationModule } from '@/routes/product/product-translation/product-translation.module';
 import { ProductModule } from '@/routes/product/product.module';
 import { ProfileModule } from '@/routes/profile/profile.module';
+import { ReviewModule } from '@/routes/review/review.module';
 import { RoleModule } from '@/routes/role/role.module';
 import { UserModule } from '@/routes/user/user.module';
 import envConfig from '@/shared/config';
@@ -90,6 +91,7 @@ import path from 'path';
     OrderModule,
     PaymentModule,
     WebsocketModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [

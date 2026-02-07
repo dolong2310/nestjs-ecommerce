@@ -403,6 +403,7 @@ export const ModelName = {
   Order: 'Order',
   ProductSKUSnapshot: 'ProductSKUSnapshot',
   Review: 'Review',
+  ReviewMedia: 'ReviewMedia',
   PaymentTransaction: 'PaymentTransaction',
   Payment: 'Payment',
   Message: 'Message',
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "language" | "user" | "userTranslation" | "otpCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "paymentTransaction" | "payment" | "message" | "webSocket"
+    modelProps: "language" | "user" | "userTranslation" | "otpCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "reviewMedia" | "paymentTransaction" | "payment" | "message" | "webSocket"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1832,6 +1833,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReviewMedia: {
+      payload: Prisma.$ReviewMediaPayload<ExtArgs>
+      fields: Prisma.ReviewMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReviewMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReviewMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.ReviewMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReviewMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        findMany: {
+          args: Prisma.ReviewMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>[]
+        }
+        create: {
+          args: Prisma.ReviewMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        createMany: {
+          args: Prisma.ReviewMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReviewMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.ReviewMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        update: {
+          args: Prisma.ReviewMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReviewMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReviewMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReviewMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReviewMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.ReviewMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReviewMedia>
+        }
+        groupBy: {
+          args: Prisma.ReviewMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReviewMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewMediaCountAggregateOutputType> | number
+        }
+      }
+    }
     PaymentTransaction: {
       payload: Prisma.$PaymentTransactionPayload<ExtArgs>
       fields: Prisma.PaymentTransactionFieldRefs
@@ -2462,11 +2537,24 @@ export const ReviewScalarFieldEnum = {
   rating: 'rating',
   productId: 'productId',
   userId: 'userId',
+  orderId: 'orderId',
+  updateCount: 'updateCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ReviewMediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  type: 'type',
+  reviewId: 'reviewId',
+  createdAt: 'createdAt'
+} as const
+
+export type ReviewMediaScalarFieldEnum = (typeof ReviewMediaScalarFieldEnum)[keyof typeof ReviewMediaScalarFieldEnum]
 
 
 export const PaymentTransactionScalarFieldEnum = {
@@ -2699,6 +2787,20 @@ export type ListEnumOrderStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'MediaType'
+ */
+export type EnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType'>
+    
+
+
+/**
+ * Reference to a field of type 'MediaType[]'
+ */
+export type ListEnumMediaTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaType[]'>
+    
+
+
+/**
  * Reference to a field of type 'PaymentStatus'
  */
 export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
@@ -2825,6 +2927,7 @@ export type GlobalOmitConfig = {
   order?: Prisma.OrderOmit
   productSKUSnapshot?: Prisma.ProductSKUSnapshotOmit
   review?: Prisma.ReviewOmit
+  reviewMedia?: Prisma.ReviewMediaOmit
   paymentTransaction?: Prisma.PaymentTransactionOmit
   payment?: Prisma.PaymentOmit
   message?: Prisma.MessageOmit

@@ -60,3 +60,11 @@ export const HTTPMethod = {
 } as const
 
 export type HTTPMethod = (typeof HTTPMethod)[keyof typeof HTTPMethod]
+
+
+export const MediaType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO'
+} as const
+
+export type MediaType = (typeof MediaType)[keyof typeof MediaType]
