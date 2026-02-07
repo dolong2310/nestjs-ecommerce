@@ -1,5 +1,6 @@
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
+import { RemoveRefreshTokenCronjob } from '@/cronjobs/remove-refresh-token.cronjob';
 import { AuthModule } from '@/routes/auth/auth.module';
 import { BrandTranslationModule } from '@/routes/brand/brand-translation/brand-translation.module';
 import { BrandModule } from '@/routes/brand/brand.module';
@@ -28,6 +29,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
@@ -73,6 +75,7 @@ import path from 'path';
         // },
       ],
     }),
+    ScheduleModule.forRoot(),
     SharedModule,
     AuthModule,
     LanguageModule,
@@ -116,6 +119,7 @@ import path from 'path';
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard, // throttle requests
     },
+    RemoveRefreshTokenCronjob,
   ],
 })
 export class AppModule {}
