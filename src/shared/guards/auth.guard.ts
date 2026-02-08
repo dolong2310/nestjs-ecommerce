@@ -31,7 +31,10 @@ export class AuthGuard implements CanActivate {
     private readonly tokenService: TokenService,
     private readonly prismaService: PrismaService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) {
+    // console.log('clear cache');
+    // this.cacheManager.clear();
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -99,10 +102,11 @@ export class AuthGuard implements CanActivate {
         include: {
           permissions: {
             where: {
-              // filter theo cặp method và path để tối ưu hơn việc lấy toàn bộ permissions
+              // before solution: filter theo cặp method và path để tối ưu hơn việc lấy toàn bộ permissions
+              // after solution: lấy toàn bộ permissions => bỏ filter method và path (vì đã cached tất cả permissions trong redis)
               deletedAt: null,
-              method: method,
-              path: path,
+              // method: method,
+              // path: path,
             },
           },
         },
