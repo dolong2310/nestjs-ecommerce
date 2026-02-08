@@ -25,6 +25,7 @@ import { ThrottlerBehindProxyGuard } from '@/shared/guards/throttler-behind-prox
 import { CustomZodValidationPipe } from '@/shared/pipes/custom-zod-validation.pipe';
 import { SharedModule } from '@/shared/shared.module';
 import { WebsocketModule } from '@/websockets/websocket.module';
+import KeyvRedis from '@keyv/redis';
 import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
@@ -76,8 +77,13 @@ import path from 'path';
         // },
       ],
     }),
-    CacheModule.register({
+    CacheModule.registerAsync({
       isGlobal: true,
+      useFactory: () => {
+        return {
+          stores: [new KeyvRedis(envConfig.REDIS_URL)],
+        };
+      },
     }),
     ScheduleModule.forRoot(),
     SharedModule,
