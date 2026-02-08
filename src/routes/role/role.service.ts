@@ -10,11 +10,15 @@ import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { RoleWithPermissionsType } from '@/shared/types/shared-role.type';
-import { Injectable } from '@nestjs/common';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RoleService {
-  constructor(private readonly roleRepository: RoleRepository) {}
+  constructor(
+    private readonly roleRepository: RoleRepository,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   async getRoles(payload: RoleQueryType): Promise<GetRolesResponseType> {
     try {
@@ -59,7 +63,10 @@ export class RoleService {
       // Không cho bất kỳ ai cập nhật role ADMIN, kể cả user với role ADMIN. Tránh ADMIN này thay đổi permission linh tinh làm mất quyền kiểm soát hệ thống.
       await this._verifyRoleCannotBeUpdatedOrDeleted(payload.id, true);
 
-      return await this.roleRepository.update(payload);
+      const role = await this.roleRepository.update(payload);
+      await this._clearCache(role.id);
+
+      return role;
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw RoleNotFoundException;
@@ -77,7 +84,10 @@ export class RoleService {
       await this._verifyRoleCannotBeUpdatedOrDeleted(payload.id, false);
 
       const isHardDelete = true;
-      await this.roleRepository.delete(payload, isHardDelete);
+      const role = await this.roleRepository.delete(payload, isHardDelete);
+
+      await this._clearCache(role.id);
+
       return {
         message: 'Success.RoleDeleted',
       };
@@ -104,5 +114,10 @@ export class RoleService {
     if (!isUpdate && baseRoles.includes(role.name as RoleNameType)) {
       throw RoleCannotBeDeletedException;
     }
+  }
+
+  private async _clearCache(roleId: number): Promise<void> {
+    const cacheKey = `role:${roleId}`;
+    await this.cacheManager.del(cacheKey);
   }
 }

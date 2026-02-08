@@ -6,6 +6,7 @@ import {
 } from '@/routes/permission/permission.type';
 import { PrismaService } from '@/shared/services/prisma.service';
 import type { PermissionType } from '@/shared/types/shared-permission.type';
+import { RoleType } from '@/shared/types/shared-role.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -93,7 +94,11 @@ export class PermissionRepository {
     });
   }
 
-  update(payload: { userId: number; id: number; body: UpdatePermissionBodyType }): Promise<PermissionType> {
+  update(payload: {
+    userId: number;
+    id: number;
+    body: UpdatePermissionBodyType;
+  }): Promise<PermissionType & { roles: Pick<RoleType, 'id'>[] }> {
     const { userId, id, body } = payload;
     return this.prisma.permission.update({
       where: {
@@ -107,15 +112,32 @@ export class PermissionRepository {
         method: body.method,
         updatedById: userId,
       },
+      include: {
+        roles: {
+          select: {
+            id: true,
+          },
+        },
+      },
     });
   }
 
-  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<PermissionType> {
+  delete(
+    payload: { userId: number; id: number },
+    isHardDelete?: boolean,
+  ): Promise<PermissionType & { roles: Pick<RoleType, 'id'>[] }> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prisma.permission.delete({
           where: {
             id,
+          },
+          include: {
+            roles: {
+              select: {
+                id: true,
+              },
+            },
           },
         })
       : this.prisma.permission.update({
@@ -126,6 +148,13 @@ export class PermissionRepository {
           data: {
             deletedAt: new Date(),
             deletedById: userId,
+          },
+          include: {
+            roles: {
+              select: {
+                id: true,
+              },
+            },
           },
         });
   }

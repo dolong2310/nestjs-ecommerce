@@ -26,6 +26,7 @@ import { CustomZodValidationPipe } from '@/shared/pipes/custom-zod-validation.pi
 import { SharedModule } from '@/shared/shared.module';
 import { WebsocketModule } from '@/websockets/websocket.module';
 import { BullModule } from '@nestjs/bullmq';
+import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
@@ -74,6 +75,9 @@ import path from 'path';
         //   limit: 100,
         // },
       ],
+    }),
+    CacheModule.register({
+      isGlobal: true,
     }),
     ScheduleModule.forRoot(),
     SharedModule,

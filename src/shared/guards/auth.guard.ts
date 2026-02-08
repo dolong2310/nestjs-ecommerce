@@ -5,14 +5,32 @@ import { extractTokenFromHeader, isJsonWebTokenError, isTokenExpiredError } from
 import { PrismaService } from '@/shared/services/prisma.service';
 import { TokenService } from '@/shared/services/token.service';
 import { AccessTokenPayload } from '@/shared/types/jwt.type';
-import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { RoleWithPermissionsType } from '@/shared/types/shared-role.type';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Request } from 'express';
+import { keyBy } from 'lodash-es';
+
+type Permission = RoleWithPermissionsType['permissions'][number];
+type CachedRole = RoleWithPermissionsType & {
+  permissions: {
+    [key: string]: Permission;
+  };
+};
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private readonly tokenService: TokenService,
     private readonly prismaService: PrismaService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -21,7 +39,7 @@ export class AuthGuard implements CanActivate {
     const decodedAccessToken = await this._verifyAccessToken(request);
 
     // 2. Check user permission
-    await this._checkUserPermission(request, decodedAccessToken);
+    await this._checkUserPermission(request, decodedAccessToken); // comment để test public route
 
     // 3. Return true to continue the request
     return true;
@@ -64,37 +82,60 @@ export class AuthGuard implements CanActivate {
     const method = request.method as HttpMethodType;
     const path = request.route.path as string;
     const roleId = decodedAccessToken.roleId;
+    const cacheKey = `role:${roleId}`;
 
-    // Get role include permissions
-    const roleWithPermissions = await this.prismaService.role.findUnique({
-      where: {
-        id: roleId,
-        deletedAt: null,
-      },
-      include: {
-        permissions: {
-          where: {
-            // filter theo cặp method và path để tối ưu hơn việc lấy toàn bộ permissions
-            deletedAt: null,
-            method: method,
-            path: path,
+    // 1. Check if cached role exists
+    let cachedRole = await this.cacheManager.get<CachedRole>(cacheKey);
+
+    // 2. If not, get role include permissions
+    if (!cachedRole) {
+      // 2.1. Get role include permissions
+      const roleWithPermissions = await this.prismaService.role.findUnique({
+        where: {
+          id: roleId,
+          isActive: true,
+          deletedAt: null,
+        },
+        include: {
+          permissions: {
+            where: {
+              // filter theo cặp method và path để tối ưu hơn việc lấy toàn bộ permissions
+              deletedAt: null,
+              method: method,
+              path: path,
+            },
           },
         },
-      },
-    });
+      });
 
-    if (!roleWithPermissions) {
-      throw new ForbiddenException();
+      if (!roleWithPermissions) {
+        throw new ForbiddenException();
+      }
+
+      // 2.2. Key by method and path (mục đích transform lại thành method:path để dễ dàng check canAccess bằng object)
+      const permissions = keyBy(
+        roleWithPermissions.permissions,
+        (p) => `${p.method}:${p.path}`,
+      ) as CachedRole['permissions'];
+
+      // 2.3. Cache role with permissions
+      cachedRole = {
+        ...roleWithPermissions,
+        permissions,
+      };
+
+      const ttl = 1000 * 60 * 60; // 1 hour cache (expiration time in milliseconds)
+      await this.cacheManager.set(cacheKey, cachedRole, ttl);
+
+      // 2.4. Set role permissions to request
+      request[REQUEST_ROLE_PERMISSIONS_KEY] = roleWithPermissions;
     }
 
-    // If permission length > 0 => user can access the route
-    const canAccess = roleWithPermissions?.permissions.length > 0;
+    // 3. Check if user has permission to access the route
+    const canAccess: Permission | undefined = cachedRole?.permissions[`${method}:${path}`];
 
     if (!canAccess) {
       throw new ForbiddenException();
     }
-
-    // Set role permissions to request
-    request[REQUEST_ROLE_PERMISSIONS_KEY] = roleWithPermissions;
   }
 }

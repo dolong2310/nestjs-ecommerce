@@ -9,11 +9,15 @@ import {
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import type { PermissionType } from '@/shared/types/shared-permission.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
-import { Injectable } from '@nestjs/common';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PermissionService {
-  constructor(private readonly permissionRepository: PermissionRepository) {}
+  constructor(
+    private readonly permissionRepository: PermissionRepository,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
 
   async getPermissions({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
     try {
@@ -55,7 +59,12 @@ export class PermissionService {
     body: UpdatePermissionBodyType;
   }): Promise<PermissionType> {
     try {
-      return await this.permissionRepository.update(payload);
+      const permission = await this.permissionRepository.update(payload);
+      const { roles } = permission;
+
+      await this._clearCache(roles);
+
+      return permission;
     } catch (error) {
       if (isNotFoundPrismaError(error)) {
         throw PermissionNotFoundException;
@@ -70,7 +79,11 @@ export class PermissionService {
   async deletePermission(payload: { userId: number; id: number }): Promise<MessageResponseType> {
     try {
       const isHardDelete = true;
-      await this.permissionRepository.delete(payload, isHardDelete);
+      const permission = await this.permissionRepository.delete(payload, isHardDelete);
+      const { roles } = permission;
+
+      await this._clearCache(roles);
+
       return {
         message: 'Success.PermissionDeleted',
       };
@@ -80,5 +93,14 @@ export class PermissionService {
       }
       throw error;
     }
+  }
+
+  private async _clearCache(roles: { id: number }[]): Promise<void> {
+    await Promise.all(
+      roles.map((role) => {
+        const cacheKey = `role:${role.id}`;
+        this.cacheManager.del(cacheKey);
+      }),
+    );
   }
 }
