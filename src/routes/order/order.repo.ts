@@ -1,4 +1,3 @@
-import { Prisma } from '@/generated/prisma/client';
 import {
   CannotCancelOrderException,
   CartItemDuplicatedException,
@@ -19,7 +18,10 @@ import {
 } from '@/routes/order/order.type';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
+import { VersionConflictException } from '@/shared/errors/shared-error.error';
+import { isNotFoundPrismaError } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
+import { OrderType } from '@/shared/types/shared-order.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -68,6 +70,7 @@ export class OrderRepository {
 
   async create(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {
     const { userId, body: bodyOrderItems } = props;
+
     const orders = await this.prismaService.$transaction(async (tx) => {
       // 1. Validate body
       const allBodyCartItemIds: number[] = bodyOrderItems.flatMap((item) => item.cartItemIds);
@@ -79,21 +82,21 @@ export class OrderRepository {
       }
 
       // 3. Kiểm tra xem tất cả cartItemIds có tồn tại trong database không.
-      const cartItemsSkuIds = await tx.cartItem.findMany({
-        where: {
-          userId,
-          id: {
-            in: allBodyCartItemIds,
-          },
-        },
-        select: {
-          skuId: true,
-        },
-      });
+      // const cartItemsSkuIds = await tx.cartItem.findMany({
+      //   where: {
+      //     userId,
+      //     id: {
+      //       in: allBodyCartItemIds,
+      //     },
+      //   },
+      //   select: {
+      //     skuId: true,
+      //   },
+      // });
 
       // 4. Lock "skus" in database (avoid race condition)
-      const foundSkuIds = cartItemsSkuIds.map((item) => item.skuId);
-      await tx.$queryRaw`SELECT * FROM "SKU" WHERE id IN (${Prisma.join(foundSkuIds)}) FOR UPDATE`;
+      // const foundSkuIds = cartItemsSkuIds.map((item) => item.skuId);
+      // await tx.$queryRaw`SELECT * FROM "SKU" WHERE id IN (${Prisma.join(foundSkuIds)}) FOR UPDATE`;
 
       // 5. Get cart items
       const cartItems = await tx.cartItem.findMany({
@@ -209,53 +212,53 @@ export class OrderRepository {
       // NOTE: tại sao không dùng tx.order.createMany?
       // Vì createMany không hỗ trợ tạo relationship với các model khác.
       // Model cần tạo cùng với order là items (ProductSKUSnapshot[]) và products.
-      const createdOrdersPromise = Promise.all(
-        bodyOrderItems.map((orderItem) =>
-          tx.order.create({
-            data: {
-              userId,
-              paymentId: payment.id,
-              status: EnumOrderStatus.PENDING_PAYMENT,
-              receiver: orderItem.receiver,
-              createdById: userId,
-              // items => ProductSKUSnapshot[]
-              items: {
-                create: orderItem.cartItemIds.map((cartItemId) => {
-                  const cartItem = cartItemMap.get(cartItemId)!;
-                  return {
-                    productId: cartItem.sku.product.id,
-                    productName: cartItem.sku.product.name,
-                    productTranslations: cartItem.sku.product.productTranslations.map((t) => {
-                      return {
-                        id: t.id,
-                        name: t.name,
-                        languageId: t.languageId,
-                        description: t.description,
-                      };
-                    }),
-                    quantity: cartItem.quantity,
-                    image: cartItem.sku.image,
-                    skuId: cartItem.sku.id,
-                    skuPrice: cartItem.sku.price,
-                    skuValue: cartItem.sku.value,
-                  };
-                }),
-              },
-              products: {
-                connect: orderItem.cartItemIds.map((cartItemId) => {
-                  const cartItem = cartItemMap.get(cartItemId)!;
-                  return {
-                    id: cartItem.sku.product.id,
-                  };
-                }),
-              },
+      const createdOrders: OrderType[] = [];
+      for (const orderItem of bodyOrderItems) {
+        const createdOrder = await tx.order.create({
+          data: {
+            userId,
+            paymentId: payment.id,
+            status: EnumOrderStatus.PENDING_PAYMENT,
+            receiver: orderItem.receiver,
+            createdById: userId,
+            // items => ProductSKUSnapshot[]
+            items: {
+              create: orderItem.cartItemIds.map((cartItemId) => {
+                const cartItem = cartItemMap.get(cartItemId)!;
+                return {
+                  productId: cartItem.sku.product.id,
+                  productName: cartItem.sku.product.name,
+                  productTranslations: cartItem.sku.product.productTranslations.map((t) => {
+                    return {
+                      id: t.id,
+                      name: t.name,
+                      languageId: t.languageId,
+                      description: t.description,
+                    };
+                  }),
+                  quantity: cartItem.quantity,
+                  image: cartItem.sku.image,
+                  skuId: cartItem.sku.id,
+                  skuPrice: cartItem.sku.price,
+                  skuValue: cartItem.sku.value,
+                };
+              }),
             },
-          }),
-        ),
-      );
+            products: {
+              connect: orderItem.cartItemIds.map((cartItemId) => {
+                const cartItem = cartItemMap.get(cartItemId)!;
+                return {
+                  id: cartItem.sku.product.id,
+                };
+              }),
+            },
+          },
+        });
+        createdOrders.push(createdOrder);
+      }
 
       // 10.4. Xoá cartItem
-      const deletedCartItemsPromise = tx.cartItem.deleteMany({
+      await tx.cartItem.deleteMany({
         where: {
           id: {
             in: allBodyCartItemIds,
@@ -264,22 +267,33 @@ export class OrderRepository {
       });
 
       // 10.5. Cập nhật stock của sku
-      const updatedSkusPromise = Promise.all(
-        cartItems.map((cartItem) => {
-          return tx.sKU.update({
+      for (const cartItem of cartItems) {
+        await tx.sKU
+          .update({
             where: {
               id: cartItem.sku.id,
+              // Optimistic Lock (thay vì lock sku trên database thì dùng updatedAt để kiểm tra xem sku có bị cập nhật trong khi đang cập nhật stock không)
+              // Ngoài ra thêm stock gte: cartItem.quantity để cho chặt chẽ hơn, nếu stock không đủ thì sẽ bị lỗi VersionConflictException
+              updatedAt: cartItem.sku.updatedAt, // Đảm bảo không có ai cập nhật SKU trong khi đang cập nhật stock
+              stock: {
+                gte: cartItem.quantity, // Đảm bảo số lượng tồn kho đủ để trừ
+              },
             },
             data: {
               stock: {
                 decrement: cartItem.quantity,
               },
             },
+          })
+          .catch((error) => {
+            if (isNotFoundPrismaError(error)) {
+              throw VersionConflictException;
+            }
+            throw error;
           });
-        }),
-      );
+      }
 
-      const [createdOrders] = await Promise.all([createdOrdersPromise, deletedCartItemsPromise, updatedSkusPromise]);
+      // const [createdOrders] = await Promise.all([createdOrdersPromise, deletedCartItemsPromise, updatedSkusPromise]);
 
       // 10.6. Thêm job cancel payment vào queue
       // WARNING: Chạy promise này sau khi các tx đã commit/rollback, tránh trường hợp tx failed -> rollback -> job cancel payment vẫn được thực thi (tăng stock) -> bug

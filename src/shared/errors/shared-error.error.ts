@@ -1,4 +1,4 @@
-import { BadRequestException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 export const InvalidApiKeyException = new UnauthorizedException([
   {
@@ -48,3 +48,5 @@ export const InvalidPasswordException = new BadRequestException([
     message: 'Error.InvalidPassword', // Invalid password
   },
 ]);
+
+export const VersionConflictException = new ConflictException('Error.VersionConflict');
