@@ -5,13 +5,13 @@ import {
   RoleQuerySchema,
   UpdateRoleBodySchema,
 } from '@/routes/role/role.model';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 import { RoleSchema, RoleWithPermissionsSchema } from '@/shared/models/shared-role.model';
-import { createZodDto } from 'nestjs-zod';
 
-export class CreateRoleBodyDTO extends createZodDto(CreateRoleBodySchema) {}
-export class UpdateRoleBodyDTO extends createZodDto(UpdateRoleBodySchema) {}
-export class RoleParamsDTO extends createZodDto(RoleParamsSchema) {}
-export class RoleQueryDTO extends createZodDto(RoleQuerySchema) {}
-export class GetRolesResponseDTO extends createZodDto(GetRolesResponseSchema) {}
-export class RoleResponseDTO extends createZodDto(RoleSchema) {}
-export class RoleWithPermissionsResponseDTO extends createZodDto(RoleWithPermissionsSchema) {}
+export class CreateRoleBodyDTO extends createRequestDto(CreateRoleBodySchema) {}
+export class UpdateRoleBodyDTO extends createRequestDto(UpdateRoleBodySchema) {}
+export class RoleParamsDTO extends createRequestDto(RoleParamsSchema) {}
+export class RoleQueryDTO extends createRequestDto(RoleQuerySchema) {}
+export class GetRolesResponseDTO extends createResponseDto(GetRolesResponseSchema) {}
+export class RoleResponseDTO extends createResponseDto(RoleSchema) {}
+export class RoleWithPermissionsResponseDTO extends createResponseDto(RoleWithPermissionsSchema) {}

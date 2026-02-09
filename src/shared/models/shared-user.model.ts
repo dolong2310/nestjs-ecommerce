@@ -1,4 +1,5 @@
 import { EnumUserStatus } from '@/shared/constants/auth.constant';
+import { stringToDate } from '@/shared/models/codecs';
 import { PermissionSchema } from '@/shared/models/shared-permission.model';
 import { RoleSchema } from '@/shared/models/shared-role.model';
 import z from 'zod';
@@ -18,9 +19,9 @@ import z from 'zod';
 //   createdById: z.number().nullable(),
 //   updatedById: z.number().nullable(),
 
-//   deletedAt: z.date().nullable(),
-//   createdAt: z.date(),
-//   updatedAt: z.date(),
+//   deletedAt: stringToDate.nullable(),
+//   createdAt: stringToDate,
+//   updatedAt: stringToDate,
 // });
 
 export const UserSchema = z.object({
@@ -36,9 +37,9 @@ export const UserSchema = z.object({
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
-  deletedAt: z.date().nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
+  deletedAt: stringToDate.nullable(),
 });
 
 // Response

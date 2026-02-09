@@ -1,3 +1,4 @@
+import { stringToDate } from '@/shared/models/codecs';
 import z from 'zod';
 
 export const LanguageSchema = z.object({
@@ -5,9 +6,9 @@ export const LanguageSchema = z.object({
   name: z.string().max(500),
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
-  deletedAt: z.date().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  deletedAt: stringToDate.nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });
 
 // Request

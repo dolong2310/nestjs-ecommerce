@@ -1,3 +1,4 @@
+import { stringToDate } from '@/shared/models/codecs';
 import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { createPaginationResponseSchema } from '@/shared/models/response.model';
 import { ProductTranslationSchema } from '@/shared/models/shared-product-translation.model';
@@ -12,8 +13,10 @@ export const CartItemSchema = z.object({
   skuId: z.number().int().positive(),
   userId: z.number().int().positive(),
 
-  createdAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
-  updatedAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
+  createdAt: stringToDate.default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
+  updatedAt: stringToDate.default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
+  // createdAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
+  // updatedAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
 });
 
 // NOTE: dùng schema này nếu hàm `findMany2` CÓ response các key:

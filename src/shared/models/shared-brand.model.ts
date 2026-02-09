@@ -1,3 +1,4 @@
+import { stringToDate } from '@/shared/models/codecs';
 import { BrandTranslationSchema } from '@/shared/models/shared-brand-translation.model';
 import z from 'zod';
 
@@ -8,9 +9,9 @@ export const BrandSchema = z.object({
   createdById: z.number().nullable(),
   updatedById: z.number().nullable(),
   deletedById: z.number().nullable(),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
-  deletedAt: z.date().nullable(),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
+  deletedAt: stringToDate.nullable(),
 });
 
 // Response

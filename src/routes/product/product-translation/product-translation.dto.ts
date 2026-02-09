@@ -3,8 +3,8 @@ import {
   ProductTranslationResponseSchema,
   UpdateProductTranslationBodySchema,
 } from '@/routes/product/product-translation/product-translation.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class CreateProductTranslationBodyDTO extends createZodDto(CreateProductTranslationBodySchema) {}
-export class UpdateProductTranslationBodyDTO extends createZodDto(UpdateProductTranslationBodySchema) {}
-export class ProductTranslationResponseDTO extends createZodDto(ProductTranslationResponseSchema) {}
+export class CreateProductTranslationBodyDTO extends createRequestDto(CreateProductTranslationBodySchema) {}
+export class UpdateProductTranslationBodyDTO extends createRequestDto(UpdateProductTranslationBodySchema) {}
+export class ProductTranslationResponseDTO extends createResponseDto(ProductTranslationResponseSchema) {}

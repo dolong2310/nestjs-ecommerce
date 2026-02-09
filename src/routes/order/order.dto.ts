@@ -7,12 +7,12 @@ import {
   GetOrdersQuerySchema,
   GetOrdersResponseSchema,
 } from '@/routes/order/order.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class GetOrdersQueryDTO extends createZodDto(GetOrdersQuerySchema) {}
-export class GetOrderParamsDTO extends createZodDto(GetOrderParamsSchema) {}
-export class CreateOrderBodyDTO extends createZodDto(CreateOrderBodySchema) {}
-export class CreateOrderResponseDTO extends createZodDto(CreateOrderResponseSchema) {}
-export class CancelOrderResponseDTO extends createZodDto(CancelOrderResponseSchema) {}
-export class GetOrderResponseDTO extends createZodDto(GetOrderResponseSchema) {}
-export class GetOrdersResponseDTO extends createZodDto(GetOrdersResponseSchema) {}
+export class GetOrdersQueryDTO extends createRequestDto(GetOrdersQuerySchema) {}
+export class GetOrderParamsDTO extends createRequestDto(GetOrderParamsSchema) {}
+export class CreateOrderBodyDTO extends createRequestDto(CreateOrderBodySchema) {}
+export class CreateOrderResponseDTO extends createResponseDto(CreateOrderResponseSchema) {}
+export class CancelOrderResponseDTO extends createResponseDto(CancelOrderResponseSchema) {}
+export class GetOrderResponseDTO extends createResponseDto(GetOrderResponseSchema) {}
+export class GetOrdersResponseDTO extends createResponseDto(GetOrdersResponseSchema) {}
