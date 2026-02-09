@@ -1,4 +1,10 @@
-import { BadRequestException, ConflictException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  NotFoundException,
+  ServiceUnavailableException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 export const InvalidApiKeyException = new UnauthorizedException([
   {
@@ -50,3 +56,10 @@ export const InvalidPasswordException = new BadRequestException([
 ]);
 
 export const VersionConflictException = new ConflictException('Error.VersionConflict');
+
+export const ServerOverloadedException = new ServiceUnavailableException([
+  {
+    field: 'lock',
+    message: 'Error.ServerOverloaded', // Server is currently overloaded, please try again later
+  },
+]);
