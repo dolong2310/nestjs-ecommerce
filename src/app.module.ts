@@ -34,8 +34,10 @@ import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { LoggerModule } from 'nestjs-pino';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import path from 'path';
+import pino from 'pino';
 
 @Module({
   imports: [
@@ -85,6 +87,33 @@ import path from 'path';
         };
       },
     }),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        // stream: ghi log vào file
+        stream: pino.destination({
+          dest: path.resolve('logs/app.log'),
+          sync: false, // Asynchronous logging
+          mkdir: true, // Create directory if it doesn't exist
+        }),
+
+        // serializers: chuẩn hoá dữ liệu request/response để dễ đọc
+        serializers: {
+          req: (req: any) => {
+            return {
+              method: req.method,
+              url: req.url,
+              query: req.query,
+              params: req.params,
+            };
+          },
+          res: (res: any) => {
+            return {
+              statusCode: res.statusCode,
+            };
+          },
+        },
+      },
+    }),
     ScheduleModule.forRoot(),
     SharedModule,
     AuthModule,
@@ -129,6 +158,10 @@ import path from 'path';
       provide: APP_GUARD,
       useClass: ThrottlerBehindProxyGuard, // throttle requests
     },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: LoggingInterceptor, // logging request/response
+    // },
     RemoveRefreshTokenCronjob,
   ],
 })
