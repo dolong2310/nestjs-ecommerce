@@ -11,7 +11,7 @@ import { Logger } from 'nestjs-pino';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
-    { bufferLogs: true }, // buffer logs để ghi đè lên logger mặc định của nestjs
+    // { bufferLogs: true }, // buffer logs để ghi đè lên logger mặc định của nestjs
     //   {
     //   logger: new ConsoleLogger({
     //     // json: true,
@@ -41,7 +41,7 @@ async function bootstrap() {
   // Việc này chủ yếu thông qua việc tự động thêm/chỉnh sửa các HTTP header mà trình duyệt và client sẽ dùng để tăng mức độ an toàn cho ứng dụng.
   app.use(helmet());
 
-  app.useLogger(app.get(Logger));
+  // app.useLogger(app.get(Logger));
   // app.useGlobalInterceptors(new LoggingInterceptor());
 
   await app.listen(envConfig.PORT ?? 3000);

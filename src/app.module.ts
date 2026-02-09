@@ -62,6 +62,7 @@ import pino from 'pino';
           ttl: 10000, // 10 seconds time to live
           limit: 10, // 10 requests per 10 seconds
         },
+        // Using: @SkipThrottle() hoặc @SkipThrottle({ default: false });
         // {
         //   name: 'short',
         //   ttl: 1000,
@@ -77,6 +78,7 @@ import pino from 'pino';
         //   ttl: 60000,
         //   limit: 100,
         // },
+        // Using: @SkipThrottle({ short: true, medium: true, long: true });
       ],
     }),
     CacheModule.registerAsync({
@@ -87,33 +89,36 @@ import pino from 'pino';
         };
       },
     }),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        // stream: ghi log vào file
-        stream: pino.destination({
-          dest: path.resolve('logs/app.log'),
-          sync: false, // Asynchronous logging
-          mkdir: true, // Create directory if it doesn't exist
-        }),
+    // Setup log rotation cho dự án thực tế:
+    // Một file log app.log to sẽ bị chia thành 7 file log nhỏ tượng trưng cho 7 ngày gần nhất: app.log.1, app.log.2, app.log.3,... Và qua một ngày mới thì một file log nhỏ sẽ bị xóa, một file log nhỏ lại được tạo.
+    // Keyword hỏi AI: Hướng dẫn sử dụng logrotate cho file log được lưu tại đường dẫn /logs/app.log
+    // LoggerModule.forRoot({
+    //   pinoHttp: {
+    //     // stream: ghi log vào file
+    //     stream: pino.destination({
+    //       dest: path.resolve('logs/app.log'),
+    //       sync: false, // Asynchronous logging
+    //       mkdir: true, // Create directory if it doesn't exist
+    //     }),
 
-        // serializers: chuẩn hoá dữ liệu request/response để dễ đọc
-        serializers: {
-          req: (req: any) => {
-            return {
-              method: req.method,
-              url: req.url,
-              query: req.query,
-              params: req.params,
-            };
-          },
-          res: (res: any) => {
-            return {
-              statusCode: res.statusCode,
-            };
-          },
-        },
-      },
-    }),
+    //     // serializers: chuẩn hoá dữ liệu request/response để dễ đọc
+    //     serializers: {
+    //       req: (req: any) => {
+    //         return {
+    //           method: req.method,
+    //           url: req.url,
+    //           query: req.query,
+    //           params: req.params,
+    //         };
+    //       },
+    //       res: (res: any) => {
+    //         return {
+    //           statusCode: res.statusCode,
+    //         };
+    //       },
+    //     },
+    //   },
+    // }),
     ScheduleModule.forRoot(),
     SharedModule,
     AuthModule,

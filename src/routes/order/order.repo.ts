@@ -1,3 +1,4 @@
+import { Prisma } from '@/generated/prisma/client';
 import {
   CannotCancelOrderException,
   CartItemDuplicatedException,
@@ -67,97 +68,115 @@ export class OrderRepository {
 
   async create(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {
     const { userId, body: bodyOrderItems } = props;
+    const orders = await this.prismaService.$transaction(async (tx) => {
+      // 1. Validate body
+      const allBodyCartItemIds: number[] = bodyOrderItems.flatMap((item) => item.cartItemIds);
 
-    // 1. Validate body
-    const allBodyCartItemIds: number[] = bodyOrderItems.flatMap((item) => item.cartItemIds);
+      // 2. Check duplicates
+      const uniqueIds = new Set(allBodyCartItemIds);
+      if (uniqueIds.size !== allBodyCartItemIds.length) {
+        throw CartItemDuplicatedException;
+      }
 
-    // 1.0. Check duplicates
-    const uniqueIds = new Set(allBodyCartItemIds);
-    if (uniqueIds.size !== allBodyCartItemIds.length) {
-      throw CartItemDuplicatedException;
-    }
-
-    // 1.1 Kiểm tra xem tất cả cartItemIds có tồn tại trong database không.
-    const cartItems = await this.prismaService.cartItem.findMany({
-      where: {
-        userId,
-        id: {
-          in: allBodyCartItemIds,
+      // 3. Kiểm tra xem tất cả cartItemIds có tồn tại trong database không.
+      const cartItemsSkuIds = await tx.cartItem.findMany({
+        where: {
+          userId,
+          id: {
+            in: allBodyCartItemIds,
+          },
         },
-      },
-      include: {
-        sku: {
-          include: {
-            product: {
-              include: {
-                productTranslations: true,
+        select: {
+          skuId: true,
+        },
+      });
+
+      // 4. Lock "skus" in database (avoid race condition)
+      const foundSkuIds = cartItemsSkuIds.map((item) => item.skuId);
+      await tx.$queryRaw`SELECT * FROM "SKU" WHERE id IN (${Prisma.join(foundSkuIds)}) FOR UPDATE`;
+
+      // 5. Get cart items
+      const cartItems = await tx.cartItem.findMany({
+        where: {
+          userId,
+          id: {
+            in: allBodyCartItemIds,
+          },
+        },
+        include: {
+          sku: {
+            include: {
+              product: {
+                include: {
+                  productTranslations: true,
+                },
               },
             },
           },
         },
-      },
-    });
+      });
 
-    if (cartItems.length !== allBodyCartItemIds.length) {
-      throw CartItemNotFoundException; // Some cart items do not exist
-    }
+      // 6. Kiểm tra cartItemIds truyền lên có khớp với cartItems trong database không.
+      if (cartItems.length !== allBodyCartItemIds.length) {
+        throw CartItemNotFoundException; // Some cart items do not exist
+      }
 
-    // 1.2 Kiểm tra số lượng mua có lớn hơn số lượng tồn kho không.
-    const isOutOfStock = cartItems.some((cartItem) => {
-      // cartItem.quantity luôn dương vì đã validate ở DTO
-      return cartItem.sku.stock < cartItem.quantity;
-    });
+      // 7. Kiểm tra số lượng mua có lớn hơn số lượng tồn kho không.
+      const isOutOfStock = cartItems.some((cartItem) => {
+        // cartItem.quantity luôn dương vì đã validate ở DTO
+        return cartItem.sku.stock < cartItem.quantity;
+      });
 
-    if (isOutOfStock) {
-      throw SkuOutOfStockException; // Some skus are out of stock
-    }
+      if (isOutOfStock) {
+        throw SkuOutOfStockException; // Some skus are out of stock
+      }
 
-    // 1.3 Kiểm tra xem tất cả sản phẩm mua có sản phẩm nào bị xoá hay ẩn không.
-    const isDeletedOrDraftOrNotPublished = cartItems.some((cartItem) => {
-      const isDeleted = cartItem.sku.product.deletedAt !== null;
-      const isDraft = cartItem.sku.product.publishedAt === null;
-      const isNotPublished = cartItem.sku.product.publishedAt !== null && cartItem.sku.product.publishedAt > new Date();
-      return isDeleted || isDraft || isNotPublished;
-    });
+      // 8. Kiểm tra xem tất cả sản phẩm mua có sản phẩm nào bị xoá hay ẩn không.
+      const isDeletedOrDraftOrNotPublished = cartItems.some((cartItem) => {
+        const isDeleted = cartItem.sku.product.deletedAt !== null;
+        const isDraft = cartItem.sku.product.publishedAt === null;
+        const isNotPublished =
+          cartItem.sku.product.publishedAt !== null && cartItem.sku.product.publishedAt > new Date();
+        return isDeleted || isDraft || isNotPublished;
+      });
 
-    if (isDeletedOrDraftOrNotPublished) {
-      throw ProductNotFoundException; // Some products are deleted or unpublished
-    }
+      if (isDeletedOrDraftOrNotPublished) {
+        throw ProductNotFoundException; // Some products are deleted or unpublished
+      }
 
-    // 1.4 Kiểm tra xem các skuId trong cartItem gửi lên có thuộc về shopId gửi lên không.
-    // Cách 1:
-    const cartItemMap = new Map<number, (typeof cartItems)[number]>(cartItems.map((item) => [item.id, item]));
-    let isSkuNotBelongToShop = false;
-    outerLoop: for (const orderItem of bodyOrderItems) {
-      const shopId = orderItem.shopId;
-      for (const cartItemId of orderItem.cartItemIds) {
-        const cartItem = cartItemMap.get(cartItemId)!;
-        const isSkuBelongToShop = cartItem.sku.createdById === shopId;
-        if (!isSkuBelongToShop) {
-          isSkuNotBelongToShop = true;
-          break outerLoop;
+      // 9. Kiểm tra xem các skuId trong cartItem gửi lên có thuộc về shopId gửi lên không.
+      // Cách 1:
+      const cartItemMap = new Map<number, (typeof cartItems)[number]>(cartItems.map((item) => [item.id, item]));
+      let isSkuNotBelongToShop = false;
+      outerLoop: for (const orderItem of bodyOrderItems) {
+        const shopId = orderItem.shopId;
+        for (const cartItemId of orderItem.cartItemIds) {
+          const cartItem = cartItemMap.get(cartItemId)!;
+          const isSkuBelongToShop = cartItem.sku.createdById === shopId;
+          if (!isSkuBelongToShop) {
+            isSkuNotBelongToShop = true;
+            break outerLoop;
+          }
         }
       }
-    }
 
-    // Cách 2:
-    // const cartItemMap = new Map(cartItems.map((item) => [item.id, item]));
+      // Cách 2:
+      // const cartItemMap = new Map(cartItems.map((item) => [item.id, item]));
 
-    // const isSkuNotBelongToShop = bodyOrderItems.some((orderItem) =>
-    //   orderItem.cartItemIds.some((cartItemId) => {
-    //     const cartItem = cartItemMap.get(cartItemId)!;
-    //     return cartItem.sku.createdById !== orderItem.shopId;
-    //   }),
-    // );
+      // const isSkuNotBelongToShop = bodyOrderItems.some((orderItem) =>
+      //   orderItem.cartItemIds.some((cartItemId) => {
+      //     const cartItem = cartItemMap.get(cartItemId)!;
+      //     return cartItem.sku.createdById !== orderItem.shopId;
+      //   }),
+      // );
 
-    if (isSkuNotBelongToShop) {
-      throw SkuNotBelongToShopException; // Some skus are not belong to the same shop
-    }
+      if (isSkuNotBelongToShop) {
+        throw SkuNotBelongToShopException; // Some skus are not belong to the same shop
+      }
 
-    // 2. Tạo order và Xoá cartItem trong cùng 1 transaction
-    const orders = await this.prismaService.$transaction(async (tx) => {
-      // 2.1. Kiểm tra stock của sku
-      const skuIds = cartItems.map((item) => item.sku.id);
+      // 10. Tạo order và Xoá cartItem
+      // 10.1. Kiểm tra stock của sku
+      const skuIds = cartItems.map((item) => item.skuId);
       const currentSkus = await tx.sKU.findMany({
         where: {
           id: {
@@ -179,14 +198,14 @@ export class OrderRepository {
         }
       }
 
-      // 2.2 Tạo Payment với status PENDING
+      // 10.2 Tạo Payment với status PENDING
       const payment = await tx.payment.create({
         data: {
           status: EnumPaymentStatus.PENDING,
         },
       });
 
-      // 2.1. Tạo order
+      // 10.3. Tạo order
       // NOTE: tại sao không dùng tx.order.createMany?
       // Vì createMany không hỗ trợ tạo relationship với các model khác.
       // Model cần tạo cùng với order là items (ProductSKUSnapshot[]) và products.
@@ -235,7 +254,7 @@ export class OrderRepository {
         ),
       );
 
-      // 2.3. Xoá cartItem
+      // 10.4. Xoá cartItem
       const deletedCartItemsPromise = tx.cartItem.deleteMany({
         where: {
           id: {
@@ -244,7 +263,7 @@ export class OrderRepository {
         },
       });
 
-      // 2.4. Cập nhật stock của sku
+      // 10.5. Cập nhật stock của sku
       const updatedSkusPromise = Promise.all(
         cartItems.map((cartItem) => {
           return tx.sKU.update({
@@ -260,17 +279,13 @@ export class OrderRepository {
         }),
       );
 
-      // 2.5. Thêm job cancel payment vào queue
-      const addedJobPromise = this.orderProducer.addJobCancelPayment(payment.id);
+      const [createdOrders] = await Promise.all([createdOrdersPromise, deletedCartItemsPromise, updatedSkusPromise]);
 
-      const [createdOrders] = await Promise.all([
-        createdOrdersPromise,
-        deletedCartItemsPromise,
-        updatedSkusPromise,
-        addedJobPromise,
-      ]);
+      // 10.6. Thêm job cancel payment vào queue
+      // WARNING: Chạy promise này sau khi các tx đã commit/rollback, tránh trường hợp tx failed -> rollback -> job cancel payment vẫn được thực thi (tăng stock) -> bug
+      await this.orderProducer.addJobCancelPayment(payment.id);
 
-      // 2.5. Trả về order vừa tạo
+      // 10.7. Trả về order vừa tạo
       return createdOrders;
     });
 
