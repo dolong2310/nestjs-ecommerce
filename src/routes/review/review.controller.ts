@@ -12,7 +12,7 @@ import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { PaginationQueryDTO } from '@/shared/dtos/request.dto';
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('reviews')
 export class ReviewController {
@@ -20,13 +20,13 @@ export class ReviewController {
 
   @Get('/products/:productId')
   @Public()
-  @ZodSerializerDto(GetReviewsResponseDTO)
+  @ZodResponse({ type: GetReviewsResponseDTO })
   getReviews(@Param() params: GetReviewsParamsDTO, @Query() query: PaginationQueryDTO): Promise<GetReviewsResponseDTO> {
     return this.reviewService.getReviews({ productId: params.productId, query });
   }
 
   @Post()
-  @ZodSerializerDto(CreateReviewResponseDTO)
+  @ZodResponse({ type: CreateReviewResponseDTO })
   createReview(
     @Body() body: CreateReviewBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -35,7 +35,7 @@ export class ReviewController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(UpdateReviewResponseDTO)
+  @ZodResponse({ type: UpdateReviewResponseDTO })
   updateReview(
     @Param() params: GetReviewDetailParamsDTO,
     @Body() body: UpdateReviewBodyDTO,

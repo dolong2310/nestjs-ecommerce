@@ -11,14 +11,14 @@ import { OrderService } from '@/routes/order/order.service';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Get()
-  @ZodSerializerDto(GetOrdersResponseDTO)
+  @ZodResponse({ type: GetOrdersResponseDTO })
   async getOrders(
     @Query() query: GetOrdersQueryDTO,
     @ActiveUser('userId') userId: number,
@@ -27,7 +27,7 @@ export class OrderController {
   }
 
   @Get(':id')
-  @ZodSerializerDto(GetOrderResponseDTO)
+  @ZodResponse({ type: GetOrderResponseDTO })
   async getOrderById(
     @Param() params: GetOrderParamsDTO,
     @ActiveUser('userId') userId: number,
@@ -36,7 +36,7 @@ export class OrderController {
   }
 
   @Post()
-  @ZodSerializerDto(CreateOrderResponseDTO)
+  @ZodResponse({ type: CreateOrderResponseDTO })
   async createOrder(
     @Body() body: CreateOrderBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -45,7 +45,7 @@ export class OrderController {
   }
 
   @Put(':id/cancel')
-  @ZodSerializerDto(CancelOrderResponseDTO)
+  @ZodResponse({ type: CancelOrderResponseDTO })
   async cancelOrder(
     @Param() params: GetOrderParamsDTO,
     @ActiveUser('userId') userId: number,

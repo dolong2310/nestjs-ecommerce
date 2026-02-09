@@ -36,7 +36,7 @@ import {
 } from '@nestjs/common';
 // import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('auth')
 // @SkipThrottle()
@@ -48,7 +48,7 @@ export class AuthController {
 
   @Post('register')
   @Public()
-  @ZodSerializerDto(RegisterResponseDTO)
+  @ZodResponse({ type: RegisterResponseDTO })
   register(@Body() body: RegisterBodyDTO): Promise<RegisterResponseDTO> {
     // return dto to avoid exposing password and toptSecret
     const { name, email, password, confirmPassword, phoneNumber, code } = body; // be explicit
@@ -65,7 +65,7 @@ export class AuthController {
   // @SkipThrottle({ default: false })
   @Post('login')
   @Public()
-  @ZodSerializerDto(LoginResponseDTO)
+  @ZodResponse({ type: LoginResponseDTO })
   login(
     @Body() body: LoginBodyDTO,
     @Ip() ip: string,
@@ -83,14 +83,14 @@ export class AuthController {
   }
 
   @Post('logout')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   logout(@Body() body: LogoutBodyDTO): Promise<MessageResponseDTO> {
     return this.authService.logout({ refreshToken: body.refreshToken });
   }
 
   @Post('forgot-password')
   @Public()
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   forgotPassword(@Body() body: ForgotPasswordBodyDTO): Promise<MessageResponseDTO> {
     const { email, code, newPassword, confirmNewPassword } = body; // be explicit
     return this.authService.forgotPassword({
@@ -104,7 +104,7 @@ export class AuthController {
   @Post('refresh-token')
   @Public()
   @HttpCode(HttpStatus.OK)
-  @ZodSerializerDto(RefreshJwtTokenResponseDTO)
+  @ZodResponse({ type: RefreshJwtTokenResponseDTO })
   refreshToken(
     @Body() body: RefreshJwtTokenBodyDTO,
     @Ip() ip: string,
@@ -114,14 +114,14 @@ export class AuthController {
   }
 
   @Get('me')
-  @ZodSerializerDto(GetMeResponseDTO)
+  @ZodResponse({ type: GetMeResponseDTO })
   getMe(@ActiveUser('userId') userId: number): Promise<GetMeResponseDTO> {
     return this.authService.getMe(userId);
   }
 
   @Post('otp')
   @Public()
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   sendOtp(@Body() body: SendOtpBodyDTO): Promise<MessageResponseDTO> {
     const { email, type } = body; // be explicit
     return this.authService.sendOtp({ email, type });
@@ -129,7 +129,7 @@ export class AuthController {
 
   @Get('google/url')
   @Public()
-  @ZodSerializerDto(GoogleAuthResponseDTO)
+  @ZodResponse({ type: GoogleAuthResponseDTO })
   getAuthorizationUrl(@Ip() ip: string, @Headers('user-agent') userAgent: string): GoogleAuthResponseDTO {
     return this.googleService.getAuthorizationUrl({ ip, userAgent });
   }
@@ -158,14 +158,14 @@ export class AuthController {
   // POST bảo mật hơn GET, vì GET có thể được kích hoạt thông qua URL trên trình duyệt, còn POST thì không thể
   // User phải login thì mới enable 2FA (Authentication Required)
   @Post('2fa/setup')
-  @ZodSerializerDto(Setup2FAResponseDTO)
+  @ZodResponse({ type: Setup2FAResponseDTO })
   setup2fa(@Body() _: EmptyBodyDTO, @ActiveUser('userId') userId: number): Promise<Setup2FAResponseDTO> {
     // Không cần truyền body, chỉ cần lấy userId từ decorator
     return this.authService.setup2fa(userId);
   }
 
   @Post('2fa/disable')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   disable2fa(@Body() body: Disable2FABodyDTO, @ActiveUser('userId') userId: number): Promise<MessageResponseDTO> {
     // User phải truyền 1 trong 2 trường totpCode hoặc emailOtpCode thì mới đủ chứng thực để có thể disable 2FA
     // Tránh việc user có quyền tuỳ ý disable 2FA

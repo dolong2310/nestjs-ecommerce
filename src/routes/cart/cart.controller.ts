@@ -10,26 +10,26 @@ import { CartService } from '@/routes/cart/cart.service';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Get()
-  @ZodSerializerDto(GetCartResponseDTO)
+  @ZodResponse({ type: GetCartResponseDTO })
   getCart(@ActiveUser('userId') userId: number, @Query() query: GetCartQueryDTO): Promise<GetCartResponseDTO> {
     return this.cartService.getCart({ userId, query });
   }
 
   @Post()
-  @ZodSerializerDto(CartItemDTO)
+  @ZodResponse({ type: CartItemDTO })
   addToCart(@ActiveUser('userId') userId: number, @Body() body: AddToCartBodyDTO): Promise<CartItemDTO> {
     return this.cartService.addToCart({ userId, body });
   }
 
   @Put(':id')
-  @ZodSerializerDto(CartItemDTO)
+  @ZodResponse({ type: CartItemDTO })
   updateCart(
     @ActiveUser('userId') userId: number,
     @Param('id', ParseIntPipe) id: number,
@@ -39,7 +39,7 @@ export class CartController {
   }
 
   @Post('delete') // Method DELETE không được phép gửi body, nên sử dụng POST và thêm endpoint là delete
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteCart(@ActiveUser('userId') userId: number, @Body() body: DeleteCartBodyDTO): Promise<MessageResponseDTO> {
     return this.cartService.deleteCart({ userId, body });
   }

@@ -10,28 +10,28 @@ import { PermissionService } from '@/routes/permission/permission.service';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('permissions')
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
   @Get()
-  @ZodSerializerDto(GetPermissionsResponseDTO)
+  @ZodResponse({ type: GetPermissionsResponseDTO })
   getPermissions(@Query() query: PermissionQueryDTO): Promise<GetPermissionsResponseDTO> {
     const { page, limit } = query;
     return this.permissionService.getPermissions({ page, limit });
   }
 
   @Get(':id')
-  @ZodSerializerDto(PermissionResponseDTO)
+  @ZodResponse({ type: PermissionResponseDTO })
   // có thể dùng cách này để lấy id: @Param('id', ParseIntPipe) id: number
   getPermission(@Param() params: PermissionParamsDTO): Promise<PermissionResponseDTO> {
     return this.permissionService.getPermissionById(params.id);
   }
 
   @Post()
-  @ZodSerializerDto(PermissionResponseDTO)
+  @ZodResponse({ type: PermissionResponseDTO })
   createPermission(
     @Body() body: CreatePermissionBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -40,7 +40,7 @@ export class PermissionController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(PermissionResponseDTO)
+  @ZodResponse({ type: PermissionResponseDTO })
   updatePermission(
     @Param() params: PermissionParamsDTO,
     @Body() body: UpdatePermissionBodyDTO,
@@ -50,7 +50,7 @@ export class PermissionController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deletePermission(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,

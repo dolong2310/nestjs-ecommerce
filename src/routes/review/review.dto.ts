@@ -9,16 +9,16 @@ import {
   UpdateReviewBodySchema,
   UpdateReviewResponseSchema,
 } from '@/routes/review/review.model';
-import { createZodDto } from 'nestjs-zod';
+import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
-export class ReviewMediaDTO extends createZodDto(ReviewMediaSchema) {}
-export class ReviewDTO extends createZodDto(ReviewSchema) {}
+export class ReviewMediaDTO extends createRequestDto(ReviewMediaSchema) {}
+export class ReviewDTO extends createRequestDto(ReviewSchema) {}
 
-export class GetReviewsParamsDTO extends createZodDto(GetReviewsParamsSchema) {}
-export class GetReviewDetailParamsDTO extends createZodDto(GetReviewDetailParamsSchema) {}
-export class CreateReviewBodyDTO extends createZodDto(CreateReviewBodySchema) {}
-export class UpdateReviewBodyDTO extends createZodDto(UpdateReviewBodySchema) {}
+export class GetReviewsParamsDTO extends createRequestDto(GetReviewsParamsSchema) {}
+export class GetReviewDetailParamsDTO extends createRequestDto(GetReviewDetailParamsSchema) {}
+export class CreateReviewBodyDTO extends createRequestDto(CreateReviewBodySchema) {}
+export class UpdateReviewBodyDTO extends createRequestDto(UpdateReviewBodySchema) {}
 
-export class GetReviewsResponseDTO extends createZodDto(GetReviewsResponseSchema) {}
-export class CreateReviewResponseDTO extends createZodDto(CreateReviewResponseSchema) {}
-export class UpdateReviewResponseDTO extends createZodDto(UpdateReviewResponseSchema) {}
+export class GetReviewsResponseDTO extends createResponseDto(GetReviewsResponseSchema) {}
+export class CreateReviewResponseDTO extends createResponseDto(CreateReviewResponseSchema) {}
+export class UpdateReviewResponseDTO extends createResponseDto(UpdateReviewResponseSchema) {}

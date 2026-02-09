@@ -22,7 +22,7 @@ import {
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 import path from 'path';
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
@@ -41,7 +41,7 @@ export class MediaController {
       // }
     }),
   )
-  @ZodSerializerDto(UploadFileResponseDTO)
+  @ZodResponse({ type: UploadFileResponseDTO })
   uploadFile(
     @UploadedFiles(
       new ParseFilePipeWithUnlink({
@@ -89,7 +89,7 @@ export class MediaController {
    */
   @Post('images/upload/presigned-url')
   @Public()
-  @ZodSerializerDto(PresignedUrlUploadFileResponseDTO)
+  @ZodResponse({ type: PresignedUrlUploadFileResponseDTO })
   createPresignedUrl(@Body() body: PresignedUrlUploadFileBodyDTO): Promise<PresignedUrlUploadFileResponseDTO> {
     // mục đích khai báo file size trong PresignedUrlUploadFileBodyDTO
     // => để validate file size trong schema

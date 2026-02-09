@@ -10,7 +10,7 @@ import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import type { AccessTokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 import { ManageProductService } from './manage-product.service';
 
 /**
@@ -21,7 +21,7 @@ export class ManageProductController {
   constructor(private readonly manageProductService: ManageProductService) {}
 
   @Get()
-  @ZodSerializerDto(GetProductsResponseDTO)
+  @ZodResponse({ type: GetProductsResponseDTO })
   getProducts(
     @Query() query: GetManageProductsQueryDTO,
     @ActiveUser() user: AccessTokenPayload,
@@ -35,7 +35,7 @@ export class ManageProductController {
   }
 
   @Get(':id')
-  @ZodSerializerDto(GetProductResponseDTO)
+  @ZodResponse({ type: GetProductResponseDTO })
   getProductById(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser() user: AccessTokenPayload,
@@ -49,7 +49,7 @@ export class ManageProductController {
   }
 
   @Post()
-  @ZodSerializerDto(GetProductResponseDTO)
+  @ZodResponse({ type: GetProductResponseDTO })
   createProduct(
     @ActiveUser() user: AccessTokenPayload,
     @Body() body: CreateProductBodyDTO,
@@ -59,7 +59,7 @@ export class ManageProductController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(ProductResponseDTO)
+  @ZodResponse({ type: ProductResponseDTO })
   updateProduct(
     @ActiveUser() user: AccessTokenPayload,
     @Param('id', ParseIntPipe) id: number,
@@ -75,7 +75,7 @@ export class ManageProductController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteProduct(
     @ActiveUser() user: AccessTokenPayload,
     @Param('id', ParseIntPipe) id: number,

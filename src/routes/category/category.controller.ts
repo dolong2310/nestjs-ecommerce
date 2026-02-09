@@ -11,7 +11,7 @@ import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { I18nContext } from 'nestjs-i18n';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('categories')
 export class CategoryController {
@@ -19,7 +19,7 @@ export class CategoryController {
 
   @Get()
   @Public()
-  @ZodSerializerDto(GetCategoriesIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: GetCategoriesIncludeTranslationsResponseDTO })
   getCategories(@Query() query: GetCategoriesQueryDTO): Promise<GetCategoriesIncludeTranslationsResponseDTO> {
     const lang = I18nContext.current()!.lang;
     return this.categoryService.getCategories({ parentCategoryId: query.parentCategoryId, lang });
@@ -27,14 +27,14 @@ export class CategoryController {
 
   @Get(':id')
   @Public()
-  @ZodSerializerDto(CategoryIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: CategoryIncludeTranslationsResponseDTO })
   getCategory(@Param('id', ParseIntPipe) id: number): Promise<CategoryIncludeTranslationsResponseDTO> {
     const lang = I18nContext.current()!.lang;
     return this.categoryService.getCategoryById({ id, languageId: lang });
   }
 
   @Post()
-  @ZodSerializerDto(CategoryIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: CategoryIncludeTranslationsResponseDTO })
   createCategory(
     @Body() body: CreateCategoryBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -43,7 +43,7 @@ export class CategoryController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(CategoryIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: CategoryIncludeTranslationsResponseDTO })
   updateCategory(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateCategoryBodyDTO,
@@ -53,7 +53,7 @@ export class CategoryController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteCategory(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,

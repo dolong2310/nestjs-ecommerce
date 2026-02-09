@@ -11,7 +11,7 @@ import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { I18nContext } from 'nestjs-i18n';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('brands')
 export class BrandController {
@@ -19,7 +19,7 @@ export class BrandController {
 
   @Get()
   @Public()
-  @ZodSerializerDto(GetBrandsIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: GetBrandsIncludeTranslationsResponseDTO })
   getBrands(@Query() query: GetBrandsQueryDTO): Promise<GetBrandsIncludeTranslationsResponseDTO> {
     const { page, limit } = query;
     const lang = I18nContext.current()!.lang;
@@ -28,14 +28,14 @@ export class BrandController {
 
   @Get(':id')
   @Public()
-  @ZodSerializerDto(BrandIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: BrandIncludeTranslationsResponseDTO })
   getBrand(@Param('id', ParseIntPipe) id: number): Promise<BrandIncludeTranslationsResponseDTO> {
     const lang = I18nContext.current()!.lang;
     return this.brandService.getBrandById(id, lang);
   }
 
   @Post()
-  @ZodSerializerDto(BrandIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: BrandIncludeTranslationsResponseDTO })
   createBrand(
     @Body() body: CreateBrandBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -44,7 +44,7 @@ export class BrandController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(BrandIncludeTranslationsResponseDTO)
+  @ZodResponse({ type: BrandIncludeTranslationsResponseDTO })
   updateBrand(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateBrandBodyDTO,
@@ -54,7 +54,7 @@ export class BrandController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteBrand(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,

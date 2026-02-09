@@ -1,5 +1,5 @@
 import { EnumMediaType } from '@/shared/constants/media.constant';
-import { PaginationQuerySchema } from '@/shared/models/request.model';
+import { stringToDate } from '@/shared/models/codecs';
 import { UserSchema } from '@/shared/models/shared-user.model';
 import z from 'zod';
 
@@ -8,7 +8,7 @@ export const ReviewMediaSchema = z.object({
   url: z.url().max(1000),
   type: z.enum(EnumMediaType),
   reviewId: z.number(),
-  createdAt: z.date().default(new Date()),
+  createdAt: stringToDate.default(new Date()),
 });
 
 export const ReviewSchema = z.object({
@@ -19,8 +19,8 @@ export const ReviewSchema = z.object({
   userId: z.number(),
   orderId: z.number(),
   updateCount: z.number().default(0),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+  createdAt: stringToDate.default(new Date()),
+  updatedAt: stringToDate.default(new Date()),
 });
 
 // Request body

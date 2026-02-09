@@ -4,20 +4,20 @@ import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { GetUserProfileResponseDTO, UpdateUserProfileResponseDTO } from '@/shared/dtos/shared-user.dto';
 import { Body, Controller, Get, Put } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('profile')
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Get()
-  @ZodSerializerDto(GetUserProfileResponseDTO)
+  @ZodResponse({ type: GetUserProfileResponseDTO })
   getProfile(@ActiveUser('userId') userId: number): Promise<GetUserProfileResponseDTO> {
     return this.profileService.getProfile(userId);
   }
 
   @Put()
-  @ZodSerializerDto(UpdateUserProfileResponseDTO)
+  @ZodResponse({ type: UpdateUserProfileResponseDTO })
   updateProfile(
     @Body() body: UpdateProfileBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -26,7 +26,7 @@ export class ProfileController {
   }
 
   @Put('change-password')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   changePassword(
     @Body() body: ChangePasswordBodyDTO,
     @ActiveUser('userId') userId: number,

@@ -7,20 +7,20 @@ import { ProductTranslationService } from '@/routes/product/product-translation/
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('product-translation')
 export class ProductTranslationController {
   constructor(private readonly productTranslationService: ProductTranslationService) {}
 
   @Get(':id')
-  @ZodSerializerDto(ProductTranslationResponseDTO)
+  @ZodResponse({ type: ProductTranslationResponseDTO })
   getProductTranslation(@Param('id', ParseIntPipe) id: number): Promise<ProductTranslationResponseDTO> {
     return this.productTranslationService.getProductTranslationById(id);
   }
 
   @Post()
-  @ZodSerializerDto(ProductTranslationResponseDTO)
+  @ZodResponse({ type: ProductTranslationResponseDTO })
   createProductTranslation(
     @Body() body: CreateProductTranslationBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -32,7 +32,7 @@ export class ProductTranslationController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(ProductTranslationResponseDTO)
+  @ZodResponse({ type: ProductTranslationResponseDTO })
   updateProductTranslation(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateProductTranslationBodyDTO,
@@ -46,7 +46,7 @@ export class ProductTranslationController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteProductTranslation(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,

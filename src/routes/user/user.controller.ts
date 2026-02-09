@@ -15,7 +15,7 @@ import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('users')
 @ApiBearerAuth()
@@ -23,21 +23,21 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @ZodSerializerDto(GetUsersResponseDTO)
+  @ZodResponse({ type: GetUsersResponseDTO })
   getUsers(@Query() query: UserQueryDTO): Promise<GetUsersResponseDTO> {
     const { page, limit } = query;
     return this.userService.getUsers({ page, limit });
   }
 
   @Get(':id')
-  @ZodSerializerDto(GetUserResponseDTO)
+  @ZodResponse({ type: GetUserResponseDTO })
   // có thể dùng cách này để lấy id: @Param('id', ParseIntPipe) id: number
   getUser(@Param() params: UserParamsDTO): Promise<GetUserResponseDTO> {
     return this.userService.getUserById(params.id);
   }
 
   @Post()
-  @ZodSerializerDto(CreateUserResponseDTO)
+  @ZodResponse({ type: CreateUserResponseDTO })
   createUser(
     @Body() body: CreateUserBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -47,7 +47,7 @@ export class UserController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(UpdateUserResponseDTO)
+  @ZodResponse({ type: UpdateUserResponseDTO })
   updateUser(
     @Param() params: UserParamsDTO,
     @Body() body: UpdateUserBodyDTO,
@@ -58,7 +58,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteUser(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,

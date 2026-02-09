@@ -7,20 +7,20 @@ import { CategoryTranslationService } from '@/routes/category/category-translati
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
-import { ZodSerializerDto } from 'nestjs-zod';
+import { ZodResponse } from 'nestjs-zod';
 
 @Controller('category-translation')
 export class CategoryTranslationController {
   constructor(private readonly categoryTranslationService: CategoryTranslationService) {}
 
   @Get(':id')
-  @ZodSerializerDto(CategoryTranslationResponseDTO)
+  @ZodResponse({ type: CategoryTranslationResponseDTO })
   getCategoryTranslation(@Param('id', ParseIntPipe) id: number): Promise<CategoryTranslationResponseDTO> {
     return this.categoryTranslationService.getCategoryTranslationById(id);
   }
 
   @Post()
-  @ZodSerializerDto(CategoryTranslationResponseDTO)
+  @ZodResponse({ type: CategoryTranslationResponseDTO })
   createCategoryTranslation(
     @Body() body: CreateCategoryTranslationBodyDTO,
     @ActiveUser('userId') userId: number,
@@ -32,7 +32,7 @@ export class CategoryTranslationController {
   }
 
   @Put(':id')
-  @ZodSerializerDto(CategoryTranslationResponseDTO)
+  @ZodResponse({ type: CategoryTranslationResponseDTO })
   updateCategoryTranslation(
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateCategoryTranslationBodyDTO,
@@ -46,7 +46,7 @@ export class CategoryTranslationController {
   }
 
   @Delete(':id')
-  @ZodSerializerDto(MessageResponseDTO)
+  @ZodResponse({ type: MessageResponseDTO })
   deleteCategoryTranslation(
     @Param('id', ParseIntPipe) id: number,
     @ActiveUser('userId') userId: number,
