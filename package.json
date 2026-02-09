@@ -53,6 +53,7 @@
     "cache-manager": "^7.2.8",
     "date-fns": "^4.1.0",
     "googleapis": "^170.1.0",
+    "helmet": "^8.1.0",
     "lodash-es": "^4.17.23",
     "mime-types": "^3.0.2",
     "ms": "^2.1.3",
