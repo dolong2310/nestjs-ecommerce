@@ -1,4 +1,3 @@
-import { ProductNotFoundException } from '@/routes/product/product.error';
 import { ProductRepository } from '@/routes/product/product.repo';
 import {
   CreateProductBodyType,
@@ -8,6 +7,7 @@ import {
   UpdateProductBodyType,
 } from '@/routes/product/product.type';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
+import { ProductNotFoundException } from '@/shared/errors/shared-error.error';
 import { isNotFoundPrismaError } from '@/shared/helpers';
 import { ProductType } from '@/shared/types/shared-product.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';

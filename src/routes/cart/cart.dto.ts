@@ -1,13 +1,13 @@
 import {
   AddToCartBodySchema,
   CartItemDetailSchema,
-  CartItemSchema,
   DeleteCartBodySchema,
   GetCartQuerySchema,
   GetCartResponseSchema,
   UpdateCartBodySchema,
 } from '@/routes/cart/cart.model';
 import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
+import { CartItemSchema } from '@/shared/models/shared-cart.model';
 
 export class CartItemDTO extends createResponseDto(CartItemSchema) {}
 export class CartItemDetailDTO extends createResponseDto(CartItemDetailSchema) {}

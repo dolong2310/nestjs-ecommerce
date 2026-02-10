@@ -70,3 +70,17 @@ export const RoleNotFoundException = new NotFoundException([
     message: 'Error.RoleNotFound', // Role not found
   },
 ]);
+
+export const CartItemNotFoundException = new NotFoundException([
+  {
+    field: 'id',
+    message: 'Error.CartItemNotFound',
+  },
+]);
+
+export const ProductNotFoundException = new NotFoundException([
+  {
+    field: 'id',
+    message: 'Error.ProductNotFound',
+  },
+]);

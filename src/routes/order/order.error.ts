@@ -8,12 +8,12 @@ export const OrderNotFoundException = new NotFoundException([
 ]);
 
 // Giả sử admin/seller xoá sản phẩm khi mà user đặt sản phẩm thì throw error
-export const ProductNotFoundException = new NotFoundException([
-  {
-    field: 'id',
-    message: 'Error.ProductNotFound',
-  },
-]);
+// export const ProductNotFoundException = new NotFoundException([
+//   {
+//     field: 'id',
+//     message: 'Error.ProductNotFound',
+//   },
+// ]);
 
 // Giả sử user thêm vào giỏ hàng nhưng khi đặt thì sản phẩm đó hết hàng thì throw error
 export const SkuOutOfStockException = new BadRequestException([

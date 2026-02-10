@@ -146,21 +146,19 @@ export class ReviewRepository {
       });
 
       // media: deleteMany + createManyAndReturn
-      const deleteMedia = tx.reviewMedia.deleteMany({
+      await tx.reviewMedia.deleteMany({
         where: {
           reviewId: review.id,
         },
       });
 
-      const createMedia = tx.reviewMedia.createManyAndReturn({
+      const createdMedia = await tx.reviewMedia.createManyAndReturn({
         data: media.map((m) => ({
           url: m.url,
           type: m.type,
           reviewId: review.id,
         })),
       });
-
-      const [createdMedia] = await Promise.all([createMedia, deleteMedia]);
 
       return {
         ...review,

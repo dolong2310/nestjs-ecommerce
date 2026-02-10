@@ -1,12 +1,12 @@
 import {
   AddToCartBodySchema,
   CartItemDetailSchema,
-  CartItemSchema,
   DeleteCartBodySchema,
   GetCartQuerySchema,
   GetCartResponseSchema,
   UpdateCartBodySchema,
 } from '@/routes/cart/cart.model';
+import { CartItemSchema } from '@/shared/models/shared-cart.model';
 import z from 'zod';
 
 export type CartItemType = z.infer<typeof CartItemSchema>;

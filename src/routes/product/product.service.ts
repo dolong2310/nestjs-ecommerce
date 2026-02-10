@@ -1,6 +1,6 @@
-import { ProductNotFoundException } from '@/routes/product/product.error';
 import { ProductRepository } from '@/routes/product/product.repo';
 import { GetProductResponseType, GetProductsQueryType, GetProductsResponseType } from '@/routes/product/product.type';
+import { ProductNotFoundException } from '@/shared/errors/shared-error.error';
 import { Injectable } from '@nestjs/common';
 import { I18nContext } from 'nestjs-i18n';
 

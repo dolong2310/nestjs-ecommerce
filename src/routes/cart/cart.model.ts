@@ -1,23 +1,11 @@
-import { stringToDate } from '@/shared/models/codecs';
 import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { createPaginationResponseSchema } from '@/shared/models/response.model';
+import { CartItemSchema } from '@/shared/models/shared-cart.model';
 import { ProductTranslationSchema } from '@/shared/models/shared-product-translation.model';
 import { ProductSchema } from '@/shared/models/shared-product.model';
 import { SkuSchema } from '@/shared/models/shared-sku.model';
 import { UserSchema } from '@/shared/models/shared-user.model';
 import z from 'zod';
-
-export const CartItemSchema = z.object({
-  id: z.number(),
-  quantity: z.number().min(0),
-  skuId: z.number().int().positive(),
-  userId: z.number().int().positive(),
-
-  createdAt: stringToDate.default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
-  updatedAt: stringToDate.default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
-  // createdAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
-  // updatedAt: z.coerce.date().default(new Date()), // trong cart.service nếu dùng hàm findMany2 thì phải dùng coerce ép kiểu từ string qua date => không thì lỗi zod serialize
-});
 
 // NOTE: dùng schema này nếu hàm `findMany2` CÓ response các key:
 // createdById, updatedById, deletedById, deletedAt, createdAt, updatedAt
@@ -37,6 +25,7 @@ export const CartItemDetailSchema2 = z.object({
     }),
   ),
 });
+export type CartItemDetailType2 = z.infer<typeof CartItemDetailSchema2>;
 
 // NOTE: dùng schema này nếu hàm `findMany2` KHÔNG response các key:
 // createdById, updatedById, deletedById, deletedAt, createdAt, updatedAt

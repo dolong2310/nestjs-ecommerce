@@ -1,4 +1,3 @@
-import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
 import { stringToDate } from '@/shared/models/codecs';
 import z from 'zod';
 
@@ -51,11 +50,4 @@ export const WebhookPaymentBodySchema = z.object({
   subAccount: z.string().nullable(), // Tài khoản ngân hàng phụ (tài khoản định danh),
   referenceCode: z.string().nullable(), // Mã tham chiếu của tin nhắn sms
   description: z.string(), // Toàn bộ nội dung tin nhắn sms
-});
-
-export const PaymentSchema = z.object({
-  id: z.number(),
-  status: z.enum(EnumPaymentStatus),
-  createdAt: stringToDate.default(new Date()),
-  updatedAt: stringToDate.default(new Date()),
 });

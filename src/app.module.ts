@@ -23,9 +23,12 @@ import { HttpExceptionFilter } from '@/shared/filters/http-exception.filter';
 import { AuthCompositeGuard } from '@/shared/guards/auth-composite.guard';
 import { ThrottlerBehindProxyGuard } from '@/shared/guards/throttler-behind-proxy.guard';
 import { CustomZodValidationPipe } from '@/shared/pipes/custom-zod-validation.pipe';
+import { PrismaService } from '@/shared/services/prisma.service';
 import { SharedModule } from '@/shared/shared.module';
 import { WebsocketModule } from '@/websockets/websocket.module';
 import KeyvRedis from '@keyv/redis';
+import { ClsPluginTransactional } from '@nestjs-cls/transactional';
+import { TransactionalAdapterPrisma } from '@nestjs-cls/transactional-adapter-prisma';
 import { BullModule } from '@nestjs/bullmq';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
@@ -33,11 +36,13 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ClsModule } from 'nestjs-cls';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { LoggerModule } from 'nestjs-pino';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import path from 'path';
-import pino from 'pino';
+
+// import pino from 'pino';
 
 @Module({
   imports: [
@@ -118,6 +123,20 @@ import pino from 'pino';
           },
         },
       },
+    }),
+    ClsModule.forRoot({
+      global: true, // dùng được ở mọi nơi không cần import lại
+      middleware: {
+        mount: true, // tự động mount cho mọi HTTP request
+      },
+      plugins: [
+        new ClsPluginTransactional({
+          imports: [SharedModule], // Import module có PrismaService
+          adapter: new TransactionalAdapterPrisma({
+            prismaInjectionToken: PrismaService,
+          }),
+        }),
+      ],
     }),
     ScheduleModule.forRoot(),
     SharedModule,
