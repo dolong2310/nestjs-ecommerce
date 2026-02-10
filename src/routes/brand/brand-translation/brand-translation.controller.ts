@@ -4,12 +4,13 @@ import {
   UpdateBrandTranslationBodyDTO,
 } from '@/routes/brand/brand-translation/brand-translation.dto';
 import { BrandTranslationService } from '@/routes/brand/brand-translation/brand-translation.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('brand-translation')
+@Controller({ path: 'brand-translation', version: CURRENT_VERSION })
 export class BrandTranslationController {
   constructor(private readonly brandTranslationService: BrandTranslationService) {}
 

@@ -7,12 +7,13 @@ import {
   UpdateRoleBodyDTO,
 } from '@/routes/role/role.dto';
 import { RoleService } from '@/routes/role/role.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('roles')
+@Controller({ path: 'roles', version: CURRENT_VERSION })
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 

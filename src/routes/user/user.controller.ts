@@ -10,6 +10,7 @@ import {
 } from '@/routes/user/user.dto';
 import { UserService } from '@/routes/user/user.service';
 import type { RoleNameType } from '@/shared/constants/role.constant';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveRolePermissions } from '@/shared/decorators/active-role-permissions.decorator';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
@@ -17,7 +18,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } 
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('users')
+@Controller({ path: 'users', version: CURRENT_VERSION })
 @ApiBearerAuth()
 export class UserController {
   constructor(private readonly userService: UserService) {}

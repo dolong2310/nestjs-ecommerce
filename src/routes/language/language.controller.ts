@@ -6,12 +6,13 @@ import {
   UpdateLanguageBodyDTO,
 } from '@/routes/language/language.dto';
 import { LanguageService } from '@/routes/language/language.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('languages')
+@Controller({ path: 'languages', version: CURRENT_VERSION })
 export class LanguageController {
   constructor(private readonly languageService: LanguageService) {}
 

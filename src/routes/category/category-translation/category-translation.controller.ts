@@ -4,12 +4,13 @@ import {
   UpdateCategoryTranslationBodyDTO,
 } from '@/routes/category/category-translation/category-translation.dto';
 import { CategoryTranslationService } from '@/routes/category/category-translation/category-translation.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('category-translation')
+@Controller({ path: 'category-translation', version: CURRENT_VERSION })
 export class CategoryTranslationController {
   constructor(private readonly categoryTranslationService: CategoryTranslationService) {}
 

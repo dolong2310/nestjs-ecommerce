@@ -1,13 +1,14 @@
 import { WebhookPaymentBodyDTO } from '@/routes/payment/payment.dto';
 import { PaymentService } from '@/routes/payment/payment.service';
 import { AuthKey } from '@/shared/constants/auth.constant';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { Private } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiSecurity } from '@nestjs/swagger';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('payment')
+@Controller({ path: 'payment', version: CURRENT_VERSION })
 @ApiSecurity('payment-api-key')
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}

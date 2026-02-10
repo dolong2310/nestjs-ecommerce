@@ -6,6 +6,7 @@ import {
   UpdateCategoryBodyDTO,
 } from '@/routes/category/category.dto';
 import { CategoryService } from '@/routes/category/category.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
@@ -13,7 +14,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } 
 import { I18nContext } from 'nestjs-i18n';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('categories')
+@Controller({ path: 'categories', version: CURRENT_VERSION })
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 

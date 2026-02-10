@@ -8,13 +8,14 @@ import {
   UpdateReviewResponseDTO,
 } from '@/routes/review/review.dto';
 import { ReviewService } from '@/routes/review/review.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { PaginationQueryDTO } from '@/shared/dtos/request.dto';
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('reviews')
+@Controller({ path: 'reviews', version: CURRENT_VERSION })
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 

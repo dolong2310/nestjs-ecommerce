@@ -1,15 +1,16 @@
 import {
-  ProductTranslationResponseDTO,
   CreateProductTranslationBodyDTO,
+  ProductTranslationResponseDTO,
   UpdateProductTranslationBodyDTO,
 } from '@/routes/product/product-translation/product-translation.dto';
 import { ProductTranslationService } from '@/routes/product/product-translation/product-translation.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('product-translation')
+@Controller({ path: 'product-translation', version: CURRENT_VERSION })
 export class ProductTranslationController {
   constructor(private readonly productTranslationService: ProductTranslationService) {}
 

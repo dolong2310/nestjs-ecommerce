@@ -6,6 +6,7 @@ import {
   UpdateBrandBodyDTO,
 } from '@/routes/brand/brand.dto';
 import { BrandService } from '@/routes/brand/brand.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
@@ -13,7 +14,7 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } 
 import { I18nContext } from 'nestjs-i18n';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('brands')
+@Controller({ path: 'brands', version: CURRENT_VERSION })
 export class BrandController {
   constructor(private readonly brandService: BrandService) {}
 

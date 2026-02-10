@@ -8,12 +8,13 @@ import {
   GetOrdersResponseDTO,
 } from '@/routes/order/order.dto';
 import { OrderService } from '@/routes/order/order.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
 import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('orders')
+@Controller({ path: 'orders', version: CURRENT_VERSION })
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

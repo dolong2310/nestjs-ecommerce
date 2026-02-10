@@ -6,6 +6,7 @@ import {
   ProductResponseDTO,
   UpdateProductBodyDTO,
 } from '@/routes/product/product.dto';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import type { AccessTokenPayload } from '@/shared/types/jwt.type';
@@ -16,7 +17,7 @@ import { ManageProductService } from './manage-product.service';
 /**
  * @description: Only for ADMIN/SELLER access
  */
-@Controller('manage-product/products')
+@Controller({ path: 'manage-product/products', version: CURRENT_VERSION })
 export class ManageProductController {
   constructor(private readonly manageProductService: ManageProductService) {}
 

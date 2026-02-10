@@ -3,11 +3,12 @@ import envConfig from '@/shared/config';
 import { LoggingInterceptor } from '@/shared/interceptor/logging.interceptor';
 import { WebsocketAdapter } from '@/websockets/websocket.adapter';
 // import { ConsoleLogger } from '@nestjs/common';
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { Logger } from 'nestjs-pino';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { cleanupOpenApiDoc } from 'nestjs-zod';
 
 async function bootstrap() {
@@ -49,6 +50,18 @@ async function bootstrap() {
   // Logger
   app.useLogger(app.get(Logger));
   app.useGlobalInterceptors(new LoggingInterceptor());
+
+  // Enable URI versioning
+  app.setGlobalPrefix('api', {
+    exclude: [
+      // { path: 'health', method: RequestMethod.GET },
+    ],
+  });
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1', // version mặc định nếu route không specify
+    // prefix: 'api/', // optional: thêm prefix, sẽ thành /api/v1/users
+  });
 
   // Swagger
   const openApiDoc = SwaggerModule.createDocument(

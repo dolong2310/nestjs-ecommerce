@@ -7,12 +7,13 @@ import {
   UpdateCartBodyDTO,
 } from '@/routes/cart/cart.dto';
 import { CartService } from '@/routes/cart/cart.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('cart')
+@Controller({ path: 'cart', version: CURRENT_VERSION })
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 

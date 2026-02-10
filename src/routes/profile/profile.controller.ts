@@ -1,12 +1,13 @@
 import { ChangePasswordBodyDTO, UpdateProfileBodyDTO } from '@/routes/profile/profile.dto';
 import { ProfileService } from '@/routes/profile/profile.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { GetUserProfileResponseDTO, UpdateUserProfileResponseDTO } from '@/shared/dtos/shared-user.dto';
 import { Body, Controller, Get, Put } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('profile')
+@Controller({ path: 'profile', version: CURRENT_VERSION })
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 

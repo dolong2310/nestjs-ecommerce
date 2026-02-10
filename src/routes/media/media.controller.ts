@@ -6,6 +6,7 @@ import {
 import { MediaService } from '@/routes/media/media.service';
 import { ParseFilePipeWithUnlink } from '@/routes/media/parse-file-pipe-with-unlink.pipe';
 import { UPLOAD_DIR } from '@/shared/constants/common.constant';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { Public } from '@/shared/decorators/auth.decorator';
 import {
   Body,
@@ -29,7 +30,7 @@ const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 const MAX_COUNT = 10;
 const FILE_TYPE = /^(image\/)(png|jpg|jpeg|webp)$/;
 
-@Controller('media')
+@Controller({ path: 'media', version: CURRENT_VERSION })
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 

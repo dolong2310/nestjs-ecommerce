@@ -17,6 +17,7 @@ import {
 import { AuthService } from '@/routes/auth/services/auth.service';
 import { GoogleService } from '@/routes/auth/services/google.service';
 import envConfig from '@/shared/config';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { Public } from '@/shared/decorators/auth.decorator';
 import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
@@ -38,7 +39,7 @@ import {
 import type { Response } from 'express';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: CURRENT_VERSION })
 // @SkipThrottle()
 export class AuthController {
   constructor(

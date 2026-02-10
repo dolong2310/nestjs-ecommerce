@@ -7,12 +7,13 @@ import {
   UpdatePermissionBodyDTO,
 } from '@/routes/permission/permission.dto';
 import { PermissionService } from '@/routes/permission/permission.service';
+import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller('permissions')
+@Controller({ path: 'permissions', version: CURRENT_VERSION })
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
