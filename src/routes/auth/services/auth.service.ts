@@ -535,6 +535,10 @@ export class AuthService {
         throw InvalidOtpCodeException;
       }
 
+      if (otpCode.code !== data.code) {
+        throw InvalidOtpCodeException;
+      }
+
       if (otpCode.expiresAt < new Date()) {
         // Delete OTP code
         await this.authRepository.deleteOtpCode({ id: otpCode.id });

@@ -126,7 +126,7 @@ export class ManageProductService {
         creatorId: product.createdById,
       });
 
-      const updatedProduct = await this.productRepository.update2({ userId, productId, body });
+      const updatedProduct = await this.productRepository.update({ userId, productId, body });
 
       return updatedProduct;
     } catch (error) {

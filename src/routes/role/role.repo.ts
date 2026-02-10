@@ -1,4 +1,5 @@
 import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from '@/routes/role/role.type';
+import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { RoleType, RoleWithPermissionsType } from '@/shared/types/shared-role.type';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -24,14 +25,7 @@ export class RoleRepository {
         deletedAt: null,
       },
     });
-    const [roles, totalRoles] = await Promise.all([rolesPromise, totalRolesPromise]);
-    return {
-      data: roles,
-      totalItems: totalRoles,
-      totalPages: Math.ceil(totalRoles / limit),
-      currentPage: page,
-      limit: limit,
-    };
+    return await paginate(rolesPromise, totalRolesPromise, page, limit);
   }
 
   // For cursor-based pagination

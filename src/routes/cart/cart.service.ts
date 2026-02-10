@@ -20,7 +20,7 @@ export class CartService {
   async getCart(props: { userId: number; query: GetCartQueryType }): Promise<GetCartResponseType> {
     try {
       const { userId, query } = props;
-      return await this.cartRepository.findMany2({ userId, languageId: I18nContext.current()!.lang, query });
+      return await this.cartRepository.findMany({ userId, languageId: I18nContext.current()!.lang, query });
     } catch (error) {
       throw error;
     }

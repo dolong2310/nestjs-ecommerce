@@ -5,7 +5,7 @@ import {
   GetCategoriesIncludeTranslationsResponseType,
   UpdateCategoryBodyType,
 } from '@/routes/category/category.type';
-import { ALL_LANGUAGE_CODE } from '@/shared/constants/common.constant';
+import { translationWhere } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -24,15 +24,7 @@ export class CategoryRepository {
       },
       include: {
         categoryTranslations: {
-          where:
-            payload.languageId === ALL_LANGUAGE_CODE
-              ? {
-                  deletedAt: null,
-                }
-              : {
-                  languageId: payload.languageId,
-                  deletedAt: null,
-                },
+          where: translationWhere(payload.languageId),
           orderBy: {
             createdAt: 'asc',
           },
@@ -53,15 +45,7 @@ export class CategoryRepository {
       },
       include: {
         categoryTranslations: {
-          where:
-            payload.languageId === ALL_LANGUAGE_CODE
-              ? {
-                  deletedAt: null,
-                }
-              : {
-                  languageId: payload.languageId,
-                  deletedAt: null,
-                },
+          where: translationWhere(payload.languageId),
           orderBy: {
             createdAt: 'asc',
           },

@@ -136,7 +136,7 @@ export const GetProductsResponseSchema = z.object({
   ),
   totalItems: z.number(),
   totalPages: z.number(),
-  page: z.number(),
+  currentPage: z.number(),
   limit: z.number(),
 });
 

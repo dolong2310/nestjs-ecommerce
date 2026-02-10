@@ -6,7 +6,7 @@ import {
   GetBrandsQueryType,
   UpdateBrandBodyType,
 } from '@/routes/brand/brand.type';
-import { ALL_LANGUAGE_CODE } from '@/shared/constants/common.constant';
+import { translationWhere } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { Injectable } from '@nestjs/common';
 
@@ -29,15 +29,7 @@ export class BrandRepository {
       },
       include: {
         brandTranslations: {
-          where:
-            languageId === ALL_LANGUAGE_CODE
-              ? {
-                  deletedAt: null,
-                }
-              : {
-                  languageId,
-                  deletedAt: null,
-                },
+          where: translationWhere(languageId),
           orderBy: {
             createdAt: 'asc',
           },
@@ -64,15 +56,7 @@ export class BrandRepository {
       },
       include: {
         brandTranslations: {
-          where:
-            languageId === ALL_LANGUAGE_CODE
-              ? {
-                  deletedAt: null,
-                }
-              : {
-                  languageId,
-                  deletedAt: null,
-                },
+          where: translationWhere(languageId),
           orderBy: {
             createdAt: 'asc',
           },

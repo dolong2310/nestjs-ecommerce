@@ -1,7 +1,7 @@
 import path from 'path';
 
 export const UPLOAD_DIR = path.resolve('upload');
-
+export const EMAIL_TEMPLATES_DIR = path.resolve('src/shared/email-templates');
 export const ALL_LANGUAGE_CODE = 'all';
 
 export const EnumOrderBy = {

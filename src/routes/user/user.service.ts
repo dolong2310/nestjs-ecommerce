@@ -1,5 +1,4 @@
 import {
-  RoleNotFoundException,
   UserAlreadyExistsException,
   UserCannotBeSetAsAdminException,
   UserCannotUpdateOrDeleteYourselfException,
@@ -8,6 +7,7 @@ import {
 import { UserRepository } from '@/routes/user/user.repo';
 import { CreateUserBodyType, GetUsersResponseType, UpdateUserBodyType, UserQueryType } from '@/routes/user/user.type';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
+import { RoleNotFoundException } from '@/shared/errors/shared-error.error';
 import {
   isForeignKeyConstraintPrismaError,
   isNotFoundPrismaError,

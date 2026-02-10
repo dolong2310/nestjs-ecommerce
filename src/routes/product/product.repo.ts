@@ -5,7 +5,8 @@ import {
   GetProductsResponseType,
   UpdateProductBodyType,
 } from '@/routes/product/product.type';
-import { ALL_LANGUAGE_CODE, EnumSortBy, OrderByType, SortByType } from '@/shared/constants/common.constant';
+import { EnumSortBy, OrderByType, SortByType } from '@/shared/constants/common.constant';
+import { paginate, translationWhere } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { ProductType } from '@/shared/types/shared-product.type';
 import { Injectable } from '@nestjs/common';
@@ -103,13 +104,7 @@ export class ProductRepository {
       where,
       include: {
         productTranslations: {
-          where:
-            languageId === ALL_LANGUAGE_CODE
-              ? { deletedAt: null }
-              : {
-                  languageId,
-                  deletedAt: null,
-                },
+          where: translationWhere(languageId),
         },
         // NOTE: để lấy được order của product để sort theo sales thì phải join với bảng order
         // VẤN ĐỀ: nếu join thì sẽ tạo ra nhiều query join => tăng độ phức tạp của query => tăng latency => tăng thời gian trả về response
@@ -146,9 +141,7 @@ export class ProductRepository {
 
     const totalProductsPromise = this.prismaService.product.count({ where });
 
-    const [products, totalProducts] = await Promise.all([productsPromise, totalProductsPromise]);
-
-    return { data: products, totalItems: totalProducts, totalPages: Math.ceil(totalProducts / limit), page, limit };
+    return await paginate(productsPromise, totalProductsPromise, page, limit);
   }
 
   async findById(productId: number): Promise<ProductType | null> {
@@ -187,12 +180,11 @@ export class ProductRepository {
       };
     }
 
-    const translationWhere = languageId === ALL_LANGUAGE_CODE ? { deletedAt: null } : { languageId, deletedAt: null };
     const product = await this.prismaService.product.findUnique({
       where,
       include: {
         productTranslations: {
-          where: translationWhere,
+          where: translationWhere(languageId),
         },
         skus: {
           where: { deletedAt: null },
@@ -201,14 +193,14 @@ export class ProductRepository {
           where: { deletedAt: null },
           include: {
             categoryTranslations: {
-              where: translationWhere,
+              where: translationWhere(languageId),
             },
           },
         },
         brand: {
           include: {
             brandTranslations: {
-              where: translationWhere,
+              where: translationWhere(languageId),
             },
           },
         },
@@ -267,94 +259,94 @@ export class ProductRepository {
    * 2. SKU đã tồn tại trong database nhưng có trong body thì sẽ được cập nhật.
    * 3. SKU không tồn tại trong database nhưng có trong body thì sẽ được thêm mới
    */
-  async update(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
-    const { userId, productId, body } = payload;
-    const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
+  // async update2(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
+  //   const { userId, productId, body } = payload;
+  //   const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
 
-    // 1. Lấy danh sách sku hiện tại trong database
-    const skusInDatabase = await this.prismaService.sKU.findMany({
-      where: { productId, deletedAt: null },
-    });
+  //   // 1. Lấy danh sách sku hiện tại trong database
+  //   const skusInDatabase = await this.prismaService.sKU.findMany({
+  //     where: { productId, deletedAt: null },
+  //   });
 
-    // 2. Tìm các skus cần xoá (tồn tại trong database nhưng không có trong body)
-    const skusToDelete = skusInDatabase.filter((skuInDatabase) =>
-      skus.every((sku) => sku.value !== skuInDatabase.value),
-    );
-    const skuIdsToDelete = skusToDelete.map((sku) => sku.id);
+  //   // 2. Tìm các skus cần xoá (tồn tại trong database nhưng không có trong body)
+  //   const skusToDelete = skusInDatabase.filter((skuInDatabase) =>
+  //     skus.every((sku) => sku.value !== skuInDatabase.value),
+  //   );
+  //   const skuIdsToDelete = skusToDelete.map((sku) => sku.id);
 
-    // 3. Mapping Id vào trong body skus
-    const skusWithId = skus.map((sku) => {
-      const skuInDatabase = skusInDatabase.find((skuInDatabase) => skuInDatabase.value === sku.value);
-      return {
-        ...sku,
-        id: skuInDatabase ? skuInDatabase.id : null,
-      };
-    });
+  //   // 3. Mapping Id vào trong body skus
+  //   const skusWithId = skus.map((sku) => {
+  //     const skuInDatabase = skusInDatabase.find((skuInDatabase) => skuInDatabase.value === sku.value);
+  //     return {
+  //       ...sku,
+  //       id: skuInDatabase ? skuInDatabase.id : null,
+  //     };
+  //   });
 
-    // 4. Tìm các skus để cập nhật
-    const skusToUpdate = skusWithId.filter((sku) => sku.id !== null);
+  //   // 4. Tìm các skus để cập nhật
+  //   const skusToUpdate = skusWithId.filter((sku) => sku.id !== null);
 
-    // 5. Tìm các skus để thêm mới
-    const skusToCreate = skusWithId.filter((sku) => sku.id === null);
-    const skusDataToCreate = skusToCreate.map((sku) => {
-      const { id: skuId, ...skuData } = sku;
-      return {
-        ...skuData,
-        productId,
-        createdById: userId,
-      };
-    });
+  //   // 5. Tìm các skus để thêm mới
+  //   const skusToCreate = skusWithId.filter((sku) => sku.id === null);
+  //   const skusDataToCreate = skusToCreate.map((sku) => {
+  //     const { id: skuId, ...skuData } = sku;
+  //     return {
+  //       ...skuData,
+  //       productId,
+  //       createdById: userId,
+  //     };
+  //   });
 
-    // 6. Cập nhật transaction
-    const [product] = await this.prismaService.$transaction([
-      // 6.1. Cập nhật product
-      this.prismaService.product.update({
-        where: { id: productId, deletedAt: null },
-        data: {
-          name: name,
-          basePrice: basePrice,
-          virtualPrice: virtualPrice,
-          brandId: brandId,
-          images: images,
-          publishedAt: publishedAt,
-          variants: variants,
-          categories: { set: categories.map((categoryId) => ({ id: categoryId })) },
-          updatedById: userId,
-        },
-      }),
-      // 6.2. Xoá mềm các sku không có trong body
-      this.prismaService.sKU.updateMany({
-        where: { id: { in: skuIdsToDelete }, deletedAt: null },
-        data: { deletedAt: new Date(), deletedById: userId },
-      }),
-      // 6.3. Cập nhật các skus có trong body
-      ...skusToUpdate.map((sku) =>
-        this.prismaService.sKU.update({
-          where: { id: sku.id!, deletedAt: null },
-          data: {
-            value: sku.value,
-            price: sku.price,
-            stock: sku.stock,
-            image: sku.image,
-            updatedById: userId,
-          },
-        }),
-      ),
-      // 6.4. Thêm mới các skus mới
-      this.prismaService.sKU.createMany({
-        data: skusDataToCreate,
-      }),
-    ]);
-    return product;
-  }
+  //   // 6. Cập nhật transaction
+  //   const [product] = await this.prismaService.$transaction([
+  //     // 6.1. Cập nhật product
+  //     this.prismaService.product.update({
+  //       where: { id: productId, deletedAt: null },
+  //       data: {
+  //         name: name,
+  //         basePrice: basePrice,
+  //         virtualPrice: virtualPrice,
+  //         brandId: brandId,
+  //         images: images,
+  //         publishedAt: publishedAt,
+  //         variants: variants,
+  //         categories: { set: categories.map((categoryId) => ({ id: categoryId })) },
+  //         updatedById: userId,
+  //       },
+  //     }),
+  //     // 6.2. Xoá mềm các sku không có trong body
+  //     this.prismaService.sKU.updateMany({
+  //       where: { id: { in: skuIdsToDelete }, deletedAt: null },
+  //       data: { deletedAt: new Date(), deletedById: userId },
+  //     }),
+  //     // 6.3. Cập nhật các skus có trong body
+  //     ...skusToUpdate.map((sku) =>
+  //       this.prismaService.sKU.update({
+  //         where: { id: sku.id!, deletedAt: null },
+  //         data: {
+  //           value: sku.value,
+  //           price: sku.price,
+  //           stock: sku.stock,
+  //           image: sku.image,
+  //           updatedById: userId,
+  //         },
+  //       }),
+  //     ),
+  //     // 6.4. Thêm mới các skus mới
+  //     this.prismaService.sKU.createMany({
+  //       data: skusDataToCreate,
+  //     }),
+  //   ]);
+  //   return product;
+  // }
 
   /**
-   * update2: Phiên bản tối ưu của update.
+   * update: Phiên bản tối ưu của update2.
    * - categories: dùng `set` thay vì `connect` để ghi đè đúng danh sách category.
    * - SKU: dùng Map/Set cho lookup O(1), tránh O(n×m).
    * - Transaction: chỉ thêm thao tác xóa/cập nhật/tạo SKU khi có dữ liệu.
    */
-  async update2(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
+  async update(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
     const { userId, productId, body } = payload;
     const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
 

@@ -35,13 +35,6 @@ export const FailedToCreateDeviceException = new BadRequestException([
   },
 ]);
 
-export const RoleNotFoundException = new NotFoundException([
-  {
-    field: 'role',
-    message: 'Error.RoleNotFound', // Role not found
-  },
-]);
-
 export const RefreshTokenNotFoundException = new NotFoundException([
   {
     field: 'refreshToken',

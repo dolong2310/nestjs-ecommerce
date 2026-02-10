@@ -20,7 +20,7 @@ import {
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
 import { ServerOverloadedException, VersionConflictException } from '@/shared/errors/shared-error.error';
-import { isNotFoundPrismaError } from '@/shared/helpers';
+import { isNotFoundPrismaError, paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { OrderType } from '@/shared/types/shared-order.type';
 import { Injectable } from '@nestjs/common';
@@ -36,37 +36,29 @@ export class OrderRepository {
     const { userId, query } = props;
     const { page, limit, status } = query;
 
-    const [orders, totalOrders] = await Promise.all([
-      this.prismaService.order.findMany({
-        where: {
-          userId,
-          status,
-          deletedAt: null,
-        },
-        include: {
-          items: true,
-        },
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy: {
-          createdAt: 'desc',
-        },
-      }),
-      this.prismaService.order.count({
-        where: {
-          status,
-          deletedAt: null,
-        },
-      }),
-    ]);
+    const ordersPromise = this.prismaService.order.findMany({
+      where: {
+        userId,
+        status,
+        deletedAt: null,
+      },
+      include: {
+        items: true,
+      },
+      skip: (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    const totalOrdersPromise = this.prismaService.order.count({
+      where: {
+        status,
+        deletedAt: null,
+      },
+    });
 
-    return {
-      data: orders,
-      totalItems: totalOrders,
-      totalPages: Math.ceil(totalOrders / limit),
-      currentPage: page,
-      limit: limit,
-    };
+    return await paginate(ordersPromise, totalOrdersPromise, page, limit);
   }
 
   async create(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {

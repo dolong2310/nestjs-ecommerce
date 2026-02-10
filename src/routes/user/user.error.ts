@@ -36,13 +36,6 @@ export const UserCannotBeSetAsAdminException = new ForbiddenException([
   },
 ]);
 
-export const RoleNotFoundException = new NotFoundException([
-  {
-    field: 'roleId',
-    message: 'Error.RoleNotFound', // Role not found
-  },
-]);
-
 export const UserCannotUpdateOrDeleteYourselfException = new ForbiddenException(
   'Error.UserCannotUpdateOrDeleteYourself',
 );

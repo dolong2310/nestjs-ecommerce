@@ -1,5 +1,5 @@
-import { RoleNotFoundException } from '@/routes/role/role.error';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
+import { RoleNotFoundException } from '@/shared/errors/shared-error.error';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { RoleType } from '@/shared/types/shared-role.type';
 import { Injectable } from '@nestjs/common';

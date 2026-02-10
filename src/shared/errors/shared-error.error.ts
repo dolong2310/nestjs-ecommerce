@@ -63,3 +63,10 @@ export const ServerOverloadedException = new ServiceUnavailableException([
     message: 'Error.ServerOverloaded', // Server is currently overloaded, please try again later
   },
 ]);
+
+export const RoleNotFoundException = new NotFoundException([
+  {
+    field: 'role',
+    message: 'Error.RoleNotFound', // Role not found
+  },
+]);

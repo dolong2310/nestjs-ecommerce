@@ -1,6 +1,5 @@
 import { Prisma } from '@/generated/prisma/client';
 import {
-  CartItemNotFoundException,
   InvalidQuantityException,
   OutOfStockSkuException,
   ProductNotFoundException,
@@ -16,6 +15,7 @@ import {
   UpdateCartBodyType,
 } from '@/routes/cart/cart.type';
 import { ALL_LANGUAGE_CODE } from '@/shared/constants/common.constant';
+import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { SkuType } from '@/shared/types/shared-sku.type';
 import { Injectable } from '@nestjs/common';
@@ -24,94 +24,89 @@ import { Injectable } from '@nestjs/common';
 export class CartRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  // For cursor-based pagination
+  // async findMany2(props: { userId: number; languageId: string; query: GetCartQueryType }): Promise<GetCartResponseType> {
+  //   const { userId, languageId, query } = props;
+  //   const { page, limit } = query;
+
+  //   // 1. Lấy tất cả cart items của user
+  //   const cartItems = await this.prismaService.cartItem.findMany({
+  //     where: {
+  //       userId,
+  //       sku: {
+  //         product: {
+  //           deletedAt: null,
+  //           publishedAt: {
+  //             not: null,
+  //             lte: new Date(),
+  //           },
+  //         },
+  //       },
+  //     },
+  //     // WARNING: join nhiều bảng như vậy sẽ làm tăng đáng kể thời gian query
+  //     include: {
+  //       sku: {
+  //         include: {
+  //           product: {
+  //             include: {
+  //               createdBy: true, // shop
+  //               productTranslations: {
+  //                 where: languageId === ALL_LANGUAGE_CODE ? { deletedAt: null } : { deletedAt: null, languageId },
+  //               },
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //     orderBy: {
+  //       updatedAt: 'desc', // Tính năng: khi update cart item thì sẽ được item đó sẽ được xếp lên vị trí trên cùng
+  //     },
+  //   });
+
+  //   // 2. Group cart items by shop
+  //   // Cách 1: Sử dụng Map
+  //   const groupMap = new Map<number, CartItemDetailType>();
+  //   for (const cartItem of cartItems) {
+  //     const shopId = cartItem.sku.product.createdById;
+  //     if (!shopId) continue;
+  //     if (!groupMap.has(shopId)) {
+  //       groupMap.set(shopId, { shop: cartItem.sku.product.createdBy, cartItems: [] });
+  //     }
+  //     groupMap.get(shopId)?.cartItems.push(cartItem);
+  //   }
+  //   const cartItemsByShop = Array.from(groupMap.values());
+
+  //   // Cách 2: Sử dụng reduce
+  //   // const cartItemsByShop2: CartItemDetailType[] = Object.values(
+  //   //   cartItems.reduce(
+  //   //     (result, cartItem) => {
+  //   //       const shopId = cartItem.sku.product.createdById;
+  //   //       if (!shopId) return result;
+  //   //       if (!result[shopId]) {
+  //   //         result[shopId] = { shop: cartItem.sku.product.createdBy, cartItems: [] };
+  //   //       }
+  //   //       result[shopId].cartItems.push(cartItem);
+  //   //       return result;
+  //   //     },
+  //   //     {} as Record<number, CartItemDetailType>,
+  //   //   ),
+  //   // );
+
+  //   // 3. Pagination
+  //   const skip = (page - 1) * limit;
+  //   const take = limit;
+  //   const totalItems = cartItemsByShop.length;
+  //   const data = cartItemsByShop.slice(skip, skip + take);
+
+  //   return {
+  //     data,
+  //     totalItems,
+  //     totalPages: Math.ceil(totalItems / limit),
+  //     currentPage: page,
+  //     limit: limit,
+  //   };
+  // }
+
   async findMany(props: { userId: number; languageId: string; query: GetCartQueryType }): Promise<GetCartResponseType> {
-    const { userId, languageId, query } = props;
-    const { page, limit } = query;
-
-    // 1. Lấy tất cả cart items của user
-    const cartItems = await this.prismaService.cartItem.findMany({
-      where: {
-        userId,
-        sku: {
-          product: {
-            deletedAt: null,
-            publishedAt: {
-              not: null,
-              lte: new Date(),
-            },
-          },
-        },
-      },
-      // WARNING: join nhiều bảng như vậy sẽ làm tăng đáng kể thời gian query
-      include: {
-        sku: {
-          include: {
-            product: {
-              include: {
-                createdBy: true, // shop
-                productTranslations: {
-                  where: languageId === ALL_LANGUAGE_CODE ? { deletedAt: null } : { deletedAt: null, languageId },
-                },
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        updatedAt: 'desc', // Tính năng: khi update cart item thì sẽ được item đó sẽ được xếp lên vị trí trên cùng
-      },
-    });
-
-    // 2. Group cart items by shop
-    // Cách 1: Sử dụng Map
-    const groupMap = new Map<number, CartItemDetailType>();
-    for (const cartItem of cartItems) {
-      const shopId = cartItem.sku.product.createdById;
-      if (!shopId) continue;
-      if (!groupMap.has(shopId)) {
-        groupMap.set(shopId, { shop: cartItem.sku.product.createdBy, cartItems: [] });
-      }
-      groupMap.get(shopId)?.cartItems.push(cartItem);
-    }
-    const cartItemsByShop = Array.from(groupMap.values());
-
-    // Cách 2: Sử dụng reduce
-    // const cartItemsByShop2: CartItemDetailType[] = Object.values(
-    //   cartItems.reduce(
-    //     (result, cartItem) => {
-    //       const shopId = cartItem.sku.product.createdById;
-    //       if (!shopId) return result;
-    //       if (!result[shopId]) {
-    //         result[shopId] = { shop: cartItem.sku.product.createdBy, cartItems: [] };
-    //       }
-    //       result[shopId].cartItems.push(cartItem);
-    //       return result;
-    //     },
-    //     {} as Record<number, CartItemDetailType>,
-    //   ),
-    // );
-
-    // 3. Pagination
-    const skip = (page - 1) * limit;
-    const take = limit;
-    const totalItems = cartItemsByShop.length;
-    const data = cartItemsByShop.slice(skip, skip + take);
-
-    return {
-      data,
-      totalItems,
-      totalPages: Math.ceil(totalItems / limit),
-      currentPage: page,
-      limit: limit,
-    };
-  }
-
-  async findMany2(props: {
-    userId: number;
-    languageId: string;
-    query: GetCartQueryType;
-  }): Promise<GetCartResponseType> {
     const { userId, languageId, query } = props;
     const { page, limit } = query;
 
@@ -119,7 +114,7 @@ export class CartRepository {
     const take = limit;
 
     // Đếm tổng số nhóm sản phẩm
-    const totalItems$ = this.prismaService.$queryRaw<{ createdById: number }[]>`
+    const totalItemsPromise = this.prismaService.$queryRaw<{ createdById: number }[]>`
       SELECT
         "Product"."createdById"
       FROM "CartItem"
@@ -130,9 +125,9 @@ export class CartRepository {
         AND "Product"."publishedAt" IS NOT NULL
         AND "Product"."publishedAt" <= NOW()
       GROUP BY "Product"."createdById"
-    `;
+    `.then((res) => res.length);
 
-    const data$ = await this.prismaService.$queryRaw<CartItemDetailType[]>`
+    const cartItemsPromise = this.prismaService.$queryRaw<CartItemDetailType[]>`
       SELECT
         "Product"."createdById",
         json_agg(
@@ -218,15 +213,7 @@ export class CartRepository {
       OFFSET ${skip}
     `;
 
-    const [data, totalItems] = await Promise.all([data$, totalItems$]);
-
-    return {
-      data,
-      totalItems: totalItems.length,
-      totalPages: Math.ceil(totalItems.length / limit),
-      currentPage: page,
-      limit,
-    };
+    return await paginate(cartItemsPromise, totalItemsPromise, page, limit);
   }
 
   async create(props: { userId: number; body: AddToCartBodyType }): Promise<CartItemType> {

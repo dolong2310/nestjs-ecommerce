@@ -1,4 +1,5 @@
 import { CreateUserBodyType, GetUsersResponseType, UserQueryType } from '@/routes/user/user.type';
+import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import type { UserType } from '@/shared/types/shared-user.type';
 import { Injectable } from '@nestjs/common';
@@ -32,14 +33,7 @@ export class UserRepository {
         deletedAt: null,
       },
     });
-    const [users, totalUsers] = await Promise.all([usersPromise, totalUsersPromise]);
-    return {
-      data: users,
-      totalItems: totalUsers,
-      totalPages: Math.ceil(totalUsers / limit),
-      currentPage: page,
-      limit: limit,
-    };
+    return await paginate(usersPromise, totalUsersPromise, page, limit);
   }
 
   create(payload: { userId: number; body: CreateUserBodyType }): Promise<UserType> {

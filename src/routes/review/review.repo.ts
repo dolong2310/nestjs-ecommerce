@@ -13,7 +13,7 @@ import {
   UpdateReviewResponseType,
 } from '@/routes/review/review.type';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
-import { isUniqueConstraintPrismaError } from '@/shared/helpers';
+import { isUniqueConstraintPrismaError, paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { PaginationQueryType } from '@/shared/types/shared-request.type';
 import { Injectable } from '@nestjs/common';
@@ -53,15 +53,7 @@ export class ReviewRepository {
       },
     });
 
-    const [reviews, totalReviews] = await Promise.all([reviewsPromise, totalReviewsPromise]);
-
-    return {
-      data: reviews,
-      totalItems: totalReviews,
-      totalPages: Math.ceil(totalReviews / limit),
-      currentPage: page,
-      limit,
-    };
+    return await paginate(reviewsPromise, totalReviewsPromise, page, limit);
   }
 
   async create({ userId, body }: { userId: number; body: CreateReviewBodyType }): Promise<CreateReviewResponseType> {

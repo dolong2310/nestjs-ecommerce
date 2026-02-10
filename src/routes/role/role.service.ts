@@ -2,11 +2,11 @@ import {
   RoleAlreadyExistsException,
   RoleCannotBeDeletedException,
   RoleCannotBeUpdatedException,
-  RoleNotFoundException,
 } from '@/routes/role/role.error';
 import { RoleRepository } from '@/routes/role/role.repo';
 import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from '@/routes/role/role.type';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
+import { RoleNotFoundException } from '@/shared/errors/shared-error.error';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { RoleWithPermissionsType } from '@/shared/types/shared-role.type';
