@@ -10,7 +10,6 @@ import { BrandIncludeTranslationsResponseSchema } from '@/shared/models/shared-b
 export class GetBrandsQueryDTO extends createRequestDto(GetBrandsQuerySchema) {}
 export class CreateBrandBodyDTO extends createRequestDto(CreateBrandBodySchema) {}
 export class UpdateBrandBodyDTO extends createRequestDto(UpdateBrandBodySchema) {}
-export class GetBrandsIncludeTranslationsResponseDTO extends createResponseDto(
-  GetBrandsIncludeTranslationsResponseSchema,
-) {}
+
+export class GetBrandsIncludeTranslationsResponseDTO extends createResponseDto(GetBrandsIncludeTranslationsResponseSchema) {}
 export class BrandIncludeTranslationsResponseDTO extends createResponseDto(BrandIncludeTranslationsResponseSchema) {}

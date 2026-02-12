@@ -1,5 +1,6 @@
 import {
   CreatePermissionBodyType,
+  GetPermissionResponseType,
   GetPermissionsResponseType,
   PermissionQueryType,
   UpdatePermissionBodyType,
@@ -72,7 +73,7 @@ export class PermissionRepository {
   //   }
   // }
 
-  findOne(id: number): Promise<PermissionType | null> {
+  findOne(id: number): Promise<GetPermissionResponseType | null> {
     return this.prisma.permission.findUnique({
       where: {
         id,

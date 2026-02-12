@@ -27,8 +27,18 @@ export const UpdateLanguageBodySchema = LanguageSchema.pick({
 
 // Response
 export const GetLanguagesResponseSchema = z.object({
-  data: z.array(LanguageSchema),
+  data: z.array(
+    LanguageSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedAt: true,
+    }),
+  ),
   totalItems: z.number(),
 });
 
-export const GetLanguageResponseSchema = LanguageSchema;
+export const GetLanguageResponseSchema = LanguageSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedAt: true,
+});

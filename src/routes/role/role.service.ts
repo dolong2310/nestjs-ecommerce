@@ -9,7 +9,7 @@ import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
 import { RoleNotFoundException } from '@/shared/errors/shared-error.error';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
-import { RoleWithPermissionsType } from '@/shared/types/shared-role.type';
+import { RoleWithPermissionsResponseType } from '@/shared/types/shared-role.type';
 import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
 
@@ -28,7 +28,7 @@ export class RoleService {
     }
   }
 
-  async getRoleById(id: number): Promise<RoleWithPermissionsType> {
+  async getRoleById(id: number): Promise<RoleWithPermissionsResponseType> {
     try {
       const role = await this.roleRepository.findOne(id);
       if (!role) {
@@ -43,7 +43,7 @@ export class RoleService {
     }
   }
 
-  async createRole(payload: { userId: number; body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  async createRole(payload: { userId: number; body: CreateRoleBodyType }): Promise<RoleWithPermissionsResponseType> {
     try {
       return await this.roleRepository.create(payload);
     } catch (error) {
@@ -58,7 +58,7 @@ export class RoleService {
     userId: number;
     id: number;
     body: UpdateRoleBodyType;
-  }): Promise<RoleWithPermissionsType> {
+  }): Promise<RoleWithPermissionsResponseType> {
     try {
       // Không cho bất kỳ ai cập nhật role ADMIN, kể cả user với role ADMIN. Tránh ADMIN này thay đổi permission linh tinh làm mất quyền kiểm soát hệ thống.
       await this._verifyRoleCannotBeUpdatedOrDeleted(payload.id, true);

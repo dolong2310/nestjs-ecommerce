@@ -16,5 +16,17 @@ export const BrandSchema = z.object({
 
 // Response
 export const BrandIncludeTranslationsResponseSchema = BrandSchema.extend({
-  brandTranslations: z.array(BrandTranslationSchema),
+  brandTranslations: z.array(
+    BrandTranslationSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+}).omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });

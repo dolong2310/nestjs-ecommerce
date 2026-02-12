@@ -29,7 +29,14 @@ export const UpdatePermissionBodySchema = CreatePermissionBodySchema.strict();
 // Response
 // For offset-based pagination
 export const GetPermissionsResponseSchema = z.object({
-  data: z.array(PermissionSchema),
+  data: z.array(
+    PermissionSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
   totalItems: z.number(),
   totalPages: z.number(),
   currentPage: z.number(),
@@ -42,3 +49,10 @@ export const GetPermissionsResponseSchema = z.object({
 //   hasNextPage: z.boolean(), // Còn page tiếp theo không
 //   limit: z.number(),
 // });
+
+export const GetPermissionResponseSchema = PermissionSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
+});

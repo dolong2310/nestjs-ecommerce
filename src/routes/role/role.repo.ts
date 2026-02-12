@@ -1,7 +1,7 @@
 import { CreateRoleBodyType, GetRolesResponseType, RoleQueryType, UpdateRoleBodyType } from '@/routes/role/role.type';
 import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
-import { RoleType, RoleWithPermissionsType } from '@/shared/types/shared-role.type';
+import { RoleResponseType, RoleWithPermissionsResponseType } from '@/shared/types/shared-role.type';
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -60,7 +60,7 @@ export class RoleRepository {
   //   }
   // }
 
-  findOne(id: number): Promise<RoleWithPermissionsType | null> {
+  findOne(id: number): Promise<RoleWithPermissionsResponseType | null> {
     return this.prisma.role.findUnique({
       where: {
         id,
@@ -76,7 +76,7 @@ export class RoleRepository {
     });
   }
 
-  create(payload: { userId: number; body: CreateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  create(payload: { userId: number; body: CreateRoleBodyType }): Promise<RoleWithPermissionsResponseType> {
     const { userId, body } = payload;
     return this.prisma.role.create({
       data: {
@@ -96,7 +96,7 @@ export class RoleRepository {
     });
   }
 
-  async update(payload: { userId: number; id: number; body: UpdateRoleBodyType }): Promise<RoleWithPermissionsType> {
+  async update(payload: { userId: number; id: number; body: UpdateRoleBodyType }): Promise<RoleWithPermissionsResponseType> {
     const { userId, id, body } = payload;
 
     // kiểm tra xem list permissionIds có item nào đã soft delete hoặc không tồn tại thì không cho phép update
@@ -170,7 +170,7 @@ export class RoleRepository {
     });
   }
 
-  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<RoleType> {
+  delete(payload: { userId: number; id: number }, isHardDelete?: boolean): Promise<RoleResponseType> {
     const { userId, id } = payload;
     return isHardDelete
       ? this.prisma.role.delete({

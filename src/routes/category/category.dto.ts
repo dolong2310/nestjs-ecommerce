@@ -10,5 +10,6 @@ import { CategoryIncludeTranslationsResponseSchema } from '@/shared/models/share
 export class GetCategoriesQueryDTO extends createRequestDto(GetCategoriesQuerySchema) {}
 export class CreateCategoryBodyDTO extends createRequestDto(CreateCategoryBodySchema) {}
 export class UpdateCategoryBodyDTO extends createRequestDto(UpdateCategoryBodySchema) {}
+
 export class GetCategoriesIncludeTranslationsResponseDTO extends createResponseDto(GetCategoriesIncludeTranslationsResponseSchema) {}
 export class CategoryIncludeTranslationsResponseDTO extends createResponseDto(CategoryIncludeTranslationsResponseSchema) {}

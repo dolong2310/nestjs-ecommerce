@@ -131,7 +131,19 @@ export const UpdateProductBodySchema = CreateProductBodySchema.strict();
 export const GetProductsResponseSchema = z.object({
   data: z.array(
     ProductSchema.extend({
-      productTranslations: z.array(ProductTranslationSchema),
+      productTranslations: z.array(
+        ProductTranslationSchema.omit({
+          createdById: true,
+          updatedById: true,
+          deletedById: true,
+          deletedAt: true,
+        }),
+      ),
+    }).omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
     }),
   ),
   totalItems: z.number(),
@@ -141,10 +153,29 @@ export const GetProductsResponseSchema = z.object({
 });
 
 export const GetProductResponseSchema = ProductSchema.extend({
-  productTranslations: z.array(ProductTranslationSchema),
-  skus: z.array(SkuSchema),
+  productTranslations: z.array(
+    ProductTranslationSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+  skus: z.array(
+    SkuSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
   categories: z.array(CategoryIncludeTranslationsResponseSchema),
   brand: BrandIncludeTranslationsResponseSchema,
+}).omit({
+  // createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });
 
 function _generateSKUs(variants: VariantsType) {

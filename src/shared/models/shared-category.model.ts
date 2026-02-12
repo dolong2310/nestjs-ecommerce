@@ -17,5 +17,17 @@ export const CategorySchema = z.object({
 
 // Response
 export const CategoryIncludeTranslationsResponseSchema = CategorySchema.extend({
-  categoryTranslations: z.array(CategoryTranslationSchema),
+  categoryTranslations: z.array(
+    CategoryTranslationSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+}).omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });

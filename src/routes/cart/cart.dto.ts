@@ -15,4 +15,5 @@ export class GetCartQueryDTO extends createRequestDto(GetCartQuerySchema) {}
 export class AddToCartBodyDTO extends createRequestDto(AddToCartBodySchema) {}
 export class UpdateCartBodyDTO extends createRequestDto(UpdateCartBodySchema) {}
 export class DeleteCartBodyDTO extends createRequestDto(DeleteCartBodySchema) {}
+
 export class GetCartResponseDTO extends createResponseDto(GetCartResponseSchema) {}

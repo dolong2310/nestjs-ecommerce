@@ -61,26 +61,37 @@ export const UserSchema = z.object({
 export const GetUserProfileResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
-}).extend({
-  role: RoleSchema.pick({
-    id: true,
-    name: true,
-  }).extend({
-    permissions: z
-      .array(
-        PermissionSchema.pick({
-          id: true,
-          name: true,
-          path: true,
-          method: true,
-          module: true,
-        }),
-      )
-      .default([]),
-  }),
-});
+})
+  .extend({
+    role: RoleSchema.pick({
+      id: true,
+      name: true,
+    }).extend({
+      permissions: z
+        .array(
+          PermissionSchema.pick({
+            id: true,
+            name: true,
+            path: true,
+            method: true,
+            module: true,
+          }),
+        )
+        .default([]),
+    }),
+  })
+  .omit({
+    createdById: true,
+    updatedById: true,
+    deletedById: true,
+    deletedAt: true,
+  });
 
 export const UpdateUserProfileResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });

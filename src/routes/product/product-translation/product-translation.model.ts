@@ -10,4 +10,9 @@ export const CreateProductTranslationBodySchema = ProductTranslationSchema.pick(
 export const UpdateProductTranslationBodySchema = CreateProductTranslationBodySchema.partial().strict();
 
 // Response
-export const ProductTranslationResponseSchema = ProductTranslationSchema;
+export const ProductTranslationResponseSchema = ProductTranslationSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
+});

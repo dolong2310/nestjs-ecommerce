@@ -2,6 +2,7 @@ import { PermissionAlreadyExistsException, PermissionNotFoundException } from '@
 import { PermissionRepository } from '@/routes/permission/permission.repo';
 import {
   CreatePermissionBodyType,
+  GetPermissionResponseType,
   GetPermissionsResponseType,
   PermissionQueryType,
   UpdatePermissionBodyType,
@@ -27,7 +28,7 @@ export class PermissionService {
     }
   }
 
-  async getPermissionById(id: number): Promise<PermissionType> {
+  async getPermissionById(id: number): Promise<GetPermissionResponseType> {
     try {
       const permission = await this.permissionRepository.findOne(id);
       if (!permission) {

@@ -21,3 +21,22 @@ export const RoleSchema = z.object({
 export const RoleWithPermissionsSchema = RoleSchema.extend({
   permissions: z.array(PermissionSchema),
 });
+
+// Response
+export const RoleResponseSchema = RoleSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
+});
+
+export const RoleWithPermissionsResponseSchema = RoleResponseSchema.extend({
+  permissions: z.array(
+    PermissionSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+});

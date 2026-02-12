@@ -134,6 +134,7 @@ export class OrderRepository {
     return this.prismaService.order.create({
       data: {
         userId,
+        shopId: userId,
         paymentId,
         status,
         receiver: orderItem.receiver,

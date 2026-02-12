@@ -15,6 +15,7 @@ export class UpdateProductBodyDTO extends createRequestDto(UpdateProductBodySche
 export class GetProductsQueryDTO extends createRequestDto(GetProductsQuerySchema) {}
 export class GetManageProductsQueryDTO extends createRequestDto(GetManageProductsQuerySchema) {}
 export class GetProductParamsDTO extends createRequestDto(GetProductParamsSchema) {}
+
 export class GetProductsResponseDTO extends createResponseDto(GetProductsResponseSchema) {}
 export class GetProductResponseDTO extends createResponseDto(GetProductResponseSchema) {}
 export class ProductResponseDTO extends createResponseDto(ProductSchema) {}

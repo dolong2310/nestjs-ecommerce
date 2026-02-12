@@ -10,4 +10,9 @@ export const CreateBrandTranslationBodySchema = BrandTranslationSchema.pick({
 export const UpdateBrandTranslationBodySchema = CreateBrandTranslationBodySchema.partial().strict();
 
 // Response
-export const BrandTranslationResponseSchema = BrandTranslationSchema;
+export const BrandTranslationResponseSchema = BrandTranslationSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
+});

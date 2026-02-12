@@ -37,10 +37,11 @@ export const GetOrdersResponseSchema = z.object({
       items: z.array(ProductSKUSnapshotSchema),
     }).omit({
       receiver: true,
-      deletedAt: true,
+      userId: true,
       createdById: true,
       updatedById: true,
       deletedById: true,
+      deletedAt: true,
     }),
   ),
   totalItems: z.number(),
@@ -51,10 +52,28 @@ export const GetOrdersResponseSchema = z.object({
 
 export const GetOrderResponseSchema = OrderSchema.extend({
   items: z.array(ProductSKUSnapshotSchema),
+}).omit({
+  userId: true,
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });
 
 export const CreateOrderResponseSchema = z.object({
-  data: z.array(OrderSchema),
+  data: z.array(
+    OrderSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
 });
 
-export const CancelOrderResponseSchema = OrderSchema;
+export const CancelOrderResponseSchema = OrderSchema.omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
+});

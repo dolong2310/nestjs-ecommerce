@@ -1,5 +1,5 @@
 import { PaginationQuerySchema } from '@/shared/models/request.model';
-import { RoleSchema, RoleWithPermissionsSchema } from '@/shared/models/shared-role.model';
+import { RoleSchema, RoleWithPermissionsResponseSchema } from '@/shared/models/shared-role.model';
 import z from 'zod';
 
 export const RoleParamsSchema = z
@@ -29,7 +29,14 @@ export const UpdateRoleBodySchema = CreateRoleBodySchema.extend({
 // Response
 // For offset-based pagination
 export const GetRolesResponseSchema = z.object({
-  data: z.array(RoleSchema),
+  data: z.array(
+    RoleSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
   totalItems: z.number(),
   totalPages: z.number(),
   currentPage: z.number(),
@@ -43,4 +50,4 @@ export const GetRolesResponseSchema = z.object({
 //   limit: z.number(),
 // });
 
-export const GetRoleResponseSchema = RoleWithPermissionsSchema; // reponse get role detail
+export const GetRoleResponseSchema = RoleWithPermissionsResponseSchema; // reponse get role detail

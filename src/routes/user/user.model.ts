@@ -26,16 +26,22 @@ export const UpdateUserBodySchema = CreateUserBodySchema.omit({
 }).partial();
 
 // Response
-
 const UsersResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
-}).extend({
-  role: RoleSchema.pick({
-    id: true,
-    name: true,
-  }),
-});
+})
+  .extend({
+    role: RoleSchema.pick({
+      id: true,
+      name: true,
+    }),
+  })
+  .omit({
+    createdById: true,
+    updatedById: true,
+    deletedById: true,
+    deletedAt: true,
+  });
 
 export const GetUsersResponseSchema = z.object({
   data: z.array(UsersResponseSchema),
@@ -50,6 +56,11 @@ export const GetUserResponseSchema = GetUserProfileResponseSchema; // get user d
 export const CreateUserResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
+}).omit({
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });
 
 // export const CreateUserResponseSchema = GetUserProfileResponseSchema;

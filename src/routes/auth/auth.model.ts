@@ -17,6 +17,10 @@ export const JwtTokenSchema = z.object({
 export const GetMeResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });
 
 //////////////////////////////////////////
@@ -82,6 +86,10 @@ export const RegisterBodySchema = UserSchema.pick({
 export const RegisterResponseSchema = UserSchema.omit({
   password: true,
   totpSecret: true,
+  createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });
 
 //////////////////////////////////////////
