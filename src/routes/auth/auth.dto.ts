@@ -13,7 +13,7 @@ import {
   RegisterResponseSchema,
   SendOtpBodySchema,
   Setup2FAResponseSchema,
-} from '@/routes/auth/models/auth.model';
+} from '@/routes/auth/auth.model';
 import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
 
 export class RegisterBodyDTO extends createRequestDto(RegisterBodySchema) {}

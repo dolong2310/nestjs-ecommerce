@@ -29,7 +29,22 @@ export const UserSchema = z.object({
   email: z.email(),
   name: z.string().max(500),
   password: z.string().min(6).max(100),
-  phoneNumber: z.string().min(10).max(15).nullable(),
+  phoneNumber: z
+    .string()
+    .nullable()
+    .refine(
+      (value: string) => {
+        if (value === '' || value.length === 0 || value === undefined || value === null) {
+          return true;
+        }
+        return value.length >= 10 && value.length <= 15;
+      },
+      {
+        error: 'Phone number must be between 10 and 15 characters',
+        path: ['phoneNumber'],
+      },
+    ),
+  // phoneNumber: z.string().min(10).max(15).nullable(),
   avatar: z.string().max(1000).nullable(),
   totpSecret: z.string().max(1000).nullable(),
   status: z.enum(EnumUserStatus).default(EnumUserStatus.ACTIVE),

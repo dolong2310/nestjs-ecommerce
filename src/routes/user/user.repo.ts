@@ -24,6 +24,10 @@ export class UserRepository {
           },
         },
       },
+      omit: {
+        password: true,
+        totpSecret: true,
+      },
       orderBy: {
         id: 'asc', // Giúp database dùng index hiệu quả
       },

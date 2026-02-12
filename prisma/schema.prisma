@@ -107,7 +107,7 @@ model Language {
 
 model User {
   id          Int     @id @default(autoincrement())
-  email       String // @unique // email cần set unique index với điều kiện deletedAt = null
+  email       String // @unique // NOTE: email không cần unique vì khi đăng ký, user phải send otp cho email unique
   name        String  @db.VarChar(500)
   password    String  @db.VarChar(100)
   phoneNumber String? @db.VarChar(50) // optional vì user đăng ký/đăng nhập bằng tài khoản google không phải user nào cũng có phone number

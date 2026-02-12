@@ -3,16 +3,6 @@ import { RoleSchema } from '@/shared/models/shared-role.model';
 import { GetUserProfileResponseSchema, UserSchema } from '@/shared/models/shared-user.model';
 import z from 'zod';
 
-export const UsersResponseSchema = UserSchema.omit({
-  password: true,
-  totpSecret: true,
-}).extend({
-  role: RoleSchema.pick({
-    id: true,
-    name: true,
-  }),
-});
-
 export const UserParamsSchema = z
   .object({
     id: z.coerce.number(),
@@ -36,6 +26,17 @@ export const UpdateUserBodySchema = CreateUserBodySchema.omit({
 }).partial();
 
 // Response
+
+const UsersResponseSchema = UserSchema.omit({
+  password: true,
+  totpSecret: true,
+}).extend({
+  role: RoleSchema.pick({
+    id: true,
+    name: true,
+  }),
+});
+
 export const GetUsersResponseSchema = z.object({
   data: z.array(UsersResponseSchema),
   totalItems: z.number(),

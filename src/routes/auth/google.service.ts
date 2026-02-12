@@ -1,12 +1,12 @@
-import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/errors/auth.error';
-import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
-import { AuthService } from '@/routes/auth/services/auth.service';
+import { EmailNotVerifiedException, FailedToCreateDeviceException } from '@/routes/auth/auth.error';
+import { AuthRepository } from '@/routes/auth/auth.repo';
+import { AuthService } from '@/routes/auth/auth.service';
 import {
   GoogleAuthCallbackQueryType,
   GoogleAuthCallbackResponseType,
   GoogleAuthResponseType,
   GoogleAuthStateType,
-} from '@/routes/auth/types/auth.type';
+} from '@/routes/auth/auth.type';
 import envConfig from '@/shared/config';
 import { RoleNameType } from '@/shared/constants/role.constant';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';

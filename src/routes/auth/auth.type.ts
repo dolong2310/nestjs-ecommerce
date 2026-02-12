@@ -24,7 +24,7 @@ import {
   RoleSchema,
   SendOtpBodySchema,
   Setup2FAResponseSchema,
-} from '@/routes/auth/models/auth.model';
+} from '@/routes/auth/auth.model';
 import z from 'zod';
 
 export type JwtTokenType = z.infer<typeof JwtTokenSchema>;

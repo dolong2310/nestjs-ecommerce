@@ -205,7 +205,25 @@ export class CartRepository {
       ORDER BY MAX("CartItem"."updatedAt") DESC
       LIMIT ${take}
       OFFSET ${skip}
-    `;
+    `.then((results) => {
+      // convert string to date for zod serialize
+      // message zod serialize: "Invalid input: expected date, received string"
+      return results.map((item) => ({
+        ...item,
+        cartItems: item.cartItems.map((cartItem) => ({
+          ...cartItem,
+          createdAt: new Date(cartItem.createdAt),
+          updatedAt: new Date(cartItem.updatedAt),
+          sku: {
+            ...cartItem.sku,
+            product: {
+              ...cartItem.sku.product,
+              publishedAt: cartItem.sku.product.publishedAt ? new Date(cartItem.sku.product.publishedAt) : null,
+            },
+          },
+        })),
+      }));
+    });
 
     return await paginate(cartItemsPromise, totalItemsPromise, page, limit);
   }
@@ -248,14 +266,23 @@ export class CartRepository {
     });
   }
 
-  async delete(props: { userId: number; body: DeleteCartBodyType }): Promise<{ count: number }> {
+  delete(props: { userId: number; id: number }): Promise<CartItemType> {
+    const { userId, id } = props;
+
+    return this.prismaService.cartItem.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
+
+  deleteMany(props: { userId: number; body: DeleteCartBodyType }): Promise<{ count: number }> {
     const { userId, body } = props;
 
-    const result = await this.prismaService.cartItem.deleteMany({
+    return this.prismaService.cartItem.deleteMany({
       where: { id: { in: body.ids }, userId },
     });
-
-    return result;
   }
 
   async findSkuIncludeProductById(skuId: number): Promise<SkuIncludeProductType | null> {

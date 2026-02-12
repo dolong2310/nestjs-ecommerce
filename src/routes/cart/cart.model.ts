@@ -9,23 +9,22 @@ import z from 'zod';
 
 // NOTE: dùng schema này nếu hàm `findMany2` CÓ response các key:
 // createdById, updatedById, deletedById, deletedAt, createdAt, updatedAt
-export const CartItemDetailSchema2 = z.object({
-  shop: UserSchema.pick({
-    id: true,
-    name: true,
-    avatar: true,
-  }),
-  cartItems: z.array(
-    CartItemSchema.extend({
-      sku: SkuSchema.extend({
-        product: ProductSchema.extend({
-          productTranslations: z.array(ProductTranslationSchema),
-        }),
-      }),
-    }),
-  ),
-});
-export type CartItemDetailType2 = z.infer<typeof CartItemDetailSchema2>;
+// export const CartItemDetailSchema2 = z.object({
+//   shop: UserSchema.pick({
+//     id: true,
+//     name: true,
+//     avatar: true,
+//   }),
+//   cartItems: z.array(
+//     CartItemSchema.extend({
+//       sku: SkuSchema.extend({
+//         product: ProductSchema.extend({
+//           productTranslations: z.array(ProductTranslationSchema),
+//         }),
+//       }),
+//     }),
+//   ),
+// });
 
 // NOTE: dùng schema này nếu hàm `findMany2` KHÔNG response các key:
 // createdById, updatedById, deletedById, deletedAt, createdAt, updatedAt

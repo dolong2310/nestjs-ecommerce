@@ -19,13 +19,9 @@ import { I18nContext } from 'nestjs-i18n';
 export class CartService {
   constructor(private readonly cartRepository: CartRepository) {}
 
-  async getCart(props: { userId: number; query: GetCartQueryType }): Promise<GetCartResponseType> {
-    try {
-      const { userId, query } = props;
-      return await this.cartRepository.findMany({ userId, languageId: I18nContext.current()!.lang, query });
-    } catch (error) {
-      throw error;
-    }
+  getCart(props: { userId: number; query: GetCartQueryType }): Promise<GetCartResponseType> {
+    const { userId, query } = props;
+    return this.cartRepository.findMany({ userId, languageId: I18nContext.current()!.lang, query });
   }
 
   async addToCart(props: { userId: number; body: AddToCartBodyType }): Promise<CartItemType> {
@@ -54,6 +50,10 @@ export class CartService {
       // 1. Validate sku
       await this._validateSku({ userId, skuId, quantity, isCreate: false });
 
+      if (quantity <= 0) {
+        return await this.cartRepository.delete({ userId, id });
+      }
+
       // 2. Update cart item
       return await this.cartRepository.update({ userId, id, body });
     } catch (error) {
@@ -70,7 +70,7 @@ export class CartService {
   async deleteCart(props: { userId: number; body: DeleteCartBodyType }): Promise<MessageResponseType> {
     try {
       const { userId, body } = props;
-      await this.cartRepository.delete({ userId, body });
+      await this.cartRepository.deleteMany({ userId, body });
       return {
         message: 'Success.DeleteCart',
       };

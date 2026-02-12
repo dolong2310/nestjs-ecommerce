@@ -18,12 +18,12 @@ import { SharedUserRepository, UserIncludeRolePermissionsType } from '@/shared/r
 import { HashingService } from '@/shared/services/hashing.service';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import type { UserType } from '@/shared/types/shared-user.type';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('UserRepository') private readonly userRepository: UserRepository,
+    private readonly userRepository: UserRepository,
     private readonly sharedUserRepository: SharedUserRepository,
     private readonly sharedRoleRepository: SharedRoleRepository,
     private readonly hashingService: HashingService,

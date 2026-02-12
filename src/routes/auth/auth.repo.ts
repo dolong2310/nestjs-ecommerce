@@ -7,7 +7,7 @@ import {
   OtpCodeType,
   RefreshTokenType,
   RegisterBodyType,
-} from '@/routes/auth/types/auth.type';
+} from '@/routes/auth/auth.type';
 import { EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { WhereUniqueInputType } from '@/shared/repositories/shared-user.repo';
 import { PrismaService } from '@/shared/services/prisma.service';

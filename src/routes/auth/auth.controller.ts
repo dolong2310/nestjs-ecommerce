@@ -13,9 +13,9 @@ import {
   RegisterResponseDTO,
   SendOtpBodyDTO,
   Setup2FAResponseDTO,
-} from '@/routes/auth/dtos/auth.dto';
-import { AuthService } from '@/routes/auth/services/auth.service';
-import { GoogleService } from '@/routes/auth/services/google.service';
+} from '@/routes/auth/auth.dto';
+import { AuthService } from '@/routes/auth/auth.service';
+import { GoogleService } from '@/routes/auth/google.service';
 import envConfig from '@/shared/config';
 import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
@@ -34,6 +34,8 @@ import {
   Post,
   Query,
   Res,
+  Version,
+  VERSION_NEUTRAL,
 } from '@nestjs/common';
 // import { SkipThrottle, Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
@@ -128,6 +130,7 @@ export class AuthController {
     return this.authService.sendOtp({ email, type });
   }
 
+  @Version(VERSION_NEUTRAL)
   @Get('google/url')
   @Public()
   @ZodResponse({ type: GoogleAuthResponseDTO })
@@ -135,6 +138,7 @@ export class AuthController {
     return this.googleService.getAuthorizationUrl({ ip, userAgent });
   }
 
+  @Version(VERSION_NEUTRAL)
   @Get('google/callback')
   @Public()
   async authCallback(@Query() query: GoogleAuthCallbackQueryDTO, @Res() response: Response): Promise<void> {

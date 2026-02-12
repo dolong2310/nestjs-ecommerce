@@ -4,7 +4,7 @@
  * Link stackoverflow tham khảo cách lấy availableRoutes: https://stackoverflow.com/questions/58255000/how-can-i-get-all-the-routes-from-all-the-modules-and-controllers-available-on/63333671#63333671
  */
 import { AppModule } from '@/app.module';
-import { HttpMethodType } from '@/shared/constants/permission.constant';
+import { EnumHttpMethod, HttpMethodType } from '@/shared/constants/permission.constant';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { NestFactory } from '@nestjs/core';
@@ -17,7 +17,16 @@ type AvailableRoute = {
 };
 
 const PORT = 3030; // only for testing port
-const SELLER_MODULE = ['AUTH', 'MEDIA', 'MANAGE_PRODUCT', 'PRODUCT_TRANSLATION', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS'];
+const SELLER_MODULE = [
+  'AUTH',
+  'MEDIA',
+  'MANAGE_PRODUCT',
+  'PRODUCT_TRANSLATION',
+  'PROFILE',
+  'CART',
+  'ORDERS',
+  'REVIEWS',
+];
 const USER_MODULE = ['AUTH', 'MEDIA', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS'];
 
 const prismaService = new PrismaService();
@@ -64,12 +73,26 @@ async function main() {
 }
 
 function getAvailableRoutes(router: any): AvailableRoute[] {
+  const VALID_HTTP_METHODS = Object.values(EnumHttpMethod);
+
   return router.stack
     .map((layer) => {
       if (layer.route) {
         const path = layer.route?.path;
         const method = layer.route?.stack[0].method.toUpperCase() as HttpMethodType;
         const module = path.split('/')[1]?.toUpperCase() || '';
+
+        // Vì method: ACL và path: /{*path} đến từ middleware Helmet hoặc CORS tự động đăng ký các WebDAV methods (ACL, PROPFIND, PROPPATCH, MKCOL, COPY, MOVE, LOCK, UNLOCK) để xử lý các request bảo mật.
+        // Lọc bỏ các WebDAV methods và các method không chuẩn
+        if (!VALID_HTTP_METHODS.includes(method)) {
+          return null;
+        }
+
+        // Lọc bỏ các catch-all routes từ middleware
+        if (path === '/{*path}' || path.includes('{*')) {
+          return null;
+        }
+
         return {
           name: `${method}+${path}`,
           path,

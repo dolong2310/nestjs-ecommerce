@@ -1,5 +1,6 @@
 import { REQUEST_ROLE_PERMISSIONS_KEY, REQUEST_USER_KEY } from '@/shared/constants/auth.constant';
 import { HttpMethodType } from '@/shared/constants/permission.constant';
+import { CURRENT_VERSION_PATH } from '@/shared/constants/version.constant';
 import { AccessTokenExpiredException, InvalidAccessTokenException } from '@/shared/errors/shared-error.error';
 import { extractTokenFromHeader, isJsonWebTokenError, isTokenExpiredError } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
@@ -20,7 +21,7 @@ import { keyBy } from 'lodash-es';
 
 type Permission = RoleWithPermissionsType['permissions'][number];
 type CachedRole = RoleWithPermissionsType & {
-  permissions: {
+  permissionsMap: {
     [key: string]: Permission;
   };
 };
@@ -83,7 +84,7 @@ export class AuthGuard implements CanActivate {
 
   private async _checkUserPermission(request: Request, decodedAccessToken: AccessTokenPayload): Promise<void> {
     const method = request.method as HttpMethodType;
-    const path = request.route.path as string;
+    const path: string = request.route.path.slice(CURRENT_VERSION_PATH.length);
     const roleId = decodedAccessToken.roleId;
     const cacheKey = `role:${roleId}`;
 
@@ -103,10 +104,11 @@ export class AuthGuard implements CanActivate {
           permissions: {
             where: {
               // before solution: filter theo cặp method và path để tối ưu hơn việc lấy toàn bộ permissions
-              // after solution: lấy toàn bộ permissions => bỏ filter method và path (vì đã cached tất cả permissions trong redis)
-              deletedAt: null,
+              // deletedAt: null,
               // method: method,
               // path: path,
+              // after solution: lấy toàn bộ permissions => bỏ filter method và path (vì đã cached tất cả permissions trong redis)
+              deletedAt: null,
             },
           },
         },
@@ -117,29 +119,32 @@ export class AuthGuard implements CanActivate {
       }
 
       // 2.2. Key by method and path (mục đích transform lại thành method:path để dễ dàng check canAccess bằng object)
-      const permissions = keyBy(
+      const permissionsMap = keyBy(
         roleWithPermissions.permissions,
         (p) => `${p.method}:${p.path}`,
-      ) as CachedRole['permissions'];
+      ) as CachedRole['permissionsMap'];
 
       // 2.3. Cache role with permissions
       cachedRole = {
         ...roleWithPermissions,
-        permissions,
+        permissionsMap,
       };
 
       const ttl = 1000 * 60 * 60; // 1 hour cache (expiration time in milliseconds)
       await this.cacheManager.set(cacheKey, cachedRole, ttl);
-
-      // 2.4. Set role permissions to request
-      request[REQUEST_ROLE_PERMISSIONS_KEY] = roleWithPermissions;
     }
 
     // 3. Check if user has permission to access the route
-    const canAccess: Permission | undefined = cachedRole?.permissions[`${method}:${path}`];
+    const canAccess: Permission | undefined = cachedRole?.permissionsMap[`${method}:${path}`];
+    // console.log('canAccess: ', Boolean(canAccess));
 
     if (!canAccess) {
       throw new ForbiddenException();
     }
+
+    // 4. Set roleWithPermissions to request
+    const { permissionsMap, ...roleWithPermissions } = cachedRole; // Omit permissionsMap to avoid circular reference
+
+    request[REQUEST_ROLE_PERMISSIONS_KEY] = roleWithPermissions;
   }
 }

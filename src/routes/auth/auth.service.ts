@@ -13,8 +13,8 @@ import {
   RefreshTokenNotFoundException,
   TOTPAlreadyEnabledException,
   TOTPNotEnabledException,
-} from '@/routes/auth/errors/auth.error';
-import { AuthRepository } from '@/routes/auth/repositories/auth.repo';
+} from '@/routes/auth/auth.error';
+import { AuthRepository } from '@/routes/auth/auth.repo';
 import {
   Disable2FABodyType,
   ForgotPasswordBodyType,
@@ -30,7 +30,7 @@ import {
   RegisterResponseType,
   SendOtpBodyType,
   Setup2FAResponseType,
-} from '@/routes/auth/types/auth.type';
+} from '@/routes/auth/auth.type';
 import envConfig from '@/shared/config';
 import { EnumOtpCode, EnumOtpCodeType } from '@/shared/constants/auth.constant';
 import { RoleNameType } from '@/shared/constants/role.constant';

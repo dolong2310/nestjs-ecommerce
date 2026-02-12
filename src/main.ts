@@ -1,6 +1,6 @@
 import { AppModule } from '@/app.module';
 import envConfig from '@/shared/config';
-import { LoggingInterceptor } from '@/shared/interceptor/logging.interceptor';
+// import { LoggingInterceptor } from '@/shared/interceptor/logging.interceptor';
 import { WebsocketAdapter } from '@/websockets/websocket.adapter';
 // import { ConsoleLogger } from '@nestjs/common';
 import { VersioningType } from '@nestjs/common';
@@ -8,13 +8,14 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
-import { Logger } from 'nestjs-pino';
+// import { Logger } from 'nestjs-pino';
+import { API_VERSION_1, PREFIX_API_VERSION, PREFIX_URI } from '@/shared/constants/version.constant';
 import { cleanupOpenApiDoc } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(
     AppModule,
-    { bufferLogs: true }, // buffer logs để ghi đè lên logger mặc định của nestjs
+    // { bufferLogs: true }, // buffer logs để ghi đè lên logger mặc định của nestjs
     //   {
     //   logger: new ConsoleLogger({
     //     // json: true,
@@ -48,19 +49,19 @@ async function bootstrap() {
   app.use(helmet());
 
   // Logger
-  app.useLogger(app.get(Logger));
-  app.useGlobalInterceptors(new LoggingInterceptor());
+  // app.useLogger(app.get(Logger));
+  // app.useGlobalInterceptors(new LoggingInterceptor());
 
   // Enable URI versioning
-  app.setGlobalPrefix('api', {
+  app.setGlobalPrefix(PREFIX_URI, {
     exclude: [
       // { path: 'health', method: RequestMethod.GET },
     ],
   });
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: '1', // version mặc định nếu route không specify
-    // prefix: 'api/', // optional: thêm prefix, sẽ thành /api/v1/users
+    defaultVersion: API_VERSION_1, // version mặc định nếu route không specify
+    prefix: PREFIX_API_VERSION,
   });
 
   // Swagger
