@@ -1,4 +1,4 @@
-import { OrderStatus, Prisma } from '@/generated/prisma/client';
+import { Prisma } from '@/generated/prisma/client';
 import {
   CreateProductBodyType,
   GetProductResponseType,
@@ -6,14 +6,21 @@ import {
   UpdateProductBodyType,
 } from '@/routes/product/product.type';
 import { EnumSortBy, OrderByType, SortByType } from '@/shared/constants/common.constant';
+import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { paginate, translationWhere } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { ProductType } from '@/shared/types/shared-product.type';
+import { SkuType } from '@/shared/types/shared-sku.type';
+import { TransactionHost } from '@nestjs-cls/transactional';
+import { TransactionalAdapterPrisma } from '@nestjs-cls/transactional-adapter-prisma';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ProductRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly txHost: TransactionHost<TransactionalAdapterPrisma<PrismaService>>,
+  ) {}
 
   async findMany({
     page,
@@ -130,7 +137,7 @@ export class ProductRepository {
         orders: {
           where: {
             deletedAt: null,
-            status: OrderStatus.DELIVERED,
+            status: EnumOrderStatus.DELIVERED,
           },
         },
       },
@@ -144,15 +151,13 @@ export class ProductRepository {
     return await paginate(productsPromise, totalProductsPromise, page, limit);
   }
 
-  async findById(productId: number): Promise<ProductType | null> {
-    const product = await this.prismaService.product.findUnique({
+  findById(productId: number): Promise<ProductType | null> {
+    return this.prismaService.product.findUnique({
       where: { id: productId, deletedAt: null },
     });
-
-    return product;
   }
 
-  async getDetail({
+  getDetail({
     productId,
     languageId,
     isPublished, // user => true, admin/seller => false
@@ -180,7 +185,7 @@ export class ProductRepository {
       };
     }
 
-    const product = await this.prismaService.product.findUnique({
+    return this.prismaService.product.findUnique({
       where,
       include: {
         productTranslations: {
@@ -206,14 +211,12 @@ export class ProductRepository {
         },
       },
     });
-
-    return product;
   }
 
-  async create(payload: { userId: number; body: CreateProductBodyType }): Promise<GetProductResponseType> {
-    const { userId, body } = payload;
+  create(props: { userId: number; body: CreateProductBodyType }): Promise<GetProductResponseType> {
+    const { userId, body } = props;
     const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
-    const product = await this.prismaService.product.create({
+    return this.prismaService.product.create({
       data: {
         name,
         basePrice,
@@ -250,7 +253,6 @@ export class ProductRepository {
         },
       },
     });
-    return product;
   }
 
   /**
@@ -259,8 +261,8 @@ export class ProductRepository {
    * 2. SKU đã tồn tại trong database nhưng có trong body thì sẽ được cập nhật.
    * 3. SKU không tồn tại trong database nhưng có trong body thì sẽ được thêm mới
    */
-  // async update2(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
-  //   const { userId, productId, body } = payload;
+  // async update2(props: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
+  //   const { userId, productId, body } = props;
   //   const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
 
   //   // 1. Lấy danh sách sku hiện tại trong database
@@ -346,84 +348,84 @@ export class ProductRepository {
    * - SKU: dùng Map/Set cho lookup O(1), tránh O(n×m).
    * - Transaction: chỉ thêm thao tác xóa/cập nhật/tạo SKU khi có dữ liệu.
    */
-  async update(payload: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
-    const { userId, productId, body } = payload;
-    const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
+  // async update(props: { userId: number; productId: number; body: UpdateProductBodyType }): Promise<ProductType> {
+  //   const { userId, productId, body } = props;
+  //   const { name, basePrice, virtualPrice, brandId, images, publishedAt, variants, categories, skus } = body;
 
-    const skusInDatabase = await this.prismaService.sKU.findMany({
-      where: { productId, deletedAt: null },
-    });
+  //   const skusInDatabase = await this.prismaService.sKU.findMany({
+  //     where: { productId, deletedAt: null },
+  //   });
 
-    const skuInDatabaseByValue = new Map(skusInDatabase.map((s) => [s.value, s]));
-    const bodyValues = new Set(skus.map((s) => s.value));
+  //   const skuInDatabaseByValue = new Map(skusInDatabase.map((s) => [s.value, s]));
+  //   const bodyValues = new Set(skus.map((s) => s.value));
 
-    const skusWithId = skus.map((sku) => ({
-      ...sku,
-      id: skuInDatabaseByValue.get(sku.value)?.id ?? null,
-    }));
+  //   const skusWithId = skus.map((sku) => ({
+  //     ...sku,
+  //     id: skuInDatabaseByValue.get(sku.value)?.id ?? null,
+  //   }));
 
-    const skuIdsToDelete = skusInDatabase.filter((s) => !bodyValues.has(s.value)).map((s) => s.id);
-    const skusToUpdate = skusWithId.filter((sku): sku is typeof sku & { id: number } => sku.id !== null);
-    const skusToCreate = skusWithId
-      .filter((sku) => sku.id === null)
-      .map(({ id: _id, ...skuData }) => ({
-        ...skuData,
-        productId,
-        createdById: userId,
-      }));
+  //   const skuIdsToDelete = skusInDatabase.filter((s) => !bodyValues.has(s.value)).map((s) => s.id);
+  //   const skusToUpdate = skusWithId.filter((sku): sku is typeof sku & { id: number } => sku.id !== null);
+  //   const skusToCreate = skusWithId
+  //     .filter((sku) => sku.id === null)
+  //     .map(({ id: _id, ...skuData }) => ({
+  //       ...skuData,
+  //       productId,
+  //       createdById: userId,
+  //     }));
 
-    return this.prismaService.$transaction(async (tx) => {
-      const product = await tx.product.update({
-        where: { id: productId, deletedAt: null },
-        data: {
-          name,
-          basePrice,
-          virtualPrice,
-          brandId,
-          images,
-          publishedAt,
-          variants,
-          categories: { set: categories.map((categoryId) => ({ id: categoryId })) },
-          updatedById: userId,
-        },
-      });
+  //   return this.prismaService.$transaction(async (tx) => {
+  //     const product = await tx.product.update({
+  //       where: { id: productId, deletedAt: null },
+  //       data: {
+  //         name,
+  //         basePrice,
+  //         virtualPrice,
+  //         brandId,
+  //         images,
+  //         publishedAt,
+  //         variants,
+  //         categories: { set: categories.map((categoryId) => ({ id: categoryId })) },
+  //         updatedById: userId,
+  //       },
+  //     });
 
-      if (skuIdsToDelete.length > 0) {
-        await tx.sKU.updateMany({
-          where: { id: { in: skuIdsToDelete }, deletedAt: null },
-          data: { deletedAt: new Date(), deletedById: userId },
-        });
-      }
+  //     if (skuIdsToDelete.length > 0) {
+  //       await tx.sKU.updateMany({
+  //         where: { id: { in: skuIdsToDelete }, deletedAt: null },
+  //         data: { deletedAt: new Date(), deletedById: userId },
+  //       });
+  //     }
 
-      if (skusToUpdate.length > 0) {
-        await Promise.all(
-          skusToUpdate.map((sku) =>
-            tx.sKU.update({
-              where: { id: sku.id, deletedAt: null },
-              data: {
-                value: sku.value,
-                price: sku.price,
-                stock: sku.stock,
-                image: sku.image,
-                updatedById: userId,
-              },
-            }),
-          ),
-        );
-      }
+  //     if (skusToUpdate.length > 0) {
+  //       await Promise.all(
+  //         skusToUpdate.map((sku) =>
+  //           tx.sKU.update({
+  //             where: { id: sku.id, deletedAt: null },
+  //             data: {
+  //               value: sku.value,
+  //               price: sku.price,
+  //               stock: sku.stock,
+  //               image: sku.image,
+  //               updatedById: userId,
+  //             },
+  //           }),
+  //         ),
+  //       );
+  //     }
 
-      if (skusToCreate.length > 0) {
-        await tx.sKU.createMany({
-          data: skusToCreate,
-        });
-      }
+  //     if (skusToCreate.length > 0) {
+  //       await tx.sKU.createMany({
+  //         data: skusToCreate,
+  //       });
+  //     }
 
-      return product;
-    });
-  }
+  //     return product;
+  //   });
+  // }
 
-  async delete(payload: { productId: number; userId: number }, isHardDelete?: boolean): Promise<ProductType> {
-    const { productId, userId } = payload;
+  async delete(props: { productId: number; userId: number }, isHardDelete?: boolean): Promise<ProductType> {
+    const { productId, userId } = props;
     if (isHardDelete) {
       // NOTE: Không cần xoá kèm sku vì schema đã quy định delete cascade từ product sang sku
       // const [product] = await Promise.all([
@@ -456,5 +458,77 @@ export class ProductRepository {
       }),
     ]);
     return product;
+  }
+
+  // các methods cho update product transaction
+  findSkusByProductId(productId: number): Promise<SkuType[]> {
+    return this.txHost.tx.sKU.findMany({
+      where: { productId, deletedAt: null },
+    });
+  }
+
+  softDeleteSkus({ userId, skuIds }: { userId: number; skuIds: number[] }): Promise<{ count: number }> {
+    return this.txHost.tx.sKU.updateMany({
+      where: { id: { in: skuIds }, deletedAt: null },
+      data: { deletedAt: new Date(), deletedById: userId },
+    });
+  }
+
+  updateSku({
+    userId,
+    sku,
+  }: {
+    userId: number;
+    sku: Pick<SkuType, 'id' | 'value' | 'price' | 'stock' | 'image'>;
+  }): Promise<SkuType> {
+    return this.txHost.tx.sKU.update({
+      where: { id: sku.id, deletedAt: null },
+      data: {
+        value: sku.value,
+        price: sku.price,
+        stock: sku.stock,
+        image: sku.image,
+        updatedById: userId,
+      },
+    });
+  }
+
+  createSkus(
+    data: ({ productId: number } & Pick<SkuType, 'value' | 'price' | 'stock' | 'image' | 'createdById'>)[],
+  ): Promise<{ count: number }> {
+    return this.txHost.tx.sKU.createMany({
+      data,
+    });
+  }
+
+  updateProduct({
+    productId,
+    userId,
+    name,
+    basePrice,
+    virtualPrice,
+    brandId,
+    images,
+    publishedAt,
+    variants,
+    categories,
+  }: Omit<UpdateProductBodyType, 'skus'> & {
+    productId: number;
+    userId: number;
+  }): Promise<ProductType> {
+    return this.txHost.tx.product.update({
+      where: { id: productId, deletedAt: null },
+      data: {
+        name,
+        basePrice,
+        virtualPrice,
+        brandId,
+        images,
+        publishedAt,
+        variants,
+        categories: { set: categories.map((categoryId) => ({ id: categoryId })) },
+        updatedById: userId,
+      },
+    });
   }
 }

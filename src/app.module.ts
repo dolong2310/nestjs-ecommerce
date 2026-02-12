@@ -125,15 +125,16 @@ import path from 'path';
     //   },
     // }),
     ClsModule.forRoot({
-      global: true, // dùng được ở mọi nơi không cần import lại
-      middleware: {
-        mount: true, // tự động mount cho mọi HTTP request
-      },
+      // global: true, // dùng được ở mọi nơi không cần import lại
+      // middleware: {
+      //   mount: true, // tự động mount cho mọi HTTP request
+      // },
       plugins: [
         new ClsPluginTransactional({
           imports: [SharedModule], // Import module có PrismaService
           adapter: new TransactionalAdapterPrisma({
             prismaInjectionToken: PrismaService,
+            sqlFlavor: 'postgresql',
           }),
         }),
       ],

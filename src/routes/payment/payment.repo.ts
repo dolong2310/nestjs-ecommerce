@@ -3,12 +3,17 @@ import { EnumOrderStatus, OrderStatusType } from '@/shared/constants/order.const
 import { EnumPaymentStatus, PaymentStatusType } from '@/shared/constants/payment.constant';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { PaymentIncludeOrdersType } from '@/shared/types/shared-payment.type';
+import { TransactionHost } from '@nestjs-cls/transactional';
+import { TransactionalAdapterPrisma } from '@nestjs-cls/transactional-adapter-prisma';
 import { Injectable } from '@nestjs/common';
 import { parse } from 'date-fns';
 
 @Injectable()
 export class PaymentRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly txHost: TransactionHost<TransactionalAdapterPrisma<PrismaService>>,
+  ) {}
 
   findPaymentTransactionById(id: number): Promise<PaymentTransactionType | null> {
     return this.prismaService.paymentTransaction.findUnique({
@@ -43,7 +48,7 @@ export class PaymentRepository {
       amountOut = transferAmount;
     }
 
-    const result = await this.prismaService.paymentTransaction.create({
+    const result = await this.txHost.tx.paymentTransaction.create({
       data: {
         id,
         gateway,
@@ -64,7 +69,7 @@ export class PaymentRepository {
   }
 
   findPaymentIncludeOrdersById(paymentId: number): Promise<PaymentIncludeOrdersType | null> {
-    return this.prismaService.payment.findUnique({
+    return this.txHost.tx.payment.findUnique({
       where: {
         id: paymentId,
       },
@@ -80,7 +85,7 @@ export class PaymentRepository {
   }
 
   updatePayment({ paymentId, status = EnumPaymentStatus.SUCCESS }: { paymentId: number; status: PaymentStatusType }) {
-    return this.prismaService.payment.update({
+    return this.txHost.tx.payment.update({
       where: {
         id: paymentId,
       },
@@ -91,7 +96,7 @@ export class PaymentRepository {
   }
 
   updateOrders({ orderIds, status = EnumOrderStatus.PENDING_PICKUP }: { orderIds: number[]; status: OrderStatusType }) {
-    return this.prismaService.order.updateMany({
+    return this.txHost.tx.order.updateMany({
       where: {
         id: {
           in: orderIds,

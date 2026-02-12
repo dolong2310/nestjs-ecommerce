@@ -13,11 +13,16 @@ import { CartItemIncludeSkuAndProductType } from '@/shared/types/shared-cart.typ
 import { OrderType } from '@/shared/types/shared-order.type';
 import { PaymentType } from '@/shared/types/shared-payment.type';
 import { SkuType } from '@/shared/types/shared-sku.type';
+import { TransactionHost } from '@nestjs-cls/transactional';
+import { TransactionalAdapterPrisma } from '@nestjs-cls/transactional-adapter-prisma';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OrderRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly txHost: TransactionHost<TransactionalAdapterPrisma<PrismaService>>,
+  ) {}
 
   async findMany(props: { userId: number; query: GetOrdersQueryType }): Promise<GetOrdersResponseType> {
     const { userId, query } = props;
@@ -75,7 +80,7 @@ export class OrderRepository {
     userId: number;
     cartItemIds: number[];
   }): Promise<CartItemIncludeSkuAndProductType[]> {
-    return this.prismaService.cartItem.findMany({
+    return this.txHost.tx.cartItem.findMany({
       where: {
         userId,
         id: {
@@ -97,7 +102,7 @@ export class OrderRepository {
   }
 
   findSkus(skuIds: number[]): Promise<{ id: number; stock: number }[]> {
-    return this.prismaService.sKU.findMany({
+    return this.txHost.tx.sKU.findMany({
       where: {
         id: {
           in: skuIds,
@@ -111,7 +116,7 @@ export class OrderRepository {
   }
 
   createPayment(status: PaymentStatusType): Promise<PaymentType> {
-    return this.prismaService.payment.create({
+    return this.txHost.tx.payment.create({
       data: {
         status: status,
       },
@@ -131,7 +136,7 @@ export class OrderRepository {
     orderItem: CreateOrderBodyType[number];
     cartItemMap: Map<number, CartItemIncludeSkuAndProductType>;
   }): Promise<OrderType> {
-    return this.prismaService.order.create({
+    return this.txHost.tx.order.create({
       data: {
         userId,
         shopId: userId,
@@ -175,7 +180,7 @@ export class OrderRepository {
   }
 
   deleteCartItems(cartItemIds: number[]) {
-    return this.prismaService.cartItem.deleteMany({
+    return this.txHost.tx.cartItem.deleteMany({
       where: {
         id: {
           in: cartItemIds,
@@ -221,15 +226,16 @@ export class OrderRepository {
       };
     }
 
-    return this.prismaService.sKU.update({
+    return this.txHost.tx.sKU.update({
       where,
       data,
     });
   }
 
+  // các methods cho delete order transaction
   findById(props: { userId: number; id: number }): Promise<GetOrderResponseType | null> {
     const { userId, id: orderId } = props;
-    return this.prismaService.order.findUnique({
+    return this.txHost.tx.order.findUnique({
       where: {
         userId,
         id: orderId,
@@ -250,7 +256,7 @@ export class OrderRepository {
     orderId: number;
     status: OrderStatusType;
   }): Promise<OrderType> {
-    return this.prismaService.order.update({
+    return this.txHost.tx.order.update({
       where: {
         userId,
         id: orderId,
@@ -270,7 +276,7 @@ export class OrderRepository {
     paymentId: number;
     status: PaymentStatusType;
   }): Promise<PaymentType> {
-    return this.prismaService.payment.update({
+    return this.txHost.tx.payment.update({
       where: {
         id: paymentId,
       },
