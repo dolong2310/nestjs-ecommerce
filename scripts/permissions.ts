@@ -20,6 +20,7 @@ const PORT = 3030; // only for testing port
 const SELLER_MODULE = [
   'AUTH',
   'MEDIA',
+  'PRODUCTS',
   'MANAGE_PRODUCT',
   'PRODUCT_TRANSLATION',
   'PROFILE',
@@ -27,7 +28,7 @@ const SELLER_MODULE = [
   'ORDERS',
   'REVIEWS',
 ];
-const USER_MODULE = ['AUTH', 'MEDIA', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS'];
+const USER_MODULE = ['AUTH', 'MEDIA', 'PRODUCTS', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS'];
 
 const prismaService = new PrismaService();
 
@@ -145,7 +146,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
   }
 
   // 6. Tìm routes không tồn tại trong permissionsInDatabase
-  const routesToCreate = availableRoutes.filter((route) => !permissionsInDatabaseMap[`${route.method}-${route.path}`]);
+  const routesToCreate = availableRoutes.filter((route) => !permissionsInDatabaseMap[`${route.method}_${route.path}`]);
 
   // 7. Tạo permissions không tồn tại trong permissionsInDatabase
   if (routesToCreate.length > 0) {

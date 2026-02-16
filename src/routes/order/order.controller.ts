@@ -11,7 +11,7 @@ import { OrderService } from '@/routes/order/order.service';
 import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
 import { EmptyBodyDTO } from '@/shared/dtos/request.dto';
-import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Param, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
 @Controller({ path: 'orders', version: CURRENT_VERSION })
@@ -20,19 +20,13 @@ export class OrderController {
 
   @Get()
   @ZodResponse({ type: GetOrdersResponseDTO })
-  async getOrders(
-    @Query() query: GetOrdersQueryDTO,
-    @ActiveUser('userId') userId: number,
-  ): Promise<GetOrdersResponseDTO> {
+  getOrders(@Query() query: GetOrdersQueryDTO, @ActiveUser('userId') userId: number): Promise<GetOrdersResponseDTO> {
     return this.orderService.getOrders({ userId, query });
   }
 
   @Get(':id')
   @ZodResponse({ type: GetOrderResponseDTO })
-  async getOrderById(
-    @Param() params: GetOrderParamsDTO,
-    @ActiveUser('userId') userId: number,
-  ): Promise<GetOrderResponseDTO> {
+  getOrderById(@Param() params: GetOrderParamsDTO, @ActiveUser('userId') userId: number): Promise<GetOrderResponseDTO> {
     return this.orderService.getOrderById({ userId, id: params.id });
   }
 
@@ -41,13 +35,14 @@ export class OrderController {
   async createOrder(
     @Body() body: CreateOrderBodyDTO,
     @ActiveUser('userId') userId: number,
+    @Ip() ip: string,
   ): Promise<CreateOrderResponseDTO> {
-    return this.orderService.createOrder({ userId, body });
+    return this.orderService.createOrder({ userId, body, ip });
   }
 
   @Put(':id/cancel')
   @ZodResponse({ type: CancelOrderResponseDTO })
-  async cancelOrder(
+  cancelOrder(
     @Param() params: GetOrderParamsDTO,
     @ActiveUser('userId') userId: number,
     @Body() _: EmptyBodyDTO,

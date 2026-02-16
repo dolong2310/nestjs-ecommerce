@@ -6,10 +6,8 @@ import {
   GetCartResponseSchema,
   UpdateCartBodySchema,
 } from '@/routes/cart/cart.model';
-import { CartItemSchema } from '@/shared/models/shared-cart.model';
 import z from 'zod';
 
-export type CartItemType = z.infer<typeof CartItemSchema>;
 export type CartItemDetailType = z.infer<typeof CartItemDetailSchema>;
 export type GetCartQueryType = z.infer<typeof GetCartQuerySchema>;
 export type AddToCartBodyType = z.infer<typeof AddToCartBodySchema>;

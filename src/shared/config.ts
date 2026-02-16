@@ -50,6 +50,10 @@ const configSchema = z.object({
   AWS_S3_BUCKET_NAME: z.string().min(1, 'AWS_S3_BUCKET_NAME is required'),
 
   REDIS_URL: z.string().min(1, 'REDIS_URL is required'),
+
+  VNPAY_TMN_CODE: z.string().min(1, 'VNPAY_TMN_CODE is required'),
+  VNPAY_SECURE_SECRET: z.string().min(1, 'VNPAY_SECURE_SECRET is required'),
+  VNPAY_HOST: z.string().min(1, 'VNPAY_HOST is required'),
 });
 
 const config = configSchema.safeParse(process.env);
