@@ -35,6 +35,7 @@ const configSchema = z.object({
 
   RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
 
+  API_URL: z.string().min(1, 'API_URL is required'),
   FRONTEND_URL: z.string().min(1, 'FRONTEND_URL is required'),
 
   GOOGLE_CLIENT_ID: z.string().min(1, 'GOOGLE_CLIENT_ID is required'),
@@ -54,6 +55,12 @@ const configSchema = z.object({
   VNPAY_TMN_CODE: z.string().min(1, 'VNPAY_TMN_CODE is required'),
   VNPAY_SECURE_SECRET: z.string().min(1, 'VNPAY_SECURE_SECRET is required'),
   VNPAY_HOST: z.string().min(1, 'VNPAY_HOST is required'),
+
+  MOMO_PARTNER_CODE: z.string().min(1, 'MOMO_PARTNER_CODE is required'),
+  MOMO_ACCESS_KEY: z.string().min(1, 'MOMO_ACCESS_KEY is required'),
+  MOMO_SECRET_KEY: z.string().min(1, 'MOMO_SECRET_KEY is required'),
+  MOMO_STORE_ID: z.string().min(1, 'MOMO_STORE_ID is required'),
+  MOMO_STORE_NAME: z.string().min(1, 'MOMO_STORE_NAME is required'),
 });
 
 const config = configSchema.safeParse(process.env);

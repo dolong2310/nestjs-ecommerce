@@ -32,7 +32,7 @@ export class OrderController {
 
   @Post()
   @ZodResponse({ type: CreateOrderResponseDTO })
-  async createOrder(
+  createOrder(
     @Body() body: CreateOrderBodyDTO,
     @ActiveUser('userId') userId: number,
     @Ip() ip: string,

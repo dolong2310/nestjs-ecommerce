@@ -14,7 +14,6 @@ export interface MomoConfig {
   enableLog?: boolean;
   loggerFn?: (data: unknown) => void;
   hostname?: string;
-  port?: number;
 
   createPaymentEndpoint?: string;
   queryTransactionEndpoint?: string;
@@ -26,7 +25,6 @@ export interface GlobalConfig extends MomoConfig {
   accessKey: string;
   secretKey: string;
   hostname: string;
-  port: number;
   storeName: string;
   storeId: string;
   requestType: RequestType;

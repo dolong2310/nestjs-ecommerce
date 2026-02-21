@@ -1,3 +1,4 @@
+export * from './bank.type';
 export * from './build-payment-url.type';
 export * from './common.type';
 export * from './momo-config.type';

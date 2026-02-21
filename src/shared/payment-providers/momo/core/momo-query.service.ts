@@ -60,8 +60,7 @@ export class QueryService {
     } as BodyRequestQueryDr);
 
     // Build full URL
-    const port = this.config.port || 443;
-    const url = `https://${this.config.hostname}:${port}${this.config.queryTransactionEndpoint}`;
+    const url = `https://${this.config.hostname}${this.config.queryTransactionEndpoint}`;
 
     // Return promise to handle async fetch request
     try {
@@ -129,8 +128,7 @@ export class QueryService {
     } as BodyRequestRefund);
 
     // Build full URL
-    const port = this.config.port || 443;
-    const url = `https://${this.config.hostname}:${port}${this.config.refundTransactionEndpoint}`;
+    const url = `https://${this.config.hostname}${this.config.refundTransactionEndpoint}`;
 
     // Return promise to handle async fetch request
     try {

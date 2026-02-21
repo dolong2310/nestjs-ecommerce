@@ -1,6 +1,8 @@
 import { LoggerService } from '../../common/services/logger.service';
+import { resolveUrlString } from '../../common/utils/http.util';
 import {
   CREATE_PAYMENT_ENDPOINT,
+  GET_BANK_LIST_ENDPOINT,
   MOMO_GATEWAY_PRODUCTION_HOST,
   MOMO_GATEWAY_SANDBOX_HOST,
   MOMO_PARTNER_CODE,
@@ -9,6 +11,7 @@ import {
 } from '../constants';
 import { RequestType } from '../enums';
 import {
+  BankList,
   BuildPaymentUrl,
   BuildPaymentUrlLogger,
   BuildPaymentUrlOptions,
@@ -65,7 +68,6 @@ export class Momo {
       accessKey,
       secretKey,
       hostname,
-      port: 443,
       storeName,
       storeId,
       requestType,
@@ -85,22 +87,27 @@ export class Momo {
     this.queryService = new QueryService(this.globalConfig, this.loggerService);
   }
 
-  // public async getBankList(): Promise<Bank[]> {
-  //   const response = await fetch(resolveUrlString(this.globalConfig.hostname, GET_BANK_LIST_ENDPOINT), {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //   });
+  public async getBankList(): Promise<BankList> {
+    const url = resolveUrlString(
+      this.globalConfig.testMode ? MOMO_GATEWAY_SANDBOX_HOST : MOMO_GATEWAY_PRODUCTION_HOST,
+      GET_BANK_LIST_ENDPOINT,
+    );
 
-  //   if (!response.ok) {
-  //     throw new Error(`Failed to fetch bank list: HTTP ${response.status}`);
-  //   }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  //   const bankList = (await response.json()) as Record<string, Bank>[];
+    if (!response.ok) {
+      throw new Error(`Failed to fetch bank list: HTTP ${response.status}`);
+    }
 
-  //   const list = Object.values(bankList);
-  // }
+    const bankList = (await response.json()) as BankList;
+
+    return bankList;
+  }
 
   public buildPaymentUrl<LoggerFields extends keyof BuildPaymentUrlLogger>(
     data: BuildPaymentUrl,
@@ -137,43 +144,3 @@ export class Momo {
     return this.queryService.refund(data, options);
   }
 }
-
-// type Bank = {
-//   napasCode: string;
-//   disburseCode: string;
-//   name: string;
-//   bankLogoUrl: string;
-// };
-
-// const bankList: Record<string, Bank> = {
-//   VCB: {
-//     napasCode: '970436',
-//     disburseCode: '970436',
-//     name: 'VietcomBank',
-//     bankLogoUrl: 'https://img.mservice.com.vn/momo_app_v2/img/VCB.png',
-//   },
-//   CTG: {
-//     napasCode: '970415',
-//     disburseCode: '970415',
-//     name: 'VietinBank',
-//     bankLogoUrl: 'https://img.mservice.com.vn/momo_app_v2/img/CTG.png',
-//   },
-//   TCB: {
-//     napasCode: '970407',
-//     disburseCode: '970407',
-//     name: 'Techcombank',
-//     bankLogoUrl: 'https://img.mservice.com.vn/momo_app_v2/img/TCB.png',
-//   },
-//   BIDV: {
-//     napasCode: '970418',
-//     disburseCode: '970418',
-//     name: 'BIDV',
-//     bankLogoUrl: 'https://img.mservice.com.vn/momo_app_v2/img/BIDV.png',
-//   },
-//   VARB: {
-//     napasCode: '970405',
-//     disburseCode: '970405',
-//     name: 'AgriBank',
-//     bankLogoUrl: 'https://img.mservice.com.vn/momo_app_v2/img/VARB.png',
-//   },
-// };

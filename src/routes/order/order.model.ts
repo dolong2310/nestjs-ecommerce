@@ -1,6 +1,7 @@
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { OrderSchema, ProductSKUSnapshotSchema } from '@/shared/models/shared-order.model';
+import { EnumPaymentMethod } from '@/shared/payment-providers/core/constants';
 import z from 'zod';
 
 // Request query
@@ -16,19 +17,22 @@ export const GetOrderParamsSchema = z
   .strict();
 
 // Request body
-export const CreateOrderBodySchema = z
-  .array(
-    z.object({
-      shopId: z.number(),
-      receiver: z.object({
-        name: z.string(),
-        phoneNumber: z.string().min(10).max(15),
-        address: z.string(),
+export const CreateOrderBodySchema = z.object({
+  paymentMethod: z.enum(EnumPaymentMethod).nullable().optional(),
+  orders: z
+    .array(
+      z.object({
+        shopId: z.number(),
+        receiver: z.object({
+          name: z.string(),
+          phoneNumber: z.string().min(10).max(15),
+          address: z.string(),
+        }),
+        cartItemIds: z.array(z.number()).min(1),
       }),
-      cartItemIds: z.array(z.number()).min(1),
-    }),
-  )
-  .min(1);
+    )
+    .min(1),
+});
 
 // Response
 export const GetOrdersResponseSchema = z.object({
@@ -69,6 +73,7 @@ export const CreateOrderResponseSchema = z.object({
       deletedAt: true,
     }),
   ),
+  paymentUrl: z.string().nullable(),
 });
 
 export const CancelOrderResponseSchema = OrderSchema.omit({

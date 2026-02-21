@@ -69,8 +69,6 @@ export class PaymentService {
 
     // Build full URL
     const url = `https://${this.config.hostname}${this.config.createPaymentEndpoint}`;
-    // const port = this.config.port || 443;
-    // const url = `https://${this.config.hostname}:${port}${this.config.createPaymentEndpoint}`;
 
     // Return promise to handle async fetch request
     try {
