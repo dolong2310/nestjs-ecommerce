@@ -66,6 +66,17 @@ enum MediaType {
   VIDEO
 }
 
+enum CouponStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
+}
+
+enum CouponDiscountType {
+  PERCENTAGE // %
+  FIXED_AMOUNT // số tiền cố định
+}
+
 //////////////////////////////////////////
 // CORE MODELS
 //////////////////////////////////////////
@@ -166,6 +177,9 @@ model User {
   sentMessages                Message[]             @relation("FromUser")
   receivedMessages            Message[]             @relation("ToUser")
   webSockets                  WebSocket[]
+  createdCoupons              Coupon[]              @relation("CouponCreatedBy")
+  updatedCoupons              Coupon[]              @relation("CouponUpdatedBy")
+  deletedCoupons              Coupon[]              @relation("CouponDeletedBy")
 
   // 1 user có thể tạo ra nhiều user khác
   // 1 user chỉ có thể được tạo ra bởi 1 user khác
@@ -553,6 +567,7 @@ model Order {
   userId    Int
   shopId    Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
   paymentId Int
+  couponId  Int?
   status    OrderStatus
   /// [Receiver]
   receiver  Json // thông tin người nhận (JSONB)
@@ -560,6 +575,7 @@ model Order {
   user    User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   shop    User?   @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  coupon  Coupon? @relation(fields: [couponId], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
   createdById Int?
   updatedById Int?
@@ -644,6 +660,36 @@ model ReviewMedia {
 }
 
 //////////////////////////////////////////
+// COUPON
+//////////////////////////////////////////
+
+model Coupon {
+  id             Int                @id @default(autoincrement())
+  code           String             @unique @db.VarChar(255) // mã coupon
+  discount       Int // số tiền giảm giá (nếu discountType là PERCENTAGE thì là %, nếu discountType là FIXED_AMOUNT thì là số tiền cố định)
+  quantity       Int
+  minOrderAmount Int // số tiền tối thiểu để áp dụng coupon
+  startDate      DateTime // thời gian bắt đầu áp dụng coupon
+  endDate        DateTime // thời gian kết thúc áp dụng coupon
+  discountType   CouponDiscountType @default(PERCENTAGE)
+  status         CouponStatus       @default(ACTIVE)
+
+  createdById Int?
+  updatedById Int?
+  deletedById Int?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  createdBy User? @relation("CouponCreatedBy", fields: [createdById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  updatedBy User? @relation("CouponUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  deletedBy User? @relation("CouponDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  orders Order[]
+}
+
+//////////////////////////////////////////
 // PAYMENT & MESSAGE
 //////////////////////////////////////////
 
@@ -705,7 +751,7 @@ model WebSocket {
 
 // LƯU Ý: Trong Prisma version 7, các quan hệ many-to-many đã được định nghĩa NGẦM ĐỊNH (implicit)
 // ở phía trên và Prisma tự động tạo bảng junction table trong database.
-// 
+//
 // KHÔNG CẦN định nghĩa các bảng junction table rõ ràng (explicit) như sau nữa:
 //
 // 1. ProductsCategories - cho quan hệ Product ↔ Category (dòng 258, 300)

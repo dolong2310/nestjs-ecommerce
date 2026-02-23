@@ -7,6 +7,7 @@ export const OrderSchema = z.object({
   userId: z.number().int().positive(),
   shopId: z.number().nullable(),
   paymentId: z.number(),
+  couponId: z.number().nullable(),
   status: z.enum(EnumOrderStatus),
   receiver: z.object({
     name: z.string(),

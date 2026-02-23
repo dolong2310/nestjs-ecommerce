@@ -21,14 +21,16 @@ const SELLER_MODULE = [
   'AUTH',
   'MEDIA',
   'PRODUCTS',
-  'MANAGE_PRODUCT',
-  'PRODUCT_TRANSLATION',
+  'MANAGE-PRODUCT',
+  'PRODUCT-TRANSLATION',
   'PROFILE',
   'CART',
   'ORDERS',
   'REVIEWS',
+  'COUPONS',
+  'MANAGE-COUPONS',
 ];
-const USER_MODULE = ['AUTH', 'MEDIA', 'PRODUCTS', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS'];
+const USER_MODULE = ['AUTH', 'MEDIA', 'PRODUCTS', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS', 'COUPONS'];
 
 const prismaService = new PrismaService();
 
@@ -146,7 +148,7 @@ async function syncPermissions(availableRoutes: AvailableRoute[]) {
   }
 
   // 6. Tìm routes không tồn tại trong permissionsInDatabase
-  const routesToCreate = availableRoutes.filter((route) => !permissionsInDatabaseMap[`${route.method}_${route.path}`]);
+  const routesToCreate = availableRoutes.filter((route) => !permissionsInDatabaseMap[`${route.method}-${route.path}`]);
 
   // 7. Tạo permissions không tồn tại trong permissionsInDatabase
   if (routesToCreate.length > 0) {

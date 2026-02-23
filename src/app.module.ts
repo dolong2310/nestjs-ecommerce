@@ -7,6 +7,7 @@ import { BrandModule } from '@/routes/brand/brand.module';
 import { CartModule } from '@/routes/cart/cart.module';
 import { CategoryTranslationModule } from '@/routes/category/category-translation/category-translation.module';
 import { CategoryModule } from '@/routes/category/category.module';
+import { CouponModule } from '@/routes/coupon/coupon.module';
 import { LanguageModule } from '@/routes/language/language.module';
 import { MediaModule } from '@/routes/media/media.module';
 import { OrderModule } from '@/routes/order/order.module';
@@ -38,10 +39,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ClsModule } from 'nestjs-cls';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
-import { LoggerModule } from 'nestjs-pino';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import path from 'path';
 
+// import { LoggerModule } from 'nestjs-pino';
 // import pino from 'pino';
 
 @Module({
@@ -159,6 +160,7 @@ import path from 'path';
     PaymentModule,
     WebsocketModule,
     ReviewModule,
+    CouponModule,
   ],
   controllers: [AppController],
   providers: [

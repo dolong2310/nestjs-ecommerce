@@ -41,11 +41,6 @@ export class PaymentService {
   async receiver(props: { body: WebhookPaymentBodyType }): Promise<MessageResponseType> {
     const { body } = props;
     const { id, code, content, transferAmount } = body;
-    console.log('body: ', body);
-    console.log('id: ', id);
-    console.log('transferAmount: ', transferAmount);
-    console.log('code: ', code);
-    console.log('content: ', content);
 
     // 1. Kiểm tra payment transaction có tồn tại không.
     // Tránh case Sepay thanh toán lỗi thì nó sẽ retry lại và tạo transaction mới => ảnh hưởng tới stock của sku.

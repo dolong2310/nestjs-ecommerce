@@ -121,7 +121,7 @@ export class AuthGuard implements CanActivate {
       // 2.2. Key by method and path (mục đích transform lại thành method:path để dễ dàng check canAccess bằng object)
       const permissionsMap = keyBy(
         roleWithPermissions.permissions,
-        (p) => `${p.method}:${p.path}`,
+        (p) => `${p.method}-${p.path}`,
       ) as CachedRole['permissionsMap'];
 
       // 2.3. Cache role with permissions
@@ -135,7 +135,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // 3. Check if user has permission to access the route
-    const canAccess: Permission | undefined = cachedRole?.permissionsMap[`${method}:${path}`];
+    const canAccess: Permission | undefined = cachedRole?.permissionsMap[`${method}-${path}`];
     // console.log('canAccess: ', Boolean(canAccess));
 
     if (!canAccess) {

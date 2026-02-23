@@ -33,6 +33,7 @@ export type OrderAvgAggregateOutputType = {
   userId: number | null
   shopId: number | null
   paymentId: number | null
+  couponId: number | null
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
@@ -43,6 +44,7 @@ export type OrderSumAggregateOutputType = {
   userId: number | null
   shopId: number | null
   paymentId: number | null
+  couponId: number | null
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
@@ -53,6 +55,7 @@ export type OrderMinAggregateOutputType = {
   userId: number | null
   shopId: number | null
   paymentId: number | null
+  couponId: number | null
   status: $Enums.OrderStatus | null
   createdById: number | null
   updatedById: number | null
@@ -67,6 +70,7 @@ export type OrderMaxAggregateOutputType = {
   userId: number | null
   shopId: number | null
   paymentId: number | null
+  couponId: number | null
   status: $Enums.OrderStatus | null
   createdById: number | null
   updatedById: number | null
@@ -81,6 +85,7 @@ export type OrderCountAggregateOutputType = {
   userId: number
   shopId: number
   paymentId: number
+  couponId: number
   status: number
   receiver:PrismaJson.Receiver
   createdById: number
@@ -98,6 +103,7 @@ export type OrderAvgAggregateInputType = {
   userId?: true
   shopId?: true
   paymentId?: true
+  couponId?: true
   createdById?: true
   updatedById?: true
   deletedById?: true
@@ -108,6 +114,7 @@ export type OrderSumAggregateInputType = {
   userId?: true
   shopId?: true
   paymentId?: true
+  couponId?: true
   createdById?: true
   updatedById?: true
   deletedById?: true
@@ -118,6 +125,7 @@ export type OrderMinAggregateInputType = {
   userId?: true
   shopId?: true
   paymentId?: true
+  couponId?: true
   status?: true
   createdById?: true
   updatedById?: true
@@ -132,6 +140,7 @@ export type OrderMaxAggregateInputType = {
   userId?: true
   shopId?: true
   paymentId?: true
+  couponId?: true
   status?: true
   createdById?: true
   updatedById?: true
@@ -146,6 +155,7 @@ export type OrderCountAggregateInputType = {
   userId?: true
   shopId?: true
   paymentId?: true
+  couponId?: true
   status?: true
   receiver?: true
   createdById?: true
@@ -248,6 +258,7 @@ export type OrderGroupByOutputType = {
   userId: number
   shopId: number | null
   paymentId: number
+  couponId: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById: number | null
@@ -286,6 +297,7 @@ export type OrderWhereInput = {
   userId?: Prisma.IntFilter<"Order"> | number
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
+  couponId?: Prisma.IntNullableFilter<"Order"> | number | null
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -297,6 +309,7 @@ export type OrderWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   shop?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentScalarRelationFilter, Prisma.PaymentWhereInput>
+  coupon?: Prisma.XOR<Prisma.CouponNullableScalarRelationFilter, Prisma.CouponWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -310,6 +323,7 @@ export type OrderOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -321,6 +335,7 @@ export type OrderOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   shop?: Prisma.UserOrderByWithRelationInput
   payment?: Prisma.PaymentOrderByWithRelationInput
+  coupon?: Prisma.CouponOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   deletedBy?: Prisma.UserOrderByWithRelationInput
@@ -337,6 +352,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"Order"> | number
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
+  couponId?: Prisma.IntNullableFilter<"Order"> | number | null
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -348,6 +364,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   shop?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.PaymentScalarRelationFilter, Prisma.PaymentWhereInput>
+  coupon?: Prisma.XOR<Prisma.CouponNullableScalarRelationFilter, Prisma.CouponWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -361,6 +378,7 @@ export type OrderOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -384,6 +402,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   userId?: Prisma.IntWithAggregatesFilter<"Order"> | number
   shopId?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   paymentId?: Prisma.IntWithAggregatesFilter<"Order"> | number
+  couponId?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   status?: Prisma.EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonWithAggregatesFilter<"Order">
   createdById?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
@@ -403,6 +422,7 @@ export type OrderCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -416,6 +436,7 @@ export type OrderUncheckedCreateInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -438,6 +459,7 @@ export type OrderUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -451,6 +473,7 @@ export type OrderUncheckedUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -469,6 +492,7 @@ export type OrderCreateManyInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -492,6 +516,7 @@ export type OrderUncheckedUpdateManyInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -517,6 +542,7 @@ export type OrderCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -532,6 +558,7 @@ export type OrderAvgOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
@@ -542,6 +569,7 @@ export type OrderMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -556,6 +584,7 @@ export type OrderMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -570,6 +599,7 @@ export type OrderSumOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
+  couponId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
@@ -867,6 +897,48 @@ export type OrderUpdateOneRequiredWithoutReviewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrderUpdateToOneWithWhereWithoutReviewsInput, Prisma.OrderUpdateWithoutReviewsInput>, Prisma.OrderUncheckedUpdateWithoutReviewsInput>
 }
 
+export type OrderCreateNestedManyWithoutCouponInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput> | Prisma.OrderCreateWithoutCouponInput[] | Prisma.OrderUncheckedCreateWithoutCouponInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutCouponInput | Prisma.OrderCreateOrConnectWithoutCouponInput[]
+  createMany?: Prisma.OrderCreateManyCouponInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUncheckedCreateNestedManyWithoutCouponInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput> | Prisma.OrderCreateWithoutCouponInput[] | Prisma.OrderUncheckedCreateWithoutCouponInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutCouponInput | Prisma.OrderCreateOrConnectWithoutCouponInput[]
+  createMany?: Prisma.OrderCreateManyCouponInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUpdateManyWithoutCouponNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput> | Prisma.OrderCreateWithoutCouponInput[] | Prisma.OrderUncheckedCreateWithoutCouponInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutCouponInput | Prisma.OrderCreateOrConnectWithoutCouponInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutCouponInput | Prisma.OrderUpsertWithWhereUniqueWithoutCouponInput[]
+  createMany?: Prisma.OrderCreateManyCouponInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutCouponInput | Prisma.OrderUpdateWithWhereUniqueWithoutCouponInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutCouponInput | Prisma.OrderUpdateManyWithWhereWithoutCouponInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
+export type OrderUncheckedUpdateManyWithoutCouponNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput> | Prisma.OrderCreateWithoutCouponInput[] | Prisma.OrderUncheckedCreateWithoutCouponInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutCouponInput | Prisma.OrderCreateOrConnectWithoutCouponInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutCouponInput | Prisma.OrderUpsertWithWhereUniqueWithoutCouponInput[]
+  createMany?: Prisma.OrderCreateManyCouponInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutCouponInput | Prisma.OrderUpdateWithWhereUniqueWithoutCouponInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutCouponInput | Prisma.OrderUpdateManyWithWhereWithoutCouponInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
 export type OrderCreateNestedManyWithoutPaymentInput = {
   create?: Prisma.XOR<Prisma.OrderCreateWithoutPaymentInput, Prisma.OrderUncheckedCreateWithoutPaymentInput> | Prisma.OrderCreateWithoutPaymentInput[] | Prisma.OrderUncheckedCreateWithoutPaymentInput[]
   connectOrCreate?: Prisma.OrderCreateOrConnectWithoutPaymentInput | Prisma.OrderCreateOrConnectWithoutPaymentInput[]
@@ -917,6 +989,7 @@ export type OrderCreateWithoutUserInput = {
   updatedAt?: Date | string
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -929,6 +1002,7 @@ export type OrderUncheckedCreateWithoutUserInput = {
   id?: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -960,6 +1034,7 @@ export type OrderCreateWithoutShopInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -972,6 +1047,7 @@ export type OrderUncheckedCreateWithoutShopInput = {
   id?: number
   userId: number
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1004,6 +1080,7 @@ export type OrderCreateWithoutCreatedByInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
@@ -1016,6 +1093,7 @@ export type OrderUncheckedCreateWithoutCreatedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   updatedById?: number | null
@@ -1047,6 +1125,7 @@ export type OrderCreateWithoutUpdatedByInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
@@ -1059,6 +1138,7 @@ export type OrderUncheckedCreateWithoutUpdatedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1090,6 +1170,7 @@ export type OrderCreateWithoutDeletedByInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
@@ -1102,6 +1183,7 @@ export type OrderUncheckedCreateWithoutDeletedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1148,6 +1230,7 @@ export type OrderScalarWhereInput = {
   userId?: Prisma.IntFilter<"Order"> | number
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
+  couponId?: Prisma.IntNullableFilter<"Order"> | number | null
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -1231,6 +1314,7 @@ export type OrderCreateWithoutProductsInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -1243,6 +1327,7 @@ export type OrderUncheckedCreateWithoutProductsInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1285,6 +1370,7 @@ export type OrderCreateWithoutItemsInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -1297,6 +1383,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1334,6 +1421,7 @@ export type OrderUpdateWithoutItemsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1346,6 +1434,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1367,6 +1456,7 @@ export type OrderCreateWithoutReviewsInput = {
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
   payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -1379,6 +1469,7 @@ export type OrderUncheckedCreateWithoutReviewsInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1416,6 +1507,7 @@ export type OrderUpdateWithoutReviewsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1428,6 +1520,7 @@ export type OrderUncheckedUpdateWithoutReviewsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1440,6 +1533,67 @@ export type OrderUncheckedUpdateWithoutReviewsInput = {
   products?: Prisma.ProductUncheckedUpdateManyWithoutOrdersNestedInput
 }
 
+export type OrderCreateWithoutCouponInput = {
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutOrdersInput
+  shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
+  payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
+}
+
+export type OrderUncheckedCreateWithoutCouponInput = {
+  id?: number
+  userId: number
+  shopId?: number | null
+  paymentId: number
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProductSKUSnapshotUncheckedCreateNestedManyWithoutOrderInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrdersInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutCouponInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput>
+}
+
+export type OrderCreateManyCouponInputEnvelope = {
+  data: Prisma.OrderCreateManyCouponInput | Prisma.OrderCreateManyCouponInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderUpsertWithWhereUniqueWithoutCouponInput = {
+  where: Prisma.OrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutCouponInput, Prisma.OrderUncheckedUpdateWithoutCouponInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutCouponInput, Prisma.OrderUncheckedCreateWithoutCouponInput>
+}
+
+export type OrderUpdateWithWhereUniqueWithoutCouponInput = {
+  where: Prisma.OrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutCouponInput, Prisma.OrderUncheckedUpdateWithoutCouponInput>
+}
+
+export type OrderUpdateManyWithWhereWithoutCouponInput = {
+  where: Prisma.OrderScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutCouponInput>
+}
+
 export type OrderCreateWithoutPaymentInput = {
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
@@ -1448,6 +1602,7 @@ export type OrderCreateWithoutPaymentInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutOrdersInput
   shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
@@ -1460,6 +1615,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   id?: number
   userId: number
   shopId?: number | null
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1503,6 +1659,7 @@ export type OrderCreateManyUserInput = {
   id?: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1517,6 +1674,7 @@ export type OrderCreateManyShopInput = {
   id?: number
   userId: number
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1532,6 +1690,7 @@ export type OrderCreateManyCreatedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   updatedById?: number | null
@@ -1546,6 +1705,7 @@ export type OrderCreateManyUpdatedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1560,6 +1720,7 @@ export type OrderCreateManyDeletedByInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1577,6 +1738,7 @@ export type OrderUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1589,6 +1751,7 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1606,6 +1769,7 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1624,6 +1788,7 @@ export type OrderUpdateWithoutShopInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1636,6 +1801,7 @@ export type OrderUncheckedUpdateWithoutShopInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1653,6 +1819,7 @@ export type OrderUncheckedUpdateManyWithoutShopInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1672,6 +1839,7 @@ export type OrderUpdateWithoutCreatedByInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
@@ -1684,6 +1852,7 @@ export type OrderUncheckedUpdateWithoutCreatedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1701,6 +1870,7 @@ export type OrderUncheckedUpdateManyWithoutCreatedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1719,6 +1889,7 @@ export type OrderUpdateWithoutUpdatedByInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
@@ -1731,6 +1902,7 @@ export type OrderUncheckedUpdateWithoutUpdatedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1748,6 +1920,7 @@ export type OrderUncheckedUpdateManyWithoutUpdatedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1766,6 +1939,7 @@ export type OrderUpdateWithoutDeletedByInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
@@ -1778,6 +1952,7 @@ export type OrderUncheckedUpdateWithoutDeletedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1795,6 +1970,7 @@ export type OrderUncheckedUpdateManyWithoutDeletedByInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1813,6 +1989,7 @@ export type OrderUpdateWithoutProductsInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
   payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1825,6 +2002,7 @@ export type OrderUncheckedUpdateWithoutProductsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1838,6 +2016,72 @@ export type OrderUncheckedUpdateWithoutProductsInput = {
 }
 
 export type OrderUncheckedUpdateManyWithoutProductsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderCreateManyCouponInput = {
+  id?: number
+  userId: number
+  shopId?: number | null
+  paymentId: number
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderUpdateWithoutCouponInput = {
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
+  shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
+  payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutCouponInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProductSKUSnapshotUncheckedUpdateManyWithoutOrderNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrdersNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateManyWithoutCouponInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1856,6 +2100,7 @@ export type OrderCreateManyPaymentInput = {
   id?: number
   userId: number
   shopId?: number | null
+  couponId?: number | null
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1874,6 +2119,7 @@ export type OrderUpdateWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
   shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
@@ -1886,6 +2132,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1903,6 +2150,7 @@ export type OrderUncheckedUpdateManyWithoutPaymentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1967,6 +2215,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   userId?: boolean
   shopId?: boolean
   paymentId?: boolean
+  couponId?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -1978,6 +2227,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -1992,6 +2242,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   shopId?: boolean
   paymentId?: boolean
+  couponId?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2003,6 +2254,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -2013,6 +2265,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   userId?: boolean
   shopId?: boolean
   paymentId?: boolean
+  couponId?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2024,6 +2277,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -2034,6 +2288,7 @@ export type OrderSelectScalar = {
   userId?: boolean
   shopId?: boolean
   paymentId?: boolean
+  couponId?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2044,11 +2299,12 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "couponId" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -2061,6 +2317,7 @@ export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -2069,6 +2326,7 @@ export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
   payment?: boolean | Prisma.PaymentDefaultArgs<ExtArgs>
+  coupon?: boolean | Prisma.Order$couponArgs<ExtArgs>
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
@@ -2080,6 +2338,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     user: Prisma.$UserPayload<ExtArgs>
     shop: Prisma.$UserPayload<ExtArgs> | null
     payment: Prisma.$PaymentPayload<ExtArgs>
+    coupon: Prisma.$CouponPayload<ExtArgs> | null
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     deletedBy: Prisma.$UserPayload<ExtArgs> | null
@@ -2092,6 +2351,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     userId: number
     shopId: number | null
     paymentId: number
+    couponId: number | null
     status: $Enums.OrderStatus
     /**
      * [Receiver]
@@ -2500,6 +2760,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   shop<T extends Prisma.Order$shopArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$shopArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.PaymentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PaymentDefaultArgs<ExtArgs>>): Prisma.Prisma__PaymentClient<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  coupon<T extends Prisma.Order$couponArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$couponArgs<ExtArgs>>): Prisma.Prisma__CouponClient<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.Order$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Order$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deletedBy<T extends Prisma.Order$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2539,6 +2800,7 @@ export interface OrderFieldRefs {
   readonly userId: Prisma.FieldRef<"Order", 'Int'>
   readonly shopId: Prisma.FieldRef<"Order", 'Int'>
   readonly paymentId: Prisma.FieldRef<"Order", 'Int'>
+  readonly couponId: Prisma.FieldRef<"Order", 'Int'>
   readonly status: Prisma.FieldRef<"Order", 'OrderStatus'>
   readonly receiver: Prisma.FieldRef<"Order", 'Json'>
   readonly createdById: Prisma.FieldRef<"Order", 'Int'>
@@ -2959,6 +3221,25 @@ export type Order$shopArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Order.coupon
+ */
+export type Order$couponArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coupon
+   */
+  select?: Prisma.CouponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coupon
+   */
+  omit?: Prisma.CouponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponInclude<ExtArgs> | null
+  where?: Prisma.CouponWhereInput
 }
 
 /**
