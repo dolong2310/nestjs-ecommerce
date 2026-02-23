@@ -361,6 +361,9 @@ export type UserWhereInput = {
   sentMessages?: Prisma.MessageListRelationFilter
   receivedMessages?: Prisma.MessageListRelationFilter
   webSockets?: Prisma.WebSocketListRelationFilter
+  createdCoupons?: Prisma.CouponListRelationFilter
+  updatedCoupons?: Prisma.CouponListRelationFilter
+  deletedCoupons?: Prisma.CouponListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -432,6 +435,9 @@ export type UserOrderByWithRelationInput = {
   sentMessages?: Prisma.MessageOrderByRelationAggregateInput
   receivedMessages?: Prisma.MessageOrderByRelationAggregateInput
   webSockets?: Prisma.WebSocketOrderByRelationAggregateInput
+  createdCoupons?: Prisma.CouponOrderByRelationAggregateInput
+  updatedCoupons?: Prisma.CouponOrderByRelationAggregateInput
+  deletedCoupons?: Prisma.CouponOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   deletedBy?: Prisma.UserOrderByWithRelationInput
@@ -506,6 +512,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sentMessages?: Prisma.MessageListRelationFilter
   receivedMessages?: Prisma.MessageListRelationFilter
   webSockets?: Prisma.WebSocketListRelationFilter
+  createdCoupons?: Prisma.CouponListRelationFilter
+  updatedCoupons?: Prisma.CouponListRelationFilter
+  deletedCoupons?: Prisma.CouponListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -616,6 +625,9 @@ export type UserCreateInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -686,6 +698,9 @@ export type UserUncheckedCreateInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -749,6 +764,9 @@ export type UserUpdateInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -819,6 +837,9 @@ export type UserUncheckedUpdateInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -1867,6 +1888,54 @@ export type UserUpdateOneRequiredWithoutReviewsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewsInput, Prisma.UserUpdateWithoutReviewsInput>, Prisma.UserUncheckedUpdateWithoutReviewsInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedCouponsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCouponsInput, Prisma.UserUncheckedCreateWithoutCreatedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCouponsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutUpdatedCouponsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCouponsInput, Prisma.UserUncheckedCreateWithoutUpdatedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCouponsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutDeletedCouponsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeletedCouponsInput, Prisma.UserUncheckedCreateWithoutDeletedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeletedCouponsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCreatedCouponsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedCouponsInput, Prisma.UserUncheckedCreateWithoutCreatedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedCouponsInput
+  upsert?: Prisma.UserUpsertWithoutCreatedCouponsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedCouponsInput, Prisma.UserUpdateWithoutCreatedCouponsInput>, Prisma.UserUncheckedUpdateWithoutCreatedCouponsInput>
+}
+
+export type UserUpdateOneWithoutUpdatedCouponsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCouponsInput, Prisma.UserUncheckedCreateWithoutUpdatedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedCouponsInput
+  upsert?: Prisma.UserUpsertWithoutUpdatedCouponsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUpdatedCouponsInput, Prisma.UserUpdateWithoutUpdatedCouponsInput>, Prisma.UserUncheckedUpdateWithoutUpdatedCouponsInput>
+}
+
+export type UserUpdateOneWithoutDeletedCouponsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDeletedCouponsInput, Prisma.UserUncheckedCreateWithoutDeletedCouponsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDeletedCouponsInput
+  upsert?: Prisma.UserUpsertWithoutDeletedCouponsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeletedCouponsInput, Prisma.UserUpdateWithoutDeletedCouponsInput>, Prisma.UserUncheckedUpdateWithoutDeletedCouponsInput>
+}
+
 export type UserCreateNestedOneWithoutSentMessagesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSentMessagesInput, Prisma.UserUncheckedCreateWithoutSentMessagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentMessagesInput
@@ -1966,6 +2035,9 @@ export type UserCreateWithoutCreatedLanguagesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2035,6 +2107,9 @@ export type UserUncheckedCreateWithoutCreatedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2102,6 +2177,9 @@ export type UserCreateWithoutUpdatedLanguagesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2171,6 +2249,9 @@ export type UserUncheckedCreateWithoutUpdatedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2238,6 +2319,9 @@ export type UserCreateWithoutDeletedLanguagesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2307,6 +2391,9 @@ export type UserUncheckedCreateWithoutDeletedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -2385,6 +2472,9 @@ export type UserUpdateWithoutCreatedLanguagesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2454,6 +2544,9 @@ export type UserUncheckedUpdateWithoutCreatedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2527,6 +2620,9 @@ export type UserUpdateWithoutUpdatedLanguagesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2596,6 +2692,9 @@ export type UserUncheckedUpdateWithoutUpdatedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2669,6 +2768,9 @@ export type UserUpdateWithoutDeletedLanguagesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -2738,6 +2840,9 @@ export type UserUncheckedUpdateWithoutDeletedLanguagesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -2801,6 +2906,9 @@ export type UserCreateWithoutCreatedUsersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -2870,6 +2978,9 @@ export type UserUncheckedCreateWithoutCreatedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
 }
@@ -2937,6 +3048,9 @@ export type UserCreateWithoutUpdatedUsersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -3006,6 +3120,9 @@ export type UserUncheckedCreateWithoutUpdatedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
 }
@@ -3073,6 +3190,9 @@ export type UserCreateWithoutDeletedUsersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -3142,6 +3262,9 @@ export type UserUncheckedCreateWithoutDeletedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
 }
@@ -3209,6 +3332,9 @@ export type UserCreateWithoutCreatedByInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3277,6 +3403,9 @@ export type UserUncheckedCreateWithoutCreatedByInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3350,6 +3479,9 @@ export type UserCreateWithoutUpdatedByInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3418,6 +3550,9 @@ export type UserUncheckedCreateWithoutUpdatedByInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3491,6 +3626,9 @@ export type UserCreateWithoutDeletedByInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
@@ -3559,6 +3697,9 @@ export type UserUncheckedCreateWithoutDeletedByInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -3643,6 +3784,9 @@ export type UserUpdateWithoutCreatedUsersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3712,6 +3856,9 @@ export type UserUncheckedUpdateWithoutCreatedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
 }
@@ -3785,6 +3932,9 @@ export type UserUpdateWithoutUpdatedUsersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3854,6 +4004,9 @@ export type UserUncheckedUpdateWithoutUpdatedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
 }
@@ -3927,6 +4080,9 @@ export type UserUpdateWithoutDeletedUsersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -3996,6 +4152,9 @@ export type UserUncheckedUpdateWithoutDeletedUsersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
 }
@@ -4126,6 +4285,9 @@ export type UserCreateWithoutUserTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4195,6 +4357,9 @@ export type UserUncheckedCreateWithoutUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4262,6 +4427,9 @@ export type UserCreateWithoutCreatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4331,6 +4499,9 @@ export type UserUncheckedCreateWithoutCreatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4398,6 +4569,9 @@ export type UserCreateWithoutUpdatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4467,6 +4641,9 @@ export type UserUncheckedCreateWithoutUpdatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4534,6 +4711,9 @@ export type UserCreateWithoutDeletedUserTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -4603,6 +4783,9 @@ export type UserUncheckedCreateWithoutDeletedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -4681,6 +4864,9 @@ export type UserUpdateWithoutUserTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -4750,6 +4936,9 @@ export type UserUncheckedUpdateWithoutUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -4823,6 +5012,9 @@ export type UserUpdateWithoutCreatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -4892,6 +5084,9 @@ export type UserUncheckedUpdateWithoutCreatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -4965,6 +5160,9 @@ export type UserUpdateWithoutUpdatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5034,6 +5232,9 @@ export type UserUncheckedUpdateWithoutUpdatedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5107,6 +5308,9 @@ export type UserUpdateWithoutDeletedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5176,6 +5380,9 @@ export type UserUncheckedUpdateWithoutDeletedUserTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5238,6 +5445,9 @@ export type UserCreateWithoutRefreshTokensInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5307,6 +5517,9 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5385,6 +5598,9 @@ export type UserUpdateWithoutRefreshTokensInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5454,6 +5670,9 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5516,6 +5735,9 @@ export type UserCreateWithoutDevicesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5585,6 +5807,9 @@ export type UserUncheckedCreateWithoutDevicesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5663,6 +5888,9 @@ export type UserUpdateWithoutDevicesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -5732,6 +5960,9 @@ export type UserUncheckedUpdateWithoutDevicesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -5794,6 +6025,9 @@ export type UserCreateWithoutCreatedPermissionsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5863,6 +6097,9 @@ export type UserUncheckedCreateWithoutCreatedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -5930,6 +6167,9 @@ export type UserCreateWithoutUpdatedPermissionsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -5999,6 +6239,9 @@ export type UserUncheckedCreateWithoutUpdatedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6066,6 +6309,9 @@ export type UserCreateWithoutDeletedPermissionsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6135,6 +6381,9 @@ export type UserUncheckedCreateWithoutDeletedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6213,6 +6462,9 @@ export type UserUpdateWithoutCreatedPermissionsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6282,6 +6534,9 @@ export type UserUncheckedUpdateWithoutCreatedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6355,6 +6610,9 @@ export type UserUpdateWithoutUpdatedPermissionsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6424,6 +6682,9 @@ export type UserUncheckedUpdateWithoutUpdatedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6497,6 +6758,9 @@ export type UserUpdateWithoutDeletedPermissionsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -6566,6 +6830,9 @@ export type UserUncheckedUpdateWithoutDeletedPermissionsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -6628,6 +6895,9 @@ export type UserCreateWithoutCreatedRolesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6697,6 +6967,9 @@ export type UserUncheckedCreateWithoutCreatedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6764,6 +7037,9 @@ export type UserCreateWithoutUpdatedRolesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6833,6 +7109,9 @@ export type UserUncheckedCreateWithoutUpdatedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -6900,6 +7179,9 @@ export type UserCreateWithoutDeletedRolesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -6969,6 +7251,9 @@ export type UserUncheckedCreateWithoutDeletedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7036,6 +7321,9 @@ export type UserCreateWithoutRoleInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7105,6 +7393,9 @@ export type UserUncheckedCreateWithoutRoleInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7188,6 +7479,9 @@ export type UserUpdateWithoutCreatedRolesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7257,6 +7551,9 @@ export type UserUncheckedUpdateWithoutCreatedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7330,6 +7627,9 @@ export type UserUpdateWithoutUpdatedRolesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7399,6 +7699,9 @@ export type UserUncheckedUpdateWithoutUpdatedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7472,6 +7775,9 @@ export type UserUpdateWithoutDeletedRolesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -7541,6 +7847,9 @@ export type UserUncheckedUpdateWithoutDeletedRolesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -7619,6 +7928,9 @@ export type UserCreateWithoutCreatedProductsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7688,6 +8000,9 @@ export type UserUncheckedCreateWithoutCreatedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7755,6 +8070,9 @@ export type UserCreateWithoutUpdatedProductsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7824,6 +8142,9 @@ export type UserUncheckedCreateWithoutUpdatedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -7891,6 +8212,9 @@ export type UserCreateWithoutDeletedProductsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -7960,6 +8284,9 @@ export type UserUncheckedCreateWithoutDeletedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8038,6 +8365,9 @@ export type UserUpdateWithoutCreatedProductsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8107,6 +8437,9 @@ export type UserUncheckedUpdateWithoutCreatedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8180,6 +8513,9 @@ export type UserUpdateWithoutUpdatedProductsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8249,6 +8585,9 @@ export type UserUncheckedUpdateWithoutUpdatedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8322,6 +8661,9 @@ export type UserUpdateWithoutDeletedProductsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8391,6 +8733,9 @@ export type UserUncheckedUpdateWithoutDeletedProductsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -8453,6 +8798,9 @@ export type UserCreateWithoutCreatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8522,6 +8870,9 @@ export type UserUncheckedCreateWithoutCreatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8589,6 +8940,9 @@ export type UserCreateWithoutUpdatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8658,6 +9012,9 @@ export type UserUncheckedCreateWithoutUpdatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8725,6 +9082,9 @@ export type UserCreateWithoutDeletedProductTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -8794,6 +9154,9 @@ export type UserUncheckedCreateWithoutDeletedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -8872,6 +9235,9 @@ export type UserUpdateWithoutCreatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -8941,6 +9307,9 @@ export type UserUncheckedUpdateWithoutCreatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9014,6 +9383,9 @@ export type UserUpdateWithoutUpdatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9083,6 +9455,9 @@ export type UserUncheckedUpdateWithoutUpdatedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9156,6 +9531,9 @@ export type UserUpdateWithoutDeletedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9225,6 +9603,9 @@ export type UserUncheckedUpdateWithoutDeletedProductTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9287,6 +9668,9 @@ export type UserCreateWithoutCreatedCategoriesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9356,6 +9740,9 @@ export type UserUncheckedCreateWithoutCreatedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9423,6 +9810,9 @@ export type UserCreateWithoutUpdatedCategoriesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9492,6 +9882,9 @@ export type UserUncheckedCreateWithoutUpdatedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9559,6 +9952,9 @@ export type UserCreateWithoutDeletedCategoriesInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -9628,6 +10024,9 @@ export type UserUncheckedCreateWithoutDeletedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -9706,6 +10105,9 @@ export type UserUpdateWithoutCreatedCategoriesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9775,6 +10177,9 @@ export type UserUncheckedUpdateWithoutCreatedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9848,6 +10253,9 @@ export type UserUpdateWithoutUpdatedCategoriesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -9917,6 +10325,9 @@ export type UserUncheckedUpdateWithoutUpdatedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -9990,6 +10401,9 @@ export type UserUpdateWithoutDeletedCategoriesInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10059,6 +10473,9 @@ export type UserUncheckedUpdateWithoutDeletedCategoriesInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10121,6 +10538,9 @@ export type UserCreateWithoutCreatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10190,6 +10610,9 @@ export type UserUncheckedCreateWithoutCreatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10257,6 +10680,9 @@ export type UserCreateWithoutUpdatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10326,6 +10752,9 @@ export type UserUncheckedCreateWithoutUpdatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10393,6 +10822,9 @@ export type UserCreateWithoutDeletedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -10462,6 +10894,9 @@ export type UserUncheckedCreateWithoutDeletedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -10540,6 +10975,9 @@ export type UserUpdateWithoutCreatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10609,6 +11047,9 @@ export type UserUncheckedUpdateWithoutCreatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10682,6 +11123,9 @@ export type UserUpdateWithoutUpdatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10751,6 +11195,9 @@ export type UserUncheckedUpdateWithoutUpdatedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10824,6 +11271,9 @@ export type UserUpdateWithoutDeletedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -10893,6 +11343,9 @@ export type UserUncheckedUpdateWithoutDeletedCategoryTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -10955,6 +11408,9 @@ export type UserCreateWithoutCreatedSkusInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11024,6 +11480,9 @@ export type UserUncheckedCreateWithoutCreatedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11091,6 +11550,9 @@ export type UserCreateWithoutUpdatedSkusInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11160,6 +11622,9 @@ export type UserUncheckedCreateWithoutUpdatedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11227,6 +11692,9 @@ export type UserCreateWithoutDeletedSkusInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11296,6 +11764,9 @@ export type UserUncheckedCreateWithoutDeletedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11374,6 +11845,9 @@ export type UserUpdateWithoutCreatedSkusInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11443,6 +11917,9 @@ export type UserUncheckedUpdateWithoutCreatedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11516,6 +11993,9 @@ export type UserUpdateWithoutUpdatedSkusInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11585,6 +12065,9 @@ export type UserUncheckedUpdateWithoutUpdatedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11658,6 +12141,9 @@ export type UserUpdateWithoutDeletedSkusInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -11727,6 +12213,9 @@ export type UserUncheckedUpdateWithoutDeletedSkusInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -11789,6 +12278,9 @@ export type UserCreateWithoutCreatedBrandsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11858,6 +12350,9 @@ export type UserUncheckedCreateWithoutCreatedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -11925,6 +12420,9 @@ export type UserCreateWithoutUpdatedBrandsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -11994,6 +12492,9 @@ export type UserUncheckedCreateWithoutUpdatedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12061,6 +12562,9 @@ export type UserCreateWithoutDeletedBrandsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12130,6 +12634,9 @@ export type UserUncheckedCreateWithoutDeletedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12208,6 +12715,9 @@ export type UserUpdateWithoutCreatedBrandsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12277,6 +12787,9 @@ export type UserUncheckedUpdateWithoutCreatedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12350,6 +12863,9 @@ export type UserUpdateWithoutUpdatedBrandsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12419,6 +12935,9 @@ export type UserUncheckedUpdateWithoutUpdatedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12492,6 +13011,9 @@ export type UserUpdateWithoutDeletedBrandsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -12561,6 +13083,9 @@ export type UserUncheckedUpdateWithoutDeletedBrandsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -12623,6 +13148,9 @@ export type UserCreateWithoutCreatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12692,6 +13220,9 @@ export type UserUncheckedCreateWithoutCreatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12759,6 +13290,9 @@ export type UserCreateWithoutUpdatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12828,6 +13362,9 @@ export type UserUncheckedCreateWithoutUpdatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -12895,6 +13432,9 @@ export type UserCreateWithoutDeletedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -12964,6 +13504,9 @@ export type UserUncheckedCreateWithoutDeletedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13042,6 +13585,9 @@ export type UserUpdateWithoutCreatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13111,6 +13657,9 @@ export type UserUncheckedUpdateWithoutCreatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13184,6 +13733,9 @@ export type UserUpdateWithoutUpdatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13253,6 +13805,9 @@ export type UserUncheckedUpdateWithoutUpdatedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13326,6 +13881,9 @@ export type UserUpdateWithoutDeletedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13395,6 +13953,9 @@ export type UserUncheckedUpdateWithoutDeletedBrandTranslationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13457,6 +14018,9 @@ export type UserCreateWithoutCartsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13526,6 +14090,9 @@ export type UserUncheckedCreateWithoutCartsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13604,6 +14171,9 @@ export type UserUpdateWithoutCartsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -13673,6 +14243,9 @@ export type UserUncheckedUpdateWithoutCartsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -13735,6 +14308,9 @@ export type UserCreateWithoutOrdersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13804,6 +14380,9 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -13871,6 +14450,9 @@ export type UserCreateWithoutSoldOrdersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -13940,6 +14522,9 @@ export type UserUncheckedCreateWithoutSoldOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14007,6 +14592,9 @@ export type UserCreateWithoutCreatedOrdersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14076,6 +14664,9 @@ export type UserUncheckedCreateWithoutCreatedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14143,6 +14734,9 @@ export type UserCreateWithoutUpdatedOrdersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14212,6 +14806,9 @@ export type UserUncheckedCreateWithoutUpdatedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14279,6 +14876,9 @@ export type UserCreateWithoutDeletedOrdersInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -14348,6 +14948,9 @@ export type UserUncheckedCreateWithoutDeletedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -14426,6 +15029,9 @@ export type UserUpdateWithoutOrdersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14495,6 +15101,9 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14568,6 +15177,9 @@ export type UserUpdateWithoutSoldOrdersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14637,6 +15249,9 @@ export type UserUncheckedUpdateWithoutSoldOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14710,6 +15325,9 @@ export type UserUpdateWithoutCreatedOrdersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14779,6 +15397,9 @@ export type UserUncheckedUpdateWithoutCreatedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14852,6 +15473,9 @@ export type UserUpdateWithoutUpdatedOrdersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -14921,6 +15545,9 @@ export type UserUncheckedUpdateWithoutUpdatedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -14994,6 +15621,9 @@ export type UserUpdateWithoutDeletedOrdersInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15063,6 +15693,9 @@ export type UserUncheckedUpdateWithoutDeletedOrdersInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15125,6 +15758,9 @@ export type UserCreateWithoutReviewsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -15194,6 +15830,9 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15272,6 +15911,9 @@ export type UserUpdateWithoutReviewsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15341,6 +15983,879 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserCreateWithoutCreatedCouponsInput = {
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
+  createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedCouponsInput = {
+  id?: number
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  roleId: number
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedCouponsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCouponsInput, Prisma.UserUncheckedCreateWithoutCreatedCouponsInput>
+}
+
+export type UserCreateWithoutUpdatedCouponsInput = {
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
+  createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserUncheckedCreateWithoutUpdatedCouponsInput = {
+  id?: number
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  roleId: number
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserCreateOrConnectWithoutUpdatedCouponsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCouponsInput, Prisma.UserUncheckedCreateWithoutUpdatedCouponsInput>
+}
+
+export type UserCreateWithoutDeletedCouponsInput = {
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  role: Prisma.RoleCreateNestedOneWithoutUsersInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
+  createdUsers?: Prisma.UserCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserUncheckedCreateWithoutDeletedCouponsInput = {
+  id?: number
+  email: string
+  name: string
+  password: string
+  phoneNumber?: string | null
+  avatar?: string | null
+  totpSecret?: string | null
+  status?: $Enums.UserStatus
+  roleId: number
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  devices?: Prisma.DeviceUncheckedCreateNestedManyWithoutUserInput
+  carts?: Prisma.CartItemUncheckedCreateNestedManyWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+  soldOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutShopInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  createdPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedPermissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutDeletedByInput
+  createdRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedRoles?: Prisma.RoleUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProducts?: Prisma.ProductUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategories?: Prisma.CategoryUncheckedCreateNestedManyWithoutDeletedByInput
+  createdSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedSkus?: Prisma.SKUUncheckedCreateNestedManyWithoutDeletedByInput
+  createdLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedLanguages?: Prisma.LanguageUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrands?: Prisma.BrandUncheckedCreateNestedManyWithoutDeletedByInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  createdOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedOrders?: Prisma.OrderUncheckedCreateNestedManyWithoutDeletedByInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutDeletedByInput
+  userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
+  receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
+}
+
+export type UserCreateOrConnectWithoutDeletedCouponsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeletedCouponsInput, Prisma.UserUncheckedCreateWithoutDeletedCouponsInput>
+}
+
+export type UserUpsertWithoutCreatedCouponsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCouponsInput, Prisma.UserUncheckedUpdateWithoutCreatedCouponsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedCouponsInput, Prisma.UserUncheckedCreateWithoutCreatedCouponsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedCouponsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedCouponsInput, Prisma.UserUncheckedUpdateWithoutCreatedCouponsInput>
+}
+
+export type UserUpdateWithoutCreatedCouponsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
+  createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedCouponsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUpsertWithoutUpdatedCouponsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCouponsInput, Prisma.UserUncheckedUpdateWithoutUpdatedCouponsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedCouponsInput, Prisma.UserUncheckedCreateWithoutUpdatedCouponsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUpdatedCouponsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUpdatedCouponsInput, Prisma.UserUncheckedUpdateWithoutUpdatedCouponsInput>
+}
+
+export type UserUpdateWithoutUpdatedCouponsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
+  createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUpdatedCouponsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUpsertWithoutDeletedCouponsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDeletedCouponsInput, Prisma.UserUncheckedUpdateWithoutDeletedCouponsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDeletedCouponsInput, Prisma.UserUncheckedCreateWithoutDeletedCouponsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDeletedCouponsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDeletedCouponsInput, Prisma.UserUncheckedUpdateWithoutDeletedCouponsInput>
+}
+
+export type UserUpdateWithoutDeletedCouponsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role?: Prisma.RoleUpdateOneRequiredWithoutUsersNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
+  createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
+  updatedUsers?: Prisma.UserUpdateManyWithoutUpdatedByNestedInput
+  deletedUsers?: Prisma.UserUpdateManyWithoutDeletedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDeletedCouponsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  devices?: Prisma.DeviceUncheckedUpdateManyWithoutUserNestedInput
+  carts?: Prisma.CartItemUncheckedUpdateManyWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+  soldOrders?: Prisma.OrderUncheckedUpdateManyWithoutShopNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  createdPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedPermissions?: Prisma.PermissionUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdRoles?: Prisma.RoleUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedRoles?: Prisma.RoleUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedRoles?: Prisma.RoleUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProducts?: Prisma.ProductUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProducts?: Prisma.ProductUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProducts?: Prisma.ProductUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategories?: Prisma.CategoryUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategories?: Prisma.CategoryUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdSkus?: Prisma.SKUUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedSkus?: Prisma.SKUUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedSkus?: Prisma.SKUUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedLanguages?: Prisma.LanguageUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrands?: Prisma.BrandUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrands?: Prisma.BrandUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrands?: Prisma.BrandUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedProductTranslations?: Prisma.ProductTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCategoryTranslations?: Prisma.CategoryTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedBrandTranslations?: Prisma.BrandTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdOrders?: Prisma.OrderUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedOrders?: Prisma.OrderUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedOrders?: Prisma.OrderUncheckedUpdateManyWithoutDeletedByNestedInput
+  createdUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedUserTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutDeletedByNestedInput
+  userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
+  receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15403,6 +16918,9 @@ export type UserCreateWithoutSentMessagesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -15472,6 +16990,9 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15539,6 +17060,9 @@ export type UserCreateWithoutReceivedMessagesInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   webSockets?: Prisma.WebSocketCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -15608,6 +17132,9 @@ export type UserUncheckedCreateWithoutReceivedMessagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   webSockets?: Prisma.WebSocketUncheckedCreateNestedManyWithoutUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -15686,6 +17213,9 @@ export type UserUpdateWithoutSentMessagesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15755,6 +17285,9 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15828,6 +17361,9 @@ export type UserUpdateWithoutReceivedMessagesInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -15897,6 +17433,9 @@ export type UserUncheckedUpdateWithoutReceivedMessagesInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -15959,6 +17498,9 @@ export type UserCreateWithoutWebSocketsInput = {
   userTranslations?: Prisma.UserTranslationCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageCreateNestedManyWithoutToUserInput
+  createdCoupons?: Prisma.CouponCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponCreateNestedManyWithoutDeletedByInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedUsersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedUsersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedUsersInput
@@ -16028,6 +17570,9 @@ export type UserUncheckedCreateWithoutWebSocketsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedCreateNestedManyWithoutUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutFromUserInput
   receivedMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutToUserInput
+  createdCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutUpdatedByInput
+  deletedCoupons?: Prisma.CouponUncheckedCreateNestedManyWithoutDeletedByInput
   createdUsers?: Prisma.UserUncheckedCreateNestedManyWithoutCreatedByInput
   updatedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutUpdatedByInput
   deletedUsers?: Prisma.UserUncheckedCreateNestedManyWithoutDeletedByInput
@@ -16106,6 +17651,9 @@ export type UserUpdateWithoutWebSocketsInput = {
   userTranslations?: Prisma.UserTranslationUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -16175,6 +17723,9 @@ export type UserUncheckedUpdateWithoutWebSocketsInput = {
   userTranslations?: Prisma.UserTranslationUncheckedUpdateManyWithoutUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16289,6 +17840,9 @@ export type UserUpdateWithoutCreatedByInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -16357,6 +17911,9 @@ export type UserUncheckedUpdateWithoutCreatedByInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16437,6 +17994,9 @@ export type UserUpdateWithoutUpdatedByInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -16505,6 +18065,9 @@ export type UserUncheckedUpdateWithoutUpdatedByInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16585,6 +18148,9 @@ export type UserUpdateWithoutDeletedByInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   createdUsers?: Prisma.UserUpdateManyWithoutCreatedByNestedInput
@@ -16653,6 +18219,9 @@ export type UserUncheckedUpdateWithoutDeletedByInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16749,6 +18318,9 @@ export type UserUpdateWithoutRoleInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUpdateManyWithoutDeletedByNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedUsersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedUsersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedUsersNestedInput
@@ -16818,6 +18390,9 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutFromUserNestedInput
   receivedMessages?: Prisma.MessageUncheckedUpdateManyWithoutToUserNestedInput
   webSockets?: Prisma.WebSocketUncheckedUpdateManyWithoutUserNestedInput
+  createdCoupons?: Prisma.CouponUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutUpdatedByNestedInput
+  deletedCoupons?: Prisma.CouponUncheckedUpdateManyWithoutDeletedByNestedInput
   createdUsers?: Prisma.UserUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedUsers?: Prisma.UserUncheckedUpdateManyWithoutUpdatedByNestedInput
   deletedUsers?: Prisma.UserUncheckedUpdateManyWithoutDeletedByNestedInput
@@ -16892,6 +18467,9 @@ export type UserCountOutputType = {
   sentMessages: number
   receivedMessages: number
   webSockets: number
+  createdCoupons: number
+  updatedCoupons: number
+  deletedCoupons: number
   createdUsers: number
   updatedUsers: number
   deletedUsers: number
@@ -16944,6 +18522,9 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
   receivedMessages?: boolean | UserCountOutputTypeCountReceivedMessagesArgs
   webSockets?: boolean | UserCountOutputTypeCountWebSocketsArgs
+  createdCoupons?: boolean | UserCountOutputTypeCountCreatedCouponsArgs
+  updatedCoupons?: boolean | UserCountOutputTypeCountUpdatedCouponsArgs
+  deletedCoupons?: boolean | UserCountOutputTypeCountDeletedCouponsArgs
   createdUsers?: boolean | UserCountOutputTypeCountCreatedUsersArgs
   updatedUsers?: boolean | UserCountOutputTypeCountUpdatedUsersArgs
   deletedUsers?: boolean | UserCountOutputTypeCountDeletedUsersArgs
@@ -17284,6 +18865,27 @@ export type UserCountOutputTypeCountWebSocketsArgs<ExtArgs extends runtime.Types
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountCreatedCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUpdatedCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDeletedCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CouponWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCreatedUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UserWhereInput
 }
@@ -17366,6 +18968,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
   webSockets?: boolean | Prisma.User$webSocketsArgs<ExtArgs>
+  createdCoupons?: boolean | Prisma.User$createdCouponsArgs<ExtArgs>
+  updatedCoupons?: boolean | Prisma.User$updatedCouponsArgs<ExtArgs>
+  deletedCoupons?: boolean | Prisma.User$deletedCouponsArgs<ExtArgs>
   createdBy?: boolean | Prisma.User$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.User$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.User$deletedByArgs<ExtArgs>
@@ -17486,6 +19091,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   receivedMessages?: boolean | Prisma.User$receivedMessagesArgs<ExtArgs>
   webSockets?: boolean | Prisma.User$webSocketsArgs<ExtArgs>
+  createdCoupons?: boolean | Prisma.User$createdCouponsArgs<ExtArgs>
+  updatedCoupons?: boolean | Prisma.User$updatedCouponsArgs<ExtArgs>
+  deletedCoupons?: boolean | Prisma.User$deletedCouponsArgs<ExtArgs>
   createdBy?: boolean | Prisma.User$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.User$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.User$deletedByArgs<ExtArgs>
@@ -17557,6 +19165,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sentMessages: Prisma.$MessagePayload<ExtArgs>[]
     receivedMessages: Prisma.$MessagePayload<ExtArgs>[]
     webSockets: Prisma.$WebSocketPayload<ExtArgs>[]
+    createdCoupons: Prisma.$CouponPayload<ExtArgs>[]
+    updatedCoupons: Prisma.$CouponPayload<ExtArgs>[]
+    deletedCoupons: Prisma.$CouponPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     deletedBy: Prisma.$UserPayload<ExtArgs> | null
@@ -18021,6 +19632,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedMessages<T extends Prisma.User$receivedMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   webSockets<T extends Prisma.User$webSocketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$webSocketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WebSocketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdCoupons<T extends Prisma.User$createdCouponsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdCouponsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  updatedCoupons<T extends Prisma.User$updatedCouponsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedCouponsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  deletedCoupons<T extends Prisma.User$deletedCouponsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deletedCouponsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CouponPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.User$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.User$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deletedBy<T extends Prisma.User$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -19568,6 +21182,78 @@ export type User$webSocketsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.WebSocketScalarFieldEnum | Prisma.WebSocketScalarFieldEnum[]
+}
+
+/**
+ * User.createdCoupons
+ */
+export type User$createdCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coupon
+   */
+  select?: Prisma.CouponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coupon
+   */
+  omit?: Prisma.CouponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponInclude<ExtArgs> | null
+  where?: Prisma.CouponWhereInput
+  orderBy?: Prisma.CouponOrderByWithRelationInput | Prisma.CouponOrderByWithRelationInput[]
+  cursor?: Prisma.CouponWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponScalarFieldEnum | Prisma.CouponScalarFieldEnum[]
+}
+
+/**
+ * User.updatedCoupons
+ */
+export type User$updatedCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coupon
+   */
+  select?: Prisma.CouponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coupon
+   */
+  omit?: Prisma.CouponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponInclude<ExtArgs> | null
+  where?: Prisma.CouponWhereInput
+  orderBy?: Prisma.CouponOrderByWithRelationInput | Prisma.CouponOrderByWithRelationInput[]
+  cursor?: Prisma.CouponWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponScalarFieldEnum | Prisma.CouponScalarFieldEnum[]
+}
+
+/**
+ * User.deletedCoupons
+ */
+export type User$deletedCouponsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Coupon
+   */
+  select?: Prisma.CouponSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Coupon
+   */
+  omit?: Prisma.CouponOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CouponInclude<ExtArgs> | null
+  where?: Prisma.CouponWhereInput
+  orderBy?: Prisma.CouponOrderByWithRelationInput | Prisma.CouponOrderByWithRelationInput[]
+  cursor?: Prisma.CouponWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CouponScalarFieldEnum | Prisma.CouponScalarFieldEnum[]
 }
 
 /**

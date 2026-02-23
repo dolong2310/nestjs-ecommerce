@@ -71,6 +71,7 @@ export const ModelName = {
   ProductSKUSnapshot: 'ProductSKUSnapshot',
   Review: 'Review',
   ReviewMedia: 'ReviewMedia',
+  Coupon: 'Coupon',
   PaymentTransaction: 'PaymentTransaction',
   Payment: 'Payment',
   Message: 'Message',
@@ -352,6 +353,7 @@ export const OrderScalarFieldEnum = {
   userId: 'userId',
   shopId: 'shopId',
   paymentId: 'paymentId',
+  couponId: 'couponId',
   status: 'status',
   receiver: 'receiver',
   createdById: 'createdById',
@@ -406,6 +408,27 @@ export const ReviewMediaScalarFieldEnum = {
 } as const
 
 export type ReviewMediaScalarFieldEnum = (typeof ReviewMediaScalarFieldEnum)[keyof typeof ReviewMediaScalarFieldEnum]
+
+
+export const CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  discount: 'discount',
+  quantity: 'quantity',
+  minOrderAmount: 'minOrderAmount',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  discountType: 'discountType',
+  status: 'status',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  deletedById: 'deletedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
 
 
 export const PaymentTransactionScalarFieldEnum = {

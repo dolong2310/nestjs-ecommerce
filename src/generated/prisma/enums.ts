@@ -68,3 +68,20 @@ export const MediaType = {
 } as const
 
 export type MediaType = (typeof MediaType)[keyof typeof MediaType]
+
+
+export const CouponStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type CouponStatus = (typeof CouponStatus)[keyof typeof CouponStatus]
+
+
+export const CouponDiscountType = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED_AMOUNT: 'FIXED_AMOUNT'
+} as const
+
+export type CouponDiscountType = (typeof CouponDiscountType)[keyof typeof CouponDiscountType]

@@ -120,6 +120,11 @@ export type Review = Prisma.ReviewModel
  */
 export type ReviewMedia = Prisma.ReviewMediaModel
 /**
+ * Model Coupon
+ * 
+ */
+export type Coupon = Prisma.CouponModel
+/**
  * Model PaymentTransaction
  * 
  */
