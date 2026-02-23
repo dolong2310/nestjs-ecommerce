@@ -24,23 +24,30 @@ import {
   ServerOverloadedException,
 } from '@/shared/errors/shared-error.error';
 import { isNotFoundPrismaError } from '@/shared/helpers';
+import { SharedPaymentService } from '@/shared/services/shared-payment.service';
 import { OrderType } from '@/shared/types/shared-order.type';
-import { Injectable } from '@nestjs/common';
 import { Transactional } from '@nestjs-cls/transactional';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class OrderService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly orderProducer: OrderProducer,
+    private readonly sharedPaymentService: SharedPaymentService,
   ) {}
 
   getOrders(props: { userId: number; query: GetOrdersQueryType }): Promise<GetOrdersResponseType> {
     return this.orderRepository.findMany(props);
   }
 
-  async createOrder(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {
-    const { userId, body: bodyOrderItems } = props;
+  async createOrder(props: {
+    userId: number;
+    body: CreateOrderBodyType;
+    ip: string;
+  }): Promise<CreateOrderResponseType> {
+    const { userId, body, ip } = props;
+    const { paymentMethod, orders: bodyOrderItems } = body;
 
     // 1. FlatMap cartItemIds
     const allBodyCartItemIds: number[] = bodyOrderItems.flatMap((item) => item.cartItemIds);
@@ -67,9 +74,9 @@ export class OrderService {
 
     try {
       // 3. Create Transaction
-      const { orders, paymentId } = await this._createOrderTransaction({
+      const { orders, paymentId, cartItems } = await this._createOrderTransaction({
         userId,
-        body: bodyOrderItems,
+        bodyOrderItems,
         allBodyCartItemIds,
       });
 
@@ -79,7 +86,19 @@ export class OrderService {
       // addJobCancelPayment là chức năng tự động cancel payment sau 24h nếu order không được thanh toán
       await this.orderProducer.addJobCancelPayment(paymentId);
 
-      return { data: orders };
+      // Nếu thanh toán bằng vnpay (hoặc momo, zalopay, ...) thì trả về URL thanh toán (hoặc redirect trực tiếp bằng server)
+      let paymentUrl: string | null = null;
+      if (paymentMethod) {
+        paymentUrl = await this.sharedPaymentService.buildPaymentUrl({
+          method: paymentMethod,
+          userId,
+          paymentId,
+          cartItems,
+          ip,
+        });
+      }
+
+      return { data: orders, paymentUrl };
     } finally {
       // 5. Giải phóng tất cả locks
       await Promise.all(locks.map((lock) => lock.release())).catch(() => {});
@@ -89,10 +108,10 @@ export class OrderService {
   @Transactional()
   private async _createOrderTransaction(props: {
     userId: number;
-    body: CreateOrderBodyType;
+    bodyOrderItems: CreateOrderBodyType['orders'];
     allBodyCartItemIds: number[];
   }) {
-    const { userId, body: bodyOrderItems, allBodyCartItemIds } = props;
+    const { userId, bodyOrderItems, allBodyCartItemIds } = props;
 
     // 1. Check duplicates
     const uniqueIds = new Set(allBodyCartItemIds);
@@ -134,7 +153,6 @@ export class OrderService {
     }
 
     // 6. Kiểm tra xem các skuId trong cartItem gửi lên có thuộc về shopId gửi lên không.
-    // Cách 1:
     const cartItemMap = new Map<number, (typeof cartItems)[number]>(cartItems.map((item) => [item.id, item]));
     let isSkuNotBelongToShop = false;
     outerLoop: for (const orderItem of bodyOrderItems) {
@@ -200,7 +218,7 @@ export class OrderService {
     }
 
     // 7.6. Trả về order vừa tạo
-    return { orders: createdOrders, paymentId: payment.id };
+    return { orders: createdOrders, paymentId: payment.id, cartItems };
   }
 
   async getOrderById(props: { userId: number; id: number }): Promise<GetOrderResponseType> {

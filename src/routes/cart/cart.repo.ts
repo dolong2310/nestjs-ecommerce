@@ -2,7 +2,6 @@ import { Prisma } from '@/generated/prisma/client';
 import {
   AddToCartBodyType,
   CartItemDetailType,
-  CartItemType,
   DeleteCartBodyType,
   GetCartQueryType,
   GetCartResponseType,
@@ -11,6 +10,7 @@ import {
 import { ALL_LANGUAGE_CODE } from '@/shared/constants/common.constant';
 import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
+import { CartItemType } from '@/shared/types/shared-cart.type';
 import { SkuIncludeProductType } from '@/shared/types/shared-sku.type';
 import { Injectable } from '@nestjs/common';
 

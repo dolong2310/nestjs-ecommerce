@@ -2,7 +2,6 @@ import { InvalidQuantityException, OutOfStockSkuException, SkuNotFoundException 
 import { CartRepository } from '@/routes/cart/cart.repo';
 import {
   AddToCartBodyType,
-  CartItemType,
   DeleteCartBodyType,
   GetCartQueryType,
   GetCartResponseType,
@@ -10,6 +9,7 @@ import {
 } from '@/routes/cart/cart.type';
 import { CartItemNotFoundException, ProductNotFoundException } from '@/shared/errors/shared-error.error';
 import { isForeignKeyConstraintPrismaError, isNotFoundPrismaError } from '@/shared/helpers';
+import { CartItemType } from '@/shared/types/shared-cart.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { SkuType } from '@/shared/types/shared-sku.type';
 import { Injectable } from '@nestjs/common';

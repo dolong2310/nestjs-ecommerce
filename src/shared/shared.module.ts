@@ -14,6 +14,7 @@ import { EmailService } from '@/shared/services/email.service';
 import { HashingService } from '@/shared/services/hashing.service';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { S3Service } from '@/shared/services/s3.service';
+import { SharedPaymentService } from '@/shared/services/shared-payment.service';
 import { TokenService } from '@/shared/services/token.service';
 import { Global, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
@@ -25,6 +26,7 @@ const sharedServices = [
   EmailService,
   TwoFactorAuthenticationService,
   S3Service,
+  SharedPaymentService,
 ];
 const sharedRepositories = [
   SharedWebSocketRepository,

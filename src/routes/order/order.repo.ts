@@ -133,7 +133,7 @@ export class OrderRepository {
     userId: number;
     paymentId: number;
     status: OrderStatusType;
-    orderItem: CreateOrderBodyType[number];
+    orderItem: CreateOrderBodyType['orders'][number];
     cartItemMap: Map<number, CartItemIncludeSkuAndProductType>;
   }): Promise<OrderType> {
     return this.txHost.tx.order.create({
@@ -286,7 +286,7 @@ export class OrderRepository {
     });
   }
 
-  // async create(props: { userId: number; body: CreateOrderBodyType }): Promise<CreateOrderResponseType> {
+  // async create(props: { userId: number; body: CreateOrderBodyType['orders'] }): Promise<CreateOrderResponseType> {
   //   const { userId, body: bodyOrderItems } = props;
 
   //   // 1. Validate body
