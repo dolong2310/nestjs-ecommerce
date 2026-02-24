@@ -354,6 +354,7 @@ export const OrderScalarFieldEnum = {
   shopId: 'shopId',
   paymentId: 'paymentId',
   couponId: 'couponId',
+  discountAmount: 'discountAmount',
   status: 'status',
   receiver: 'receiver',
   createdById: 'createdById',

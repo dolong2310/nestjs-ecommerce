@@ -52,3 +52,24 @@ export const CannotCancelOrderException = new BadRequestException([
     message: 'Error.CannotCancelOrder',
   },
 ]);
+
+export const CouponNotFoundException = new NotFoundException([
+  {
+    field: 'couponId',
+    message: 'Error.CouponNotFound',
+  },
+]);
+
+export const CouponMinOrderAmountException = new BadRequestException([
+  {
+    field: 'couponId',
+    message: 'Error.CouponMinOrderAmount',
+  },
+]);
+
+export const CouponOutOfQuantityException = new BadRequestException([
+  {
+    field: 'couponId',
+    message: 'Error.CouponOutOfQuantity',
+  },
+]);

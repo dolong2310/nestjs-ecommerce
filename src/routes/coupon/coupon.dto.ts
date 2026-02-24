@@ -2,13 +2,13 @@ import {
   CreateCouponBodySchema,
   GetCouponIncludeOrdersCountResponseSchema,
   GetCouponParamsSchema,
-  GetCouponResponseSchema,
   GetCouponsPublicUserQuerySchema,
   GetCouponsQuerySchema,
   GetCouponsResponseSchema,
   UpdateCouponBodySchema,
 } from '@/routes/coupon/coupon.model';
 import { createRequestDto, createResponseDto } from '@/shared/helpers/zod-dto';
+import { GetCouponResponseSchema } from '@/shared/models/shared-coupon.model';
 
 export class GetCouponsQueryDTO extends createRequestDto(GetCouponsQuerySchema) {}
 export class GetCouponsPublicUserQueryDTO extends createRequestDto(GetCouponsPublicUserQuerySchema) {}

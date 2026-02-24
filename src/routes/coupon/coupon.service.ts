@@ -1,10 +1,7 @@
 import { NotFoundCouponException } from '@/routes/coupon/coupon.error';
 import { CouponRepository } from '@/routes/coupon/coupon.repo';
-import {
-  GetCouponResponseType,
-  GetCouponsPublicUserQueryType,
-  GetCouponsResponseType,
-} from '@/routes/coupon/coupon.type';
+import { GetCouponsPublicUserQueryType, GetCouponsResponseType } from '@/routes/coupon/coupon.type';
+import { GetCouponResponseType } from '@/shared/types/shared-coupon.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -29,6 +29,7 @@ export const CreateOrderBodySchema = z.object({
           address: z.string(),
         }),
         cartItemIds: z.array(z.number()).min(1),
+        couponId: z.number().int().positive().optional(),
       }),
     )
     .min(1),

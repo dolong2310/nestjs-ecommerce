@@ -256,7 +256,8 @@ export class PaymentService {
     const { orders } = payment;
     const userId = orders[0].userId;
 
-    const totalAmount = this._getTotalAmount(orders);
+    // Math.round để tránh floating point errors khi tính PERCENTAGE discount (vd: 100000 * 10% = 10000.000...01)
+    const totalAmount = Math.round(this._getTotalAmount(orders));
 
     if (totalAmount !== transferAmount) {
       throw isVnpay
@@ -325,10 +326,11 @@ export class PaymentService {
 
   private _getTotalAmount(orders: OrderIncludeProductSkuSnapshotType[]): number {
     return orders.reduce((total, order) => {
-      const orderTotal = order.items.reduce((totalPrice, productSku) => {
+      const skuTotal = order.items.reduce((totalPrice, productSku) => {
         return totalPrice + productSku.skuPrice * productSku.quantity;
       }, 0);
-      return total + orderTotal;
+      // Trừ discountAmount đã được lưu snapshot tại thời điểm tạo order
+      return total + skuTotal - (order.discountAmount ?? 0);
     }, 0);
   }
 

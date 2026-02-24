@@ -2,7 +2,6 @@ import { Prisma } from '@/generated/prisma/client';
 import {
   CreateCouponBodyType,
   GetCouponIncludeOrdersCountResponseType,
-  GetCouponResponseType,
   GetCouponsQueryType,
   GetCouponsResponseType,
   UpdateCouponBodyType,
@@ -10,6 +9,7 @@ import {
 import { EnumCouponStatus } from '@/shared/constants/coupon.constant';
 import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
+import { GetCouponResponseType } from '@/shared/types/shared-coupon.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

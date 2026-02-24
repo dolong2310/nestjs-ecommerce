@@ -8,7 +8,6 @@ import {
 import { CouponRepository } from '@/routes/coupon/coupon.repo';
 import {
   CreateCouponBodyType,
-  GetCouponResponseType,
   GetCouponsQueryType,
   GetCouponsResponseType,
   UpdateCouponBodyType,
@@ -16,6 +15,7 @@ import {
 import { EnumCouponStatus } from '@/shared/constants/coupon.constant';
 import { RoleName, RoleNameType } from '@/shared/constants/role.constant';
 import { isNotFoundPrismaError, isUniqueConstraintPrismaError } from '@/shared/helpers';
+import { GetCouponResponseType } from '@/shared/types/shared-coupon.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
 import { Injectable } from '@nestjs/common';
 

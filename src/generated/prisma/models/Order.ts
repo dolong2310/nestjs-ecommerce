@@ -34,6 +34,7 @@ export type OrderAvgAggregateOutputType = {
   shopId: number | null
   paymentId: number | null
   couponId: number | null
+  discountAmount: number | null
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
@@ -45,6 +46,7 @@ export type OrderSumAggregateOutputType = {
   shopId: number | null
   paymentId: number | null
   couponId: number | null
+  discountAmount: number | null
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
@@ -56,6 +58,7 @@ export type OrderMinAggregateOutputType = {
   shopId: number | null
   paymentId: number | null
   couponId: number | null
+  discountAmount: number | null
   status: $Enums.OrderStatus | null
   createdById: number | null
   updatedById: number | null
@@ -71,6 +74,7 @@ export type OrderMaxAggregateOutputType = {
   shopId: number | null
   paymentId: number | null
   couponId: number | null
+  discountAmount: number | null
   status: $Enums.OrderStatus | null
   createdById: number | null
   updatedById: number | null
@@ -86,6 +90,7 @@ export type OrderCountAggregateOutputType = {
   shopId: number
   paymentId: number
   couponId: number
+  discountAmount: number
   status: number
   receiver:PrismaJson.Receiver
   createdById: number
@@ -104,6 +109,7 @@ export type OrderAvgAggregateInputType = {
   shopId?: true
   paymentId?: true
   couponId?: true
+  discountAmount?: true
   createdById?: true
   updatedById?: true
   deletedById?: true
@@ -115,6 +121,7 @@ export type OrderSumAggregateInputType = {
   shopId?: true
   paymentId?: true
   couponId?: true
+  discountAmount?: true
   createdById?: true
   updatedById?: true
   deletedById?: true
@@ -126,6 +133,7 @@ export type OrderMinAggregateInputType = {
   shopId?: true
   paymentId?: true
   couponId?: true
+  discountAmount?: true
   status?: true
   createdById?: true
   updatedById?: true
@@ -141,6 +149,7 @@ export type OrderMaxAggregateInputType = {
   shopId?: true
   paymentId?: true
   couponId?: true
+  discountAmount?: true
   status?: true
   createdById?: true
   updatedById?: true
@@ -156,6 +165,7 @@ export type OrderCountAggregateInputType = {
   shopId?: true
   paymentId?: true
   couponId?: true
+  discountAmount?: true
   status?: true
   receiver?: true
   createdById?: true
@@ -259,6 +269,7 @@ export type OrderGroupByOutputType = {
   shopId: number | null
   paymentId: number
   couponId: number | null
+  discountAmount: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById: number | null
@@ -298,6 +309,7 @@ export type OrderWhereInput = {
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
   couponId?: Prisma.IntNullableFilter<"Order"> | number | null
+  discountAmount?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -324,6 +336,7 @@ export type OrderOrderByWithRelationInput = {
   shopId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -353,6 +366,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
   couponId?: Prisma.IntNullableFilter<"Order"> | number | null
+  discountAmount?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -379,6 +393,7 @@ export type OrderOrderByWithAggregationInput = {
   shopId?: Prisma.SortOrderInput | Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -403,6 +418,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   shopId?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   paymentId?: Prisma.IntWithAggregatesFilter<"Order"> | number
   couponId?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
+  discountAmount?: Prisma.FloatWithAggregatesFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonWithAggregatesFilter<"Order">
   createdById?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
@@ -414,6 +430,7 @@ export type OrderScalarWhereWithAggregatesInput = {
 }
 
 export type OrderCreateInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -437,6 +454,7 @@ export type OrderUncheckedCreateInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -451,6 +469,7 @@ export type OrderUncheckedCreateInput = {
 }
 
 export type OrderUpdateInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -474,6 +493,7 @@ export type OrderUncheckedUpdateInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -493,6 +513,7 @@ export type OrderCreateManyInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -504,6 +525,7 @@ export type OrderCreateManyInput = {
 }
 
 export type OrderUpdateManyMutationInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -517,6 +539,7 @@ export type OrderUncheckedUpdateManyInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -543,6 +566,7 @@ export type OrderCountOrderByAggregateInput = {
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   receiver?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
@@ -559,6 +583,7 @@ export type OrderAvgOrderByAggregateInput = {
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
@@ -570,6 +595,7 @@ export type OrderMaxOrderByAggregateInput = {
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -585,6 +611,7 @@ export type OrderMinOrderByAggregateInput = {
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -600,6 +627,7 @@ export type OrderSumOrderByAggregateInput = {
   shopId?: Prisma.SortOrder
   paymentId?: Prisma.SortOrder
   couponId?: Prisma.SortOrder
+  discountAmount?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
@@ -982,6 +1010,7 @@ export type OrderUncheckedUpdateManyWithoutPaymentNestedInput = {
 }
 
 export type OrderCreateWithoutUserInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1003,6 +1032,7 @@ export type OrderUncheckedCreateWithoutUserInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1027,6 +1057,7 @@ export type OrderCreateManyUserInputEnvelope = {
 }
 
 export type OrderCreateWithoutShopInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1048,6 +1079,7 @@ export type OrderUncheckedCreateWithoutShopInput = {
   userId: number
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1072,6 +1104,7 @@ export type OrderCreateManyShopInputEnvelope = {
 }
 
 export type OrderCreateWithoutCreatedByInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1094,6 +1127,7 @@ export type OrderUncheckedCreateWithoutCreatedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   updatedById?: number | null
@@ -1117,6 +1151,7 @@ export type OrderCreateManyCreatedByInputEnvelope = {
 }
 
 export type OrderCreateWithoutUpdatedByInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1139,6 +1174,7 @@ export type OrderUncheckedCreateWithoutUpdatedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1162,6 +1198,7 @@ export type OrderCreateManyUpdatedByInputEnvelope = {
 }
 
 export type OrderCreateWithoutDeletedByInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1184,6 +1221,7 @@ export type OrderUncheckedCreateWithoutDeletedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1231,6 +1269,7 @@ export type OrderScalarWhereInput = {
   shopId?: Prisma.IntNullableFilter<"Order"> | number | null
   paymentId?: Prisma.IntFilter<"Order"> | number
   couponId?: Prisma.IntNullableFilter<"Order"> | number | null
+  discountAmount?: Prisma.FloatFilter<"Order"> | number
   status?: Prisma.EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
   receiver?: Prisma.JsonFilter<"Order">
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
@@ -1306,6 +1345,7 @@ export type OrderUpdateManyWithWhereWithoutDeletedByInput = {
 }
 
 export type OrderCreateWithoutProductsInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1328,6 +1368,7 @@ export type OrderUncheckedCreateWithoutProductsInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1362,6 +1403,7 @@ export type OrderUpdateManyWithWhereWithoutProductsInput = {
 }
 
 export type OrderCreateWithoutItemsInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1384,6 +1426,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1413,6 +1456,7 @@ export type OrderUpdateToOneWithWhereWithoutItemsInput = {
 }
 
 export type OrderUpdateWithoutItemsInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1435,6 +1479,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1448,6 +1493,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
 }
 
 export type OrderCreateWithoutReviewsInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1470,6 +1516,7 @@ export type OrderUncheckedCreateWithoutReviewsInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1499,6 +1546,7 @@ export type OrderUpdateToOneWithWhereWithoutReviewsInput = {
 }
 
 export type OrderUpdateWithoutReviewsInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1521,6 +1569,7 @@ export type OrderUncheckedUpdateWithoutReviewsInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1534,6 +1583,7 @@ export type OrderUncheckedUpdateWithoutReviewsInput = {
 }
 
 export type OrderCreateWithoutCouponInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1555,6 +1605,7 @@ export type OrderUncheckedCreateWithoutCouponInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1595,6 +1646,7 @@ export type OrderUpdateManyWithWhereWithoutCouponInput = {
 }
 
 export type OrderCreateWithoutPaymentInput = {
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   deletedAt?: Date | string | null
@@ -1616,6 +1668,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   userId: number
   shopId?: number | null
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1660,6 +1713,7 @@ export type OrderCreateManyUserInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1675,6 +1729,7 @@ export type OrderCreateManyShopInput = {
   userId: number
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1691,6 +1746,7 @@ export type OrderCreateManyCreatedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   updatedById?: number | null
@@ -1706,6 +1762,7 @@ export type OrderCreateManyUpdatedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1721,6 +1778,7 @@ export type OrderCreateManyDeletedByInput = {
   shopId?: number | null
   paymentId: number
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -1731,6 +1789,7 @@ export type OrderCreateManyDeletedByInput = {
 }
 
 export type OrderUpdateWithoutUserInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1752,6 +1811,7 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1770,6 +1830,7 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1781,6 +1842,7 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
 }
 
 export type OrderUpdateWithoutShopInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1802,6 +1864,7 @@ export type OrderUncheckedUpdateWithoutShopInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1820,6 +1883,7 @@ export type OrderUncheckedUpdateManyWithoutShopInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1831,6 +1895,7 @@ export type OrderUncheckedUpdateManyWithoutShopInput = {
 }
 
 export type OrderUpdateWithoutCreatedByInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1853,6 +1918,7 @@ export type OrderUncheckedUpdateWithoutCreatedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1871,6 +1937,7 @@ export type OrderUncheckedUpdateManyWithoutCreatedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1881,6 +1948,7 @@ export type OrderUncheckedUpdateManyWithoutCreatedByInput = {
 }
 
 export type OrderUpdateWithoutUpdatedByInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1903,6 +1971,7 @@ export type OrderUncheckedUpdateWithoutUpdatedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1921,6 +1990,7 @@ export type OrderUncheckedUpdateManyWithoutUpdatedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1931,6 +2001,7 @@ export type OrderUncheckedUpdateManyWithoutUpdatedByInput = {
 }
 
 export type OrderUpdateWithoutDeletedByInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1953,6 +2024,7 @@ export type OrderUncheckedUpdateWithoutDeletedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1971,6 +2043,7 @@ export type OrderUncheckedUpdateManyWithoutDeletedByInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1981,6 +2054,7 @@ export type OrderUncheckedUpdateManyWithoutDeletedByInput = {
 }
 
 export type OrderUpdateWithoutProductsInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2003,6 +2077,7 @@ export type OrderUncheckedUpdateWithoutProductsInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2021,6 +2096,7 @@ export type OrderUncheckedUpdateManyWithoutProductsInput = {
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2036,6 +2112,7 @@ export type OrderCreateManyCouponInput = {
   userId: number
   shopId?: number | null
   paymentId: number
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -2047,6 +2124,7 @@ export type OrderCreateManyCouponInput = {
 }
 
 export type OrderUpdateWithoutCouponInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2068,6 +2146,7 @@ export type OrderUncheckedUpdateWithoutCouponInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2086,6 +2165,7 @@ export type OrderUncheckedUpdateManyWithoutCouponInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2101,6 +2181,7 @@ export type OrderCreateManyPaymentInput = {
   userId: number
   shopId?: number | null
   couponId?: number | null
+  discountAmount?: number
   status: $Enums.OrderStatus
   receiver:PrismaJson.Receiver
   createdById?: number | null
@@ -2112,6 +2193,7 @@ export type OrderCreateManyPaymentInput = {
 }
 
 export type OrderUpdateWithoutPaymentInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2133,6 +2215,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2151,6 +2234,7 @@ export type OrderUncheckedUpdateManyWithoutPaymentInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2216,6 +2300,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   shopId?: boolean
   paymentId?: boolean
   couponId?: boolean
+  discountAmount?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2243,6 +2328,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shopId?: boolean
   paymentId?: boolean
   couponId?: boolean
+  discountAmount?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2266,6 +2352,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shopId?: boolean
   paymentId?: boolean
   couponId?: boolean
+  discountAmount?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2289,6 +2376,7 @@ export type OrderSelectScalar = {
   shopId?: boolean
   paymentId?: boolean
   couponId?: boolean
+  discountAmount?: boolean
   status?: boolean
   receiver?: boolean
   createdById?: boolean
@@ -2299,7 +2387,7 @@ export type OrderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "couponId" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "couponId" | "discountAmount" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
@@ -2352,6 +2440,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     shopId: number | null
     paymentId: number
     couponId: number | null
+    discountAmount: number
     status: $Enums.OrderStatus
     /**
      * [Receiver]
@@ -2801,6 +2890,7 @@ export interface OrderFieldRefs {
   readonly shopId: Prisma.FieldRef<"Order", 'Int'>
   readonly paymentId: Prisma.FieldRef<"Order", 'Int'>
   readonly couponId: Prisma.FieldRef<"Order", 'Int'>
+  readonly discountAmount: Prisma.FieldRef<"Order", 'Float'>
   readonly status: Prisma.FieldRef<"Order", 'OrderStatus'>
   readonly receiver: Prisma.FieldRef<"Order", 'Json'>
   readonly createdById: Prisma.FieldRef<"Order", 'Int'>

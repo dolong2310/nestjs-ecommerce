@@ -563,14 +563,15 @@ model CartItem {
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  userId    Int
-  shopId    Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
-  paymentId Int
-  couponId  Int?
-  status    OrderStatus
+  id             Int         @id @default(autoincrement())
+  userId         Int
+  shopId         Int? // NOTE: gom nhóm 1 shopId thì có nhiều `items` => nhiều ProductSKUSnapshot[]
+  paymentId      Int
+  couponId       Int?
+  discountAmount Float       @default(0) // số tiền được giảm sau khi áp dụng coupon (lưu snapshot tại thời điểm tạo order, không recalculate)
+  status         OrderStatus
   /// [Receiver]
-  receiver  Json // thông tin người nhận (JSONB)
+  receiver       Json // thông tin người nhận (JSONB)
 
   user    User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   shop    User?   @relation("Shop", fields: [shopId], references: [id], onDelete: SetNull, onUpdate: NoAction)

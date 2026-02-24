@@ -4,8 +4,9 @@ import { EnumPaymentMethod, PaymentFactory, PaymentMethod } from '@/shared/payme
 import { CartItemIncludeSkuAndProductType } from '@/shared/types/shared-cart.type';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
+import { CURRENT_VERSION_PATH } from '@/shared/constants/version.constant';
 
-const HOST = envConfig.API_URL;
+const HOST = envConfig.API_URL + CURRENT_VERSION_PATH;
 
 @Injectable()
 export class SharedPaymentService {
@@ -39,11 +40,12 @@ export class SharedPaymentService {
     paymentId: number;
     cartItems: CartItemIncludeSkuAndProductType[];
     ip: string;
+    totalAmount?: number; // pre-calculated từ order service (đã trừ discount). Nếu không có thì fallback tính từ cartItems
   }): Promise<string> {
     const { method, userId, paymentId, cartItems, ip } = props;
-    const totalAmount = cartItems.reduce((total, cartItem) => {
-      return total + cartItem.sku.price * cartItem.quantity;
-    }, 0);
+
+    // Tính totalAmount từ cartItems để làm fallback hoặc so sánh kiểm tra
+    const totalAmount = props.totalAmount ?? this._calculateTotalFromCartItems(cartItems);
 
     switch (method) {
       case EnumPaymentMethod.MOMO:
@@ -53,6 +55,11 @@ export class SharedPaymentService {
       default:
         throw new BadRequestException('Invalid payment method');
     }
+  }
+
+  // Tính tổng tiền từ cartItems (chưa áp dụng discount) — dùng làm fallback hoặc để verify
+  private _calculateTotalFromCartItems(cartItems: CartItemIncludeSkuAndProductType[]): number {
+    return cartItems.reduce((total, cartItem) => total + cartItem.sku.price * cartItem.quantity, 0);
   }
 
   private async _buildPaymentUrlVNPay(props: {

@@ -2,7 +2,6 @@ import {
   CreateCouponBodySchema,
   GetCouponIncludeOrdersCountResponseSchema,
   GetCouponParamsSchema,
-  GetCouponResponseSchema,
   GetCouponsPublicUserQuerySchema,
   GetCouponsQuerySchema,
   GetCouponsResponseSchema,
@@ -17,5 +16,4 @@ export type CreateCouponBodyType = z.infer<typeof CreateCouponBodySchema>;
 export type UpdateCouponBodyType = z.infer<typeof UpdateCouponBodySchema>;
 
 export type GetCouponsResponseType = z.infer<typeof GetCouponsResponseSchema>;
-export type GetCouponResponseType = z.infer<typeof GetCouponResponseSchema>;
 export type GetCouponIncludeOrdersCountResponseType = z.infer<typeof GetCouponIncludeOrdersCountResponseSchema>;

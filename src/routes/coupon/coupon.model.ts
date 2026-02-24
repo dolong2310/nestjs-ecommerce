@@ -1,26 +1,9 @@
 import { EnumCouponDiscountType, EnumCouponStatus } from '@/shared/constants/coupon.constant';
-import { stringToDate, timestampToDate } from '@/shared/models/codecs';
+import { timestampToDate } from '@/shared/models/codecs';
 import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { createPaginationResponseSchema } from '@/shared/models/response.model';
+import { CouponSchema } from '@/shared/models/shared-coupon.model';
 import z from 'zod';
-
-export const CouponSchema = z.object({
-  id: z.number(),
-  code: z.string().min(1).max(255),
-  discount: z.number(),
-  quantity: z.number().min(1),
-  minOrderAmount: z.number(),
-  startDate: timestampToDate,
-  endDate: timestampToDate,
-  discountType: z.enum(EnumCouponDiscountType),
-  status: z.enum(EnumCouponStatus),
-
-  createdById: z.number().nullable(),
-  updatedById: z.number().nullable(),
-
-  createdAt: stringToDate.default(new Date()),
-  updatedAt: stringToDate.default(new Date()),
-});
 
 // Request query
 export const GetCouponsQuerySchema = PaginationQuerySchema.extend({
@@ -106,11 +89,6 @@ export const GetCouponsResponseSchema = createPaginationResponseSchema(
     updatedById: true,
   }),
 );
-
-export const GetCouponResponseSchema = CouponSchema.omit({
-  createdById: true,
-  updatedById: true,
-});
 
 export const GetCouponIncludeOrdersCountResponseSchema = CouponSchema.extend({
   _count: z.object({

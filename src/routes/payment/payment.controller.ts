@@ -40,7 +40,6 @@ export class PaymentController {
   @Get('momo-return')
   @Public()
   async momoReturn(@Query() query: ReturnQueryFromMomoDTO): Promise<MessageResponseDTO> {
-    console.log('momoReturn: ', query);
     return this.paymentService.verifyReturnMomo(query);
   }
 

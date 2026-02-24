@@ -2,6 +2,9 @@ import { redlock } from '@/redis';
 import {
   CannotCancelOrderException,
   CartItemDuplicatedException,
+  CouponMinOrderAmountException,
+  CouponNotFoundException,
+  CouponOutOfQuantityException,
   OrderNotFoundException,
   SkuNotBelongToShopException,
   SkuOutOfStockException,
@@ -16,6 +19,7 @@ import {
   GetOrdersQueryType,
   GetOrdersResponseType,
 } from '@/routes/order/order.type';
+import { EnumCouponDiscountType } from '@/shared/constants/coupon.constant';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus } from '@/shared/constants/payment.constant';
 import {
@@ -25,6 +29,8 @@ import {
 } from '@/shared/errors/shared-error.error';
 import { isNotFoundPrismaError } from '@/shared/helpers';
 import { SharedPaymentService } from '@/shared/services/shared-payment.service';
+import { CartItemIncludeSkuAndProductType } from '@/shared/types/shared-cart.type';
+import { GetCouponResponseType } from '@/shared/types/shared-coupon.type';
 import { OrderType } from '@/shared/types/shared-order.type';
 import { Transactional } from '@nestjs-cls/transactional';
 import { Injectable } from '@nestjs/common';
@@ -74,7 +80,7 @@ export class OrderService {
 
     try {
       // 3. Create Transaction
-      const { orders, paymentId, cartItems } = await this._createOrderTransaction({
+      const { orders, paymentId, cartItems, totalFinalAmount } = await this._createOrderTransaction({
         userId,
         bodyOrderItems,
         allBodyCartItemIds,
@@ -95,6 +101,7 @@ export class OrderService {
           paymentId,
           cartItems,
           ip,
+          totalAmount: totalFinalAmount,
         });
       }
 
@@ -193,13 +200,49 @@ export class OrderService {
     // Vì createMany không hỗ trợ tạo relationship với các model khác.
     // Model cần tạo cùng với order là items (ProductSKUSnapshot[]) và products.
     const createdOrders: OrderType[] = [];
+    let totalFinalAmount = 0;
+
     for (const orderItem of bodyOrderItems) {
+      // Tính subtotal của orderItem này (tổng tiền chưa giảm)
+      const subtotal = this._calculateOrderItemSubtotal(orderItem.cartItemIds, cartItemMap);
+      let discountAmount = 0;
+      let couponId: number | null = null;
+
+      // 7.3.1. Validate và apply coupon nếu có
+      if (orderItem.couponId) {
+        const coupon = await this.orderRepository.findCouponForOrder(orderItem.couponId);
+
+        if (!coupon) {
+          throw CouponNotFoundException;
+        }
+
+        if (subtotal < coupon.minOrderAmount) {
+          throw CouponMinOrderAmountException;
+        }
+
+        discountAmount = this._calculateDiscountAmount({ coupon, subtotal });
+
+        // Atomic decrement — nếu quantity đã về 0 thì Prisma throw NotFound → catch bên dưới
+        await this.orderRepository.decrementCouponQuantity(coupon.id).catch((error) => {
+          if (isNotFoundPrismaError(error)) {
+            throw CouponOutOfQuantityException;
+          }
+          throw error;
+        });
+
+        couponId = coupon.id;
+      }
+
+      totalFinalAmount += subtotal - discountAmount;
+
       const createdOrder = await this.orderRepository.createOrder({
         userId,
         paymentId: payment.id,
         status: EnumOrderStatus.PENDING_PAYMENT,
         orderItem,
         cartItemMap,
+        couponId,
+        discountAmount,
       });
       createdOrders.push(createdOrder);
     }
@@ -218,19 +261,44 @@ export class OrderService {
     }
 
     // 7.6. Trả về order vừa tạo
-    return { orders: createdOrders, paymentId: payment.id, cartItems };
+    return { orders: createdOrders, paymentId: payment.id, cartItems, totalFinalAmount };
+  }
+
+  // Tính subtotal (chưa giảm) cho một orderItem dựa trên các cartItemIds
+  private _calculateOrderItemSubtotal(
+    cartItemIds: number[],
+    cartItemMap: Map<number, CartItemIncludeSkuAndProductType>,
+  ): number {
+    return cartItemIds.reduce((sum, cartItemId) => {
+      const cartItem = cartItemMap.get(cartItemId)!;
+      return sum + cartItem.sku.price * cartItem.quantity;
+    }, 0);
+  }
+
+  // Tính discount amount dựa trên coupon và subtotal
+  private _calculateDiscountAmount({
+    coupon,
+    subtotal,
+  }: {
+    coupon: GetCouponResponseType;
+    subtotal: number;
+  }): number {
+    if (coupon.discountType === EnumCouponDiscountType.PERCENTAGE) {
+      const percentageDiscount = (subtotal * coupon.discount) / 100;
+      // Áp dụng maxDiscount nếu có (giới hạn mức giảm tối đa cho kiểu %)
+      // return coupon.maxDiscount ? Math.min(percentageDiscount, coupon.maxDiscount) : percentageDiscount;
+      return percentageDiscount;
+    }
+    // FIXED_AMOUNT: giảm trực tiếp số tiền cố định
+    return coupon.discount;
   }
 
   async getOrderById(props: { userId: number; id: number }): Promise<GetOrderResponseType> {
-    try {
-      const order = await this.orderRepository.findById(props);
-      if (!order) {
-        throw OrderNotFoundException;
-      }
-      return order;
-    } catch (error) {
-      throw error;
+    const order = await this.orderRepository.findById(props);
+    if (!order) {
+      throw OrderNotFoundException;
     }
+    return order;
   }
 
   @Transactional()
@@ -273,6 +341,11 @@ export class OrderService {
           quantity: sku.quantity, // khôi phục stock của sku khi order bị cancelled
           isCreateOrder: false,
         });
+      }
+
+      // 5. Hoàn lại coupon quantity nếu order đã dùng coupon
+      if (order.couponId) {
+        await this.orderRepository.incrementCouponQuantity(order.couponId);
       }
 
       return updatedOrder;

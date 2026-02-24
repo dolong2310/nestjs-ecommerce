@@ -5,11 +5,13 @@ import {
   GetOrdersQueryType,
   GetOrdersResponseType,
 } from '@/routes/order/order.type';
+import { EnumCouponStatus } from '@/shared/constants/coupon.constant';
 import { EnumOrderStatus, OrderStatusType } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus, PaymentStatusType } from '@/shared/constants/payment.constant';
 import { paginate } from '@/shared/helpers';
 import { PrismaService } from '@/shared/services/prisma.service';
 import { CartItemIncludeSkuAndProductType } from '@/shared/types/shared-cart.type';
+import { GetCouponResponseType } from '@/shared/types/shared-coupon.type';
 import { OrderType } from '@/shared/types/shared-order.type';
 import { PaymentType } from '@/shared/types/shared-payment.type';
 import { SkuType } from '@/shared/types/shared-sku.type';
@@ -45,6 +47,7 @@ export class OrderRepository {
     });
     const totalOrdersPromise = this.prismaService.order.count({
       where: {
+        userId,
         status,
         deletedAt: null,
       },
@@ -129,21 +132,27 @@ export class OrderRepository {
     status = EnumOrderStatus.PENDING_PAYMENT,
     orderItem,
     cartItemMap,
+    couponId,
+    discountAmount,
   }: {
     userId: number;
     paymentId: number;
     status: OrderStatusType;
     orderItem: CreateOrderBodyType['orders'][number];
     cartItemMap: Map<number, CartItemIncludeSkuAndProductType>;
+    couponId?: number | null;
+    discountAmount?: number;
   }): Promise<OrderType> {
     return this.txHost.tx.order.create({
       data: {
         userId,
-        shopId: userId,
+        shopId: orderItem.shopId,
         paymentId,
         status,
         receiver: orderItem.receiver,
         createdById: userId,
+        couponId: couponId ?? null,
+        discountAmount: discountAmount ?? 0,
         // items => ProductSKUSnapshot[]
         items: {
           create: orderItem.cartItemIds.map((cartItemId) => {
@@ -186,6 +195,41 @@ export class OrderRepository {
           in: cartItemIds,
         },
       },
+    });
+  }
+
+  // Lấy coupon hợp lệ để áp dụng cho order (chạy trong transaction)
+  findCouponForOrder(couponId: number): Promise<GetCouponResponseType | null> {
+    return this.txHost.tx.coupon.findUnique({
+      where: {
+        id: couponId,
+        deletedAt: null,
+        status: EnumCouponStatus.ACTIVE,
+        startDate: { lte: new Date() },
+        endDate: { gt: new Date() },
+        quantity: { gt: 0 },
+      },
+    });
+  }
+
+  // Trừ quantity coupon theo kiểu atomic (WHERE quantity > 0 để tránh race condition)
+  decrementCouponQuantity(couponId: number): Promise<GetCouponResponseType> {
+    return this.txHost.tx.coupon.update({
+      where: {
+        id: couponId,
+        quantity: { gt: 0 },
+      },
+      data: {
+        quantity: { decrement: 1 },
+      },
+    });
+  }
+
+  // Hoàn lại quantity coupon khi cancel order
+  incrementCouponQuantity(couponId: number): Promise<GetCouponResponseType> {
+    return this.txHost.tx.coupon.update({
+      where: { id: couponId },
+      data: { quantity: { increment: 1 } },
     });
   }
 
