@@ -109,6 +109,34 @@ export class PaymentRepository {
   }
 
   /**
+   * Tăng soldCount atomic cho các launchpad orders khi thanh toán thành công.
+   * Mỗi order có launchpadId sẽ tăng soldCount của launchpad đó lên 1.
+   */
+  async incrementLaunchpadSoldCounts(orderIds: number[]): Promise<void> {
+    const launchpadOrders = await this.txHost.tx.order.findMany({
+      where: {
+        id: { in: orderIds },
+        launchpadId: { not: null },
+      },
+      select: { launchpadId: true },
+    });
+
+    if (launchpadOrders.length === 0) return;
+
+    // Deduplicate launchpadIds rồi increment từng cái
+    const uniqueLaunchpadIds = [...new Set(launchpadOrders.map((o) => o.launchpadId!))];
+
+    await Promise.all(
+      uniqueLaunchpadIds.map((launchpadId) =>
+        this.txHost.tx.launchpad.update({
+          where: { id: launchpadId },
+          data: { soldCount: { increment: 1 } },
+        }),
+      ),
+    );
+  }
+
+  /**
    * Tài liệu tham khảo: https://docs.sepay.vn/lap-trinh-webhooks.html
    * Hàm này được gọi khi có giao dịch thanh toán mới được tạo trên hệ thống SePay.
    * Nếu hàm này bị failed thì chưa tăng stock của sku. Stock chỉ tăng khi payment transaction expired (khoảng 24h) mà user vẫn chưa thanh toàn thành công hoặc user bấm cancel order.

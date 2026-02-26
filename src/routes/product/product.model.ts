@@ -3,8 +3,7 @@ import { EnumOrderBy, EnumSortBy } from '@/shared/constants/common.constant';
 import { BrandIncludeTranslationsResponseSchema } from '@/shared/models/shared-brand.model';
 import { CategoryIncludeTranslationsResponseSchema } from '@/shared/models/shared-category.model';
 import { ProductTranslationSchema } from '@/shared/models/shared-product-translation.model';
-import { ProductSchema } from '@/shared/models/shared-product.model';
-import { SkuSchema } from '@/shared/models/shared-sku.model';
+import { ProductIncludeSkuAndTranslation, ProductSchema } from '@/shared/models/shared-product.model';
 import { VariantsType } from '@/shared/types/shared-product.type';
 import z from 'zod';
 
@@ -152,30 +151,9 @@ export const GetProductsResponseSchema = z.object({
   limit: z.number(),
 });
 
-export const GetProductResponseSchema = ProductSchema.extend({
-  productTranslations: z.array(
-    ProductTranslationSchema.omit({
-      createdById: true,
-      updatedById: true,
-      deletedById: true,
-      deletedAt: true,
-    }),
-  ),
-  skus: z.array(
-    SkuSchema.omit({
-      createdById: true,
-      updatedById: true,
-      deletedById: true,
-      deletedAt: true,
-    }),
-  ),
+export const GetProductResponseSchema = ProductIncludeSkuAndTranslation.extend({
   categories: z.array(CategoryIncludeTranslationsResponseSchema),
   brand: BrandIncludeTranslationsResponseSchema,
-}).omit({
-  // createdById: true,
-  updatedById: true,
-  deletedById: true,
-  deletedAt: true,
 });
 
 function _generateSKUs(variants: VariantsType) {

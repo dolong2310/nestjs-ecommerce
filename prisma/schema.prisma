@@ -77,6 +77,15 @@ enum CouponDiscountType {
   FIXED_AMOUNT // số tiền cố định
 }
 
+enum LaunchpadStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  LIVE
+  ENDED
+  REJECTED
+}
+
 //////////////////////////////////////////
 // CORE MODELS
 //////////////////////////////////////////
@@ -180,6 +189,9 @@ model User {
   createdCoupons              Coupon[]              @relation("CouponCreatedBy")
   updatedCoupons              Coupon[]              @relation("CouponUpdatedBy")
   deletedCoupons              Coupon[]              @relation("CouponDeletedBy")
+  createdLaunchpads           Launchpad[]           @relation("LaunchpadCreatedBy")
+  updatedLaunchpads           Launchpad[]           @relation("LaunchpadUpdatedBy")
+  deletedLaunchpads           Launchpad[]           @relation("LaunchpadDeletedBy")
 
   // 1 user có thể tạo ra nhiều user khác
   // 1 user chỉ có thể được tạo ra bởi 1 user khác
@@ -370,6 +382,7 @@ model Product {
   categories          Category[] // ProductsCategories[] - Implicit many-to-many (Prisma tự động tạo bảng _CategoryToProduct)
   orders              Order[] // ProductsOrders[] - Implicit many-to-many (Prisma tự động tạo bảng _ProductToOrder)
   productSKUSnapshots ProductSKUSnapshot[]
+  launchpads          Launchpad[]
 
   // CÁCH VIẾT EXPLICIT MANY-TO-MANY (nếu cần thêm fields vào bảng junction):
   // productsCategories ProductsCategories[]
@@ -586,6 +599,9 @@ model Order {
   updatedBy User? @relation("OrderUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
   deletedBy User? @relation("OrderDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
+  launchpadId Int?
+  launchpad   Launchpad? @relation(fields: [launchpadId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
   deletedAt DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -688,6 +704,45 @@ model Coupon {
   deletedBy User? @relation("CouponDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
 
   orders Order[]
+}
+
+//////////////////////////////////////////
+// LAUNCHPAD
+//////////////////////////////////////////
+
+model Launchpad {
+  id                  Int             @id @default(autoincrement())
+  productId           Int
+  discountRate        Float           // % giảm giá áp dụng cho tất cả SKU, ví dụ 20.0 = giảm 20%
+  duration            Int             // Số giờ live (1-720)
+  startTime           DateTime?       // Auto-set khi publish
+  endTime             DateTime?       // Auto-set = startTime + duration * 3600s
+  status              LaunchpadStatus @default(DRAFT)
+  priority            Int             @default(0)   // Admin-only, dùng để sort hiển thị
+  soldCount           Int             @default(0)   // Tăng atomic sau mỗi lần thanh toán thành công
+  maxPurchasesPerUser Int?            // null = không giới hạn; số nguyên dương = giới hạn số lần mua/user
+  rejectionReason     String?         // Chỉ set khi status = REJECTED
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  createdById Int
+  updatedById Int?
+  deletedById Int?
+
+  createdBy User  @relation("LaunchpadCreatedBy", fields: [createdById], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  updatedBy User? @relation("LaunchpadUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  deletedBy User? @relation("LaunchpadDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  orders Order[]
+
+  deletedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([status, endTime])          // Cron job query: tìm expired LIVE launchpads
+  @@index([productId, status])        // Kiểm tra active launchpad của product
+  @@index([createdById, status])      // Seller xem launchpads của mình
+  @@index([deletedAt])
 }
 
 //////////////////////////////////////////

@@ -273,10 +273,14 @@ export class PaymentService {
     });
 
     // 5.2. Cập nhật trạng thái đơn hàng thành "Chờ lấy hàng"
+    const orderIds = orders.map((order) => order.id);
     await this.paymentRepository.updateOrders({
-      orderIds: orders.map((order) => order.id),
+      orderIds,
       status: EnumOrderStatus.PENDING_PICKUP,
     });
+
+    // 5.3. Tăng soldCount cho các launchpad orders (atomic, idempotent qua PaymentTransaction.id)
+    await this.paymentRepository.incrementLaunchpadSoldCounts(orderIds);
 
     return userId;
   }

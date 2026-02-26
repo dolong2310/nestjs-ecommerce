@@ -15,7 +15,7 @@ import type { AccessTokenPayload } from '@/shared/types/jwt.type';
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
-@Controller({ path: 'manage-coupons', version: CURRENT_VERSION })
+@Controller({ path: 'manage-coupon/coupons', version: CURRENT_VERSION })
 export class ManageCouponController {
   constructor(private readonly manageCouponService: ManageCouponService) {}
 

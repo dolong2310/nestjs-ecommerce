@@ -38,11 +38,11 @@ export class SharedPaymentService {
     method: PaymentMethod;
     userId: number;
     paymentId: number;
-    cartItems: CartItemIncludeSkuAndProductType[];
+    cartItems?: CartItemIncludeSkuAndProductType[]; // optional khi mua Launchpad (không có cart)
     ip: string;
     totalAmount?: number; // pre-calculated từ order service (đã trừ discount). Nếu không có thì fallback tính từ cartItems
   }): Promise<string> {
-    const { method, userId, paymentId, cartItems, ip } = props;
+    const { method, userId, paymentId, cartItems = [], ip } = props;
 
     // Tính totalAmount từ cartItems để làm fallback hoặc so sánh kiểm tra
     const totalAmount = props.totalAmount ?? this._calculateTotalFromCartItems(cartItems);

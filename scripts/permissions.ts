@@ -28,9 +28,11 @@ const SELLER_MODULE = [
   'ORDERS',
   'REVIEWS',
   'COUPONS',
-  'MANAGE-COUPONS',
+  'MANAGE-COUPON',
+  'LAUNCHPADS',
+  'MANAGE-LAUNCHPAD',
 ];
-const USER_MODULE = ['AUTH', 'MEDIA', 'PRODUCTS', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS', 'COUPONS'];
+const USER_MODULE = ['AUTH', 'MEDIA', 'PRODUCTS', 'PROFILE', 'CART', 'ORDERS', 'REVIEWS', 'COUPONS', 'LAUNCHPADS'];
 
 const prismaService = new PrismaService();
 

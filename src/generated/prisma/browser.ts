@@ -125,6 +125,11 @@ export type ReviewMedia = Prisma.ReviewMediaModel
  */
 export type Coupon = Prisma.CouponModel
 /**
+ * Model Launchpad
+ * 
+ */
+export type Launchpad = Prisma.LaunchpadModel
+/**
  * Model PaymentTransaction
  * 
  */

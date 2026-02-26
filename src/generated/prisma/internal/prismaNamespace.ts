@@ -405,6 +405,7 @@ export const ModelName = {
   Review: 'Review',
   ReviewMedia: 'ReviewMedia',
   Coupon: 'Coupon',
+  Launchpad: 'Launchpad',
   PaymentTransaction: 'PaymentTransaction',
   Payment: 'Payment',
   Message: 'Message',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "language" | "user" | "userTranslation" | "otpCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "reviewMedia" | "coupon" | "paymentTransaction" | "payment" | "message" | "webSocket"
+    modelProps: "language" | "user" | "userTranslation" | "otpCode" | "refreshToken" | "device" | "permission" | "role" | "product" | "productTranslation" | "category" | "categoryTranslation" | "sKU" | "brand" | "brandTranslation" | "cartItem" | "order" | "productSKUSnapshot" | "review" | "reviewMedia" | "coupon" | "launchpad" | "paymentTransaction" | "payment" | "message" | "webSocket"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1982,6 +1983,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Launchpad: {
+      payload: Prisma.$LaunchpadPayload<ExtArgs>
+      fields: Prisma.LaunchpadFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LaunchpadFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LaunchpadFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        findFirst: {
+          args: Prisma.LaunchpadFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LaunchpadFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        findMany: {
+          args: Prisma.LaunchpadFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>[]
+        }
+        create: {
+          args: Prisma.LaunchpadCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        createMany: {
+          args: Prisma.LaunchpadCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LaunchpadCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>[]
+        }
+        delete: {
+          args: Prisma.LaunchpadDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        update: {
+          args: Prisma.LaunchpadUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        deleteMany: {
+          args: Prisma.LaunchpadDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LaunchpadUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LaunchpadUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>[]
+        }
+        upsert: {
+          args: Prisma.LaunchpadUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchpadPayload>
+        }
+        aggregate: {
+          args: Prisma.LaunchpadAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLaunchpad>
+        }
+        groupBy: {
+          args: Prisma.LaunchpadGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchpadGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LaunchpadCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchpadCountAggregateOutputType> | number
+        }
+      }
+    }
     PaymentTransaction: {
       payload: Prisma.$PaymentTransactionPayload<ExtArgs>
       fields: Prisma.PaymentTransactionFieldRefs
@@ -2583,6 +2658,7 @@ export const OrderScalarFieldEnum = {
   createdById: 'createdById',
   updatedById: 'updatedById',
   deletedById: 'deletedById',
+  launchpadId: 'launchpadId',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2653,6 +2729,29 @@ export const CouponScalarFieldEnum = {
 } as const
 
 export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+export const LaunchpadScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  discountRate: 'discountRate',
+  duration: 'duration',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  status: 'status',
+  priority: 'priority',
+  soldCount: 'soldCount',
+  maxPurchasesPerUser: 'maxPurchasesPerUser',
+  rejectionReason: 'rejectionReason',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  deletedById: 'deletedById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchpadScalarFieldEnum = (typeof LaunchpadScalarFieldEnum)[keyof typeof LaunchpadScalarFieldEnum]
 
 
 export const PaymentTransactionScalarFieldEnum = {
@@ -2927,6 +3026,20 @@ export type ListEnumCouponStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'LaunchpadStatus'
+ */
+export type EnumLaunchpadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LaunchpadStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LaunchpadStatus[]'
+ */
+export type ListEnumLaunchpadStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LaunchpadStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'PaymentStatus'
  */
 export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
@@ -3055,6 +3168,7 @@ export type GlobalOmitConfig = {
   review?: Prisma.ReviewOmit
   reviewMedia?: Prisma.ReviewMediaOmit
   coupon?: Prisma.CouponOmit
+  launchpad?: Prisma.LaunchpadOmit
   paymentTransaction?: Prisma.PaymentTransactionOmit
   payment?: Prisma.PaymentOmit
   message?: Prisma.MessageOmit

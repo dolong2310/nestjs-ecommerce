@@ -38,6 +38,7 @@ export type OrderAvgAggregateOutputType = {
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
+  launchpadId: number | null
 }
 
 export type OrderSumAggregateOutputType = {
@@ -50,6 +51,7 @@ export type OrderSumAggregateOutputType = {
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
+  launchpadId: number | null
 }
 
 export type OrderMinAggregateOutputType = {
@@ -63,6 +65,7 @@ export type OrderMinAggregateOutputType = {
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
+  launchpadId: number | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -79,6 +82,7 @@ export type OrderMaxAggregateOutputType = {
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
+  launchpadId: number | null
   deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -96,6 +100,7 @@ export type OrderCountAggregateOutputType = {
   createdById: number
   updatedById: number
   deletedById: number
+  launchpadId: number
   deletedAt: number
   createdAt: number
   updatedAt: number
@@ -113,6 +118,7 @@ export type OrderAvgAggregateInputType = {
   createdById?: true
   updatedById?: true
   deletedById?: true
+  launchpadId?: true
 }
 
 export type OrderSumAggregateInputType = {
@@ -125,6 +131,7 @@ export type OrderSumAggregateInputType = {
   createdById?: true
   updatedById?: true
   deletedById?: true
+  launchpadId?: true
 }
 
 export type OrderMinAggregateInputType = {
@@ -138,6 +145,7 @@ export type OrderMinAggregateInputType = {
   createdById?: true
   updatedById?: true
   deletedById?: true
+  launchpadId?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -154,6 +162,7 @@ export type OrderMaxAggregateInputType = {
   createdById?: true
   updatedById?: true
   deletedById?: true
+  launchpadId?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -171,6 +180,7 @@ export type OrderCountAggregateInputType = {
   createdById?: true
   updatedById?: true
   deletedById?: true
+  launchpadId?: true
   deletedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -275,6 +285,7 @@ export type OrderGroupByOutputType = {
   createdById: number | null
   updatedById: number | null
   deletedById: number | null
+  launchpadId: number | null
   deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -315,6 +326,7 @@ export type OrderWhereInput = {
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
   updatedById?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedById?: Prisma.IntNullableFilter<"Order"> | number | null
+  launchpadId?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -325,6 +337,7 @@ export type OrderWhereInput = {
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  launchpad?: Prisma.XOR<Prisma.LaunchpadNullableScalarRelationFilter, Prisma.LaunchpadWhereInput> | null
   items?: Prisma.ProductSKUSnapshotListRelationFilter
   products?: Prisma.ProductListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -342,6 +355,7 @@ export type OrderOrderByWithRelationInput = {
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  launchpadId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -352,6 +366,7 @@ export type OrderOrderByWithRelationInput = {
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   deletedBy?: Prisma.UserOrderByWithRelationInput
+  launchpad?: Prisma.LaunchpadOrderByWithRelationInput
   items?: Prisma.ProductSKUSnapshotOrderByRelationAggregateInput
   products?: Prisma.ProductOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -372,6 +387,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
   updatedById?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedById?: Prisma.IntNullableFilter<"Order"> | number | null
+  launchpadId?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -382,6 +398,7 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   updatedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   deletedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  launchpad?: Prisma.XOR<Prisma.LaunchpadNullableScalarRelationFilter, Prisma.LaunchpadWhereInput> | null
   items?: Prisma.ProductSKUSnapshotListRelationFilter
   products?: Prisma.ProductListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -399,6 +416,7 @@ export type OrderOrderByWithAggregationInput = {
   createdById?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedById?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  launchpadId?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -424,6 +442,7 @@ export type OrderScalarWhereWithAggregatesInput = {
   createdById?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   updatedById?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   deletedById?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
+  launchpadId?: Prisma.IntNullableWithAggregatesFilter<"Order"> | number | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
@@ -443,6 +462,7 @@ export type OrderCreateInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -460,6 +480,7 @@ export type OrderUncheckedCreateInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -482,6 +503,7 @@ export type OrderUpdateInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -499,6 +521,7 @@ export type OrderUncheckedUpdateInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -519,6 +542,7 @@ export type OrderCreateManyInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -545,6 +569,7 @@ export type OrderUncheckedUpdateManyInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -572,6 +597,7 @@ export type OrderCountOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
+  launchpadId?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -587,6 +613,7 @@ export type OrderAvgOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
+  launchpadId?: Prisma.SortOrder
 }
 
 export type OrderMaxOrderByAggregateInput = {
@@ -600,6 +627,7 @@ export type OrderMaxOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
+  launchpadId?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -616,6 +644,7 @@ export type OrderMinOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
+  launchpadId?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -631,6 +660,7 @@ export type OrderSumOrderByAggregateInput = {
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
   deletedById?: Prisma.SortOrder
+  launchpadId?: Prisma.SortOrder
 }
 
 export type OrderNullableScalarRelationFilter = {
@@ -967,6 +997,48 @@ export type OrderUncheckedUpdateManyWithoutCouponNestedInput = {
   deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
 }
 
+export type OrderCreateNestedManyWithoutLaunchpadInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput> | Prisma.OrderCreateWithoutLaunchpadInput[] | Prisma.OrderUncheckedCreateWithoutLaunchpadInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutLaunchpadInput | Prisma.OrderCreateOrConnectWithoutLaunchpadInput[]
+  createMany?: Prisma.OrderCreateManyLaunchpadInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUncheckedCreateNestedManyWithoutLaunchpadInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput> | Prisma.OrderCreateWithoutLaunchpadInput[] | Prisma.OrderUncheckedCreateWithoutLaunchpadInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutLaunchpadInput | Prisma.OrderCreateOrConnectWithoutLaunchpadInput[]
+  createMany?: Prisma.OrderCreateManyLaunchpadInputEnvelope
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+}
+
+export type OrderUpdateManyWithoutLaunchpadNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput> | Prisma.OrderCreateWithoutLaunchpadInput[] | Prisma.OrderUncheckedCreateWithoutLaunchpadInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutLaunchpadInput | Prisma.OrderCreateOrConnectWithoutLaunchpadInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutLaunchpadInput | Prisma.OrderUpsertWithWhereUniqueWithoutLaunchpadInput[]
+  createMany?: Prisma.OrderCreateManyLaunchpadInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutLaunchpadInput | Prisma.OrderUpdateWithWhereUniqueWithoutLaunchpadInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutLaunchpadInput | Prisma.OrderUpdateManyWithWhereWithoutLaunchpadInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
+export type OrderUncheckedUpdateManyWithoutLaunchpadNestedInput = {
+  create?: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput> | Prisma.OrderCreateWithoutLaunchpadInput[] | Prisma.OrderUncheckedCreateWithoutLaunchpadInput[]
+  connectOrCreate?: Prisma.OrderCreateOrConnectWithoutLaunchpadInput | Prisma.OrderCreateOrConnectWithoutLaunchpadInput[]
+  upsert?: Prisma.OrderUpsertWithWhereUniqueWithoutLaunchpadInput | Prisma.OrderUpsertWithWhereUniqueWithoutLaunchpadInput[]
+  createMany?: Prisma.OrderCreateManyLaunchpadInputEnvelope
+  set?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  disconnect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  delete?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  connect?: Prisma.OrderWhereUniqueInput | Prisma.OrderWhereUniqueInput[]
+  update?: Prisma.OrderUpdateWithWhereUniqueWithoutLaunchpadInput | Prisma.OrderUpdateWithWhereUniqueWithoutLaunchpadInput[]
+  updateMany?: Prisma.OrderUpdateManyWithWhereWithoutLaunchpadInput | Prisma.OrderUpdateManyWithWhereWithoutLaunchpadInput[]
+  deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
+}
+
 export type OrderCreateNestedManyWithoutPaymentInput = {
   create?: Prisma.XOR<Prisma.OrderCreateWithoutPaymentInput, Prisma.OrderUncheckedCreateWithoutPaymentInput> | Prisma.OrderCreateWithoutPaymentInput[] | Prisma.OrderUncheckedCreateWithoutPaymentInput[]
   connectOrCreate?: Prisma.OrderCreateOrConnectWithoutPaymentInput | Prisma.OrderCreateOrConnectWithoutPaymentInput[]
@@ -1022,6 +1094,7 @@ export type OrderCreateWithoutUserInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1038,6 +1111,7 @@ export type OrderUncheckedCreateWithoutUserInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1069,6 +1143,7 @@ export type OrderCreateWithoutShopInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1085,6 +1160,7 @@ export type OrderUncheckedCreateWithoutShopInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1116,6 +1192,7 @@ export type OrderCreateWithoutCreatedByInput = {
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1132,6 +1209,7 @@ export type OrderUncheckedCreateWithoutCreatedByInput = {
   receiver:PrismaJson.Receiver
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1163,6 +1241,7 @@ export type OrderCreateWithoutUpdatedByInput = {
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1179,6 +1258,7 @@ export type OrderUncheckedCreateWithoutUpdatedByInput = {
   receiver:PrismaJson.Receiver
   createdById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1210,6 +1290,7 @@ export type OrderCreateWithoutDeletedByInput = {
   coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1226,6 +1307,7 @@ export type OrderUncheckedCreateWithoutDeletedByInput = {
   receiver:PrismaJson.Receiver
   createdById?: number | null
   updatedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1275,6 +1357,7 @@ export type OrderScalarWhereInput = {
   createdById?: Prisma.IntNullableFilter<"Order"> | number | null
   updatedById?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedById?: Prisma.IntNullableFilter<"Order"> | number | null
+  launchpadId?: Prisma.IntNullableFilter<"Order"> | number | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -1358,6 +1441,7 @@ export type OrderCreateWithoutProductsInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
 }
@@ -1374,6 +1458,7 @@ export type OrderUncheckedCreateWithoutProductsInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1416,6 +1501,7 @@ export type OrderCreateWithoutItemsInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
 }
@@ -1432,6 +1518,7 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1469,6 +1556,7 @@ export type OrderUpdateWithoutItemsInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
 }
@@ -1485,6 +1573,7 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1506,6 +1595,7 @@ export type OrderCreateWithoutReviewsInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
 }
@@ -1522,6 +1612,7 @@ export type OrderUncheckedCreateWithoutReviewsInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1559,6 +1650,7 @@ export type OrderUpdateWithoutReviewsInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
 }
@@ -1575,6 +1667,7 @@ export type OrderUncheckedUpdateWithoutReviewsInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1595,6 +1688,7 @@ export type OrderCreateWithoutCouponInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1611,6 +1705,7 @@ export type OrderUncheckedCreateWithoutCouponInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1645,6 +1740,71 @@ export type OrderUpdateManyWithWhereWithoutCouponInput = {
   data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutCouponInput>
 }
 
+export type OrderCreateWithoutLaunchpadInput = {
+  discountAmount?: number
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutOrdersInput
+  shop?: Prisma.UserCreateNestedOneWithoutSoldOrdersInput
+  payment: Prisma.PaymentCreateNestedOneWithoutOrdersInput
+  coupon?: Prisma.CouponCreateNestedOneWithoutOrdersInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
+  updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
+  deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
+  products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
+}
+
+export type OrderUncheckedCreateWithoutLaunchpadInput = {
+  id?: number
+  userId: number
+  shopId?: number | null
+  paymentId: number
+  couponId?: number | null
+  discountAmount?: number
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ProductSKUSnapshotUncheckedCreateNestedManyWithoutOrderInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutOrdersInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutOrderInput
+}
+
+export type OrderCreateOrConnectWithoutLaunchpadInput = {
+  where: Prisma.OrderWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput>
+}
+
+export type OrderCreateManyLaunchpadInputEnvelope = {
+  data: Prisma.OrderCreateManyLaunchpadInput | Prisma.OrderCreateManyLaunchpadInput[]
+  skipDuplicates?: boolean
+}
+
+export type OrderUpsertWithWhereUniqueWithoutLaunchpadInput = {
+  where: Prisma.OrderWhereUniqueInput
+  update: Prisma.XOR<Prisma.OrderUpdateWithoutLaunchpadInput, Prisma.OrderUncheckedUpdateWithoutLaunchpadInput>
+  create: Prisma.XOR<Prisma.OrderCreateWithoutLaunchpadInput, Prisma.OrderUncheckedCreateWithoutLaunchpadInput>
+}
+
+export type OrderUpdateWithWhereUniqueWithoutLaunchpadInput = {
+  where: Prisma.OrderWhereUniqueInput
+  data: Prisma.XOR<Prisma.OrderUpdateWithoutLaunchpadInput, Prisma.OrderUncheckedUpdateWithoutLaunchpadInput>
+}
+
+export type OrderUpdateManyWithWhereWithoutLaunchpadInput = {
+  where: Prisma.OrderScalarWhereInput
+  data: Prisma.XOR<Prisma.OrderUpdateManyMutationInput, Prisma.OrderUncheckedUpdateManyWithoutLaunchpadInput>
+}
+
 export type OrderCreateWithoutPaymentInput = {
   discountAmount?: number
   status: $Enums.OrderStatus
@@ -1658,6 +1818,7 @@ export type OrderCreateWithoutPaymentInput = {
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedOrdersInput
   updatedBy?: Prisma.UserCreateNestedOneWithoutUpdatedOrdersInput
   deletedBy?: Prisma.UserCreateNestedOneWithoutDeletedOrdersInput
+  launchpad?: Prisma.LaunchpadCreateNestedOneWithoutOrdersInput
   items?: Prisma.ProductSKUSnapshotCreateNestedManyWithoutOrderInput
   products?: Prisma.ProductCreateNestedManyWithoutOrdersInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutOrderInput
@@ -1674,6 +1835,7 @@ export type OrderUncheckedCreateWithoutPaymentInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1719,6 +1881,7 @@ export type OrderCreateManyUserInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1735,6 +1898,7 @@ export type OrderCreateManyShopInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1751,6 +1915,7 @@ export type OrderCreateManyCreatedByInput = {
   receiver:PrismaJson.Receiver
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1767,6 +1932,7 @@ export type OrderCreateManyUpdatedByInput = {
   receiver:PrismaJson.Receiver
   createdById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1783,6 +1949,7 @@ export type OrderCreateManyDeletedByInput = {
   receiver:PrismaJson.Receiver
   createdById?: number | null
   updatedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1801,6 +1968,7 @@ export type OrderUpdateWithoutUserInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -1817,6 +1985,7 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1836,6 +2005,7 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1854,6 +2024,7 @@ export type OrderUpdateWithoutShopInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -1870,6 +2041,7 @@ export type OrderUncheckedUpdateWithoutShopInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1889,6 +2061,7 @@ export type OrderUncheckedUpdateManyWithoutShopInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1907,6 +2080,7 @@ export type OrderUpdateWithoutCreatedByInput = {
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -1923,6 +2097,7 @@ export type OrderUncheckedUpdateWithoutCreatedByInput = {
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1942,6 +2117,7 @@ export type OrderUncheckedUpdateManyWithoutCreatedByInput = {
   receiver?:PrismaJson.Receiver
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1960,6 +2136,7 @@ export type OrderUpdateWithoutUpdatedByInput = {
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -1976,6 +2153,7 @@ export type OrderUncheckedUpdateWithoutUpdatedByInput = {
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1995,6 +2173,7 @@ export type OrderUncheckedUpdateManyWithoutUpdatedByInput = {
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2013,6 +2192,7 @@ export type OrderUpdateWithoutDeletedByInput = {
   coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -2029,6 +2209,7 @@ export type OrderUncheckedUpdateWithoutDeletedByInput = {
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2048,6 +2229,7 @@ export type OrderUncheckedUpdateManyWithoutDeletedByInput = {
   receiver?:PrismaJson.Receiver
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2067,6 +2249,7 @@ export type OrderUpdateWithoutProductsInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
 }
@@ -2083,6 +2266,7 @@ export type OrderUncheckedUpdateWithoutProductsInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2102,6 +2286,7 @@ export type OrderUncheckedUpdateManyWithoutProductsInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2118,6 +2303,7 @@ export type OrderCreateManyCouponInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2136,6 +2322,7 @@ export type OrderUpdateWithoutCouponInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -2152,6 +2339,7 @@ export type OrderUncheckedUpdateWithoutCouponInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2165,6 +2353,80 @@ export type OrderUncheckedUpdateManyWithoutCouponInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type OrderCreateManyLaunchpadInput = {
+  id?: number
+  userId: number
+  shopId?: number | null
+  paymentId: number
+  couponId?: number | null
+  discountAmount?: number
+  status: $Enums.OrderStatus
+  receiver:PrismaJson.Receiver
+  createdById?: number | null
+  updatedById?: number | null
+  deletedById?: number | null
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type OrderUpdateWithoutLaunchpadInput = {
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutOrdersNestedInput
+  shop?: Prisma.UserUpdateOneWithoutSoldOrdersNestedInput
+  payment?: Prisma.PaymentUpdateOneRequiredWithoutOrdersNestedInput
+  coupon?: Prisma.CouponUpdateOneWithoutOrdersNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
+  updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
+  deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
+  products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateWithoutLaunchpadInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+  receiver?:PrismaJson.Receiver
+  createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ProductSKUSnapshotUncheckedUpdateManyWithoutOrderNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutOrdersNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutOrderNestedInput
+}
+
+export type OrderUncheckedUpdateManyWithoutLaunchpadInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  shopId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  paymentId?: Prisma.IntFieldUpdateOperationsInput | number
+  couponId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   discountAmount?: Prisma.FloatFieldUpdateOperationsInput | number
   status?: Prisma.EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
   receiver?:PrismaJson.Receiver
@@ -2187,6 +2449,7 @@ export type OrderCreateManyPaymentInput = {
   createdById?: number | null
   updatedById?: number | null
   deletedById?: number | null
+  launchpadId?: number | null
   deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2205,6 +2468,7 @@ export type OrderUpdateWithoutPaymentInput = {
   createdBy?: Prisma.UserUpdateOneWithoutCreatedOrdersNestedInput
   updatedBy?: Prisma.UserUpdateOneWithoutUpdatedOrdersNestedInput
   deletedBy?: Prisma.UserUpdateOneWithoutDeletedOrdersNestedInput
+  launchpad?: Prisma.LaunchpadUpdateOneWithoutOrdersNestedInput
   items?: Prisma.ProductSKUSnapshotUpdateManyWithoutOrderNestedInput
   products?: Prisma.ProductUpdateManyWithoutOrdersNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutOrderNestedInput
@@ -2221,6 +2485,7 @@ export type OrderUncheckedUpdateWithoutPaymentInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2240,6 +2505,7 @@ export type OrderUncheckedUpdateManyWithoutPaymentInput = {
   createdById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   updatedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  launchpadId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2306,6 +2572,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdById?: boolean
   updatedById?: boolean
   deletedById?: boolean
+  launchpadId?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2316,6 +2583,7 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   products?: boolean | Prisma.Order$productsArgs<ExtArgs>
   reviews?: boolean | Prisma.Order$reviewsArgs<ExtArgs>
@@ -2334,6 +2602,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdById?: boolean
   updatedById?: boolean
   deletedById?: boolean
+  launchpadId?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2344,6 +2613,7 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
 export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2358,6 +2628,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdById?: boolean
   updatedById?: boolean
   deletedById?: boolean
+  launchpadId?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2368,6 +2639,7 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
 export type OrderSelectScalar = {
@@ -2382,12 +2654,13 @@ export type OrderSelectScalar = {
   createdById?: boolean
   updatedById?: boolean
   deletedById?: boolean
+  launchpadId?: boolean
   deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "couponId" | "discountAmount" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopId" | "paymentId" | "couponId" | "discountAmount" | "status" | "receiver" | "createdById" | "updatedById" | "deletedById" | "launchpadId" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   shop?: boolean | Prisma.Order$shopArgs<ExtArgs>
@@ -2396,6 +2669,7 @@ export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
   items?: boolean | Prisma.Order$itemsArgs<ExtArgs>
   products?: boolean | Prisma.Order$productsArgs<ExtArgs>
   reviews?: boolean | Prisma.Order$reviewsArgs<ExtArgs>
@@ -2409,6 +2683,7 @@ export type OrderIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
 }
 export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -2418,6 +2693,7 @@ export type OrderIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   createdBy?: boolean | Prisma.Order$createdByArgs<ExtArgs>
   updatedBy?: boolean | Prisma.Order$updatedByArgs<ExtArgs>
   deletedBy?: boolean | Prisma.Order$deletedByArgs<ExtArgs>
+  launchpad?: boolean | Prisma.Order$launchpadArgs<ExtArgs>
 }
 
 export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2430,6 +2706,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     updatedBy: Prisma.$UserPayload<ExtArgs> | null
     deletedBy: Prisma.$UserPayload<ExtArgs> | null
+    launchpad: Prisma.$LaunchpadPayload<ExtArgs> | null
     items: Prisma.$ProductSKUSnapshotPayload<ExtArgs>[]
     products: Prisma.$ProductPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
@@ -2449,6 +2726,7 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     createdById: number | null
     updatedById: number | null
     deletedById: number | null
+    launchpadId: number | null
     deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -2853,6 +3131,7 @@ export interface Prisma__OrderClient<T, Null = never, ExtArgs extends runtime.Ty
   createdBy<T extends Prisma.Order$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.Order$updatedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$updatedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   deletedBy<T extends Prisma.Order$deletedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$deletedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  launchpad<T extends Prisma.Order$launchpadArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$launchpadArgs<ExtArgs>>): Prisma.Prisma__LaunchpadClient<runtime.Types.Result.GetResult<Prisma.$LaunchpadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.Order$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductSKUSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   products<T extends Prisma.Order$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Order$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Order$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2896,6 +3175,7 @@ export interface OrderFieldRefs {
   readonly createdById: Prisma.FieldRef<"Order", 'Int'>
   readonly updatedById: Prisma.FieldRef<"Order", 'Int'>
   readonly deletedById: Prisma.FieldRef<"Order", 'Int'>
+  readonly launchpadId: Prisma.FieldRef<"Order", 'Int'>
   readonly deletedAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Order", 'DateTime'>
@@ -3387,6 +3667,25 @@ export type Order$deletedByArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Order.launchpad
+ */
+export type Order$launchpadArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Launchpad
+   */
+  select?: Prisma.LaunchpadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Launchpad
+   */
+  omit?: Prisma.LaunchpadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LaunchpadInclude<ExtArgs> | null
+  where?: Prisma.LaunchpadWhereInput
 }
 
 /**

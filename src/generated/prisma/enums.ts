@@ -85,3 +85,15 @@ export const CouponDiscountType = {
 } as const
 
 export type CouponDiscountType = (typeof CouponDiscountType)[keyof typeof CouponDiscountType]
+
+
+export const LaunchpadStatus = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  LIVE: 'LIVE',
+  ENDED: 'ENDED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type LaunchpadStatus = (typeof LaunchpadStatus)[keyof typeof LaunchpadStatus]

@@ -72,6 +72,7 @@ export const ModelName = {
   Review: 'Review',
   ReviewMedia: 'ReviewMedia',
   Coupon: 'Coupon',
+  Launchpad: 'Launchpad',
   PaymentTransaction: 'PaymentTransaction',
   Payment: 'Payment',
   Message: 'Message',
@@ -360,6 +361,7 @@ export const OrderScalarFieldEnum = {
   createdById: 'createdById',
   updatedById: 'updatedById',
   deletedById: 'deletedById',
+  launchpadId: 'launchpadId',
   deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -430,6 +432,29 @@ export const CouponScalarFieldEnum = {
 } as const
 
 export type CouponScalarFieldEnum = (typeof CouponScalarFieldEnum)[keyof typeof CouponScalarFieldEnum]
+
+
+export const LaunchpadScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  discountRate: 'discountRate',
+  duration: 'duration',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  status: 'status',
+  priority: 'priority',
+  soldCount: 'soldCount',
+  maxPurchasesPerUser: 'maxPurchasesPerUser',
+  rejectionReason: 'rejectionReason',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  deletedById: 'deletedById',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchpadScalarFieldEnum = (typeof LaunchpadScalarFieldEnum)[keyof typeof LaunchpadScalarFieldEnum]
 
 
 export const PaymentTransactionScalarFieldEnum = {

@@ -1,6 +1,7 @@
 import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { RemoveRefreshTokenCronjob } from '@/cronjobs/remove-refresh-token.cronjob';
+import { LaunchpadModule } from '@/routes/launchpad/launchpad.module';
 import { AuthModule } from '@/routes/auth/auth.module';
 import { BrandTranslationModule } from '@/routes/brand/brand-translation/brand-translation.module';
 import { BrandModule } from '@/routes/brand/brand.module';
@@ -161,6 +162,7 @@ import path from 'path';
     WebsocketModule,
     ReviewModule,
     CouponModule,
+    LaunchpadModule,
   ],
   controllers: [AppController],
   providers: [

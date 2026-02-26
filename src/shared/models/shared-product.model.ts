@@ -1,4 +1,6 @@
 import { stringToDate } from '@/shared/models/codecs';
+import { ProductTranslationSchema } from '@/shared/models/shared-product-translation.model';
+import { SkuSchema } from '@/shared/models/shared-sku.model';
 import z from 'zod';
 
 // Variant Schema
@@ -51,4 +53,28 @@ export const ProductSchema = z.object({
   createdAt: stringToDate.default(new Date()),
   updatedAt: stringToDate.default(new Date()),
   deletedAt: stringToDate.nullable(),
+});
+
+export const ProductIncludeSkuAndTranslation = ProductSchema.extend({
+  productTranslations: z.array(
+    ProductTranslationSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+  skus: z.array(
+    SkuSchema.omit({
+      createdById: true,
+      updatedById: true,
+      deletedById: true,
+      deletedAt: true,
+    }),
+  ),
+}).omit({
+  // createdById: true,
+  updatedById: true,
+  deletedById: true,
+  deletedAt: true,
 });

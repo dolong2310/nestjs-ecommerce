@@ -399,6 +399,23 @@ export type EnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
 }
 
+export type EnumLaunchpadStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LaunchpadStatus | Prisma.EnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel> | $Enums.LaunchpadStatus
+}
+
+export type EnumLaunchpadStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LaunchpadStatus | Prisma.EnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLaunchpadStatusWithAggregatesFilter<$PrismaModel> | $Enums.LaunchpadStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel>
+}
+
 export type EnumPaymentStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.PaymentStatus | Prisma.EnumPaymentStatusFieldRefInput<$PrismaModel>
   in?: $Enums.PaymentStatus[] | Prisma.ListEnumPaymentStatusFieldRefInput<$PrismaModel>
@@ -774,6 +791,23 @@ export type NestedEnumCouponStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumCouponStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLaunchpadStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LaunchpadStatus | Prisma.EnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel> | $Enums.LaunchpadStatus
+}
+
+export type NestedEnumLaunchpadStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LaunchpadStatus | Prisma.EnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LaunchpadStatus[] | Prisma.ListEnumLaunchpadStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLaunchpadStatusWithAggregatesFilter<$PrismaModel> | $Enums.LaunchpadStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLaunchpadStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumPaymentStatusFilter<$PrismaModel = never> = {
