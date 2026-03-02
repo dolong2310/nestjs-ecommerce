@@ -18,7 +18,6 @@ jobs:
         run: echo "${{ secrets.ENV_PRODUCTION }}" > .env
       - run: npm i --force
       - run: npm run build
-
       - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
@@ -26,10 +25,14 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Build completed successfully
+            Build completed successfully ✅
+
             ${{ github.actor }} created commit:
+
             Commit message: ${{ github.event.commits[0].message }}
+
             Repository: ${{ github.repository }}
+
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
       - name: Send telegram error message
         if: failure()
@@ -38,10 +41,14 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Build errors
+            Build errors ❌
+
             ${{ github.actor }} created commit:
+
             Commit message: ${{ github.event.commits[0].message }}
+
             Repository: ${{ github.repository }}
+
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
   deploy:
@@ -66,7 +73,6 @@ jobs:
             npx prisma generate
             npm run build
             pm2 restart nestjs-ecommerce
-
       - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
@@ -74,10 +80,14 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deploy completed successfully
+            Deploy completed successfully ✅
+
             ${{ github.actor }} created commit:
+
             Commit message: ${{ github.event.commits[0].message }}
+
             Repository: ${{ github.repository }}
+
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
       - name: Send telegram error message
         if: failure()
@@ -86,8 +96,12 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            Deploy errors
+            Deploy errors ❌
+
             ${{ github.actor }} created commit:
+
             Commit message: ${{ github.event.commits[0].message }}
+
             Repository: ${{ github.repository }}
+
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
