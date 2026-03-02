@@ -19,7 +19,7 @@ jobs:
       - run: npm i --force
       - run: npm run build
 
-      - name: send telegram message after build
+      - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
         with:
@@ -31,7 +31,7 @@ jobs:
             Commit message: ${{ github.event.commits[0].message }}
             Repository: ${{ github.repository }}
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-      - name: send telegram message after build
+      - name: Send telegram error message
         if: failure()
         uses: appleboy/telegram-action@master
         with:
@@ -58,16 +58,16 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd ~/<TÊN_DỰ_ÁN>
+            cd ~/dev/nestjs-ecommerce
             git fetch --all
             git reset --hard origin/main
             echo "${{ secrets.ENV_PRODUCTION }}" > .env
             npm i --force
-            <NPX_PRISMA_GENERATE>
+            npx prisma generate
             npm run build
-            pm2 restart <TÊN_TIẾN TRÌNH>
+            pm2 restart nestjs-ecommerce
 
-      - name: send telegram message after deploy
+      - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
         with:
@@ -79,7 +79,7 @@ jobs:
             Commit message: ${{ github.event.commits[0].message }}
             Repository: ${{ github.repository }}
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-      - name: send telegram message after deploy
+      - name: Send telegram error message
         if: failure()
         uses: appleboy/telegram-action@master
         with:
