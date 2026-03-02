@@ -2,7 +2,14 @@ import envConfig from '@/shared/config';
 import Client from 'ioredis';
 import Redlock from 'redlock';
 
-export const redisClient = new Client(envConfig.REDIS_URL);
+export const redisClient = new Client(envConfig.REDIS_URL, {
+  connectTimeout: 30000, // 30 seconds
+  retryStrategy(times) {
+    const delay = Math.min(times * 50, 2000);
+    return delay;
+  },
+  maxRetriesPerRequest: 3,
+});
 
 export const redlock = new Redlock(
   // You should have one client for each independent redis node or cluster.

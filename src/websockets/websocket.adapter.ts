@@ -22,7 +22,16 @@ export class WebsocketAdapter extends IoAdapter {
   }
 
   async connectToRedis(): Promise<void> {
-    const pubClient = createClient({ url: envConfig.REDIS_URL });
+    const pubClient = createClient({
+      url: envConfig.REDIS_URL,
+      socket: {
+        connectTimeout: 30000, // 30 seconds
+        reconnectStrategy: (retries) => {
+          if (retries > 10) return new Error('Max retries reached');
+          return Math.min(retries * 50, 2000);
+        },
+      },
+    });
     const subClient = pubClient.duplicate();
 
     await Promise.all([pubClient.connect(), subClient.connect()]);
