@@ -1,6 +1,6 @@
 import envConfig from '@/shared/config';
-import { Momo, VNPay } from '@/shared/payment-providers';
-import { EnumPaymentMethod, PaymentFactory, PaymentMethod } from '@/shared/payment-providers/core';
+import { Momo, VNPay } from '@longdoo/node-payment-gateway';
+import { EnumPaymentMethod, PaymentFactory, PaymentMethod } from '@longdoo/node-payment-gateway/core';
 import { CartItemIncludeSkuAndProductType } from '@/shared/types/shared-cart.type';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';

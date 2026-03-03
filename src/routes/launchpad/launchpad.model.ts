@@ -3,7 +3,7 @@ import { LaunchpadSchema } from '@/shared/models/shared-launchpad.model';
 import { ProductTranslationSchema } from '@/shared/models/shared-product-translation.model';
 import { ProductSchema } from '@/shared/models/shared-product.model';
 import { SkuSchema } from '@/shared/models/shared-sku.model';
-import { EnumPaymentMethod } from '@/shared/payment-providers/core/constants';
+import { EnumPaymentMethod } from '@longdoo/node-payment-gateway/core';
 import z from 'zod';
 
 // ─── Request query ────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { PaginationQuerySchema } from '@/shared/models/request.model';
 import { OrderSchema, ProductSKUSnapshotSchema } from '@/shared/models/shared-order.model';
-import { EnumPaymentMethod } from '@/shared/payment-providers/core/constants';
+import { EnumPaymentMethod } from '@longdoo/node-payment-gateway/core';
 import z from 'zod';
 
 // Request query

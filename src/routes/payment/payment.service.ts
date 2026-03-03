@@ -4,10 +4,12 @@ import { WebhookPaymentBodyType } from '@/routes/payment/payment.type';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus, PREFIX_PAYMENT_CODE } from '@/shared/constants/payment.constant';
 import { generateRoomUserId } from '@/shared/helpers';
-import { Momo, VNPay } from '@/shared/payment-providers';
-import { EnumPaymentMethod } from '@/shared/payment-providers/core';
-import { getResponseByStatusCode as getMessageMomo } from '@/shared/payment-providers/momo';
-import { getResponseByStatusCode as getMessageVNPay } from '@/shared/payment-providers/vnpay';
+import { Momo, VNPay } from '@longdoo/node-payment-gateway';
+import { EnumPaymentMethod } from '@longdoo/node-payment-gateway/core';
+import type { ReturnQueryFromMomo, VerifyReturnUrl as MomoVerifyReturnUrl } from '@longdoo/node-payment-gateway/momo';
+import { getResponseByStatusCode as getMessageMomo } from '@longdoo/node-payment-gateway/momo';
+import type { ReturnQueryFromVNPay, VerifyReturnUrl as VNPayVerifyReturnUrl } from '@longdoo/node-payment-gateway/vnpay';
+import { getResponseByStatusCode as getMessageVNPay } from '@longdoo/node-payment-gateway/vnpay';
 import { SharedPaymentService } from '@/shared/services/shared-payment.service';
 import { OrderIncludeProductSkuSnapshotType } from '@/shared/types/shared-order.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
@@ -68,7 +70,7 @@ export class PaymentService {
     return { message: 'Payment successful' };
   }
 
-  async verifyIpnMomo(body: Momo.ReturnQueryFromMomo): Promise<void> {
+  async verifyIpnMomo(body: ReturnQueryFromMomo): Promise<void> {
     // const orderType = "momo_wallet";
     // const amount = 87000000;
     // const partnerCode = "MOMO";
@@ -147,7 +149,7 @@ export class PaymentService {
     // Return void - Controller will respond with HTTP 204 (No Content)
   }
 
-  async verifyIpnVNPay(query: VNPay.ReturnQueryFromVNPay): Promise<VNPay.IpnResponse> {
+  async verifyIpnVNPay(query: ReturnQueryFromVNPay): Promise<VNPay.IpnResponse> {
     // const vnp_Amount = '87000000';
     // const vnp_BankCode = 'NCB';
     // const vnp_BankTranNo = 'VNP15427618';
@@ -285,8 +287,8 @@ export class PaymentService {
     return userId;
   }
 
-  verifyReturnMomo(query: Momo.ReturnQueryFromMomo): MessageResponseType {
-    let verify: Momo.VerifyReturnUrl;
+  verifyReturnMomo(query: ReturnQueryFromMomo): MessageResponseType {
+    let verify: MomoVerifyReturnUrl;
     try {
       verify = this.sharedPaymentService.momo.verifyReturnUrl(query, {
         logger: {
@@ -307,8 +309,8 @@ export class PaymentService {
     return { message: 'Payment successful!' };
   }
 
-  verifyReturnVNPay(query: VNPay.ReturnQueryFromVNPay): MessageResponseType {
-    let verify: VNPay.VerifyReturnUrl;
+  verifyReturnVNPay(query: ReturnQueryFromVNPay): MessageResponseType {
+    let verify: VNPayVerifyReturnUrl;
     try {
       verify = this.sharedPaymentService.vnpay.verifyReturnUrl(query, {
         logger: {
