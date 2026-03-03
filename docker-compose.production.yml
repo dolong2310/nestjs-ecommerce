@@ -7,5 +7,5 @@ services:
     ports:
       - "8080:3000"
     env_file:
-      - .env.production
+      - .env
     restart: unless-stopped
