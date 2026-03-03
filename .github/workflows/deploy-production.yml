@@ -62,6 +62,8 @@ jobs:
           password: ${{ secrets.PASSWORD_PRODUCTION }}
           port: ${{ secrets.PORT_PRODUCTION }}
           script: |
+            git fetch --all
+            git reset --hard origin/main
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             docker pull lngdo/nestjs-ecommerce:v0
             docker compose -f docker-compose.production.yml down
