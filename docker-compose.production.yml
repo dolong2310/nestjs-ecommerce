@@ -5,7 +5,7 @@ services:
     image: lngdo/nestjs-ecommerce:v0
     container_name: ecommerce-app
     ports:
-      - "8080:3000"
+      - "127.0.0.1:8080:3000"
     env_file:
       - .env
     restart: unless-stopped
