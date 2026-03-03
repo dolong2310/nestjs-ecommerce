@@ -9,15 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24.14.0
-          cache: "npm"
       - name: Create .env file
         run: echo "${{ secrets.ENV_PRODUCTION }}" > .env
-      - run: npm i --force
-      - run: npm run build
+      - name: Build docker image
+        run: docker build --platform linux/amd64 -t lngdo/nestjs-ecommerce:v0 .
+      - name: Login to DockerHub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Push docker image
+        run: docker push lngdo/nestjs-ecommerce:v0
       - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
@@ -63,16 +62,12 @@ jobs:
           password: ${{ secrets.PASSWORD_PRODUCTION }}
           port: ${{ secrets.PORT_PRODUCTION }}
           script: |
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh
-            cd ~/dev/nestjs-ecommerce
-            git fetch --all
-            git reset --hard origin/main
-            echo "${{ secrets.ENV_PRODUCTION }}" > .env
-            npm i --force
-            npx prisma generate
-            npm run build
-            pm2 restart nestjs-ecommerce
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker pull lngdo/nestjs-ecommerce:v0
+            docker compose -f docker-compose.production.yml down
+            docker compose -f docker-compose.production.yml up -d
+            docker image prune -f
+            docker logout
       - name: Send telegram success message
         if: success()
         uses: appleboy/telegram-action@master
