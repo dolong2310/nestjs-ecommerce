@@ -32,7 +32,7 @@ services:
 
   app:
     build: .
-    container_name: ecommerce-app
+    container_name: nestjs-ecommerce
     ports:
       - "8080:3000"
     depends_on:
