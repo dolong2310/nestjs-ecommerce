@@ -22,7 +22,7 @@ export class AuthCompositeGuard implements CanActivate {
       [AuthKey.JWT]: this.authGuard,
       [AuthKey.API_KEY]: this.apiKeyGuard,
       [AuthKey.PAYMENT_API_KEY]: this.paymentApiKeyGuard,
-      [AuthKey.NONE]: { canActivate: async () => true },
+      [AuthKey.NONE]: { canActivate: () => true },
     };
   }
 

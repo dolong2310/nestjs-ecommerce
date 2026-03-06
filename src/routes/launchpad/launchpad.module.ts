@@ -16,13 +16,7 @@ import { Module } from '@nestjs/common';
     }),
   ],
   controllers: [LaunchpadController, ManageLaunchpadController],
-  providers: [
-    LaunchpadRepository,
-    LaunchpadService,
-    ManageLaunchpadService,
-    LaunchpadConsumer,
-    LaunchpadExpireCronjob,
-  ],
+  providers: [LaunchpadRepository, LaunchpadService, ManageLaunchpadService, LaunchpadConsumer, LaunchpadExpireCronjob],
   exports: [LaunchpadService, LaunchpadRepository],
 })
 export class LaunchpadModule {}

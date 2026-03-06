@@ -21,7 +21,6 @@ import {
   RefreshTokenSchema,
   RegisterBodySchema,
   RegisterResponseSchema,
-  RoleSchema,
   SendOtpBodySchema,
   Setup2FAResponseSchema,
 } from '@/routes/auth/auth.model';

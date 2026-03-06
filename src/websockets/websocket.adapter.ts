@@ -40,13 +40,13 @@ export class WebsocketAdapter extends IoAdapter {
   }
 
   createIOServer(port: number, options?: ServerOptions): Server {
-    const server: Server = super.createIOServer(port, {
+    const server = super.createIOServer(port, {
       ...options,
       cors: {
         origin: '*',
         credentials: true,
       },
-    });
+    }) as Server;
 
     // Setup Redis Adapter
     // Tại sao dùng redis adapter? tham khảo link: https://socket.io/docs/v4/rooms/#with-multiple-socketio-servers

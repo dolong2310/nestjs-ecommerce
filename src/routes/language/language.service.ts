@@ -15,27 +15,19 @@ export class LanguageService {
   constructor(private readonly languageRepository: LanguageRepository) {}
 
   async getLanguages(): Promise<GetLanguagesResponseType> {
-    try {
-      const languages = await this.languageRepository.findMany();
-      return {
-        data: languages,
-        totalItems: languages.length,
-      };
-    } catch (error) {
-      throw error;
-    }
+    const languages = await this.languageRepository.findMany();
+    return {
+      data: languages,
+      totalItems: languages.length,
+    };
   }
 
   async getLanguageById(id: string): Promise<GetLanguageResponseType> {
-    try {
-      const language = await this.languageRepository.findById(id);
-      if (!language) {
-        throw LanguageNotFoundException;
-      }
-      return language;
-    } catch (error) {
-      throw error;
+    const language = await this.languageRepository.findById(id);
+    if (!language) {
+      throw LanguageNotFoundException;
     }
+    return language;
   }
 
   async createLanguage(payload: { userId: number; body: CreateLanguageBodyType }): Promise<GetLanguageResponseType> {

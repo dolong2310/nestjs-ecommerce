@@ -14,73 +14,61 @@ export class ProfileService {
   ) {}
 
   async getProfile(userId: number): Promise<GetUserProfileResponseType> {
-    try {
-      const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({ id: userId });
+    const user = await this.sharedUserRepository.findUniqueIncludeRolePermissions({ id: userId });
 
-      if (!user) {
-        throw UserNotFoundException;
-      }
-
-      return user;
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw UserNotFoundException;
     }
+
+    return user;
   }
 
   async updateProfile(userId: number, body: UpdateProfileBodyType): Promise<UserType> {
-    try {
-      const user = await this.sharedUserRepository.update(
-        { id: userId },
-        {
-          ...body,
-          updatedById: userId,
-        },
-      );
+    const user = await this.sharedUserRepository.update(
+      { id: userId },
+      {
+        ...body,
+        updatedById: userId,
+      },
+    );
 
-      if (!user) {
-        throw UserNotFoundException;
-      }
-
-      return user;
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw UserNotFoundException;
     }
+
+    return user;
   }
 
   async changePassword(userId: number, body: ChangePasswordBodyType): Promise<MessageResponseType> {
-    try {
-      // 1. Lấy user trong database
-      const user = await this.sharedUserRepository.findUnique({ id: userId });
+    // 1. Lấy user trong database
+    const user = await this.sharedUserRepository.findUnique({ id: userId });
 
-      if (!user) {
-        throw UserNotFoundException;
-      }
-
-      // 2. So sánh password body.password với user.password
-      const isPasswordValid = await this.hashingService.compare(body.password, user.password);
-
-      if (!isPasswordValid) {
-        throw InvalidPasswordException;
-      }
-
-      // 3. Hash newPassword
-      const hashedPassword = await this.hashingService.hash(body.newPassword);
-
-      // 4. Cập nhật newPassword vào database
-      await this.sharedUserRepository.update(
-        { id: userId },
-        {
-          password: hashedPassword,
-          updatedById: userId,
-        },
-      );
-
-      // 5. Trả về message thành công
-      return {
-        message: 'Success.PasswordChanged',
-      };
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw UserNotFoundException;
     }
+
+    // 2. So sánh password body.password với user.password
+    const isPasswordValid = await this.hashingService.compare(body.password, user.password);
+
+    if (!isPasswordValid) {
+      throw InvalidPasswordException;
+    }
+
+    // 3. Hash newPassword
+    const hashedPassword = await this.hashingService.hash(body.newPassword);
+
+    // 4. Cập nhật newPassword vào database
+    await this.sharedUserRepository.update(
+      { id: userId },
+      {
+        password: hashedPassword,
+        updatedById: userId,
+      },
+    );
+
+    // 5. Trả về message thành công
+    return {
+      message: 'Success.PasswordChanged',
+    };
   }
 }

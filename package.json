@@ -92,6 +92,7 @@
     "@types/multer": "^2.0.0",
     "@types/node": "^22.10.7",
     "@types/pg": "^8.16.0",
+    "@types/redlock": "^4.0.8",
     "@types/supertest": "^6.0.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.18.0",

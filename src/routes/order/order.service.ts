@@ -276,13 +276,7 @@ export class OrderService {
   }
 
   // Tính discount amount dựa trên coupon và subtotal
-  private _calculateDiscountAmount({
-    coupon,
-    subtotal,
-  }: {
-    coupon: GetCouponResponseType;
-    subtotal: number;
-  }): number {
+  private _calculateDiscountAmount({ coupon, subtotal }: { coupon: GetCouponResponseType; subtotal: number }): number {
     if (coupon.discountType === EnumCouponDiscountType.PERCENTAGE) {
       const percentageDiscount = (subtotal * coupon.discount) / 100;
       // Áp dụng maxDiscount nếu có (giới hạn mức giảm tối đa cho kiểu %)
@@ -337,7 +331,7 @@ export class OrderService {
           continue; // skip sku không có skuId, tương tự filter((sku) => Boolean(sku.skuId))
         }
         await this.orderRepository.updateSkusStock({
-          skuId: sku.skuId as number,
+          skuId: sku.skuId,
           quantity: sku.quantity, // khôi phục stock của sku khi order bị cancelled
           isCreateOrder: false,
         });

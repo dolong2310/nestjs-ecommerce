@@ -38,24 +38,20 @@ export class ManageProductService {
       creatorId,
     });
 
-    try {
-      return this.productRepository.findMany({
-        page,
-        limit,
-        name,
-        brandIds,
-        categories,
-        minPrice,
-        maxPrice,
-        creatorId,
-        isPublished,
-        orderBy,
-        sortBy,
-        languageId: I18nContext.current()!.lang,
-      });
-    } catch (error) {
-      throw error;
-    }
+    return this.productRepository.findMany({
+      page,
+      limit,
+      name,
+      brandIds,
+      categories,
+      minPrice,
+      maxPrice,
+      creatorId,
+      isPublished,
+      orderBy,
+      sortBy,
+      languageId: I18nContext.current()!.lang,
+    });
   }
 
   async getProductById(props: {
@@ -63,29 +59,25 @@ export class ManageProductService {
     userId: number;
     roleName: RoleNameType;
   }): Promise<GetProductResponseType> {
-    try {
-      const { productId, userId, roleName } = props;
+    const { productId, userId, roleName } = props;
 
-      const product = await this.productRepository.getDetail({
-        productId,
-        languageId: I18nContext.current()!.lang,
-        // isPublished: false,
-      });
+    const product = await this.productRepository.getDetail({
+      productId,
+      languageId: I18nContext.current()!.lang,
+      // isPublished: false,
+    });
 
-      if (!product) {
-        throw ProductNotFoundException;
-      }
-
-      this._validateOwnerOrAdmin({
-        userId: userId,
-        roleName: roleName,
-        creatorId: product.createdById,
-      });
-
-      return product;
-    } catch (error) {
-      throw error;
+    if (!product) {
+      throw ProductNotFoundException;
     }
+
+    this._validateOwnerOrAdmin({
+      userId: userId,
+      roleName: roleName,
+      creatorId: product.createdById,
+    });
+
+    return product;
   }
 
   async createProduct(props: {
@@ -93,18 +85,14 @@ export class ManageProductService {
     roleName: RoleNameType;
     body: CreateProductBodyType;
   }): Promise<GetProductResponseType> {
-    try {
-      const { userId, body, roleName } = props;
+    const { userId, body, roleName } = props;
 
-      // NOTE: only admin and seller can create product
-      if (roleName !== RoleName.ADMIN && roleName !== RoleName.SELLER) {
-        throw new ForbiddenException();
-      }
-
-      return this.productRepository.create({ userId, body });
-    } catch (error) {
-      throw error;
+    // NOTE: only admin and seller can create product
+    if (roleName !== RoleName.ADMIN && roleName !== RoleName.SELLER) {
+      throw new ForbiddenException();
     }
+
+    return this.productRepository.create({ userId, body });
   }
 
   // async updateProduct(props: {
@@ -223,6 +211,7 @@ export class ManageProductService {
 
     if (skusToCreate.length > 0) {
       await this.productRepository.createSkus(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         skusToCreate.map(({ id: _id, ...sku }) => ({
           ...sku,
           productId,

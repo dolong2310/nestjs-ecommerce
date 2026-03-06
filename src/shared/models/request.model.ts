@@ -3,7 +3,7 @@ import z from 'zod';
 // Chỉ chấp nhận: không gửi body (undefined/null) hoặc empty object {}
 export const EmptyBodySchema = z.preprocess(
   (val) => (val === undefined || val === null ? {} : val),
-  z.object({}).strict() // strict: reject nếu có thêm fields
+  z.object({}).strict(), // strict: reject nếu có thêm fields
 );
 
 export const PaginationQuerySchema = z.object({

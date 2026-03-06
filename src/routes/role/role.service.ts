@@ -20,12 +20,8 @@ export class RoleService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async getRoles(payload: RoleQueryType): Promise<GetRolesResponseType> {
-    try {
-      return await this.roleRepository.findMany(payload);
-    } catch (error) {
-      throw error;
-    }
+  getRoles(payload: RoleQueryType): Promise<GetRolesResponseType> {
+    return this.roleRepository.findMany(payload);
   }
 
   async getRoleById(id: number): Promise<RoleWithPermissionsResponseType> {

@@ -18,13 +18,9 @@ export class SharedRoleRepository {
       return this.adminRoleId;
     }
 
-    try {
-      const role = await this._getRole(RoleName.ADMIN);
-      this.adminRoleId = role.id; // cache role id
-      return role.id;
-    } catch (error) {
-      throw error;
-    }
+    const role = await this._getRole(RoleName.ADMIN);
+    this.adminRoleId = role.id; // cache role id
+    return role.id;
   }
 
   async getUserRoleId(): Promise<number> {
@@ -33,13 +29,9 @@ export class SharedRoleRepository {
       return this.userRoleId;
     }
 
-    try {
-      const role = await this._getRole(RoleName.USER);
-      this.userRoleId = role.id; // cache role id
-      return role.id;
-    } catch (error) {
-      throw error;
-    }
+    const role = await this._getRole(RoleName.USER);
+    this.userRoleId = role.id; // cache role id
+    return role.id;
   }
 
   async getSellerRoleId(): Promise<number> {
@@ -48,13 +40,9 @@ export class SharedRoleRepository {
       return this.sellerRoleId;
     }
 
-    try {
-      const role = await this._getRole(RoleName.SELLER);
-      this.sellerRoleId = role.id; // cache role id
-      return role.id;
-    } catch (error) {
-      throw error;
-    }
+    const role = await this._getRole(RoleName.SELLER);
+    this.sellerRoleId = role.id; // cache role id
+    return role.id;
   }
 
   private async _getRole(roleName: RoleNameType): Promise<RoleType> {

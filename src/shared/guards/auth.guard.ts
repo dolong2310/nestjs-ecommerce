@@ -17,7 +17,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { keyBy } from 'lodash-es';
+import { keyBy, omit } from 'lodash-es';
 
 type Permission = RoleWithPermissionsType['permissions'][number];
 type CachedRole = RoleWithPermissionsType & {
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<Request>();
     // 1. Verify access token
     const decodedAccessToken = await this._verifyAccessToken(request);
 
@@ -84,7 +84,7 @@ export class AuthGuard implements CanActivate {
 
   private async _checkUserPermission(request: Request, decodedAccessToken: AccessTokenPayload): Promise<void> {
     const method = request.method as HttpMethodType;
-    const path: string = request.route.path.slice(CURRENT_VERSION_PATH.length);
+    const path = (request.route as { path: string }).path.slice(CURRENT_VERSION_PATH.length);
     const roleId = decodedAccessToken.roleId;
     const cacheKey = `role:${roleId}`;
 
@@ -143,7 +143,8 @@ export class AuthGuard implements CanActivate {
     }
 
     // 4. Set roleWithPermissions to request
-    const { permissionsMap, ...roleWithPermissions } = cachedRole; // Omit permissionsMap to avoid circular reference
+    // const { permissionsMap, ...roleWithPermissions } = cachedRole; // Omit permissionsMap to avoid circular reference
+    const roleWithPermissions = omit(cachedRole, ['permissionsMap']);
 
     request[REQUEST_ROLE_PERMISSIONS_KEY] = roleWithPermissions;
   }

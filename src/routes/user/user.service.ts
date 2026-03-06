@@ -29,12 +29,8 @@ export class UserService {
     private readonly hashingService: HashingService,
   ) {}
 
-  async getUsers({ page, limit }: UserQueryType): Promise<GetUsersResponseType> {
-    try {
-      return await this.userRepository.findMany({ page, limit });
-    } catch (error) {
-      throw error;
-    }
+  getUsers({ page, limit }: UserQueryType): Promise<GetUsersResponseType> {
+    return this.userRepository.findMany({ page, limit });
   }
 
   async getUserById(id: number): Promise<UserIncludeRolePermissionsType> {
@@ -182,21 +178,17 @@ export class UserService {
     roleName: RoleNameType;
     bodyRoleId: number;
   }): Promise<boolean> {
-    try {
-      // Current user is admin => ALLOW all actions
-      if (roleName === RoleName.ADMIN) {
-        return true;
-      } else {
-        // Or current user is not admin && body role id is admin => NOT ALLOW to action
-        const adminRoleId = await this.sharedRoleRepository.getAdminRoleId();
-        if (bodyRoleId === adminRoleId) {
-          throw UserCannotBeSetAsAdminException;
-        }
-        // Or current user is not admin && body role id is not admin => ALLOW to action
-        return true;
+    // Current user is admin => ALLOW all actions
+    if (roleName === RoleName.ADMIN) {
+      return true;
+    } else {
+      // Or current user is not admin && body role id is admin => NOT ALLOW to action
+      const adminRoleId = await this.sharedRoleRepository.getAdminRoleId();
+      if (bodyRoleId === adminRoleId) {
+        throw UserCannotBeSetAsAdminException;
       }
-    } catch (error) {
-      throw error;
+      // Or current user is not admin && body role id is not admin => ALLOW to action
+      return true;
     }
   }
 

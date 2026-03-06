@@ -22,15 +22,11 @@ export class ProductTranslationService {
   constructor(private readonly productTranslationRepository: ProductTranslationRepository) {}
 
   async getProductTranslationById(id: number): Promise<ProductTranslationResponseType> {
-    try {
-      const productTranslation = await this.productTranslationRepository.findOne(id);
-      if (!productTranslation) {
-        throw ProductTranslationNotFoundException;
-      }
-      return productTranslation;
-    } catch (error) {
-      throw error;
+    const productTranslation = await this.productTranslationRepository.findOne(id);
+    if (!productTranslation) {
+      throw ProductTranslationNotFoundException;
     }
+    return productTranslation;
   }
 
   async createProductTranslation(payload: {

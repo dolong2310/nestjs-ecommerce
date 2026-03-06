@@ -39,7 +39,7 @@ export class PaymentController {
 
   @Get('momo-return')
   @Public()
-  async momoReturn(@Query() query: ReturnQueryFromMomoDTO): Promise<MessageResponseDTO> {
+  momoReturn(@Query() query: ReturnQueryFromMomoDTO): MessageResponseDTO {
     return this.paymentService.verifyReturnMomo(query);
   }
 
@@ -60,7 +60,7 @@ export class PaymentController {
    */
   @Get('vnpay-return')
   @Public()
-  async vnpayReturn(@Query() query: ReturnQueryFromVNPayDTO): Promise<MessageResponseDTO> {
+  vnpayReturn(@Query() query: ReturnQueryFromVNPayDTO): MessageResponseDTO {
     return this.paymentService.verifyReturnVNPay(query);
   }
 }

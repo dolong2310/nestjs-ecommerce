@@ -11,20 +11,8 @@ import {
 import { ManageLaunchpadService } from '@/routes/launchpad/manage-launchpad.service';
 import { CURRENT_VERSION } from '@/shared/constants/version.constant';
 import { ActiveUser } from '@/shared/decorators/active-user.decorator';
-import { MessageResponseDTO } from '@/shared/dtos/response.dto';
 import type { AccessTokenPayload } from '@/shared/types/jwt.type';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { ZodResponse } from 'nestjs-zod';
 
 /**
@@ -79,10 +67,7 @@ export class ManageLaunchpadController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(
-    @Param() params: GetLaunchpadParamsDTO,
-    @ActiveUser() user: AccessTokenPayload,
-  ): Promise<void> {
+  delete(@Param() params: GetLaunchpadParamsDTO, @ActiveUser() user: AccessTokenPayload): Promise<void> {
     return this.manageLaunchpadService.delete(params.id, user.userId);
   }
 

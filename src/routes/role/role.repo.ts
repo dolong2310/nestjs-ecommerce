@@ -96,7 +96,11 @@ export class RoleRepository {
     });
   }
 
-  async update(payload: { userId: number; id: number; body: UpdateRoleBodyType }): Promise<RoleWithPermissionsResponseType> {
+  async update(payload: {
+    userId: number;
+    id: number;
+    body: UpdateRoleBodyType;
+  }): Promise<RoleWithPermissionsResponseType> {
     const { userId, id, body } = payload;
 
     // kiểm tra xem list permissionIds có item nào đã soft delete hoặc không tồn tại thì không cho phép update

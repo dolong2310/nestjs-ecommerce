@@ -141,94 +141,86 @@ export class AuthService {
   }
 
   async login(body: LoginBodyType & { ip: string; userAgent: string }): Promise<LoginResponseType> {
-    try {
-      // 1. Check email exists in database
-      const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email });
-      // const user = await this.sharedUserRepository.findUnique({ email: body.email });
+    // 1. Check email exists in database
+    const user = await this.authRepository.findUserUniqueIncludeRole({ email: body.email });
+    // const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
-      if (!user) {
-        throw EmailNotFoundException;
-      }
-
-      // 2. Check password is correct
-      const comparePassword = await this.hashingService.compare(body.password, user.password);
-
-      if (!comparePassword) {
-        throw InvalidPasswordException;
-      }
-
-      // 3. Check 2FA is enabled
-      if (!!user.totpSecret) {
-        // Validate TOTP code or email OTP code
-        await this._validateTOTPCodeOrEmailOtpCode({
-          totpCode: body.totpCode,
-          emailOtpCode: body.emailOtpCode,
-          totpSecret: user.totpSecret,
-          email: user.email,
-          type: EnumOtpCode.LOGIN,
-        });
-      }
-
-      // 4. Create device
-      const device = await this.authRepository.createDevice({
-        userId: user.id,
-        userAgent: body.userAgent,
-        ip: body.ip,
-      });
-
-      if (!device) {
-        throw FailedToCreateDeviceException;
-      }
-
-      // 5. Get role name
-      // const role = await this.authRepository.findRoleUnique({ id: user.roleId });
-
-      // if (!role) {
-      // throw RoleNotFoundException;
-      // }
-
-      // 6. Generate tokens
-      const jwtTokens = await this.createAuthTokens({
-        userId: user.id,
-        deviceId: device.id,
-        roleId: user.roleId,
-        roleName: user.role.name as RoleNameType,
-      });
-
-      // 7. Return tokens
-      return jwtTokens;
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw EmailNotFoundException;
     }
+
+    // 2. Check password is correct
+    const comparePassword = await this.hashingService.compare(body.password, user.password);
+
+    if (!comparePassword) {
+      throw InvalidPasswordException;
+    }
+
+    // 3. Check 2FA is enabled
+    if (user.totpSecret) {
+      // Validate TOTP code or email OTP code
+      await this._validateTOTPCodeOrEmailOtpCode({
+        totpCode: body.totpCode,
+        emailOtpCode: body.emailOtpCode,
+        totpSecret: user.totpSecret,
+        email: user.email,
+        type: EnumOtpCode.LOGIN,
+      });
+    }
+
+    // 4. Create device
+    const device = await this.authRepository.createDevice({
+      userId: user.id,
+      userAgent: body.userAgent,
+      ip: body.ip,
+    });
+
+    if (!device) {
+      throw FailedToCreateDeviceException;
+    }
+
+    // 5. Get role name
+    // const role = await this.authRepository.findRoleUnique({ id: user.roleId });
+
+    // if (!role) {
+    // throw RoleNotFoundException;
+    // }
+
+    // 6. Generate tokens
+    const jwtTokens = await this.createAuthTokens({
+      userId: user.id,
+      deviceId: device.id,
+      roleId: user.roleId,
+      roleName: user.role.name as RoleNameType,
+    });
+
+    // 7. Return tokens
+    return jwtTokens;
   }
 
   async logout(body: LogoutBodyType): Promise<MessageResponseType> {
-    try {
-      // 1. Find refresh token in database
-      const refreshToken = await this.authRepository.findRefreshTokenUnique({ token: body.refreshToken });
+    // 1. Find refresh token in database
+    const refreshToken = await this.authRepository.findRefreshTokenUnique({ token: body.refreshToken });
 
-      // 2. Nếu không có refresh token thì return success, vì có đâu mà xoá trong database
-      if (!refreshToken) {
-        return { message: 'Success.LogoutSuccessful' };
-      }
-
-      // 3. Delete refresh token from database
-      const deleteRefreshTokenPromise = this.authRepository.deleteRefreshToken({ token: body.refreshToken });
-
-      // 4. Update device isActive to false (device has been logged out) in database
-      const updateDevicePromise = this.authRepository.updateDevice(
-        { id: refreshToken.deviceId },
-        { isActive: false, lastActiveAt: new Date() },
-      );
-
-      // 5. Execute promises
-      await Promise.all([deleteRefreshTokenPromise, updateDevicePromise]);
-
-      // 6. Return message success
+    // 2. Nếu không có refresh token thì return success, vì có đâu mà xoá trong database
+    if (!refreshToken) {
       return { message: 'Success.LogoutSuccessful' };
-    } catch (error) {
-      throw error;
     }
+
+    // 3. Delete refresh token from database
+    const deleteRefreshTokenPromise = this.authRepository.deleteRefreshToken({ token: body.refreshToken });
+
+    // 4. Update device isActive to false (device has been logged out) in database
+    const updateDevicePromise = this.authRepository.updateDevice(
+      { id: refreshToken.deviceId },
+      { isActive: false, lastActiveAt: new Date() },
+    );
+
+    // 5. Execute promises
+    await Promise.all([deleteRefreshTokenPromise, updateDevicePromise]);
+
+    // 6. Return message success
+    return { message: 'Success.LogoutSuccessful' };
   }
 
   async forgotPassword(body: ForgotPasswordBodyType): Promise<MessageResponseType> {
@@ -238,46 +230,42 @@ export class AuthService {
     // [new password]
     // [confirm new password]
     // [button submit]
-    try {
-      // 1. Check OTP code
-      const otpCode = await this._findAndValidateOtpCode({
-        email: body.email,
-        code: body.code,
-        type: EnumOtpCode.FORGOT_PASSWORD,
-      });
+    // 1. Check OTP code
+    const otpCode = await this._findAndValidateOtpCode({
+      email: body.email,
+      code: body.code,
+      type: EnumOtpCode.FORGOT_PASSWORD,
+    });
 
-      // 2. Check email exists in database
-      const user = await this.sharedUserRepository.findUnique({ email: body.email });
+    // 2. Check email exists in database
+    const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
-      if (!user) {
-        // Delete OTP code
-        await this.authRepository.deleteOtpCode({ id: otpCode.id });
-        throw EmailNotFoundException;
-      }
-
-      // 3. Hash new password
-      const hashedPassword = await this.hashingService.hash(body.newPassword);
-
-      // 4. Update user password
-      const updateUserPasswordPromise = this.sharedUserRepository.update(
-        { id: user.id },
-        {
-          password: hashedPassword,
-          updatedById: user.id,
-        },
-      );
-
-      // 5. Delete OTP code
-      const deleteOtpCodePromise = this.authRepository.deleteOtpCode({ id: otpCode.id });
-
-      // 6. Execute promises
-      await Promise.all([updateUserPasswordPromise, deleteOtpCodePromise]);
-
-      // 7. Return message success
-      return { message: 'Success.ForgotPasswordSuccessful' };
-    } catch (error) {
-      throw error;
+    if (!user) {
+      // Delete OTP code
+      await this.authRepository.deleteOtpCode({ id: otpCode.id });
+      throw EmailNotFoundException;
     }
+
+    // 3. Hash new password
+    const hashedPassword = await this.hashingService.hash(body.newPassword);
+
+    // 4. Update user password
+    const updateUserPasswordPromise = this.sharedUserRepository.update(
+      { id: user.id },
+      {
+        password: hashedPassword,
+        updatedById: user.id,
+      },
+    );
+
+    // 5. Delete OTP code
+    const deleteOtpCodePromise = this.authRepository.deleteOtpCode({ id: otpCode.id });
+
+    // 6. Execute promises
+    await Promise.all([updateUserPasswordPromise, deleteOtpCodePromise]);
+
+    // 7. Return message success
+    return { message: 'Success.ForgotPasswordSuccessful' };
   }
 
   async refreshToken(
@@ -372,125 +360,113 @@ export class AuthService {
   }
 
   async sendOtp(body: SendOtpBodyType): Promise<MessageResponseType> {
-    try {
-      // 1. Check email exists in database and check type
-      const user = await this.sharedUserRepository.findUnique({ email: body.email });
+    // 1. Check email exists in database and check type
+    const user = await this.sharedUserRepository.findUnique({ email: body.email });
 
-      if (user && body.type === EnumOtpCode.REGISTER) {
-        throw EmailAlreadyExistsException;
-      }
-
-      if (!user && body.type === EnumOtpCode.FORGOT_PASSWORD) {
-        throw EmailNotFoundException;
-      }
-
-      // 2. Create otp code
-      // 2.1 Generate OTP code
-      const generatedOtpCode = generateOtpCode();
-
-      // 2.2 Create OTP code in database
-      const otpCodePromise = this.authRepository.createOtpCode({
-        email: body.email,
-        code: generatedOtpCode,
-        type: body.type,
-        expiresAt: addMilliseconds(new Date(), ms(envConfig.OTP_EXPIRES_IN as StringValue)), // now + 5 minutes
-      });
-
-      // 3. Send OTP to email
-      const sendOtpPromise = this.emailService.sendOtp({
-        code: generatedOtpCode,
-        to: body.email,
-        subject: 'OTP Code',
-      });
-
-      // 4. Execute promises
-      const [otpCode, { error: emailError }] = await Promise.all([otpCodePromise, sendOtpPromise]);
-
-      if (emailError) {
-        // Delete OTP code
-        await this.authRepository.deleteOtpCode({ id: otpCode.id });
-        throw FailedToSendOtpCodeException;
-      }
-
-      // 5. Do not return otp code, because user must get code from email
-      // message: OTP code has been sent to email
-      return { message: 'Success.OtpCodeSentToEmail' };
-    } catch (error) {
-      throw error;
+    if (user && body.type === EnumOtpCode.REGISTER) {
+      throw EmailAlreadyExistsException;
     }
+
+    if (!user && body.type === EnumOtpCode.FORGOT_PASSWORD) {
+      throw EmailNotFoundException;
+    }
+
+    // 2. Create otp code
+    // 2.1 Generate OTP code
+    const generatedOtpCode = generateOtpCode();
+
+    // 2.2 Create OTP code in database
+    const otpCodePromise = this.authRepository.createOtpCode({
+      email: body.email,
+      code: generatedOtpCode,
+      type: body.type,
+      expiresAt: addMilliseconds(new Date(), ms(envConfig.OTP_EXPIRES_IN as StringValue)), // now + 5 minutes
+    });
+
+    // 3. Send OTP to email
+    const sendOtpPromise = this.emailService.sendOtp({
+      code: generatedOtpCode,
+      to: body.email,
+      subject: 'OTP Code',
+    });
+
+    // 4. Execute promises
+    const [otpCode, { error: emailError }] = await Promise.all([otpCodePromise, sendOtpPromise]);
+
+    if (emailError) {
+      // Delete OTP code
+      await this.authRepository.deleteOtpCode({ id: otpCode.id });
+      throw FailedToSendOtpCodeException;
+    }
+
+    // 5. Do not return otp code, because user must get code from email
+    // message: OTP code has been sent to email
+    return { message: 'Success.OtpCodeSentToEmail' };
   }
 
   async setup2fa(userId: number): Promise<Setup2FAResponseType> {
-    try {
-      // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
-      const user = await this.sharedUserRepository.findUnique({ id: userId });
+    // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
+    const user = await this.sharedUserRepository.findUnique({ id: userId });
 
-      if (!user) {
-        throw UserNotFoundException;
-      }
-
-      if (Boolean(user.totpSecret)) {
-        throw TOTPAlreadyEnabledException;
-      }
-
-      // 2. Tạo secret key và URI cho 2FA
-      const { secret, uri } = this.twoFactorAuthenticationService.generateSecret(user.email);
-
-      // 3. Lưu secret key vào database
-      await this.sharedUserRepository.update(
-        { id: userId },
-        {
-          totpSecret: secret,
-          updatedById: userId,
-        },
-      );
-
-      // 4. Return secret key và URI
-      return {
-        secret,
-        uri,
-      };
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw UserNotFoundException;
     }
+
+    if (user.totpSecret) {
+      throw TOTPAlreadyEnabledException;
+    }
+
+    // 2. Tạo secret key và URI cho 2FA
+    const { secret, uri } = this.twoFactorAuthenticationService.generateSecret(user.email);
+
+    // 3. Lưu secret key vào database
+    await this.sharedUserRepository.update(
+      { id: userId },
+      {
+        totpSecret: secret,
+        updatedById: userId,
+      },
+    );
+
+    // 4. Return secret key và URI
+    return {
+      secret,
+      uri,
+    };
   }
 
   async disable2fa(userId: number, body: Disable2FABodyType): Promise<MessageResponseType> {
-    try {
-      // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
-      const user = await this.sharedUserRepository.findUnique({ id: userId });
+    // 1. Lấy user từ database, kiểm tra user có tồn tại không và kiểm tra đã enable 2FA chưa
+    const user = await this.sharedUserRepository.findUnique({ id: userId });
 
-      if (!user) {
-        throw UserNotFoundException;
-      }
-
-      if (!user.totpSecret) {
-        throw TOTPNotEnabledException; // User has not enabled 2FA
-      }
-
-      // 2. Validate TOTP code or email OTP code
-      await this._validateTOTPCodeOrEmailOtpCode({
-        totpCode: body.totpCode,
-        emailOtpCode: body.emailOtpCode,
-        totpSecret: user.totpSecret,
-        email: user.email,
-        type: EnumOtpCode.DISABLE_2FA,
-      });
-
-      // 3. Delete secret key of user from database
-      await this.sharedUserRepository.update(
-        { id: userId },
-        {
-          totpSecret: null,
-          updatedById: userId,
-        },
-      );
-
-      // 4. Return message success
-      return { message: 'Success.2FADisabled' };
-    } catch (error) {
-      throw error;
+    if (!user) {
+      throw UserNotFoundException;
     }
+
+    if (!user.totpSecret) {
+      throw TOTPNotEnabledException; // User has not enabled 2FA
+    }
+
+    // 2. Validate TOTP code or email OTP code
+    await this._validateTOTPCodeOrEmailOtpCode({
+      totpCode: body.totpCode,
+      emailOtpCode: body.emailOtpCode,
+      totpSecret: user.totpSecret,
+      email: user.email,
+      type: EnumOtpCode.DISABLE_2FA,
+    });
+
+    // 3. Delete secret key of user from database
+    await this.sharedUserRepository.update(
+      { id: userId },
+      {
+        totpSecret: null,
+        updatedById: userId,
+      },
+    );
+
+    // 4. Return message success
+    return { message: 'Success.2FADisabled' };
   }
 
   public async createAuthTokens(payload: AccessTokenPayloadCreate): Promise<JwtTokenType> {
@@ -523,32 +499,28 @@ export class AuthService {
     code: string;
     type: EnumOtpCodeType;
   }): Promise<OtpCodeType> {
-    try {
-      const otpCode = await this.authRepository.findUniqueOtpCode({
-        email_type: {
-          email: data.email,
-          type: data.type,
-        },
-      });
+    const otpCode = await this.authRepository.findUniqueOtpCode({
+      email_type: {
+        email: data.email,
+        type: data.type,
+      },
+    });
 
-      if (!otpCode) {
-        throw InvalidOtpCodeException;
-      }
-
-      if (otpCode.code !== data.code) {
-        throw InvalidOtpCodeException;
-      }
-
-      if (otpCode.expiresAt < new Date()) {
-        // Delete OTP code
-        await this.authRepository.deleteOtpCode({ id: otpCode.id });
-        throw ExpiredOtpCodeException;
-      }
-
-      return otpCode;
-    } catch (error) {
-      throw error;
+    if (!otpCode) {
+      throw InvalidOtpCodeException;
     }
+
+    if (otpCode.code !== data.code) {
+      throw InvalidOtpCodeException;
+    }
+
+    if (otpCode.expiresAt < new Date()) {
+      // Delete OTP code
+      await this.authRepository.deleteOtpCode({ id: otpCode.id });
+      throw ExpiredOtpCodeException;
+    }
+
+    return otpCode;
   }
 
   private async _validateTOTPCodeOrEmailOtpCode({
@@ -564,39 +536,35 @@ export class AuthService {
     email: string;
     type: EnumOtpCodeType;
   }): Promise<void> {
-    try {
-      // Check TOTP code is valid or email OTP code is valid
-      // 1. Throw error if body does not have totpCode and emailOtpCode
-      if (!totpCode && !emailOtpCode) {
-        throw InvalidTOTPOrEmailOtpCodeException;
-      }
+    // Check TOTP code is valid or email OTP code is valid
+    // 1. Throw error if body does not have totpCode and emailOtpCode
+    if (!totpCode && !emailOtpCode) {
+      throw InvalidTOTPOrEmailOtpCodeException;
+    }
 
-      // 2. Check TOTP code is valid or email OTP code is valid
-      if (totpCode) {
-        // 2.1 Verify TOTP code
-        const isTOTPValid = this.twoFactorAuthenticationService.verifyTOTP({
-          email: email,
-          secret: totpSecret,
-          token: totpCode,
-        });
+    // 2. Check TOTP code is valid or email OTP code is valid
+    if (totpCode) {
+      // 2.1 Verify TOTP code
+      const isTOTPValid = this.twoFactorAuthenticationService.verifyTOTP({
+        email: email,
+        secret: totpSecret,
+        token: totpCode,
+      });
 
-        if (!isTOTPValid) {
-          throw InvalidTOTPException;
-        }
-      } else if (emailOtpCode) {
-        // 2.2 Verify email OTP code
-        // emailOtpCode là option nếu như user đã enable 2FA bằng TOTP nhưng giả sử không có thiết bị để lấy được TOTP code thì sẽ dùng OTP gửi qua email để login
-        // vì vậy không cần check email OTP code mỗi lần login
-        const otpCode = await this._findAndValidateOtpCode({
-          email: email,
-          code: emailOtpCode,
-          type: type,
-        });
-        // 2.3 Delete OTP code
-        await this.authRepository.deleteOtpCode({ id: otpCode.id });
+      if (!isTOTPValid) {
+        throw InvalidTOTPException;
       }
-    } catch (error) {
-      throw error;
+    } else if (emailOtpCode) {
+      // 2.2 Verify email OTP code
+      // emailOtpCode là option nếu như user đã enable 2FA bằng TOTP nhưng giả sử không có thiết bị để lấy được TOTP code thì sẽ dùng OTP gửi qua email để login
+      // vì vậy không cần check email OTP code mỗi lần login
+      const otpCode = await this._findAndValidateOtpCode({
+        email: email,
+        code: emailOtpCode,
+        type: type,
+      });
+      // 2.3 Delete OTP code
+      await this.authRepository.deleteOtpCode({ id: otpCode.id });
     }
   }
 }

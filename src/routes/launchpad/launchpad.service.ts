@@ -4,7 +4,12 @@ import {
   LaunchpadNotLiveException,
 } from '@/routes/launchpad/launchpad.error';
 import { LaunchpadRepository } from '@/routes/launchpad/launchpad.repo';
-import { GetLaunchpadResponseType, GetLaunchpadsQueryType, GetLaunchpadsResponseType, LaunchpadWithProductType } from '@/routes/launchpad/launchpad.type';
+import {
+  GetLaunchpadResponseType,
+  GetLaunchpadsQueryType,
+  GetLaunchpadsResponseType,
+  LaunchpadWithProductType,
+} from '@/routes/launchpad/launchpad.type';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -35,13 +40,9 @@ export class LaunchpadService {
     }
 
     const isPurchased = purchaseCount > 0;
-    const isLimitReached =
-      launchpad.maxPurchasesPerUser !== null && purchaseCount >= launchpad.maxPurchasesPerUser;
+    const isLimitReached = launchpad.maxPurchasesPerUser !== null && purchaseCount >= launchpad.maxPurchasesPerUser;
 
-    const effectiveDisplayPrice = this._computeDisplayPrice(
-      launchpad.product.basePrice,
-      launchpad.discountRate,
-    );
+    const effectiveDisplayPrice = this._computeDisplayPrice(launchpad.product.basePrice, launchpad.discountRate);
 
     const skusWithLaunchPrice = launchpad.product.skus.map((sku) => ({
       ...sku,

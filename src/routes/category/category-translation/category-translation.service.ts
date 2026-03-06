@@ -22,15 +22,11 @@ export class CategoryTranslationService {
   constructor(private readonly categoryTranslationRepository: CategoryTranslationRepository) {}
 
   async getCategoryTranslationById(id: number): Promise<CategoryTranslationResponseType> {
-    try {
-      const categoryTranslation = await this.categoryTranslationRepository.findOne(id);
-      if (!categoryTranslation) {
-        throw CategoryTranslationNotFoundException;
-      }
-      return categoryTranslation;
-    } catch (error) {
-      throw error;
+    const categoryTranslation = await this.categoryTranslationRepository.findOne(id);
+    if (!categoryTranslation) {
+      throw CategoryTranslationNotFoundException;
     }
+    return categoryTranslation;
   }
 
   async createCategoryTranslation(payload: {

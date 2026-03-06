@@ -1,6 +1,6 @@
 import envConfig from '@/shared/config';
 import Client from 'ioredis';
-import Redlock from 'redlock';
+import Redlock, { CompatibleRedisClient } from 'redlock';
 
 export const redisClient = new Client(envConfig.REDIS_URL, {
   connectTimeout: 30000, // 30 seconds
@@ -13,7 +13,7 @@ export const redisClient = new Client(envConfig.REDIS_URL, {
 
 export const redlock = new Redlock(
   // You should have one client for each independent redis node or cluster.
-  [redisClient],
+  [redisClient as unknown as CompatibleRedisClient], // thư viện này quá lâu không còn update nên phải cast thành CompatibleRedisClient
   {
     // The expected clock drift; for more details see: http://redis.io/topics/distlock
     // driftFactor: 0.01, // multiplied by lock ttl to determine drift time

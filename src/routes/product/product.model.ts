@@ -17,14 +17,14 @@ export const GetProductsQuerySchema = z
     limit: z.coerce.number().int().positive().default(10),
     name: z.string().optional(),
     brandIds: z.preprocess((value: string) => {
-      const parsedValue = value ? JSON.parse(value) : undefined; // Frontend truyền brandIds dưới dạng JSON.stringify vì nó là mảng
+      const parsedValue = value ? (JSON.parse(value) as string[]) : undefined; // Frontend truyền brandIds dưới dạng JSON.stringify vì nó là mảng
       if (parsedValue && Array.isArray(parsedValue)) {
         return parsedValue.map((id) => Number(id));
       }
       return undefined;
     }, z.array(z.coerce.number().int().positive()).optional()),
     categories: z.preprocess((value: string) => {
-      const parsedValue = value ? JSON.parse(value) : undefined; // Frontend truyền categories dưới dạng JSON.stringify vì nó là mảng
+      const parsedValue = value ? (JSON.parse(value) as string[]) : undefined; // Frontend truyền categories dưới dạng JSON.stringify vì nó là mảng
       if (parsedValue && Array.isArray(parsedValue)) {
         return parsedValue.map((id) => Number(id));
       }

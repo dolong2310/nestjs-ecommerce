@@ -20,12 +20,8 @@ export class PermissionService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  async getPermissions({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
-    try {
-      return await this.permissionRepository.findMany({ page, limit });
-    } catch (error) {
-      throw error;
-    }
+  getPermissions({ page, limit }: PermissionQueryType): Promise<GetPermissionsResponseType> {
+    return this.permissionRepository.findMany({ page, limit });
   }
 
   async getPermissionById(id: number): Promise<GetPermissionResponseType> {
@@ -98,8 +94,10 @@ export class PermissionService {
 
   private async _clearCache(roles: { id: number }[]): Promise<void> {
     await Promise.all(
+      // eslint-disable-next-line @typescript-eslint/await-thenable
       roles.map((role) => {
         const cacheKey = `role:${role.id}`;
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         this.cacheManager.del(cacheKey);
       }),
     );

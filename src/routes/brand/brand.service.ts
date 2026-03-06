@@ -20,36 +20,21 @@ export class BrandService {
     private readonly i18n: I18nService<I18nTranslations>,
   ) {}
 
-  async getBrands(query: GetBrandsQueryType): Promise<GetBrandsIncludeTranslationsResponseType> {
+  getBrands(query: GetBrandsQueryType): Promise<GetBrandsIncludeTranslationsResponseType> {
     // console.log(this.i18n.t('error.NOT_FOUND', { lang: I18nContext.current()?.lang }));
-    try {
-      return await this.brandRepository.findMany(query, query.lang);
-    } catch (error) {
-      throw error;
-    }
+    return this.brandRepository.findMany(query, query.lang);
   }
 
   async getBrandById(id: number, lang: string): Promise<BrandIncludeTranslationsResponseType> {
-    try {
-      const brand = await this.brandRepository.findOne(id, lang);
-      if (!brand) {
-        throw BrandNotFoundException;
-      }
-      return brand;
-    } catch (error) {
-      throw error;
+    const brand = await this.brandRepository.findOne(id, lang);
+    if (!brand) {
+      throw BrandNotFoundException;
     }
+    return brand;
   }
 
-  async createBrand(payload: {
-    userId: number;
-    body: CreateBrandBodyType;
-  }): Promise<BrandIncludeTranslationsResponseType> {
-    try {
-      return await this.brandRepository.create(payload);
-    } catch (error) {
-      throw error;
-    }
+  createBrand(payload: { userId: number; body: CreateBrandBodyType }): Promise<BrandIncludeTranslationsResponseType> {
+    return this.brandRepository.create(payload);
   }
 
   async updateBrand(payload: {

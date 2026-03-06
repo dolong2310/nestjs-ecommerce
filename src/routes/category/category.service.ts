@@ -20,41 +20,29 @@ export class CategoryService {
     private readonly i18n: I18nService<I18nTranslations>,
   ) {}
 
-  async getCategories(query: GetCategoriesQueryType): Promise<GetCategoriesIncludeTranslationsResponseType> {
-    try {
-      return await this.categoryRepository.findMany({
-        parentCategoryId: query.parentCategoryId,
-        languageId: query.lang,
-      });
-    } catch (error) {
-      throw error;
-    }
+  getCategories(query: GetCategoriesQueryType): Promise<GetCategoriesIncludeTranslationsResponseType> {
+    return this.categoryRepository.findMany({
+      parentCategoryId: query.parentCategoryId,
+      languageId: query.lang,
+    });
   }
 
   async getCategoryById(payload: { id: number; languageId: string }): Promise<CategoryIncludeTranslationsResponseType> {
-    try {
-      const category = await this.categoryRepository.findOne({
-        id: payload.id,
-        languageId: payload.languageId,
-      });
-      if (!category) {
-        throw CategoryNotFoundException;
-      }
-      return category;
-    } catch (error) {
-      throw error;
+    const category = await this.categoryRepository.findOne({
+      id: payload.id,
+      languageId: payload.languageId,
+    });
+    if (!category) {
+      throw CategoryNotFoundException;
     }
+    return category;
   }
 
-  async createCategory(payload: {
+  createCategory(payload: {
     userId: number;
     body: CreateCategoryBodyType;
   }): Promise<CategoryIncludeTranslationsResponseType> {
-    try {
-      return await this.categoryRepository.create(payload);
-    } catch (error) {
-      throw error;
-    }
+    return this.categoryRepository.create(payload);
   }
 
   async updateCategory(payload: {

@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/only-throw-error */
 import { PaymentProducer } from '@/routes/payment/payment.producer';
 import { PaymentRepository } from '@/routes/payment/payment.repo';
 import { WebhookPaymentBodyType } from '@/routes/payment/payment.type';
 import { EnumOrderStatus } from '@/shared/constants/order.constant';
 import { EnumPaymentStatus, PREFIX_PAYMENT_CODE } from '@/shared/constants/payment.constant';
 import { generateRoomUserId } from '@/shared/helpers';
-import { Momo, VNPay } from '@longdoo/node-payment-gateway';
-import { EnumPaymentMethod } from '@longdoo/node-payment-gateway/core';
-import type { ReturnQueryFromMomo, VerifyReturnUrl as MomoVerifyReturnUrl } from '@longdoo/node-payment-gateway/momo';
-import { getResponseByStatusCode as getMessageMomo } from '@longdoo/node-payment-gateway/momo';
-import type { ReturnQueryFromVNPay, VerifyReturnUrl as VNPayVerifyReturnUrl } from '@longdoo/node-payment-gateway/vnpay';
-import { getResponseByStatusCode as getMessageVNPay } from '@longdoo/node-payment-gateway/vnpay';
 import { SharedPaymentService } from '@/shared/services/shared-payment.service';
 import { OrderIncludeProductSkuSnapshotType } from '@/shared/types/shared-order.type';
 import { MessageResponseType } from '@/shared/types/shared-response.type';
+import { VNPay } from '@longdoo/node-payment-gateway';
+import type { VerifyReturnUrl as MomoVerifyReturnUrl, ReturnQueryFromMomo } from '@longdoo/node-payment-gateway/momo';
+import { getResponseByStatusCode as getMessageMomo } from '@longdoo/node-payment-gateway/momo';
+import type {
+  ReturnQueryFromVNPay,
+  VerifyReturnUrl as VNPayVerifyReturnUrl,
+} from '@longdoo/node-payment-gateway/vnpay';
+import { getResponseByStatusCode as getMessageVNPay } from '@longdoo/node-payment-gateway/vnpay';
 import { Transactional } from '@nestjs-cls/transactional';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';

@@ -12,7 +12,7 @@ import { RoleNameType } from '@/shared/constants/role.constant';
 import { SharedRoleRepository } from '@/shared/repositories/shared-role.repo';
 import { HashingService } from '@/shared/services/hashing.service';
 import { Injectable } from '@nestjs/common';
-import { Credentials, OAuth2Client } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 import { google } from 'googleapis';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -68,75 +68,71 @@ export class GoogleService {
     let userAgent = 'Unknown';
 
     try {
-      const stateData = JSON.parse(Buffer.from(state, 'base64').toString('utf-8'));
+      const stateData = JSON.parse(Buffer.from(state, 'base64').toString('utf-8')) as { ip: string; userAgent: string };
       ip = stateData.ip;
       userAgent = stateData.userAgent;
     } catch (error) {
       console.log('error parsing state: ', error);
     }
 
-    try {
-      // 2. Get token info from code
-      const { tokens } = await this.oauth2Client.getToken(code);
-      // 2.1 set credentials
-      this.oauth2Client.setCredentials(tokens as Credentials); // set credentials to oauth2Client (tokens bao gồm các access token, refresh token, ... để xác thực với google)
+    // 2. Get token info from code
+    const { tokens } = await this.oauth2Client.getToken(code);
+    // 2.1 set credentials
+    this.oauth2Client.setCredentials(tokens); // set credentials to oauth2Client (tokens bao gồm các access token, refresh token, ... để xác thực với google)
 
-      // 3. Get user info from google
-      const oauth2 = google.oauth2({ auth: this.oauth2Client, version: 'v2' });
-      const { data } = await oauth2.userinfo.get();
+    // 3. Get user info from google
+    const oauth2 = google.oauth2({ auth: this.oauth2Client, version: 'v2' });
+    const { data } = await oauth2.userinfo.get();
 
-      // 3.1 Check if email is verified
-      if (!data.verified_email || !data.email) {
-        throw EmailNotVerifiedException;
-      }
-
-      // 4. Find user by email
-      let user = await this.authRepository.findUserUniqueIncludeRole({ email: data.email });
-
-      // 5. If user not found, register new user
-      if (!user) {
-        // 5.1 Get user role id
-        const userRoleIdPromise = this.sharedRoleRepository.getUserRoleId();
-        // 5.2 Generate random password
-        const randomPassword = uuidv4();
-        // 5.3 Hash password
-        const hashedPasswordPromise = this.hashingService.hash(randomPassword);
-        // 5.4 Execute promises
-        const [userRoleId, hashedPassword] = await Promise.all([userRoleIdPromise, hashedPasswordPromise]);
-        // 5.5 Create user
-        user = await this.authRepository.createUserIncludeRole({
-          name: data.name ?? '',
-          email: data.email,
-          password: hashedPassword,
-          phoneNumber: '',
-          avatar: data.picture ?? null,
-          roleId: userRoleId,
-        });
-      }
-
-      // 6. Create device
-      const device = await this.authRepository.createDevice({
-        userId: user.id,
-        userAgent,
-        ip,
-      });
-
-      if (!device) {
-        throw FailedToCreateDeviceException;
-      }
-
-      // 7. Generate tokens
-      const jwtTokens = await this.authService.createAuthTokens({
-        userId: user.id,
-        deviceId: device.id,
-        roleId: user.roleId,
-        roleName: user.role.name as RoleNameType,
-      });
-
-      // 8. Return tokens
-      return jwtTokens;
-    } catch (error) {
-      throw error;
+    // 3.1 Check if email is verified
+    if (!data.verified_email || !data.email) {
+      throw EmailNotVerifiedException;
     }
+
+    // 4. Find user by email
+    let user = await this.authRepository.findUserUniqueIncludeRole({ email: data.email });
+
+    // 5. If user not found, register new user
+    if (!user) {
+      // 5.1 Get user role id
+      const userRoleIdPromise = this.sharedRoleRepository.getUserRoleId();
+      // 5.2 Generate random password
+      const randomPassword = uuidv4();
+      // 5.3 Hash password
+      const hashedPasswordPromise = this.hashingService.hash(randomPassword);
+      // 5.4 Execute promises
+      const [userRoleId, hashedPassword] = await Promise.all([userRoleIdPromise, hashedPasswordPromise]);
+      // 5.5 Create user
+      user = await this.authRepository.createUserIncludeRole({
+        name: data.name ?? '',
+        email: data.email,
+        password: hashedPassword,
+        phoneNumber: '',
+        avatar: data.picture ?? null,
+        roleId: userRoleId,
+      });
+    }
+
+    // 6. Create device
+    const device = await this.authRepository.createDevice({
+      userId: user.id,
+      userAgent,
+      ip,
+    });
+
+    if (!device) {
+      throw FailedToCreateDeviceException;
+    }
+
+    // 7. Generate tokens
+    const jwtTokens = await this.authService.createAuthTokens({
+      userId: user.id,
+      deviceId: device.id,
+      roleId: user.roleId,
+      roleName: user.role.name as RoleNameType,
+    });
+
+    // 8. Return tokens
+    return jwtTokens;
   }
 }

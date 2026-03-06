@@ -9,40 +9,32 @@ export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
   async getProducts(query: GetProductsQueryType): Promise<GetProductsResponseType> {
-    try {
-      const { page, limit, name, brandIds, categories, minPrice, maxPrice, creatorId, orderBy, sortBy } = query;
-      return this.productRepository.findMany({
-        page,
-        limit,
-        name,
-        brandIds,
-        categories,
-        minPrice,
-        maxPrice,
-        creatorId,
-        isPublished: true, // user only => true => chỉ lấy các product đã được publish
-        orderBy,
-        sortBy,
-        languageId: I18nContext.current()!.lang,
-      });
-    } catch (error) {
-      throw error;
-    }
+    const { page, limit, name, brandIds, categories, minPrice, maxPrice, creatorId, orderBy, sortBy } = query;
+    return this.productRepository.findMany({
+      page,
+      limit,
+      name,
+      brandIds,
+      categories,
+      minPrice,
+      maxPrice,
+      creatorId,
+      isPublished: true, // user only => true => chỉ lấy các product đã được publish
+      orderBy,
+      sortBy,
+      languageId: I18nContext.current()!.lang,
+    });
   }
 
   async getProductById(productId: number): Promise<GetProductResponseType> {
-    try {
-      const product = await this.productRepository.getDetail({
-        productId,
-        languageId: I18nContext.current()!.lang,
-        isPublished: true, // user => true
-      });
-      if (!product) {
-        throw ProductNotFoundException;
-      }
-      return product;
-    } catch (error) {
-      throw error;
+    const product = await this.productRepository.getDetail({
+      productId,
+      languageId: I18nContext.current()!.lang,
+      isPublished: true, // user => true
+    });
+    if (!product) {
+      throw ProductNotFoundException;
     }
+    return product;
   }
 }
