@@ -108,7 +108,8 @@ export class OrderService {
       return { data: orders, paymentUrl };
     } finally {
       // 5. Giải phóng tất cả locks
-      await Promise.all(locks.map((lock) => lock.release())).catch(() => {});
+      // await Promise.all(locks.map((lock) => lock.release())).catch(() => {});
+      await Promise.all(locks.map((lock) => redlock.release(lock).catch(() => {})));
     }
   }
 

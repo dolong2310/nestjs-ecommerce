@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/orders';
+const API_URL = 'http://localhost:8080/api/v1/orders';
 
 const accessToken1 = '';
 const accessToken2 = '';
@@ -13,29 +13,35 @@ const headers2 = {
   Authorization: `Bearer ${accessToken2}`,
 };
 
-const body1 = [
-  {
-    shopId: 1,
-    receiver: {
-      name: 'Unknown User',
-      phoneNumber: '0908123123',
-      address: '1 Sài Gòn, Quận 1, TP.HCM',
+const body1 = {
+  paymentMethod: null, // momo | vnpay | null
+  orders: [
+    {
+      shopId: 20,
+      receiver: {
+        name: 'Unknown User 1',
+        phoneNumber: '0908123123',
+        address: '1 Sài Gòn, Quận 1, TP.HCM',
+      },
+      cartItemIds: [159],
     },
-    cartItemIds: [41],
-  },
-];
+  ],
+};
 
-const body2 = [
-  {
-    shopId: 1,
-    receiver: {
-      name: 'Unknown User',
-      phoneNumber: '0908123123',
-      address: '1 Sài Gòn, Quận 1, TP.HCM',
+const body2 = {
+  paymentMethod: null, // momo | vnpay | null
+  orders: [
+    {
+      shopId: 20,
+      receiver: {
+        name: 'Unknown User 2',
+        phoneNumber: '0908123123',
+        address: '2 Sài Gòn, Quận 2, TP.HCM',
+      },
+      cartItemIds: [158],
     },
-    cartItemIds: [43],
-  },
-];
+  ],
+};
 
 const fetch1 = fetch(API_URL, {
   method: 'POST',

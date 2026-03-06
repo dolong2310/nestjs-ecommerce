@@ -298,7 +298,8 @@ export class ManageLaunchpadService {
           throw LaunchpadPurchaseLimitException;
         }
       } finally {
-        await lock.release().catch(() => {});
+        // await lock.release().catch(() => {});
+        await redlock.release(lock).catch(() => {});
       }
     }
 
@@ -330,7 +331,8 @@ export class ManageLaunchpadService {
 
       return { orderId: order.id, paymentUrl };
     } finally {
-      await lock.release().catch(() => {});
+      // await lock.release().catch(() => {});
+      await redlock.release(lock).catch(() => {});
     }
   }
 
