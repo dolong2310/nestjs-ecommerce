@@ -3,13 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import z from 'zod';
 
-dotenvConfig({
-  path: '.env', // path.resolve('.env'),
-});
+const envFilePath = path.resolve('.env');
 
-if (!fs.existsSync(path.resolve('.env'))) {
-  console.error('Environment file not found');
-  process.exit(1);
+if (fs.existsSync(envFilePath)) {
+  dotenvConfig({
+    path: envFilePath,
+  });
 }
 
 const configSchema = z.object({
