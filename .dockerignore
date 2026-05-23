@@ -6,3 +6,12 @@ node_modules/
 dist/
 build/
 logs/
+docs/
+test/
+tests/
+.env
+.env.*
+backups/
+upload/
+coverage/
+*.log
