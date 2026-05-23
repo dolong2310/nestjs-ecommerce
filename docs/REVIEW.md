@@ -1,0 +1,4 @@
+- Mua hàng mới được review
+- có thể review nhiều lần / sản phẩm nếu mua nhiều lần
+- 1 order mua 2 sản phẩm thì review được 2 sản phẩm
+- cập nhật review tối đa 1 lần
