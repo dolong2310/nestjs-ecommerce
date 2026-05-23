@@ -14,17 +14,31 @@ jobs:
       - name: Verify Docker build
         run: docker build --platform linux/amd64 -t nestjs-ecommerce:ci .
 
-      - name: Trigger Render deploy hook
-        if: success()
-        env:
-          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      - name: Install Render CLI
         run: |
-          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
-            echo "RENDER_DEPLOY_HOOK_URL is not set; relying on Render auto-deploy."
-            exit 0
+          curl -fsSL https://raw.githubusercontent.com/render-oss/cli/refs/heads/main/bin/install.sh | sh
+
+      - name: Deploy to Render and wait
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+          CI: true
+        run: |
+          if [ -z "$RENDER_API_KEY" ]; then
+            echo "RENDER_API_KEY is required."
+            exit 1
           fi
 
-          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+          if [ -z "$RENDER_SERVICE_ID" ]; then
+            echo "RENDER_SERVICE_ID is required."
+            exit 1
+          fi
+
+          render deploys create "$RENDER_SERVICE_ID" \
+            --commit "${{ github.sha }}" \
+            --wait \
+            --output json \
+            --confirm
 
       - name: Send Telegram success message
         if: success()
@@ -33,7 +47,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ✅ Deploy completed.
+            ✅ Render deploy completed successfully.
 
             Actor: ${{ github.actor }}
             Commit: ${{ github.sha }}
@@ -49,7 +63,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ❌ Deploy failed.
+            ❌ Render deploy failed.
 
             Actor: ${{ github.actor }}
             Commit: ${{ github.sha }}
